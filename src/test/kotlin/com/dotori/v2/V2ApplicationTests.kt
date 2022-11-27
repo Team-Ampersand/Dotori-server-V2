@@ -1,4 +1,4 @@
-package com.dotori.V2
+package com.dotori.v2
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
