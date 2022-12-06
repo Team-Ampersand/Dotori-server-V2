@@ -23,7 +23,7 @@ class TokenProvider(
 ){
     private val ACCESS_TOKEN_EXPIRE_TIME:Long = 1000 * 60 * 60 * 3// 3시간
     private val REFRESH_TOKEN_EXPIRE_TIME:Long= ACCESS_TOKEN_EXPIRE_TIME/3 * 24 * 30 * 6
-    @Value("\${jwt.secret}")
+    @Value("\${security.jwt.token.secretKey}")
     private val SECRET_KEY:String = ""
 
     private enum class TokenType(val value: String){
