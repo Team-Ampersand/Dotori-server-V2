@@ -1,6 +1,6 @@
 package com.dotori.v2.infraStructure.config.security.auth
 
-import com.dotori.v2.infraStructure.persistence.member.MemberRepository
+import com.dotori.v2.infraStructure.persistence.member.repository.MemberRepository
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service

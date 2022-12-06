@@ -33,6 +33,8 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+	implementation("com.amazonaws:aws-java-sdk-ses:1.12.347")
+	implementation("aws.sdk.kotlin:ses:0.16.0")
 }
 
 tasks.withType<KotlinCompile> {
