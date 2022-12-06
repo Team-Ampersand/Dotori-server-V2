@@ -10,9 +10,9 @@ import javax.persistence.*
 class EmailCertificate(
     @Column(name = "certificate_email", nullable = false)
     val email: String,
-    @field:Column(name = "certificate_key", nullable = false)
+    @Column(name = "certificate_key", nullable = false)
     val key: String,
-    @field:Column(name = "certificate_expiredTime", nullable = false)
+    @Column(name = "certificate_expiredTime", nullable = false)
     val expiredTime: LocalDateTime
 ) : BaseTimeEntity(){
     @Column(name = "certificate_id")

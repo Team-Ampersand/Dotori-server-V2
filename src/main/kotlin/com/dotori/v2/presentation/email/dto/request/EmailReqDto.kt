@@ -3,6 +3,6 @@ package com.dotori.v2.presentation.email.dto.request
 import javax.validation.constraints.Pattern
 
 class EmailReqDto(
-    @Pattern(regexp = "^[a-zA-Z0-9]+@gsm.hs.kr$")
+    @field:Pattern(regexp = "^[a-zA-Z0-9]+@gsm.hs.kr$")
     val email:String,
 )
