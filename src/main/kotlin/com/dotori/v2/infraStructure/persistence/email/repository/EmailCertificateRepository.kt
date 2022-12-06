@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface EmailCertificateRepository: JpaRepository<EmailCertificate, Long> {
     fun deleteByEmail(email: String)
+
+    fun findByKey(key: String): EmailCertificate?
 }

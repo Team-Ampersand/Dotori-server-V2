@@ -4,6 +4,7 @@ import com.dotori.v2.application.email.port.EmailCertificatePort
 import com.dotori.v2.domain.email.EmailCertificate
 import com.dotori.v2.infraStructure.persistence.email.repository.EmailCertificateRepository
 import org.springframework.stereotype.Component
+import java.lang.RuntimeException
 
 @Component
 class EmailPersistenceAdapter(
@@ -15,5 +16,10 @@ class EmailPersistenceAdapter(
 
     override fun save(emailCertificate: EmailCertificate) {
         emailCertificateRepository.save(emailCertificate)
+    }
+
+    override fun findByKey(key: String): EmailCertificate {
+        return (emailCertificateRepository.findByKey(key)
+            ?: throw RuntimeException())
     }
 }
