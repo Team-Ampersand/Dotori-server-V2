@@ -13,7 +13,7 @@ class EmailSender(
     private val amazonSimpleEmailService: AmazonSimpleEmailService
 ){
 
-    @Value("\${aws.ses.veritied.email}")
+    @Value("\${aws.ses.verified.email}")
     private val from = ""
     private val log = LoggerFactory.getLogger(this::class.simpleName)
 
