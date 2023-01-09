@@ -25,15 +25,15 @@ class SecurityConfig(
     @Bean
     fun webSecurityCustomizer(): WebSecurityCustomizer {
         return WebSecurityCustomizer { web: WebSecurity ->
-            web.ignoring().antMatchers("/v1/api-docs")
-                .antMatchers("/swagger-resources/**")
-                .antMatchers("/swagger-ui.html")
-                .antMatchers("configuration/**")
-                .antMatchers("/webjars/**")
-                .antMatchers("/public")
+            web.ignoring().mvcMatchers("/v1/api-docs")
+                .mvcMatchers("/swagger-resources/**")
+                .mvcMatchers("/swagger-ui.html")
+                .mvcMatchers("configuration/**")
+                .mvcMatchers("/webjars/**")
+                .mvcMatchers("/public")
                 .and()
                 .ignoring()
-                .antMatchers("/h2-console/**/**")
+                .mvcMatchers("/h2-console/**/**")
         }
     }
 
@@ -48,19 +48,17 @@ class SecurityConfig(
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeHttpRequests()
-            .antMatchers("/v2/signup").permitAll()
-            .antMatchers("/v2/signin").permitAll()
-            .antMatchers("/v2/signup/email/check").permitAll()
-            .antMatchers("/v2/health-check").permitAll()
-            .antMatchers("/v2/members/password/email/check").permitAll()
-            .antMatchers("/v2/members/gender").permitAll()
-            .antMatchers("/v2/refresh").permitAll()
+            .mvcMatchers("/v2/auth/**").permitAll()
+            .mvcMatchers("/v2/health-check").permitAll()
+            .mvcMatchers("/v2/members/password/email/check").permitAll()
+            .mvcMatchers("/v2/members/gender").permitAll()
+            .mvcMatchers("/v2/refresh").permitAll()
 
-            .antMatchers("/v2/admin/**").hasRole("ADMIN")
-            .antMatchers("/v2/member/**").hasRole("MEMBER")
-            .antMatchers("/v2/posting/**").hasRole("MEMBER")
+            .mvcMatchers("/v2/admin/**").hasRole("ADMIN")
+            .mvcMatchers("/v2/member/**").hasRole("MEMBER")
+            .mvcMatchers("/v2/posting/**").hasRole("MEMBER")
 
-            .antMatchers("/v2/email/**").permitAll()
+            .mvcMatchers("/v2/email/**").permitAll()
 
             .anyRequest().denyAll()
             .and()
