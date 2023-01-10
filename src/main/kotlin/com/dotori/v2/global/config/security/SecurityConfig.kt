@@ -25,14 +25,7 @@ class SecurityConfig(
     @Bean
     fun webSecurityCustomizer(): WebSecurityCustomizer {
         return WebSecurityCustomizer { web: WebSecurity ->
-            web.ignoring().antMatchers("/v1/api-docs")
-                .antMatchers("/swagger-resources/**")
-                .antMatchers("/swagger-ui.html")
-                .antMatchers("configuration/**")
-                .antMatchers("/webjars/**")
-                .antMatchers("/public")
-                .and()
-                .ignoring()
+            web.ignoring()
                 .antMatchers("/h2-console/**/**")
         }
     }
@@ -48,9 +41,7 @@ class SecurityConfig(
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeHttpRequests()
-            .antMatchers("/v2/signup").permitAll()
-            .antMatchers("/v2/signin").permitAll()
-            .antMatchers("/v2/signup/email/check").permitAll()
+            .antMatchers("/v2/auth/**").permitAll()
             .antMatchers("/v2/health-check").permitAll()
             .antMatchers("/v2/members/password/email/check").permitAll()
             .antMatchers("/v2/members/gender").permitAll()

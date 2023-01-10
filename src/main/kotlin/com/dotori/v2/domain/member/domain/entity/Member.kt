@@ -8,11 +8,6 @@ import javax.persistence.*
 
 @Entity
 class Member(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
-    val id: Long,
-    
     @Column(name = "member_name", nullable = false)
     val memberName: String,
     
@@ -34,6 +29,10 @@ class Member(
     @CollectionTable(name = "Role", joinColumns = [JoinColumn(name = "member_id")])
     val roles: MutableList<Role>,
 ) : BaseTimeEntity() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
+    val id: Long = 0
 
     @Column(name = "member_refreshToken")
     var refreshToken: String = ""
