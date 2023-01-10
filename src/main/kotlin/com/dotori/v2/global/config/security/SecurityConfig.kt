@@ -25,14 +25,7 @@ class SecurityConfig(
     @Bean
     fun webSecurityCustomizer(): WebSecurityCustomizer {
         return WebSecurityCustomizer { web: WebSecurity ->
-            web.ignoring().mvcMatchers("/v1/api-docs")
-                .mvcMatchers("/swagger-resources/**")
-                .mvcMatchers("/swagger-ui.html")
-                .mvcMatchers("configuration/**")
-                .mvcMatchers("/webjars/**")
-                .mvcMatchers("/public")
-                .and()
-                .ignoring()
+            web.ignoring()
                 .mvcMatchers("/h2-console/**/**")
         }
     }
