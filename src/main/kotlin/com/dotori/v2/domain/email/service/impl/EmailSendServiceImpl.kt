@@ -23,7 +23,8 @@ class EmailSendServiceImpl(
         val emailCertificate = EmailCertificate(
             email = emailReqDto.email,
             key = key,
-            expiredTime = LocalDateTime.now().plusMinutes(5)
+            expiredTime = LocalDateTime.now().plusMinutes(5),
+            authentication = false
         )
         emailCertificateRepository.save(emailCertificate)
         return key

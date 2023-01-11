@@ -1,6 +1,8 @@
 package com.dotori.v2.domain.email.presentation
 
+import com.dotori.v2.domain.email.presentation.dto.request.EmailCheckReqDto
 import com.dotori.v2.domain.email.presentation.dto.request.EmailReqDto
+import com.dotori.v2.domain.email.service.EmailCheckService
 import com.dotori.v2.domain.email.service.PasswordChangeEmailSendService
 import com.dotori.v2.domain.email.service.SingupEmailSendService
 import org.springframework.http.ResponseEntity
@@ -12,18 +14,25 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/v2/email")
 class EmailSendController(
-    private val singupEmailSendService: SingupEmailSendService,
-    private val passwordChangeEmailSendService: PasswordChangeEmailSendService
+    private val signupEmailSendService: SingupEmailSendService,
+    private val passwordChangeEmailSendService: PasswordChangeEmailSendService,
+    private val emailCheckService: EmailCheckService
 ){
     @PostMapping("/signup")
     fun sendEmailSignup(@RequestBody emailReqDto: EmailReqDto): ResponseEntity<Void>{
-        singupEmailSendService.execute(emailReqDto)
+        signupEmailSendService.execute(emailReqDto)
         return ResponseEntity.ok().build()
     }
 
     @PostMapping("/password")
     fun sendEmailChangePassword(@RequestBody emailReqDto: EmailReqDto): ResponseEntity<Void>{
         passwordChangeEmailSendService.execute(emailReqDto)
+        return ResponseEntity.ok().build()
+    }
+
+    @PostMapping("/verify")
+    fun verifyEmail(@RequestBody emailCheckReqDto: EmailCheckReqDto): ResponseEntity<Void>{
+        emailCheckService.execute(emailCheckReqDto.key)
         return ResponseEntity.ok().build()
     }
 }
