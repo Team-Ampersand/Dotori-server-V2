@@ -9,4 +9,6 @@ interface EmailCertificateRepository: JpaRepository<EmailCertificate, Long> {
     fun findByKey(key: String): EmailCertificate?
 
     fun existsByEmail(email: String): Boolean
+
+    fun findByEmail(email: String): EmailCertificate?
 }
