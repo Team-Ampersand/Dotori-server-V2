@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/v2/email")
-class EmailSendController(
+class EmailController(
     private val signupEmailSendService: SingupEmailSendService,
     private val passwordChangeEmailSendService: PasswordChangeEmailSendService,
     private val emailCheckService: EmailCheckService
@@ -30,7 +30,7 @@ class EmailSendController(
         return ResponseEntity.ok().build()
     }
 
-    @PostMapping("/verify")
+    @PostMapping("/verify-email")
     fun verifyEmail(@RequestBody emailCheckReqDto: EmailCheckReqDto): ResponseEntity<Void>{
         emailCheckService.execute(emailCheckReqDto.key)
         return ResponseEntity.ok().build()
