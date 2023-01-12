@@ -16,9 +16,12 @@ class SignupServiceImpl (
     private val memberRepository: MemberRepository,
     private val passwordEncoder: PasswordEncoder,
 ): SignupService{
-    override fun execute(signupReqDto: SignupReqDto):Long {
-        if(emailCertificateRepository.existsByEmail(signupReqDto.email))
+    override fun execute(signupReqDto: SignupReqDto): Long {
+        val emailCertificate = emailCertificateRepository.findByEmail(signupReqDto.email)
+            ?: throw RuntimeException() // TODO 인증코드 발송 X
+        if(!emailCertificate.authentication)
             throw RuntimeException() // TODO 나중에 예외처리 해야됨 -> 인증된 메일X
+        emailCertificateRepository.delete(emailCertificate)
         if(memberRepository.existsByEmail(signupReqDto.email))
             throw RuntimeException() // TODO 나중에 예외처리 해야됨 -> 이미 존재하는 유저
         val encodedPassword = passwordEncoder.encode(signupReqDto.password)
