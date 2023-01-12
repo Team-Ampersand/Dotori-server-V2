@@ -25,13 +25,12 @@ class EmailCertificate(
     constructor(email: String, key: String, expiredTime: LocalDateTime, authentication: Boolean)
             :this(0, email, key, expiredTime, authentication)
 
-    fun verify(): EmailCertificate{
-        return EmailCertificate(
+    fun verify(): EmailCertificate =
+        EmailCertificate(
             id = this.id,
             email = this.email,
             key = this.key,
             expiredTime = this.expiredTime,
             authentication = true
         )
-    }
 }
