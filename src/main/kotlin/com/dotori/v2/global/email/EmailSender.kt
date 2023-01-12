@@ -11,12 +11,11 @@ import org.springframework.stereotype.Component
 @Component
 class EmailSender(
     private val amazonSimpleEmailService: AmazonSimpleEmailService
-){
+) {
 
     @Value("\${aws.ses.verified.email}")
     private val from = ""
     private val log = LoggerFactory.getLogger(this::class.simpleName)
-
 
     fun send(receivers: String?, key: String) {
         val subject = "🎈[DOTORI] 인증 키"

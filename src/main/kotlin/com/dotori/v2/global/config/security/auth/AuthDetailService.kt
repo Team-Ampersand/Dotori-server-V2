@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 @Service
 class AuthDetailService(
     private val memberRepository: MemberRepository
-): UserDetailsService {
+) : UserDetailsService {
     override fun loadUserByUsername(username: String?): UserDetails =
         AuthDetails(memberRepository.findByEmail(username)
             ?: throw RuntimeException())

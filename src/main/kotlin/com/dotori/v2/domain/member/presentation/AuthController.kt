@@ -13,7 +13,7 @@ import javax.validation.Valid
 @RequestMapping("/v2/auth")
 class AuthController(
     private val signupService: SignupService,
-){
+) {
     @PostMapping
     fun signup(@Valid @RequestBody signupReqDto: SignupReqDto): ResponseEntity<Void> {
         signupService.execute(signupReqDto)

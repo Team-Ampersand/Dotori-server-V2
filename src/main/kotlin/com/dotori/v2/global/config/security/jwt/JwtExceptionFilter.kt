@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse
 class JwtExceptionFilter(
     private val objectMapper: ObjectMapper
 ) : OncePerRequestFilter() {
-
     private val log = LoggerFactory.getLogger(this.javaClass.simpleName)
 
     @Throws(ServletException::class, IOException::class)

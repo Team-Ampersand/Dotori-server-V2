@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletResponse
 @Component
 class JwtReqFilter(
     val tokenProvider: TokenProvider,
-): OncePerRequestFilter() {
+) : OncePerRequestFilter() {
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         val accessToken = request.getHeader("Authorization")
-        if(accessToken!=null){
+        if(accessToken!=null) {
             if (accessToken != null && tokenProvider.validateToken(accessToken)) {
                 val authentication: Authentication = tokenProvider.getAuthentication(accessToken)
                 SecurityContextHolder.getContext().authentication = authentication

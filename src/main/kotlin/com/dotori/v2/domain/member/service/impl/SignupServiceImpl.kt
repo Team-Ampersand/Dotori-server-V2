@@ -11,11 +11,11 @@ import java.lang.RuntimeException
 
 @Service
 @Transactional(rollbackFor = [Exception::class])
-class SignupServiceImpl (
+class SignupServiceImpl(
     private val emailCertificateRepository: EmailCertificateRepository,
     private val memberRepository: MemberRepository,
     private val passwordEncoder: PasswordEncoder,
-): SignupService{
+): SignupService {
     override fun execute(signupReqDto: SignupReqDto): Long {
         val emailCertificate = emailCertificateRepository.findByEmail(signupReqDto.email)
             ?: throw RuntimeException() // TODO 인증코드 발송 X
