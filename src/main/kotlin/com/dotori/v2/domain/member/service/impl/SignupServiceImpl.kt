@@ -16,7 +16,7 @@ class SignupServiceImpl (
     private val memberRepository: MemberRepository,
     private val passwordEncoder: PasswordEncoder,
 ): SignupService{
-    override fun execute(signupReqDto: SignupReqDto):Long {
+    override fun execute(signupReqDto: SignupReqDto): Long {
         val emailCertificate = emailCertificateRepository.findByEmail(signupReqDto.email)
             ?: throw RuntimeException() // TODO 인증코드 발송 X
         if(!emailCertificate.authentication)
