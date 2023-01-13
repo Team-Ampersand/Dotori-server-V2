@@ -6,8 +6,6 @@ enum class ErrorCode(
     val code: Int,
     val value: String,
 ){
-
-
     // *** SERVER ERROR ***
     UNKNOWN_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "알 수 없는 에러입니다."),
 

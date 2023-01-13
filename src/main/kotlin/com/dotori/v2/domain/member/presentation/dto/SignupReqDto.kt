@@ -8,10 +8,10 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
-class SignupReqDto (
+class SignupReqDto(
     @field:NotBlank
     @field:Size(min = 1, max = 10)
-     val memberName:String,
+    val memberName:String,
 
     @field:NotBlank
     @field:Size(min = 4, max = 4)
@@ -26,7 +26,7 @@ class SignupReqDto (
     val email:String,
 
     val gender: Gender,
-){
+) {
     fun toEntity(password: String): Member =
         Member(
             memberName = memberName,

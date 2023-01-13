@@ -20,7 +20,7 @@ class EmailCertificate(
     val expiredTime: LocalDateTime,
     @Column(name = "certificate_authentication", nullable = false)
     val authentication: Boolean
-) : BaseTimeEntity(){
+) : BaseTimeEntity() {
 
     constructor(email: String, key: String, expiredTime: LocalDateTime, authentication: Boolean)
             :this(0, email, key, expiredTime, authentication)

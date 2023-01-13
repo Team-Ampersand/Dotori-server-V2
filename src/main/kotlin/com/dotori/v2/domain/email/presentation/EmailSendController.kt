@@ -17,15 +17,15 @@ class EmailController(
     private val signupEmailSendService: SingupEmailSendService,
     private val passwordChangeEmailSendService: PasswordChangeEmailSendService,
     private val emailCheckService: EmailCheckService
-){
+) {
     @PostMapping("/signup")
-    fun sendEmailSignup(@RequestBody emailReqDto: EmailReqDto): ResponseEntity<Void>{
+    fun sendEmailSignup(@RequestBody emailReqDto: EmailReqDto): ResponseEntity<Void> {
         signupEmailSendService.execute(emailReqDto)
         return ResponseEntity.ok().build()
     }
 
     @PostMapping("/password")
-    fun sendEmailChangePassword(@RequestBody emailReqDto: EmailReqDto): ResponseEntity<Void>{
+    fun sendEmailChangePassword(@RequestBody emailReqDto: EmailReqDto): ResponseEntity<Void> {
         passwordChangeEmailSendService.execute(emailReqDto)
         return ResponseEntity.ok().build()
     }
