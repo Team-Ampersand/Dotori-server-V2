@@ -2,7 +2,7 @@ package com.dotori.v2.domain.member.service.impl
 
 import com.dotori.v2.domain.email.domain.repository.EmailCertificateRepository
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
-import com.dotori.v2.domain.member.presentation.dto.SignupReqDto
+import com.dotori.v2.domain.member.presentation.dto.req.SignupReqDto
 import com.dotori.v2.domain.member.service.SignupService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service

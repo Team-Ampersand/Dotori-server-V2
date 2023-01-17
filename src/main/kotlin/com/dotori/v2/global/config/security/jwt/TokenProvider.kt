@@ -15,6 +15,7 @@ import java.nio.charset.StandardCharsets
 import java.security.Key
 import java.util.*
 import org.springframework.security.core.Authentication
+import java.time.ZonedDateTime
 
 
 @Component
@@ -25,6 +26,9 @@ class TokenProvider(
     private val REFRESH_TOKEN_EXPIRE_TIME:Long= ACCESS_TOKEN_EXPIRE_TIME/3 * 24 * 30 * 6
     @Value("\${security.jwt.token.secretKey}")
     private val SECRET_KEY:String = ""
+    val accessExpiredTime: ZonedDateTime
+        get() = ZonedDateTime.now().plusSeconds(ACCESS_TOKEN_EXPIRE_TIME)
+
 
     private enum class TokenType(val value: String) {
         ACCESS_TOKEN("accessToken"),
