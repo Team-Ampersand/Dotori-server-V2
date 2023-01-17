@@ -3,12 +3,12 @@ package com.dotori.v2.global.error
 import org.springframework.http.HttpStatus
 
 enum class ErrorCode(
-    val code: Int,
-    val value: String,
+    val error: Int,
+    val message: String,
 ){
     // *** SERVER ERROR ***
     UNKNOWN_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "알 수 없는 에러입니다."),
-
+    EMAIL_SEND_FAIL(HttpStatus.INTERNAL_SERVER_ERROR.value(), "이메일 발송에 실패하였습니다"),
 
     // *** MASSAGE ***
     MASSAGE_ALREADY(HttpStatus.CONFLICT.value(), "이미 안마의자 신청을 신청하신 회원입니다."),
@@ -37,6 +37,7 @@ enum class ErrorCode(
     MEMBER_NOT_FOUND_BY_CLASS(HttpStatus.ACCEPTED.value(), "해당반에 해당하는 학생들이 없습니다."),
     MEMBER_NO_INFORMATION(HttpStatus.ACCEPTED.value(), "회원 정보가 없습니다."),
     MEMBER_OVER_CERTIFICATE_TIME(HttpStatus.ACCEPTED.value(), "인증 시간이 초과되었습니다."),
+    MEMBER_EMAIL_HAS_NOT_AUTH_KEY(HttpStatus.NOT_FOUND.value(), "인증번호가 존재 하지 않습니다"),
     MEMBER_EMAIL_HAS_NOT_BEEN_CERTIFICATE(HttpStatus.ACCEPTED.value(), "이메일 인증이 되지않았습니다."),
 
 
