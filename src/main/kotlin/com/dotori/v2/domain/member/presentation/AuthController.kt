@@ -1,6 +1,9 @@
 package com.dotori.v2.domain.member.presentation
 
-import com.dotori.v2.domain.member.presentation.dto.SignupReqDto
+import com.dotori.v2.domain.member.presentation.dto.req.SignInReqDto
+import com.dotori.v2.domain.member.presentation.dto.req.SignupReqDto
+import com.dotori.v2.domain.member.presentation.dto.res.SignInResDto
+import com.dotori.v2.domain.member.service.SignInService
 import com.dotori.v2.domain.member.service.SignupService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -13,10 +16,15 @@ import javax.validation.Valid
 @RequestMapping("/v2/auth")
 class AuthController(
     private val signupService: SignupService,
+    private val signInService: SignInService,
 ) {
-    @PostMapping
+    @PostMapping("/signup")
     fun signup(@Valid @RequestBody signupReqDto: SignupReqDto): ResponseEntity<Void> {
         signupService.execute(signupReqDto)
         return ResponseEntity.ok().build()
     }
+
+    @PostMapping
+    fun signIn(@Valid @RequestBody signInReqDto: SignInReqDto): ResponseEntity<SignInResDto> =
+        ResponseEntity.ok(signInService.execute(signInReqDto))
 }
