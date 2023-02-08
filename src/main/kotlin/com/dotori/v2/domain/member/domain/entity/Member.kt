@@ -52,4 +52,9 @@ class Member(
     @Column(name = "self_study_expired_date")
     var selfStudyExpiredDate: LocalDateTime? = null
     private set
+
+    fun updateRefreshToken(newRefreshToken: String): String{
+        this.refreshToken = newRefreshToken
+        return this.refreshToken
+    }
 }
