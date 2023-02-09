@@ -24,7 +24,7 @@ class AuthController(
     @PostMapping("/signup")
     fun signup(@Valid @RequestBody signupReqDto: SignupReqDto): ResponseEntity<Void> =
         signupService.execute(signupReqDto)
-            .let { ResponseEntity.ok().build() }
+            .run { ResponseEntity.ok().build() }
 
     @PostMapping
     fun signIn(@Valid @RequestBody signInReqDto: SignInReqDto): ResponseEntity<SignInResDto> =
@@ -33,5 +33,5 @@ class AuthController(
     @DeleteMapping("/logout")
     fun logout(): ResponseEntity<Void> =
         logoutService.execute()
-            .let { ResponseEntity.ok().build() }
+            .run { ResponseEntity.ok().build() }
 }
