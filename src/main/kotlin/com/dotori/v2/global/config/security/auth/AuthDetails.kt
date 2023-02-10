@@ -19,7 +19,7 @@ class AuthDetails(
     }
 
     override fun getUsername(): String {
-        return member.memberName
+        return member.email
     }
 
     override fun isAccountNonExpired(): Boolean {

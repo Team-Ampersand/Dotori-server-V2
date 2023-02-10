@@ -16,7 +16,7 @@ class GlobalExceptionHandler {
     @ExceptionHandler(BasicException::class)
     fun basicExceptionHandler(request: HttpServletRequest, ex: BasicException): ResponseEntity<ErrorResponse> {
         log?.error(request.requestURI)
-        log?.error(ex.message)
+        log?.error(ex.errorCode.message)
         val errorResponse = ErrorResponse(ex.errorCode)
         return ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.valueOf(ex.errorCode.error))
     }

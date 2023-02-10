@@ -41,9 +41,9 @@ class JwtExceptionFilter(
 
     @Throws(IOException::class)
     fun setErrorResponse(errorCode: ErrorCode, response: HttpServletResponse) {
-        response.status = errorCode.code
+        response.status = errorCode.error
         response.contentType = "application/json; charset=utf-8"
-        val errorResponse = ErrorResponse(errorCode.value, errorCode.code)
+        val errorResponse = ErrorResponse(errorCode)
         val errorResponseEntityToJson = objectMapper.writeValueAsString(errorResponse)
         response.writer.write(errorResponseEntityToJson.toString())
     }

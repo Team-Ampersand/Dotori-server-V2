@@ -27,6 +27,7 @@ class SignInServiceImpl(
         val accessToken = tokenProvider.createAccessToken(member.email, member.roles)
         val refreshToken = tokenProvider.createRefreshToken(member.email)
         val accessExpiredTime = tokenProvider.accessExpiredTime
+        member.updateRefreshToken(refreshToken)
         return SignInResDto(
             accessToken = accessToken,
             refreshToken = refreshToken,
