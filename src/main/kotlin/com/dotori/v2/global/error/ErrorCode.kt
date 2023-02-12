@@ -39,6 +39,7 @@ enum class ErrorCode(
     MEMBER_OVER_CERTIFICATE_TIME(HttpStatus.ACCEPTED.value(), "인증 시간이 초과되었습니다."),
     MEMBER_EMAIL_HAS_NOT_AUTH_KEY(HttpStatus.NOT_FOUND.value(), "인증번호가 존재 하지 않습니다"),
     MEMBER_EMAIL_HAS_NOT_BEEN_CERTIFICATE(HttpStatus.ACCEPTED.value(), "이메일 인증이 되지않았습니다."),
+    MEMBER_NOT_SAME(HttpStatus.UNAUTHORIZED.value(), "유저가 일치하지 않습니다."),
 
 
     // *** SELF STUDY ***
