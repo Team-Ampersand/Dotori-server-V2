@@ -2,6 +2,7 @@ package com.dotori.v2.domain.member.service.impl
 
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
+import com.dotori.v2.domain.member.exception.TokenTypeNotValidException
 import com.dotori.v2.domain.member.presentation.dto.res.RefreshResDto
 import com.dotori.v2.domain.member.service.RefreshService
 import com.dotori.v2.global.config.security.jwt.TokenProvider
@@ -15,6 +16,8 @@ class RefreshTokenServiceImpl(
     private val tokenProvider: TokenProvider,
 ) : RefreshService {
     override fun execute(refreshToken: String): RefreshResDto {
+        if (!tokenProvider.isRefreshToken(refreshToken))
+            throw TokenTypeNotValidException()
         val email = tokenProvider.getUserEmail(refreshToken)
         val member = (memberRepository.findByEmail(email)
             ?: throw MemberNotFoundException())
