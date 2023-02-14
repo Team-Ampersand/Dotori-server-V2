@@ -43,12 +43,12 @@ class SecurityConfig(
             .authorizeHttpRequests()
             .antMatchers("/v2/auth/**").permitAll()
             .antMatchers("/v2/health-check").permitAll()
-            .antMatchers("/v2/members/password/email/check").permitAll()
-            .antMatchers("/v2/members/gender").permitAll()
             .antMatchers("/v2/refresh").permitAll()
 
             .antMatchers("/v2/admin/**").hasRole("ADMIN")
             .antMatchers("/v2/member/**").hasRole("MEMBER")
+            .antMatchers("/v2/councillor/**").hasRole("COUNCILLOR")
+            .antMatchers("/v2/developer/**").hasRole("DEVELOPER")
             .antMatchers("/v2/posting/**").hasRole("MEMBER")
 
             .antMatchers("/v2/email/**").permitAll()
