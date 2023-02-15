@@ -93,4 +93,7 @@ class TokenProvider(
         val userDetails: UserDetails = authDetailService.loadUserByUsername(getUserEmail(token!!))
         return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)
     }
+
+    fun isRefreshToken(token: String): Boolean =
+        getTokenType(token) == TokenType.REFRESH_TOKEN.value
 }
