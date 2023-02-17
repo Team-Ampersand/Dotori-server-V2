@@ -1,6 +1,8 @@
 package com.dotori.v2.domain.member.presentation
 
+import com.dotori.v2.domain.member.presentation.dto.req.NewPasswordReqDto
 import com.dotori.v2.domain.member.presentation.dto.req.WithdrawalReqDto
+import com.dotori.v2.domain.member.service.ChangePasswordService
 import com.dotori.v2.domain.member.service.LogoutService
 import com.dotori.v2.domain.member.service.WithdrawalService
 import org.springframework.http.ResponseEntity
@@ -12,6 +14,7 @@ import javax.validation.Valid
 class MemberController(
     private val logoutService: LogoutService,
     private val withdrawalService: WithdrawalService,
+    private val changePasswordService: ChangePasswordService,
 ) {
     @DeleteMapping("/logout")
     fun logout(): ResponseEntity<Void> =
@@ -21,5 +24,10 @@ class MemberController(
     @PostMapping("/withdrawal")
     fun withdrawal(@Valid @RequestBody withdrawalReqDto: WithdrawalReqDto): ResponseEntity<Void> =
         withdrawalService.execute(withdrawalReqDto)
+            .run { ResponseEntity.ok().build() }
+
+    @PatchMapping("/password")
+    fun changePassword(@Valid @RequestBody newPasswordReqDto: NewPasswordReqDto): ResponseEntity<Void> =
+        changePasswordService.execute(newPasswordReqDto)
             .run { ResponseEntity.ok().build() }
 }

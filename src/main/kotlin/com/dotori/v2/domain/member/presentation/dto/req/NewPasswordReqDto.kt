@@ -1,0 +1,13 @@
+package com.dotori.v2.domain.member.presentation.dto.req
+
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.Size
+
+data class NewPasswordReqDto(
+    @field:NotBlank
+    @field:Size(min = 4)
+    val currentPassword: String,
+    @field:NotBlank
+    @field:Size(min = 4)
+    val newPassword: String
+)

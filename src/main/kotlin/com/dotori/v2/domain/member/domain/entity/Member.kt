@@ -57,4 +57,8 @@ class Member(
         this.refreshToken = newRefreshToken
         return this.refreshToken
     }
+
+    fun updatePassword(newPassword: String){
+        this.password = newPassword
+    }
 }
