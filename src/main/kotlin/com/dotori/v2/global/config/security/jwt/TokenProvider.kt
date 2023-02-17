@@ -68,7 +68,6 @@ class TokenProvider(
         }
 
     private fun createToken(type: TokenType, email: String, expiredTime: Long, claims: Claims): String {
-        val claims = Jwts.claims()
         claims[TokenClaimName.USER_EMAIL.value] = email
         claims[TokenClaimName.TOKEN_TYPE.value] = type.value
         return Jwts.builder()
