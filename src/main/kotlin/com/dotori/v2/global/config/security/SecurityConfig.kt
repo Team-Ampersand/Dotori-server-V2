@@ -5,6 +5,7 @@ import com.dotori.v2.global.config.security.handler.CustomAuthenticationEntryPoi
 import com.dotori.v2.global.config.security.jwt.JwtExceptionFilter
 import com.dotori.v2.global.config.security.jwt.JwtReqFilter
 import org.springframework.context.annotation.Bean
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -52,6 +53,8 @@ class SecurityConfig(
             .antMatchers("/v2/posting/**").hasRole("MEMBER")
 
             .antMatchers("/v2/email/**").permitAll()
+
+            .antMatchers(HttpMethod.GET, "/v2/home/board").authenticated()
 
             .anyRequest().denyAll()
             .and()

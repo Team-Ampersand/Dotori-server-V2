@@ -14,8 +14,8 @@ import javax.persistence.MappedSuperclass
 open class BaseTimeEntity {
     @CreatedDate
     @Column(updatable = false)
-    private val createdDate: LocalDateTime? = null
+    val createdDate: LocalDateTime? = null
 
     @LastModifiedDate
-    private val modifiedDate: LocalDateTime? = null
+    val modifiedDate: LocalDateTime? = null
 }
