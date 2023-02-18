@@ -1,6 +1,7 @@
 package com.dotori.v2.domain.main_page.service.impl
 
 import com.dotori.v2.domain.board.domain.repository.BoardRepository
+import com.dotori.v2.domain.board.exception.BoardNotExistsException
 import com.dotori.v2.domain.main_page.presentation.dto.res.BoardAlarmResDto
 import com.dotori.v2.domain.main_page.service.BoardAlarmService
 import org.springframework.stereotype.Service
@@ -13,7 +14,7 @@ class BoardAlarmServiceImpl(
 ) : BoardAlarmService {
     override fun execute(): BoardAlarmResDto {
         val board = boardRepository.findLastBoard()
-            ?: throw RuntimeException()
+            ?: throw BoardNotExistsException()
         return BoardAlarmResDto(board)
     }
 }
