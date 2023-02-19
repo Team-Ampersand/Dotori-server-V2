@@ -2,9 +2,11 @@ package com.dotori.v2.domain.member.domain.entity
 
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
+import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.global.entity.BaseTimeEntity
 import java.time.LocalDateTime
 import javax.persistence.*
+
 
 @Entity
 class Member(
@@ -53,6 +55,11 @@ class Member(
     var selfStudyExpiredDate: LocalDateTime? = null
     private set
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "member_selfstudy", nullable = false)
+    var selfStudyStatus: SelfStudyStatus = SelfStudyStatus.CAN
+    private set
+
     fun updateRefreshToken(newRefreshToken: String): String{
         this.refreshToken = newRefreshToken
         return this.refreshToken
@@ -60,5 +67,9 @@ class Member(
 
     fun updatePassword(newPassword: String){
         this.password = newPassword
+    }
+
+    fun updateSelfStudyStatus(selfStudyStatus: SelfStudyStatus){
+        this.selfStudyStatus = selfStudyStatus
     }
 }
