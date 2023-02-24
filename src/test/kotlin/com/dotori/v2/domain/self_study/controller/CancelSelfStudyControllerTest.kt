@@ -15,17 +15,17 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.springframework.http.HttpStatus
 
-class GetSelfStudyInfoControllerTest : BehaviorSpec({
+class CancelSelfStudyControllerTest : BehaviorSpec({
     val applySelfStudyService = mockk<ApplySelfStudyService>()
-    val service = mockk<GetSelfStudyInfoService>()
-    val cancelSelfStudyService = mockk<CancelSelfStudyService>()
-    val councillorSelfStudyController = CouncillorSelfStudyController(applySelfStudyService, service, cancelSelfStudyService)
-    val developerSelfStudyController = DeveloperSelfStudyController(applySelfStudyService, service, cancelSelfStudyService)
-    val memberSelfStudyController = MemberSelfStudyController(applySelfStudyService, service, cancelSelfStudyService)
-    every { service.execute() } returns SelfStudyInfoResDto(1, SelfStudyStatus.CAN)
+    val getSelfStudyService = mockk<GetSelfStudyInfoService>()
+    val service = mockk<CancelSelfStudyService>()
+    val councillorSelfStudyController = CouncillorSelfStudyController(applySelfStudyService, getSelfStudyService, service)
+    val developerSelfStudyController = DeveloperSelfStudyController(applySelfStudyService, getSelfStudyService, service)
+    val memberSelfStudyController = MemberSelfStudyController(applySelfStudyService, getSelfStudyService, service)
+    every { service.execute() } returns Unit
     given("요청이 들어오면") {
         `when`("councillorController is received") {
-            val response = councillorSelfStudyController.getSelfStudyInfo()
+            val response = councillorSelfStudyController.cancelSelfStudy()
             then("서비스가 한번은 실행되어야 함") {
                 verify(exactly = 1) { service.execute() }
             }
@@ -34,7 +34,7 @@ class GetSelfStudyInfoControllerTest : BehaviorSpec({
             }
         }
         `when`("developerController is received") {
-            val response = developerSelfStudyController.getSelfStudyInfo()
+            val response = developerSelfStudyController.cancelSelfStudy()
             then("서비스가 한번은 실행되어야 함") {
                 verify(exactly = 2) { service.execute() }
             }
@@ -43,7 +43,7 @@ class GetSelfStudyInfoControllerTest : BehaviorSpec({
             }
         }
         `when`("memberController is received") {
-            val response = memberSelfStudyController.getSelfStudyInfo()
+            val response = memberSelfStudyController.cancelSelfStudy()
             then("서비스가 한번은 실행되어야 함") {
                 verify(exactly = 3) { service.execute() }
             }
