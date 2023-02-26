@@ -13,7 +13,7 @@ class Member(
     @Column(name = "member_name", nullable = false)
     val memberName: String,
     
-    @Column(name = "member_stuNum", nullable = false, unique = true)
+    @Column(name = "member_stuNum", nullable = false)
     val stuNum: String,
     
     @Column(name = "member_email", nullable = false, unique = true)

@@ -1,4 +1,4 @@
-package com.dotori.v2.domain.self_study.presentation.dto
+package com.dotori.v2.domain.self_study.presentation.dto.res
 
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 
