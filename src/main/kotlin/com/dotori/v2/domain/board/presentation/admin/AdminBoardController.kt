@@ -2,7 +2,6 @@ package com.dotori.v2.domain.board.presentation.admin
 
 import com.dotori.v2.domain.board.presentation.data.req.CreateBoardReqDto
 import com.dotori.v2.domain.board.service.CreateBoardService
-import com.dotori.v2.domain.board.util.BoardConverter
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -15,8 +14,7 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/v2/admin/board")
 class AdminBoardController(
-    private val createBoardService: CreateBoardService,
-    private val boardConverter: BoardConverter
+    private val createBoardService: CreateBoardService
 ) {
 
     @PostMapping
@@ -24,8 +22,7 @@ class AdminBoardController(
         @RequestPart(value = "files", required = false) multipartFiles: List<MultipartFile>?,
         @Valid @RequestPart(value = "boardDto") createBoardReqDto: CreateBoardReqDto
     ): ResponseEntity<Void> =
-        boardConverter.toDto(createBoardReqDto)
-            .let { createBoardService.execute(it, multipartFiles) }
+        createBoardService.execute(createBoardReqDto, multipartFiles)
             .run { ResponseEntity.status(HttpStatus.CREATED).build() }
 
 }
