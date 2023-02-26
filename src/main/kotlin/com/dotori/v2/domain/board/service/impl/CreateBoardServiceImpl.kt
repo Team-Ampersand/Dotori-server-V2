@@ -10,9 +10,11 @@ import com.dotori.v2.domain.board.util.BoardConverter
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.global.util.UserUtil
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
 
 @Service
+@Transactional(rollbackFor = [Exception::class])
 class CreateBoardServiceImpl(
     private val userUtil: UserUtil,
     private val boardRepository: BoardRepository,
