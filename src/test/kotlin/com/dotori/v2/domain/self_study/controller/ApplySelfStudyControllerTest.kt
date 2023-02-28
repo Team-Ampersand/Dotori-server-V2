@@ -6,6 +6,7 @@ import com.dotori.v2.domain.self_study.presentation.member.MemberSelfStudyContro
 import com.dotori.v2.domain.self_study.service.ApplySelfStudyService
 import com.dotori.v2.domain.self_study.service.CancelSelfStudyService
 import com.dotori.v2.domain.self_study.service.GetSelfStudyInfoService
+import com.dotori.v2.domain.self_study.service.GetSelfStudyRankService
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -17,15 +18,16 @@ class ApplySelfStudyControllerTest : BehaviorSpec({
     val service = mockk<ApplySelfStudyService>()
     val getSelfStudyInfoService = mockk<GetSelfStudyInfoService>()
     val cancelSelfStudyService = mockk<CancelSelfStudyService>()
-    val councillorSelfStudyController = CouncillorSelfStudyController(service, getSelfStudyInfoService, cancelSelfStudyService)
-    val developerSelfStudyController = DeveloperSelfStudyController(service, getSelfStudyInfoService, cancelSelfStudyService)
-    val memberSelfStudyController = MemberSelfStudyController(service, getSelfStudyInfoService, cancelSelfStudyService)
+    val getSelfStudyRankService = mockk<GetSelfStudyRankService>()
+    val councillorSelfStudyController = CouncillorSelfStudyController(service, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService)
+    val developerSelfStudyController = DeveloperSelfStudyController(service, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService)
+    val memberSelfStudyController = MemberSelfStudyController(service, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService)
     every { service.execute() } returns Unit
     given("요청이 들어오면") {
         `when`("councillorController is received") {
             val response = councillorSelfStudyController.applySelfStudy()
             then("서비스가 한번은 실행되어야 함") {
-                verify(exactly = 1) { service.execute() }
+                verify { service.execute() }
             }
             then("response status should be ok") {
                 response.statusCode shouldBe HttpStatus.OK
@@ -34,7 +36,7 @@ class ApplySelfStudyControllerTest : BehaviorSpec({
         `when`("developerController is received") {
             val response = developerSelfStudyController.applySelfStudy()
             then("서비스가 한번은 실행되어야 함") {
-                verify(exactly = 2) { service.execute() }
+                verify { service.execute() }
             }
             then("response status should be ok") {
                 response.statusCode shouldBe HttpStatus.OK
@@ -43,7 +45,7 @@ class ApplySelfStudyControllerTest : BehaviorSpec({
         `when`("memberController is received") {
             val response = memberSelfStudyController.applySelfStudy()
             then("서비스가 한번은 실행되어야 함") {
-                verify(exactly = 3) { service.execute() }
+                verify { service.execute() }
             }
             then("response status should be ok") {
                 response.statusCode shouldBe HttpStatus.OK

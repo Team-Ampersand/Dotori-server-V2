@@ -5,7 +5,7 @@ import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.self_study.domain.entity.SelfStudyCount
 import com.dotori.v2.domain.self_study.domain.repository.SelfStudyCountRepository
-import com.dotori.v2.domain.self_study.presentation.dto.SelfStudyInfoResDto
+import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.service.impl.GetSelfStudyInfoServiceImpl
 import com.dotori.v2.global.util.UserUtil
 import io.kotest.core.spec.style.BehaviorSpec
