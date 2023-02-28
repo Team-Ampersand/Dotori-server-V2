@@ -43,7 +43,7 @@ class ApplySelfStudyServiceTest : BehaviorSpec({
             roles = Collections.singletonList(Role.ROLE_MEMBER)
         )
         val selfStudyCount = SelfStudyCount(id = 1)
-        every { validDayOfWeekAndHourUtil.validate() } returns Unit
+        every { validDayOfWeekAndHourUtil.validateApply() } returns Unit
         every { userUtil.fetchCurrentUser() } returns testMember
         every { findSelfStudyCountUtil.findSelfStudyCount() } returns selfStudyCount
         every { selfStudyCheckUtil.isSelfStudyStatusCan(testMember) } returns Unit

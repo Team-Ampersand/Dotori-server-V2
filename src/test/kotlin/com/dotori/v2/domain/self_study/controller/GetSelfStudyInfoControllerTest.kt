@@ -6,6 +6,7 @@ import com.dotori.v2.domain.self_study.presentation.developer.DeveloperSelfStudy
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.presentation.member.MemberSelfStudyController
 import com.dotori.v2.domain.self_study.service.ApplySelfStudyService
+import com.dotori.v2.domain.self_study.service.CancelSelfStudyService
 import com.dotori.v2.domain.self_study.service.GetSelfStudyInfoService
 import com.dotori.v2.domain.self_study.service.GetSelfStudyRankService
 import io.kotest.core.spec.style.BehaviorSpec
@@ -18,10 +19,11 @@ import org.springframework.http.HttpStatus
 class GetSelfStudyInfoControllerTest : BehaviorSpec({
     val applySelfStudyService = mockk<ApplySelfStudyService>()
     val service = mockk<GetSelfStudyInfoService>()
+    val cancelSelfStudyService = mockk<CancelSelfStudyService>()
     val getSelfStudyRankService = mockk<GetSelfStudyRankService>()
-    val councillorSelfStudyController = CouncillorSelfStudyController(applySelfStudyService, service, getSelfStudyRankService)
-    val developerSelfStudyController = DeveloperSelfStudyController(applySelfStudyService, service, getSelfStudyRankService)
-    val memberSelfStudyController = MemberSelfStudyController(applySelfStudyService, service, getSelfStudyRankService)
+    val councillorSelfStudyController = CouncillorSelfStudyController(applySelfStudyService, service, getSelfStudyRankService, cancelSelfStudyService)
+    val developerSelfStudyController = DeveloperSelfStudyController(applySelfStudyService, service, getSelfStudyRankService, cancelSelfStudyService)
+    val memberSelfStudyController = MemberSelfStudyController(applySelfStudyService, service, getSelfStudyRankService, cancelSelfStudyService)
     every { service.execute() } returns SelfStudyInfoResDto(1, SelfStudyStatus.CAN)
     given("요청이 들어오면") {
         `when`("councillorController is received") {
