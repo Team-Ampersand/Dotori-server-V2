@@ -39,6 +39,7 @@ dependencies {
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 	implementation("com.amazonaws:aws-java-sdk-ses:1.12.347")
 	implementation("aws.sdk.kotlin:ses:0.16.0")
+	implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
 }
 
 tasks.withType<KotlinCompile> {
