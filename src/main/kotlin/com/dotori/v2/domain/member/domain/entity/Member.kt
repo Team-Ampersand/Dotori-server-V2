@@ -72,4 +72,8 @@ class Member(
     fun updateSelfStudyStatus(selfStudyStatus: SelfStudyStatus){
         this.selfStudyStatus = selfStudyStatus
     }
+
+    fun updateSelfStudyCheck(check: Boolean){
+        this.selfStudyCheck = check
+    }
 }
