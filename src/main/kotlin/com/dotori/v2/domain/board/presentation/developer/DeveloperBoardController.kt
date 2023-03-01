@@ -1,13 +1,12 @@
 package com.dotori.v2.domain.board.presentation.developer
 
 import com.dotori.v2.domain.board.presentation.data.req.CreateBoardReqDto
+import com.dotori.v2.domain.board.presentation.data.req.ModifyBoardReqDto
 import com.dotori.v2.domain.board.service.CreateBoardService
+import com.dotori.v2.domain.board.service.ModifyBoardService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestPart
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import javax.validation.Valid
 
@@ -15,7 +14,8 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/v2/developer/board")
 class DeveloperBoardController(
-    private val createBoardService: CreateBoardService
+    private val createBoardService: CreateBoardService,
+    private val modifyBoardService: ModifyBoardService
 ) {
 
     @PostMapping
@@ -26,5 +26,12 @@ class DeveloperBoardController(
         createBoardService.execute(createBoardReqDto, multipartFiles)
             .run { ResponseEntity.status(HttpStatus.CREATED).build() }
 
+    @PutMapping("/{board_id}")
+    fun modifyBoard(
+        @Valid @RequestBody modifyBoardReqDto: ModifyBoardReqDto,
+        @PathVariable board_id: Long
+    ): ResponseEntity<Void> =
+        modifyBoardService.execute(modifyBoardReqDto, board_id)
+            .run { ResponseEntity.status(HttpStatus.OK).build() }
 
 }

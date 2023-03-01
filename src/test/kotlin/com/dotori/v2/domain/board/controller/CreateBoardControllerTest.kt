@@ -6,6 +6,7 @@ import com.dotori.v2.domain.board.presentation.councillor.CouncillorBoardControl
 import com.dotori.v2.domain.board.presentation.data.req.CreateBoardReqDto
 import com.dotori.v2.domain.board.presentation.developer.DeveloperBoardController
 import com.dotori.v2.domain.board.service.CreateBoardService
+import com.dotori.v2.domain.board.service.ModifyBoardService
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
@@ -20,10 +21,14 @@ import java.util.*
 
 class CreateBoardControllerTest : BehaviorSpec({
     val createBoardService = mockk<CreateBoardService>()
+    val modifyBoardService = mockk<ModifyBoardService>()
 
-    val councillorCreateBoardController = CouncillorBoardController(createBoardService = createBoardService)
-    val developerCreateBoardController = DeveloperBoardController(createBoardService = createBoardService)
-    val adminCreateBoardController = AdminBoardController(createBoardService = createBoardService)
+    val councillorCreateBoardController =
+        CouncillorBoardController(createBoardService = createBoardService, modifyBoardService = modifyBoardService)
+    val developerCreateBoardController =
+        DeveloperBoardController(createBoardService = createBoardService, modifyBoardService = modifyBoardService)
+    val adminCreateBoardController =
+        AdminBoardController(createBoardService = createBoardService, modifyBoardService = modifyBoardService)
 
     given("요청이 들어오면") {
         val createBoardReqDto = CreateBoardReqDto(

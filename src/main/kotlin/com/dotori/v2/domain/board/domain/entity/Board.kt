@@ -2,6 +2,8 @@ package com.dotori.v2.domain.board.domain.entity
 
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.global.entity.BaseTimeEntity
+import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import javax.persistence.*
 
 
@@ -16,7 +18,13 @@ class Board(
     @JoinColumn(name = "member_id", nullable = false)
     val member: Member,
     @Column(name = "board_title", nullable = false)
-    val title: String,
+    var title: String,
     @Column(name = "board_content", length = 5000, nullable = false)
-    val content: String
-) : BaseTimeEntity()
+    var content: String
+) : BaseTimeEntity() {
+    fun updateBoard(title: String, content: String) {
+        this.title = title
+        this.content = content
+        this.modifiedDate = LocalDateTime.now()
+    }
+}
