@@ -10,10 +10,11 @@ import javax.persistence.Table
 class SelfStudyCount(
     @Id
     @Column(name = "selfStudyCount_id")
-    val id: Long = 1
+    val id: Long = 1,
+    count: Long = 0
 ) {
     @Column(name = "selfStudyCount_count")
-    var count: Long = 0
+    var count: Long = count
     private set
 
     fun addCount() {
