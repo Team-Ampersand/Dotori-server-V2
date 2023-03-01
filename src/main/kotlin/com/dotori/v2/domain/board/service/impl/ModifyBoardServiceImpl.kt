@@ -6,6 +6,7 @@ import com.dotori.v2.domain.board.exception.BoardNotExistsException
 import com.dotori.v2.domain.board.presentation.data.dto.ModifyBoardDto
 import com.dotori.v2.domain.board.presentation.data.req.ModifyBoardReqDto
 import com.dotori.v2.domain.board.service.ModifyBoardService
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,7 +16,7 @@ class ModifyBoardServiceImpl(
     private val boardRepository: BoardRepository
 ) : ModifyBoardService {
     override fun execute(modifyBoardReqDto: ModifyBoardReqDto, boardId: Long): Board {
-        val boardInfo: Board = boardRepository.findBoardById(boardId) ?: throw BoardNotExistsException()
+        val boardInfo: Board = boardRepository.findByIdOrNull(boardId) ?: throw BoardNotExistsException()
         toDto(modifyBoardReqDto)
             .let { boardInfo.updateBoard(title = it.title, content = it.content) }
         return boardInfo
