@@ -17,5 +17,5 @@ open class BaseTimeEntity {
     val createdDate: LocalDateTime = LocalDateTime.now()
 
     @LastModifiedDate
-    val modifiedDate: LocalDateTime? = null
+    var modifiedDate: LocalDateTime? = null
 }
