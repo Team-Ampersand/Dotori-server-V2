@@ -3,6 +3,7 @@ package com.dotori.v2.domain.board.presentation.developer
 import com.dotori.v2.domain.board.presentation.data.req.CreateBoardReqDto
 import com.dotori.v2.domain.board.presentation.data.req.ModifyBoardReqDto
 import com.dotori.v2.domain.board.service.CreateBoardService
+import com.dotori.v2.domain.board.service.DeleteBoardService
 import com.dotori.v2.domain.board.service.ModifyBoardService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,7 +16,8 @@ import javax.validation.Valid
 @RequestMapping("/v2/developer/board")
 class DeveloperBoardController(
     private val createBoardService: CreateBoardService,
-    private val modifyBoardService: ModifyBoardService
+    private val modifyBoardService: ModifyBoardService,
+    private val deleteBoardService: DeleteBoardService
 ) {
 
     @PostMapping
@@ -32,6 +34,11 @@ class DeveloperBoardController(
         @PathVariable board_id: Long
     ): ResponseEntity<Void> =
         modifyBoardService.execute(modifyBoardReqDto, board_id)
+            .run { ResponseEntity.status(HttpStatus.OK).build() }
+
+    @DeleteMapping("/{board_id}")
+    fun deleteBoard(@PathVariable board_id: Long): ResponseEntity<Void> =
+        deleteBoardService.execute(board_id)
             .run { ResponseEntity.status(HttpStatus.OK).build() }
 
 }
