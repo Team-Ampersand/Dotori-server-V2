@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.Query
 interface BoardRepository : JpaRepository<Board, Long> {
     @Query("select board from Board board where board.createdDate = (select max(board.createdDate) from Board board)")
     fun findLastBoard(): Board?
+
+    fun findBoardById(id: Long): Board?
 }
