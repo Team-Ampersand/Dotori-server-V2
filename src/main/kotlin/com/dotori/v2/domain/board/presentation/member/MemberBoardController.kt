@@ -1,6 +1,6 @@
 package com.dotori.v2.domain.board.presentation.member
 
-import com.dotori.v2.domain.board.presentation.data.res.BoardResDto
+import com.dotori.v2.domain.board.presentation.data.res.ListBoardResDto
 import com.dotori.v2.domain.board.service.GetBoardsService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -14,6 +14,6 @@ class MemberBoardController(
     private val getBoardsService: GetBoardsService
 ) {
     @GetMapping
-    fun findBoards(): ResponseEntity<List<BoardResDto>> =
+    fun findBoards(): ResponseEntity<ListBoardResDto> =
         ResponseEntity.status(HttpStatus.OK).body(getBoardsService.execute())
 }

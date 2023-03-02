@@ -3,6 +3,7 @@ package com.dotori.v2.domain.board.service.impl
 import com.dotori.v2.domain.board.domain.entity.Board
 import com.dotori.v2.domain.board.domain.repository.BoardRepository
 import com.dotori.v2.domain.board.presentation.data.res.BoardResDto
+import com.dotori.v2.domain.board.presentation.data.res.ListBoardResDto
 import com.dotori.v2.domain.board.service.GetBoardsService
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.global.util.UserUtil
@@ -15,10 +16,12 @@ class GetBoardsServiceImpl(
     private val boardRepository: BoardRepository,
     private val userUtil: UserUtil
 ) : GetBoardsService {
-    override fun execute(): List<BoardResDto> {
+    override fun execute(): ListBoardResDto {
         val memberInfo: Member = userUtil.fetchCurrentUser()
-        return boardRepository.findAll()
-            .map { toDto(it, memberInfo) }
+        return ListBoardResDto(
+            content = boardRepository.findAll()
+                .map { toDto(it, memberInfo) }
+        )
     }
 
     private fun toDto(board: Board, member: Member): BoardResDto =

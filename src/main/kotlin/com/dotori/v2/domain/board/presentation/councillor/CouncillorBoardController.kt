@@ -2,7 +2,7 @@ package com.dotori.v2.domain.board.presentation.councillor
 
 import com.dotori.v2.domain.board.presentation.data.req.CreateBoardReqDto
 import com.dotori.v2.domain.board.presentation.data.req.ModifyBoardReqDto
-import com.dotori.v2.domain.board.presentation.data.res.BoardResDto
+import com.dotori.v2.domain.board.presentation.data.res.ListBoardResDto
 import com.dotori.v2.domain.board.service.CreateBoardService
 import com.dotori.v2.domain.board.service.DeleteBoardService
 import com.dotori.v2.domain.board.service.GetBoardsService
@@ -43,7 +43,7 @@ class CouncillorBoardController(
             .run { ResponseEntity.status(HttpStatus.OK).build() }
 
     @GetMapping
-    fun findBoards(): ResponseEntity<List<BoardResDto>> =
+    fun findBoards(): ResponseEntity<ListBoardResDto> =
         ResponseEntity.status(HttpStatus.OK).body(getBoardsService.execute())
 
 }
