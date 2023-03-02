@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import java.time.ZonedDateTime
+import java.time.LocalDate
 
 @Component
 @Transactional
@@ -17,6 +17,6 @@ class MusicSchedule(
     @Scheduled(cron = "0 0 0 ? * MON-FRI")
     fun weekdayMusicStatusReset() {
         musicRepository.updateMusicStatusMemberByMember()
-        log.info("dsds" + ZonedDateTime.now().toString())
+        log.info("Student Music Status Updated At {}", LocalDate.now())
     }
 }
