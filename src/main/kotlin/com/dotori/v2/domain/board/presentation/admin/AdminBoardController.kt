@@ -2,11 +2,9 @@ package com.dotori.v2.domain.board.presentation.admin
 
 import com.dotori.v2.domain.board.presentation.data.req.CreateBoardReqDto
 import com.dotori.v2.domain.board.presentation.data.req.ModifyBoardReqDto
+import com.dotori.v2.domain.board.presentation.data.res.DetailBoardResDto
 import com.dotori.v2.domain.board.presentation.data.res.ListBoardResDto
-import com.dotori.v2.domain.board.service.CreateBoardService
-import com.dotori.v2.domain.board.service.DeleteBoardService
-import com.dotori.v2.domain.board.service.GetBoardsService
-import com.dotori.v2.domain.board.service.ModifyBoardService
+import com.dotori.v2.domain.board.service.*
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
@@ -21,7 +19,8 @@ class AdminBoardController(
     private val createBoardService: CreateBoardService,
     private val modifyBoardService: ModifyBoardService,
     private val deleteBoardService: DeleteBoardService,
-    private val getBoardsService: GetBoardsService
+    private val getBoardsService: GetBoardsService,
+    private val getBoardDetailService: GetBoardDetailService
 ) {
 
     @PostMapping
@@ -48,4 +47,8 @@ class AdminBoardController(
     @GetMapping
     fun findBoards(@PageableDefault(size = 6) pageable: Pageable): ResponseEntity<ListBoardResDto> =
         ResponseEntity.status(HttpStatus.OK).body(getBoardsService.execute())
+
+    @GetMapping("/{board_id}")
+    fun findBoard(@PathVariable board_id: Long): ResponseEntity<DetailBoardResDto> =
+        ResponseEntity.status(HttpStatus.OK).body(getBoardDetailService.execute(board_id))
 }

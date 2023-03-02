@@ -20,8 +20,8 @@ class DeleteBoardServiceImpl(
 ) : DeleteBoardService {
     override fun execute(boardId: Long) {
         val boardInfo: Board = boardRepository.findByIdOrNull(boardId) ?: throw BoardNotExistsException()
-        val boardImages: List<BoardImage>? = boardImageRepository.findAllByBoard_Id(boardId)
-        if (boardImages == null) {
+        val boardImages: List<BoardImage> = boardImageRepository.findAllByBoard_Id(boardId)
+        if (boardImages.count() { true } == 0) {
             boardRepository.delete(boardInfo)
         } else {
             for (boardImage in boardImages) {
