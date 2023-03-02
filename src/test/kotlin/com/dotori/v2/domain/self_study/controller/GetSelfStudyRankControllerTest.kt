@@ -1,15 +1,13 @@
 package com.dotori.v2.domain.self_study.controller
 
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
+import com.dotori.v2.domain.self_study.presentation.admin.AdminSelfStudyController
 import com.dotori.v2.domain.self_study.presentation.councillor.CouncillorSelfStudyController
 import com.dotori.v2.domain.self_study.presentation.developer.DeveloperSelfStudyController
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
 import com.dotori.v2.domain.self_study.presentation.member.MemberSelfStudyController
-import com.dotori.v2.domain.self_study.service.ApplySelfStudyService
-import com.dotori.v2.domain.self_study.service.CancelSelfStudyService
-import com.dotori.v2.domain.self_study.service.GetSelfStudyInfoService
-import com.dotori.v2.domain.self_study.service.GetSelfStudyRankService
+import com.dotori.v2.domain.self_study.service.*
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -22,9 +20,11 @@ class GetSelfStudyRankControllerTest : BehaviorSpec({
     val getSelfStudyInfoService = mockk<GetSelfStudyInfoService>()
     val service = mockk<GetSelfStudyRankService>()
     val cancelSelfStudyService = mockk<CancelSelfStudyService>()
-    val councillorSelfStudyController = CouncillorSelfStudyController(applySelfStudyService, getSelfStudyInfoService, service, cancelSelfStudyService)
-    val developerSelfStudyController = DeveloperSelfStudyController(applySelfStudyService, getSelfStudyInfoService, service, cancelSelfStudyService)
-    val memberSelfStudyController = MemberSelfStudyController(applySelfStudyService, getSelfStudyInfoService, service, cancelSelfStudyService)
+    val getSelfStudyByMemberNameService = mockk<GetSelfStudyByMemberNameService>()
+    val councillorSelfStudyController = CouncillorSelfStudyController(applySelfStudyService, getSelfStudyInfoService, service, cancelSelfStudyService, getSelfStudyByMemberNameService)
+    val developerSelfStudyController = DeveloperSelfStudyController(applySelfStudyService, getSelfStudyInfoService, service, cancelSelfStudyService, getSelfStudyByMemberNameService)
+    val memberSelfStudyController = MemberSelfStudyController(applySelfStudyService, getSelfStudyInfoService, service, cancelSelfStudyService, getSelfStudyByMemberNameService)
+    val adminSelfStudyController = AdminSelfStudyController(getSelfStudyInfoService, service, getSelfStudyByMemberNameService)
     every { service.execute() } returns SelfStudyMemberListResDto(mutableListOf())
     given("요청이 들어오면") {
         `when`("councillorController is received") {
@@ -47,6 +47,15 @@ class GetSelfStudyRankControllerTest : BehaviorSpec({
         }
         `when`("memberController is received") {
             val response = memberSelfStudyController.getSelfStudyRank()
+            then("서비스가 한번은 실행되어야 함") {
+                verify { service.execute() }
+            }
+            then("response status should be ok") {
+                response.statusCode shouldBe HttpStatus.OK
+            }
+        }
+        `when`("adminController is received") {
+            val response = adminSelfStudyController.getSelfStudyRank()
             then("서비스가 한번은 실행되어야 함") {
                 verify { service.execute() }
             }
