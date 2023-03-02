@@ -7,6 +7,8 @@ import com.dotori.v2.domain.board.service.CreateBoardService
 import com.dotori.v2.domain.board.service.DeleteBoardService
 import com.dotori.v2.domain.board.service.GetBoardsService
 import com.dotori.v2.domain.board.service.ModifyBoardService
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -45,6 +47,6 @@ class DeveloperBoardController(
             .run { ResponseEntity.status(HttpStatus.OK).build() }
 
     @GetMapping
-    fun findBoards(): ResponseEntity<ListBoardResDto> =
+    fun findBoards(@PageableDefault(size = 6) pageable: Pageable): ResponseEntity<ListBoardResDto> =
         ResponseEntity.status(HttpStatus.OK).body(getBoardsService.execute())
 }
