@@ -3,10 +3,7 @@ package com.dotori.v2.domain.self_study.controller
 import com.dotori.v2.domain.self_study.presentation.councillor.CouncillorSelfStudyController
 import com.dotori.v2.domain.self_study.presentation.developer.DeveloperSelfStudyController
 import com.dotori.v2.domain.self_study.presentation.member.MemberSelfStudyController
-import com.dotori.v2.domain.self_study.service.ApplySelfStudyService
-import com.dotori.v2.domain.self_study.service.CancelSelfStudyService
-import com.dotori.v2.domain.self_study.service.GetSelfStudyInfoService
-import com.dotori.v2.domain.self_study.service.GetSelfStudyRankService
+import com.dotori.v2.domain.self_study.service.*
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -19,9 +16,10 @@ class CancelSelfStudyControllerTest : BehaviorSpec({
     val getSelfStudyService = mockk<GetSelfStudyInfoService>()
     val getSelfStudyRankService = mockk<GetSelfStudyRankService>()
     val service = mockk<CancelSelfStudyService>()
-    val councillorSelfStudyController = CouncillorSelfStudyController(applySelfStudyService, getSelfStudyService, getSelfStudyRankService, service)
-    val developerSelfStudyController = DeveloperSelfStudyController(applySelfStudyService, getSelfStudyService, getSelfStudyRankService, service)
-    val memberSelfStudyController = MemberSelfStudyController(applySelfStudyService, getSelfStudyService, getSelfStudyRankService, service)
+    val getSelfStudyByMemberNameService = mockk<GetSelfStudyByMemberNameService>()
+    val councillorSelfStudyController = CouncillorSelfStudyController(applySelfStudyService, getSelfStudyService, getSelfStudyRankService, service, getSelfStudyByMemberNameService)
+    val developerSelfStudyController = DeveloperSelfStudyController(applySelfStudyService, getSelfStudyService, getSelfStudyRankService, service, getSelfStudyByMemberNameService)
+    val memberSelfStudyController = MemberSelfStudyController(applySelfStudyService, getSelfStudyService, getSelfStudyRankService, service, getSelfStudyByMemberNameService)
     every { service.execute() } returns Unit
     given("요청이 들어오면") {
         `when`("councillorController is received") {

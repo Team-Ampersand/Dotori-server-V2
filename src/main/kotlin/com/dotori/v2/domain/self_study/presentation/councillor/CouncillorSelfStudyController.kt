@@ -2,15 +2,13 @@ package com.dotori.v2.domain.self_study.presentation.councillor
 
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
-import com.dotori.v2.domain.self_study.service.ApplySelfStudyService
-import com.dotori.v2.domain.self_study.service.CancelSelfStudyService
-import com.dotori.v2.domain.self_study.service.GetSelfStudyInfoService
-import com.dotori.v2.domain.self_study.service.GetSelfStudyRankService
+import com.dotori.v2.domain.self_study.service.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -19,7 +17,8 @@ class CouncillorSelfStudyController(
     private val applySelfStudyService: ApplySelfStudyService,
     private val getSelfStudyInfoService: GetSelfStudyInfoService,
     private val getSelfStudyRankService: GetSelfStudyRankService,
-    private val cancelSelfStudyService: CancelSelfStudyService
+    private val cancelSelfStudyService: CancelSelfStudyService,
+    private val getSelfStudyByMemberNameService: GetSelfStudyByMemberNameService
 ) {
     @PostMapping
     fun applySelfStudy(): ResponseEntity<Void> =
@@ -35,7 +34,11 @@ class CouncillorSelfStudyController(
     fun getSelfStudyInfo(): ResponseEntity<SelfStudyInfoResDto> =
         ResponseEntity.ok(getSelfStudyInfoService.execute())
 
-    @GetMapping
+    @GetMapping("/rank")
     fun getSelfStudyRank(): ResponseEntity<SelfStudyMemberListResDto> =
         ResponseEntity.ok(getSelfStudyRankService.execute())
+
+    @GetMapping
+    fun getSelfStudyByMemberName(@RequestParam memberName: String): ResponseEntity<SelfStudyMemberListResDto> =
+        ResponseEntity.ok(getSelfStudyByMemberNameService.execute(memberName))
 }
