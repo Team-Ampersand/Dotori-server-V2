@@ -7,6 +7,7 @@ import com.dotori.v2.domain.board.presentation.data.req.CreateBoardReqDto
 import com.dotori.v2.domain.board.presentation.developer.DeveloperBoardController
 import com.dotori.v2.domain.board.service.CreateBoardService
 import com.dotori.v2.domain.board.service.DeleteBoardService
+import com.dotori.v2.domain.board.service.GetBoardsService
 import com.dotori.v2.domain.board.service.ModifyBoardService
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.Gender
@@ -24,24 +25,28 @@ class CreateBoardControllerTest : BehaviorSpec({
     val createBoardService = mockk<CreateBoardService>()
     val modifyBoardService = mockk<ModifyBoardService>()
     val deleteBoardService = mockk<DeleteBoardService>()
+    val getBoardsService = mockk<GetBoardsService>()
 
     val councillorCreateBoardController =
         CouncillorBoardController(
             createBoardService = createBoardService,
             modifyBoardService = modifyBoardService,
-            deleteBoardService = deleteBoardService
+            deleteBoardService = deleteBoardService,
+            getBoardsService = getBoardsService
         )
     val developerCreateBoardController =
         DeveloperBoardController(
             createBoardService = createBoardService,
             modifyBoardService = modifyBoardService,
-            deleteBoardService = deleteBoardService
+            deleteBoardService = deleteBoardService,
+            getBoardsService = getBoardsService
         )
     val adminCreateBoardController =
         AdminBoardController(
             createBoardService = createBoardService,
             modifyBoardService = modifyBoardService,
-            deleteBoardService = deleteBoardService
+            deleteBoardService = deleteBoardService,
+            getBoardsService = getBoardsService
         )
 
     given("요청이 들어오면") {
