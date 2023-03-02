@@ -62,7 +62,7 @@ class Member(
         private set
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "member_music", nullable = false)
+    @Column(name = "member_music_status", nullable = false)
     var musicStatus: MusicStatus = MusicStatus.CAN
         private set
 
