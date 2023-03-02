@@ -1,30 +1,20 @@
-package com.dotori.v2.domain.self_study.presentation.member
+package com.dotori.v2.domain.self_study.presentation.admin
 
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
-import com.dotori.v2.domain.self_study.service.*
+import com.dotori.v2.domain.self_study.service.GetSelfStudyByMemberNameService
+import com.dotori.v2.domain.self_study.service.GetSelfStudyInfoService
+import com.dotori.v2.domain.self_study.service.GetSelfStudyRankService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-
 @RestController
-@RequestMapping("/v2/member/self-study")
-class MemberSelfStudyController(
-    private val applySelfStudyService: ApplySelfStudyService,
+@RequestMapping("/v2/admin/self-study")
+class AdminSelfStudyController(
     private val getSelfStudyInfoService: GetSelfStudyInfoService,
     private val getSelfStudyRankService: GetSelfStudyRankService,
-    private val cancelSelfStudyService: CancelSelfStudyService,
-    private val getSelfStudyByMemberNameService: GetSelfStudyByMemberNameService,
+    private val getSelfStudyByMemberNameService: GetSelfStudyByMemberNameService
 ) {
-    @PostMapping
-    fun applySelfStudy(): ResponseEntity<Void> =
-        applySelfStudyService.execute()
-            .run { ResponseEntity.ok().build() }
-
-    @DeleteMapping
-    fun cancelSelfStudy(): ResponseEntity<Void> =
-        cancelSelfStudyService.execute()
-            .run { ResponseEntity.ok().build() }
 
     @GetMapping("/info")
     fun getSelfStudyInfo(): ResponseEntity<SelfStudyInfoResDto> =

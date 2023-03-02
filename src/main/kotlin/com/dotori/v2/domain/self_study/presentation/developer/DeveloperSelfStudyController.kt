@@ -2,10 +2,7 @@ package com.dotori.v2.domain.self_study.presentation.developer
 
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
-import com.dotori.v2.domain.self_study.service.ApplySelfStudyService
-import com.dotori.v2.domain.self_study.service.CancelSelfStudyService
-import com.dotori.v2.domain.self_study.service.GetSelfStudyInfoService
-import com.dotori.v2.domain.self_study.service.GetSelfStudyRankService
+import com.dotori.v2.domain.self_study.service.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -15,7 +12,8 @@ class DeveloperSelfStudyController(
     private val applySelfStudyService: ApplySelfStudyService,
     private val getSelfStudyInfoService: GetSelfStudyInfoService,
     private val getSelfStudyRankService: GetSelfStudyRankService,
-    private val cancelSelfStudyService: CancelSelfStudyService
+    private val cancelSelfStudyService: CancelSelfStudyService,
+    private val getSelfStudyByMemberNameService: GetSelfStudyByMemberNameService,
 ) {
     @PostMapping
     fun applySelfStudy(): ResponseEntity<Void> =
@@ -31,7 +29,11 @@ class DeveloperSelfStudyController(
     fun getSelfStudyInfo(): ResponseEntity<SelfStudyInfoResDto> =
         ResponseEntity.ok(getSelfStudyInfoService.execute())
 
-    @GetMapping
+    @GetMapping("/rank")
     fun getSelfStudyRank(): ResponseEntity<SelfStudyMemberListResDto> =
         ResponseEntity.ok(getSelfStudyRankService.execute())
+
+    @GetMapping
+    fun getSelfStudyByMemberName(@RequestParam memberName: String): ResponseEntity<SelfStudyMemberListResDto> =
+        ResponseEntity.ok(getSelfStudyByMemberNameService.execute(memberName))
 }
