@@ -1,6 +1,7 @@
 package com.dotori.v2.domain.member.domain.entity
 
 import com.dotori.v2.domain.member.enums.Gender
+import com.dotori.v2.domain.member.enums.MusicStatus
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.global.entity.BaseTimeEntity
@@ -12,15 +13,15 @@ import javax.persistence.*
 class Member(
     @Column(name = "member_name", nullable = false)
     val memberName: String,
-    
+
     @Column(name = "member_stuNum", nullable = false)
     val stuNum: String,
-    
+
     @Column(name = "member_email", nullable = false, unique = true)
     val email: String,
-    
+
     password: String,
-    
+
     @Enumerated(EnumType.STRING)
     @Column(name = "member_gender")
     val gender: Gender,
@@ -38,42 +39,51 @@ class Member(
 
     @Column(name = "member_refreshToken")
     var refreshToken: String = ""
-    private set
+        private set
 
     @Column(name = "member_point", columnDefinition = "Long default 0")
     val point: Long = 0
 
     @Column(name = "self_study_check")
     var selfStudyCheck = false
-    private set
+        private set
 
     @Column(name = "member_password", nullable = false)
     var password: String = password
-    private set
+        private set
 
     @Column(name = "self_study_expired_date")
     var selfStudyExpiredDate: LocalDateTime? = null
-    private set
+        private set
 
     @Enumerated(EnumType.STRING)
     @Column(name = "member_selfstudy", nullable = false)
     var selfStudyStatus: SelfStudyStatus = SelfStudyStatus.CAN
-    private set
+        private set
 
-    fun updateRefreshToken(newRefreshToken: String): String{
+    @Enumerated(EnumType.STRING)
+    @Column(name = "member_music", nullable = false)
+    var musicStatus: MusicStatus = MusicStatus.CAN
+        private set
+
+    fun updateRefreshToken(newRefreshToken: String): String {
         this.refreshToken = newRefreshToken
         return this.refreshToken
     }
 
-    fun updatePassword(newPassword: String){
+    fun updatePassword(newPassword: String) {
         this.password = newPassword
     }
 
-    fun updateSelfStudyStatus(selfStudyStatus: SelfStudyStatus){
+    fun updateSelfStudyStatus(selfStudyStatus: SelfStudyStatus) {
         this.selfStudyStatus = selfStudyStatus
     }
 
-    fun updateSelfStudyCheck(check: Boolean){
+    fun updateSelfStudyCheck(check: Boolean) {
         this.selfStudyCheck = check
+    }
+
+    fun updateMusicStatus(musicStatus: MusicStatus) {
+        this.musicStatus = musicStatus
     }
 }
