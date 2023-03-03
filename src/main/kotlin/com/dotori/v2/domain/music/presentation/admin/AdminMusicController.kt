@@ -6,7 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 @RestController
 @RequestMapping("/v2/admin/music")
@@ -18,8 +18,7 @@ class AdminMusicController(
         @RequestParam(
             value = "date",
             required = true
-        ) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDateTime
+        ) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate
     ): ResponseEntity<MusicListResDto> =
         ResponseEntity.status(HttpStatus.OK).body(findMusicsService.execute(date))
-
 }
