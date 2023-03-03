@@ -7,14 +7,14 @@ import com.dotori.v2.domain.music.presentation.data.res.MusicResDto
 import com.dotori.v2.domain.music.service.FindMusicsService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 @Service
 @Transactional(readOnly = true, rollbackFor = [Exception::class])
 class FindMusicsServiceImpl(
     private val musicRepository: MusicRepository
 ) : FindMusicsService {
-    override fun execute(date: LocalDateTime): MusicListResDto {
+    override fun execute(date: LocalDate): MusicListResDto {
         return MusicListResDto(
             content = musicRepository.findAllByCreatedDate(date)
                 .map { toDto(it) }
