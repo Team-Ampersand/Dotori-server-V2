@@ -5,10 +5,7 @@ import com.dotori.v2.domain.board.presentation.admin.AdminBoardController
 import com.dotori.v2.domain.board.presentation.councillor.CouncillorBoardController
 import com.dotori.v2.domain.board.presentation.data.req.CreateBoardReqDto
 import com.dotori.v2.domain.board.presentation.developer.DeveloperBoardController
-import com.dotori.v2.domain.board.service.CreateBoardService
-import com.dotori.v2.domain.board.service.DeleteBoardService
-import com.dotori.v2.domain.board.service.GetBoardsService
-import com.dotori.v2.domain.board.service.ModifyBoardService
+import com.dotori.v2.domain.board.service.*
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
@@ -26,27 +23,31 @@ class CreateBoardControllerTest : BehaviorSpec({
     val modifyBoardService = mockk<ModifyBoardService>()
     val deleteBoardService = mockk<DeleteBoardService>()
     val getBoardsService = mockk<GetBoardsService>()
+    val getBoardDetailService = mockk<GetBoardDetailService>()
 
     val councillorCreateBoardController =
         CouncillorBoardController(
             createBoardService = createBoardService,
             modifyBoardService = modifyBoardService,
             deleteBoardService = deleteBoardService,
-            getBoardsService = getBoardsService
+            getBoardsService = getBoardsService,
+            getBoardDetailService
         )
     val developerCreateBoardController =
         DeveloperBoardController(
             createBoardService = createBoardService,
             modifyBoardService = modifyBoardService,
             deleteBoardService = deleteBoardService,
-            getBoardsService = getBoardsService
+            getBoardsService = getBoardsService,
+            getBoardDetailService = getBoardDetailService
         )
     val adminCreateBoardController =
         AdminBoardController(
             createBoardService = createBoardService,
             modifyBoardService = modifyBoardService,
             deleteBoardService = deleteBoardService,
-            getBoardsService = getBoardsService
+            getBoardsService = getBoardsService,
+            getBoardDetailService = getBoardDetailService
         )
 
     given("요청이 들어오면") {
