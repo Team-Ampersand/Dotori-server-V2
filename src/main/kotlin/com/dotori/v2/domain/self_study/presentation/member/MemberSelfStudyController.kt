@@ -15,6 +15,7 @@ class MemberSelfStudyController(
     private val getSelfStudyRankService: GetSelfStudyRankService,
     private val cancelSelfStudyService: CancelSelfStudyService,
     private val getSelfStudyByMemberNameService: GetSelfStudyByMemberNameService,
+    private val getSelfStudyByStuNumService: GetSelfStudyByStuNumService
 ) {
     @PostMapping
     fun applySelfStudy(): ResponseEntity<Void> =
@@ -37,4 +38,8 @@ class MemberSelfStudyController(
     @GetMapping
     fun getSelfStudyByMemberName(@RequestParam memberName: String): ResponseEntity<SelfStudyMemberListResDto> =
         ResponseEntity.ok(getSelfStudyByMemberNameService.execute(memberName))
+
+    @GetMapping("/{classId}")
+    fun getSelfStudyByStuNum(@PathVariable classId: String): ResponseEntity<SelfStudyMemberListResDto> =
+        ResponseEntity.ok(getSelfStudyByStuNumService.execute(classId))
 }

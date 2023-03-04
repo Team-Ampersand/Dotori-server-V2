@@ -13,50 +13,50 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.springframework.http.HttpStatus
 
-class GetSelfStudyMemberNameControllerTest : BehaviorSpec({
+class GetSelfStudyStuNumControllerTest : BehaviorSpec({
     val applySelfStudyService = mockk<ApplySelfStudyService>()
     val getSelfStudyInfoService = mockk<GetSelfStudyInfoService>()
     val getSelfStudyRankService = mockk<GetSelfStudyRankService>()
     val cancelSelfStudyService = mockk<CancelSelfStudyService>()
-    val service = mockk<GetSelfStudyByMemberNameService>()
-    val getSelfStudyByStuNumService = mockk<GetSelfStudyByStuNumService>()
-    val councillorSelfStudyController = CouncillorSelfStudyController(applySelfStudyService, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, service, getSelfStudyByStuNumService)
-    val developerSelfStudyController = DeveloperSelfStudyController(applySelfStudyService, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, service, getSelfStudyByStuNumService)
-    val memberSelfStudyController = MemberSelfStudyController(applySelfStudyService, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, service, getSelfStudyByStuNumService)
-    val adminSelfStudyController = AdminSelfStudyController(getSelfStudyInfoService, getSelfStudyRankService, service, getSelfStudyByStuNumService)
-    every { service.execute("d") } returns SelfStudyMemberListResDto(mutableListOf())
+    val getSelfStudyByMemberNameService = mockk<GetSelfStudyByMemberNameService>()
+    val service = mockk<GetSelfStudyByStuNumService>()
+    val councillorSelfStudyController = CouncillorSelfStudyController(applySelfStudyService, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, getSelfStudyByMemberNameService, service)
+    val developerSelfStudyController = DeveloperSelfStudyController(applySelfStudyService, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, getSelfStudyByMemberNameService, service)
+    val memberSelfStudyController = MemberSelfStudyController(applySelfStudyService, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, getSelfStudyByMemberNameService, service)
+    val adminSelfStudyController = AdminSelfStudyController(getSelfStudyInfoService, getSelfStudyRankService, getSelfStudyByMemberNameService, service)
+    every { service.execute("") } returns SelfStudyMemberListResDto(mutableListOf())
     given("요청이 들어오면") {
         `when`("councillorController is received") {
-            val response = councillorSelfStudyController.getSelfStudyByMemberName("d")
+            val response = councillorSelfStudyController.getSelfStudyByStuNum("")
             then("서비스가 한번은 실행되어야 함") {
-                verify { service.execute("d") }
+                verify { service.execute("") }
             }
             then("response status should be ok") {
                 response.statusCode shouldBe HttpStatus.OK
             }
         }
         `when`("developerController is received") {
-            val response = developerSelfStudyController.getSelfStudyByMemberName("d")
+            val response = developerSelfStudyController.getSelfStudyByStuNum("")
             then("서비스가 한번은 실행되어야 함") {
-                verify { service.execute("d") }
+                verify { service.execute("") }
             }
             then("response status should be ok") {
                 response.statusCode shouldBe HttpStatus.OK
             }
         }
         `when`("memberController is received") {
-            val response = memberSelfStudyController.getSelfStudyByMemberName("d")
+            val response = memberSelfStudyController.getSelfStudyByStuNum("")
             then("서비스가 한번은 실행되어야 함") {
-                verify { service.execute("d") }
+                verify { service.execute("") }
             }
             then("response status should be ok") {
                 response.statusCode shouldBe HttpStatus.OK
             }
         }
         `when`("adminController is received") {
-            val response = adminSelfStudyController.getSelfStudyByMemberName("d")
+            val response = adminSelfStudyController.getSelfStudyByStuNum("")
             then("서비스가 한번은 실행되어야 함") {
-                verify { service.execute("d") }
+                verify { service.execute("") }
             }
             then("response status should be ok") {
                 response.statusCode shouldBe HttpStatus.OK

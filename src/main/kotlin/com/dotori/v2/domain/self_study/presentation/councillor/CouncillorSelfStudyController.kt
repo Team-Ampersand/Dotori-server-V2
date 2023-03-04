@@ -4,12 +4,7 @@ import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
 import com.dotori.v2.domain.self_study.service.*
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/v2/councillor/self-study")
@@ -18,7 +13,8 @@ class CouncillorSelfStudyController(
     private val getSelfStudyInfoService: GetSelfStudyInfoService,
     private val getSelfStudyRankService: GetSelfStudyRankService,
     private val cancelSelfStudyService: CancelSelfStudyService,
-    private val getSelfStudyByMemberNameService: GetSelfStudyByMemberNameService
+    private val getSelfStudyByMemberNameService: GetSelfStudyByMemberNameService,
+    private val getSelfStudyByStuNumService: GetSelfStudyByStuNumService
 ) {
     @PostMapping
     fun applySelfStudy(): ResponseEntity<Void> =
@@ -41,4 +37,8 @@ class CouncillorSelfStudyController(
     @GetMapping
     fun getSelfStudyByMemberName(@RequestParam memberName: String): ResponseEntity<SelfStudyMemberListResDto> =
         ResponseEntity.ok(getSelfStudyByMemberNameService.execute(memberName))
+
+    @GetMapping("/{classId}")
+    fun getSelfStudyByStuNum(@PathVariable classId: String): ResponseEntity<SelfStudyMemberListResDto> =
+        ResponseEntity.ok(getSelfStudyByStuNumService.execute(classId))
 }

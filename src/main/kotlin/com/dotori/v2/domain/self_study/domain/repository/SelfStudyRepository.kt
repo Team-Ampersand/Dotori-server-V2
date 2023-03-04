@@ -13,4 +13,6 @@ interface SelfStudyRepository : JpaRepository<SelfStudy, Long> {
     fun findAllOrderByCreatedDateAsc(): List<SelfStudy>
     @Query("select selfStudy.member from SelfStudy selfStudy where selfStudy.member.memberName like %:memberName%")
     fun findAllByMemberName(@Param("memberName")memberName: String): List<Member>
+    @Query("select selfStudy.member from SelfStudy selfStudy where selfStudy.member.stuNum like :stuNum%")
+    fun findAllByStuNum(@Param("stuNum") stuNum: String): List<Member>
 }
