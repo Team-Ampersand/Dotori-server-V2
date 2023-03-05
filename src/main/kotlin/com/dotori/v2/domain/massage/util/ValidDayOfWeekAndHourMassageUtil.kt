@@ -9,7 +9,7 @@ import java.time.DayOfWeek
 import java.time.LocalDateTime
 
 @Component
-class ValidDayOfWeekAndHourUtil {
+class ValidDayOfWeekAndHourMassageUtil {
     fun validateApply() {
         val currentTime = LocalDateTime.now()
         val dayOfWeek = currentTime.dayOfWeek
