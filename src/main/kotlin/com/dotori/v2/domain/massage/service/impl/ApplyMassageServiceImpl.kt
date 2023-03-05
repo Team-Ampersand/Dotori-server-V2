@@ -1,7 +1,5 @@
 package com.dotori.v2.domain.massage.service.impl
 
-import com.dotori.v2.domain.massage.domain.repository.MassageCountRepository
-import com.dotori.v2.domain.massage.domain.repository.MassageRepository
 import com.dotori.v2.domain.massage.service.ApplyMassageService
 import com.dotori.v2.domain.massage.util.FindMassageCountUtil
 import com.dotori.v2.domain.massage.util.MassageCheckUtil
