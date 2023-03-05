@@ -3,6 +3,7 @@ package com.dotori.v2.domain.self_study.presentation.admin
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
 import com.dotori.v2.domain.self_study.service.GetSelfStudyByMemberNameService
+import com.dotori.v2.domain.self_study.service.GetSelfStudyByStuNumService
 import com.dotori.v2.domain.self_study.service.GetSelfStudyInfoService
 import com.dotori.v2.domain.self_study.service.GetSelfStudyRankService
 import org.springframework.http.ResponseEntity
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.*
 class AdminSelfStudyController(
     private val getSelfStudyInfoService: GetSelfStudyInfoService,
     private val getSelfStudyRankService: GetSelfStudyRankService,
-    private val getSelfStudyByMemberNameService: GetSelfStudyByMemberNameService
+    private val getSelfStudyByMemberNameService: GetSelfStudyByMemberNameService,
+    private val getSelfStudyByStuNumService: GetSelfStudyByStuNumService
 ) {
 
     @GetMapping("/info")
@@ -27,4 +29,8 @@ class AdminSelfStudyController(
     @GetMapping
     fun getSelfStudyByMemberName(@RequestParam memberName: String): ResponseEntity<SelfStudyMemberListResDto> =
         ResponseEntity.ok(getSelfStudyByMemberNameService.execute(memberName))
+
+    @GetMapping("/{classId}")
+    fun getSelfStudyByStuNum(@PathVariable classId: String): ResponseEntity<SelfStudyMemberListResDto> =
+        ResponseEntity.ok(getSelfStudyByStuNumService.execute(classId))
 }
