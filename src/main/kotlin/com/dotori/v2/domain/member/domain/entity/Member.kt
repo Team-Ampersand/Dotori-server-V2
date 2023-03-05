@@ -1,9 +1,6 @@
 package com.dotori.v2.domain.member.domain.entity
 
-import com.dotori.v2.domain.member.enums.Gender
-import com.dotori.v2.domain.member.enums.MusicStatus
-import com.dotori.v2.domain.member.enums.Role
-import com.dotori.v2.domain.member.enums.SelfStudyStatus
+import com.dotori.v2.domain.member.enums.*
 import com.dotori.v2.global.entity.BaseTimeEntity
 import java.time.LocalDateTime
 import javax.persistence.*
@@ -66,6 +63,11 @@ class Member(
     var musicStatus: MusicStatus = MusicStatus.CAN
         private set
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "member_massage", nullable = false)
+    var massageStatus: MassageStatus = MassageStatus.CAN
+        private set
+
     fun updateRefreshToken(newRefreshToken: String): String {
         this.refreshToken = newRefreshToken
         return this.refreshToken
@@ -85,5 +87,9 @@ class Member(
 
     fun updateMusicStatus(musicStatus: MusicStatus) {
         this.musicStatus = musicStatus
+    }
+
+    fun updateMassageStatus(massageStatus: MassageStatus){
+        this.massageStatus = massageStatus
     }
 }

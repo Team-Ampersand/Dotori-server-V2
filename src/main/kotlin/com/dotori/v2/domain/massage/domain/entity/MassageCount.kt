@@ -10,10 +10,11 @@ import javax.persistence.Table
 @Table(name = "massage_count")
 class MassageCount(
     @Id
-    val id: Long = 1
+    val id: Long = 1,
+    count: Long = 0
 ) {
     @Column(name = "massage_count")
-    var count: Long = 0
+    var count: Long = count
     private set
 
     fun addCount() {
