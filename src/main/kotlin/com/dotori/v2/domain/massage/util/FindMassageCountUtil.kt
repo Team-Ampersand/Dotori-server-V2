@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component
 class FindMassageCountUtil(
     private val massageCountRepository: MassageCountRepository
 ) {
-    fun findSelfStudyCount(): MassageCount =
+    fun findMassageCount(): MassageCount =
         massageCountRepository.findMassageCountById(1L)
 }
