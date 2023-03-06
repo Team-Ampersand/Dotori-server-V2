@@ -1,10 +1,9 @@
 package com.dotori.v2.domain.massage.service.impl
 
-import com.dotori.v2.domain.massage.exception.MassageOverException
-import com.dotori.v2.domain.massage.service.ApplyMassageService
+import com.dotori.v2.domain.massage.domain.repository.MassageRepository
+import com.dotori.v2.domain.massage.service.CancelMassageService
 import com.dotori.v2.domain.massage.util.FindMassageCountUtil
 import com.dotori.v2.domain.massage.util.MassageCheckUtil
-import com.dotori.v2.domain.massage.util.SaveMassageUtil
 import com.dotori.v2.domain.massage.util.ValidDayOfWeekAndHourMassageUtil
 import com.dotori.v2.domain.member.enums.MassageStatus
 import com.dotori.v2.global.util.UserUtil
@@ -13,22 +12,20 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(rollbackFor = [Exception::class])
-class ApplyMassageServiceImpl(
+class CancelMassageServiceImpl(
     private val userUtil: UserUtil,
     private val validDayOfWeekAndHourMassageUtil: ValidDayOfWeekAndHourMassageUtil,
     private val findMassageCountUtil: FindMassageCountUtil,
-    private val saveMassageUtil: SaveMassageUtil,
     private val massageCheckUtil: MassageCheckUtil,
-) : ApplyMassageService {
+    private val massageRepository: MassageRepository,
+) : CancelMassageService {
     override fun execute() {
-        validDayOfWeekAndHourMassageUtil.validateApply()
+        validDayOfWeekAndHourMassageUtil.validateCancel()
+        val findMassageCount = findMassageCountUtil.findMassageCount()
         val member = userUtil.fetchCurrentUser()
-        val selfStudyCount = findMassageCountUtil.findMassageCount()
-        if (selfStudyCount.count >= 50)
-            throw MassageOverException()
-        massageCheckUtil.isMassageStatusCan(member)
-        member.updateMassageStatus(MassageStatus.APPLIED)
-        selfStudyCount.addCount()
-        saveMassageUtil.save(member)
+        massageCheckUtil.isMassageStatusApplied(member)
+        member.updateMassageStatus(MassageStatus.CANT)
+        massageRepository.deleteByMember(member)
+        findMassageCount.deductionCount()
     }
 }

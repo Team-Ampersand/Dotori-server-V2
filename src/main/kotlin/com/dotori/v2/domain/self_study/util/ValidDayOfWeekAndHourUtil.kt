@@ -1,9 +1,9 @@
 package com.dotori.v2.domain.self_study.util
 
-import com.dotori.v2.domain.self_study.excetpion.NotApplyDayException
-import com.dotori.v2.domain.self_study.excetpion.NotApplyHourException
-import com.dotori.v2.domain.self_study.excetpion.NotCancelDayException
-import com.dotori.v2.domain.self_study.excetpion.NotCancelHourException
+import com.dotori.v2.domain.self_study.excetpion.NotSelfStudyApplyDayException
+import com.dotori.v2.domain.self_study.excetpion.NotSelfStudyApplyHourException
+import com.dotori.v2.domain.self_study.excetpion.NotSelfStudyCancelDayException
+import com.dotori.v2.domain.self_study.excetpion.NotSelfStudyCancelHourException
 import org.springframework.stereotype.Component
 import java.time.DayOfWeek
 import java.time.LocalDateTime
@@ -15,9 +15,9 @@ class ValidDayOfWeekAndHourUtil {
          val dayOfWeek = currentTime.dayOfWeek
          val hour = currentTime.hour
          if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
-            throw NotApplyDayException()
+            throw NotSelfStudyApplyDayException()
         if (hour != 20)
-            throw NotApplyHourException()
+            throw NotSelfStudyApplyHourException()
     }
 
     fun validateCancel() {
@@ -25,9 +25,9 @@ class ValidDayOfWeekAndHourUtil {
         val dayOfWeek = currentTime.dayOfWeek
         val hour = currentTime.hour
         if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
-            throw NotCancelDayException()
+            throw NotSelfStudyCancelDayException()
         if (hour != 20)
-            throw NotCancelHourException()
+            throw NotSelfStudyCancelHourException()
     }
 
 }
