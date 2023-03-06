@@ -4,7 +4,7 @@ import com.dotori.v2.domain.massage.service.ApplyMassageService
 import com.dotori.v2.domain.massage.util.FindMassageCountUtil
 import com.dotori.v2.domain.massage.util.MassageCheckUtil
 import com.dotori.v2.domain.massage.util.SaveMassageUtil
-import com.dotori.v2.domain.massage.util.ValidDayOfWeekAndHourUtil
+import com.dotori.v2.domain.massage.util.ValidDayOfWeekAndHourMassageUtil
 import com.dotori.v2.domain.member.enums.MassageStatus
 import com.dotori.v2.domain.self_study.excetpion.SelfStudyOverException
 import com.dotori.v2.global.util.UserUtil
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(rollbackFor = [Exception::class])
 class ApplyMassageServiceImpl(
     private val userUtil: UserUtil,
-    private val validDayOfWeekAndHourUtil: ValidDayOfWeekAndHourUtil,
+    private val validDayOfWeekAndHourUtil: ValidDayOfWeekAndHourMassageUtil,
     private val findMassageCountUtil: FindMassageCountUtil,
     private val saveMassageUtil: SaveMassageUtil,
     private val massageCheckUtil: MassageCheckUtil,
