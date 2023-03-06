@@ -14,7 +14,7 @@ class GetMassageRankServiceImpl(
 ) : GetMassageRankService {
     override fun execute(): MassageMemberListResDto =
         MassageMemberListResDto(
-            massageRepository.findAll()
+            massageRepository.findAllOrderByCreatedDateAsc()
                 .mapIndexed { index, massage ->
                     MassageMemberResDto(index + 1L, massage.member)
                 }
