@@ -5,7 +5,7 @@ import com.dotori.v2.domain.massage.service.ApplyMassageService
 import com.dotori.v2.domain.massage.util.FindMassageCountUtil
 import com.dotori.v2.domain.massage.util.MassageCheckUtil
 import com.dotori.v2.domain.massage.util.SaveMassageUtil
-import com.dotori.v2.domain.massage.util.ValidDayOfWeekAndHourUtil
+import com.dotori.v2.domain.massage.util.ValidDayOfWeekAndHourMassageUtil
 import com.dotori.v2.domain.member.enums.MassageStatus
 import com.dotori.v2.global.util.UserUtil
 import org.springframework.stereotype.Service
@@ -15,13 +15,13 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(rollbackFor = [Exception::class])
 class ApplyMassageServiceImpl(
     private val userUtil: UserUtil,
-    private val validDayOfWeekAndHourUtil: ValidDayOfWeekAndHourUtil,
+    private val validDayOfWeekAndHourMassageUtil: ValidDayOfWeekAndHourMassageUtil,
     private val findMassageCountUtil: FindMassageCountUtil,
     private val saveMassageUtil: SaveMassageUtil,
     private val massageCheckUtil: MassageCheckUtil,
 ) : ApplyMassageService {
     override fun execute() {
-        validDayOfWeekAndHourUtil.validateApply()
+        validDayOfWeekAndHourMassageUtil.validateApply()
         val member = userUtil.fetchCurrentUser()
         val selfStudyCount = findMassageCountUtil.findMassageCount()
         if (selfStudyCount.count >= 50)
