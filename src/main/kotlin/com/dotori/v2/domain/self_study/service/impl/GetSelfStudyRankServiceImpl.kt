@@ -15,6 +15,6 @@ class GetSelfStudyRankServiceImpl(
     override fun execute(): SelfStudyMemberListResDto =
         SelfStudyMemberListResDto(
             selfStudyRepository.findAllOrderByCreatedDateAsc()
-            .map { SelfStudyMemberResDto(it.member) }
+                .mapIndexed { index, selfStudy -> SelfStudyMemberResDto(index+1L, selfStudy.member) }
         )
 }

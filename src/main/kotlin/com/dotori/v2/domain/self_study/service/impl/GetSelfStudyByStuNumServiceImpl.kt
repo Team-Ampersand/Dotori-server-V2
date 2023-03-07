@@ -15,6 +15,6 @@ class GetSelfStudyByStuNumServiceImpl(
     override fun execute(stuNum: String): SelfStudyMemberListResDto =
         SelfStudyMemberListResDto(
             selfStudyRepository.findAllByStuNum(stuNum)
-                .map { SelfStudyMemberResDto(it) }
+                .mapIndexed { index, member -> SelfStudyMemberResDto(index+1L, member) }
         )
 }
