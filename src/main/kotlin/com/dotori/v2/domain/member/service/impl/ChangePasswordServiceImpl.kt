@@ -4,7 +4,7 @@ import com.dotori.v2.domain.email.domain.repository.EmailCertificateRepository
 import com.dotori.v2.domain.email.exception.EmailNotBeenException
 import com.dotori.v2.domain.email.exception.EmailSendFailException
 import com.dotori.v2.domain.member.exception.PasswordMismatchException
-import com.dotori.v2.domain.member.presentation.dto.req.NewPasswordReqDto
+import com.dotori.v2.domain.member.presentation.data.req.NewPasswordReqDto
 import com.dotori.v2.domain.member.service.ChangePasswordService
 import com.dotori.v2.global.util.UserUtil
 import org.springframework.security.crypto.password.PasswordEncoder

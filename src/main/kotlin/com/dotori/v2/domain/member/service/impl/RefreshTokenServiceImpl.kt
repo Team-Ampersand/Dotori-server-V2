@@ -3,7 +3,7 @@ package com.dotori.v2.domain.member.service.impl
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
 import com.dotori.v2.domain.member.exception.TokenTypeNotValidException
-import com.dotori.v2.domain.member.presentation.dto.res.RefreshResDto
+import com.dotori.v2.domain.member.presentation.data.res.RefreshResDto
 import com.dotori.v2.domain.member.service.RefreshService
 import com.dotori.v2.global.config.security.jwt.TokenProvider
 import org.springframework.stereotype.Service

@@ -2,8 +2,8 @@ package com.dotori.v2.domain.member.controller
 
 import com.dotori.v2.domain.member.presentation.AuthController
 import com.dotori.v2.domain.member.presentation.MemberController
-import com.dotori.v2.domain.member.presentation.dto.req.WithdrawalReqDto
-import com.dotori.v2.domain.member.presentation.dto.res.LogoutResDto
+import com.dotori.v2.domain.member.presentation.data.req.WithdrawalReqDto
+import com.dotori.v2.domain.member.presentation.data.res.LogoutResDto
 import com.dotori.v2.domain.member.service.*
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe

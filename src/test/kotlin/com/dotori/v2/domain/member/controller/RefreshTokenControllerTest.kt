@@ -1,7 +1,7 @@
 package com.dotori.v2.domain.member.controller
 
 import com.dotori.v2.domain.member.presentation.AuthController
-import com.dotori.v2.domain.member.presentation.dto.res.RefreshResDto
+import com.dotori.v2.domain.member.presentation.data.res.RefreshResDto
 import com.dotori.v2.domain.member.service.*
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe

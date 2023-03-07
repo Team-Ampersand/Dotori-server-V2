@@ -3,11 +3,10 @@ package com.dotori.v2.domain.member.service.impl
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
 import com.dotori.v2.domain.member.exception.PasswordMismatchException
-import com.dotori.v2.domain.member.presentation.dto.req.SignInReqDto
-import com.dotori.v2.domain.member.presentation.dto.res.SignInResDto
+import com.dotori.v2.domain.member.presentation.data.req.SignInReqDto
+import com.dotori.v2.domain.member.presentation.data.res.SignInResDto
 import com.dotori.v2.domain.member.service.SignInService
 import com.dotori.v2.global.config.security.jwt.TokenProvider
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

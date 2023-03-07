@@ -1,9 +1,9 @@
 package com.dotori.v2.domain.member.presentation
 
-import com.dotori.v2.domain.member.presentation.dto.req.SignInReqDto
-import com.dotori.v2.domain.member.presentation.dto.req.SignupReqDto
-import com.dotori.v2.domain.member.presentation.dto.res.RefreshResDto
-import com.dotori.v2.domain.member.presentation.dto.res.SignInResDto
+import com.dotori.v2.domain.member.presentation.data.req.SignInReqDto
+import com.dotori.v2.domain.member.presentation.data.req.SignupReqDto
+import com.dotori.v2.domain.member.presentation.data.res.RefreshResDto
+import com.dotori.v2.domain.member.presentation.data.res.SignInResDto
 import com.dotori.v2.domain.member.service.RefreshService
 import com.dotori.v2.domain.member.service.SignInService
 import com.dotori.v2.domain.member.service.SignupService

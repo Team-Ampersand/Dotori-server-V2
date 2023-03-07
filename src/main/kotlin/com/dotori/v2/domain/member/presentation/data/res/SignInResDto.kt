@@ -1,4 +1,4 @@
-package com.dotori.v2.domain.member.presentation.dto.res
+package com.dotori.v2.domain.member.presentation.data.res
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.time.ZonedDateTime

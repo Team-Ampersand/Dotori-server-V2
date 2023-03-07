@@ -1,4 +1,4 @@
-package com.dotori.v2.domain.member.presentation.dto.req
+package com.dotori.v2.domain.member.presentation.data.req
 
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.Gender
