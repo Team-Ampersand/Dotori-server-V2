@@ -1,7 +1,7 @@
 package com.dotori.v2.domain.member.presentation
 
-import com.dotori.v2.domain.member.presentation.dto.req.NewPasswordReqDto
-import com.dotori.v2.domain.member.presentation.dto.req.WithdrawalReqDto
+import com.dotori.v2.domain.member.presentation.data.req.NewPasswordReqDto
+import com.dotori.v2.domain.member.presentation.data.req.WithdrawalReqDto
 import com.dotori.v2.domain.member.service.ChangePasswordService
 import com.dotori.v2.domain.member.service.LogoutService
 import com.dotori.v2.domain.member.service.WithdrawalService

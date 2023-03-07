@@ -7,7 +7,7 @@ import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
 import com.dotori.v2.domain.member.exception.MemberNotSameException
 import com.dotori.v2.domain.member.exception.PasswordMismatchException
-import com.dotori.v2.domain.member.presentation.dto.req.WithdrawalReqDto
+import com.dotori.v2.domain.member.presentation.data.req.WithdrawalReqDto
 import com.dotori.v2.domain.member.service.impl.WithdrawalServiceImpl
 import com.dotori.v2.global.util.UserUtil
 import io.kotest.assertions.throwables.shouldThrow

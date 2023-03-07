@@ -5,7 +5,7 @@ import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.email.exception.EmailNotBeenException
 import com.dotori.v2.domain.email.exception.EmailSendFailException
 import com.dotori.v2.domain.member.exception.MemberAlreadyException
-import com.dotori.v2.domain.member.presentation.dto.req.SignupReqDto
+import com.dotori.v2.domain.member.presentation.data.req.SignupReqDto
 import com.dotori.v2.domain.member.service.SignupService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service

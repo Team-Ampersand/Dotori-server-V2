@@ -5,8 +5,9 @@ import com.dotori.v2.domain.email.domain.repository.EmailCertificateRepository
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
-import com.dotori.v2.domain.member.presentation.dto.req.NewPasswordReqDto
+import com.dotori.v2.domain.member.presentation.data.req.NewPasswordReqDto
 import com.dotori.v2.domain.member.service.impl.ChangePasswordServiceImpl
+import com.dotori.v2.domain.rule.enums.Rule
 import com.dotori.v2.global.util.UserUtil
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -28,6 +29,7 @@ class ChangePasswordServiceTest : BehaviorSpec({
             stuNum = "2116",
             email = "test@gsm.hs.kr",
             password = "test",
+            ruleViolation = mutableListOf(),
             gender = Gender.MAN,
             roles = Collections.singletonList(Role.ROLE_MEMBER)
         )

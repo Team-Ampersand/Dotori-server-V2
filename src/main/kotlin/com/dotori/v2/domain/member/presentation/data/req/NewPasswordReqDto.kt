@@ -1,4 +1,4 @@
-package com.dotori.v2.domain.member.presentation.dto.req
+package com.dotori.v2.domain.member.presentation.data.req
 
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size

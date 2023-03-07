@@ -1,6 +1,6 @@
 package com.dotori.v2.domain.member.service.impl
 
-import com.dotori.v2.domain.member.presentation.dto.res.LogoutResDto
+import com.dotori.v2.domain.member.presentation.data.res.LogoutResDto
 import com.dotori.v2.domain.member.service.LogoutService
 import com.dotori.v2.global.util.UserUtil
 import org.springframework.stereotype.Service

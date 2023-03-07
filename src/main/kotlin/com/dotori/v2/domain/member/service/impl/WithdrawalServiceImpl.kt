@@ -4,7 +4,7 @@ import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
 import com.dotori.v2.domain.member.exception.MemberNotSameException
 import com.dotori.v2.domain.member.exception.PasswordMismatchException
-import com.dotori.v2.domain.member.presentation.dto.req.WithdrawalReqDto
+import com.dotori.v2.domain.member.presentation.data.req.WithdrawalReqDto
 import com.dotori.v2.domain.member.service.WithdrawalService
 import com.dotori.v2.global.util.UserUtil
 import org.springframework.security.crypto.password.PasswordEncoder

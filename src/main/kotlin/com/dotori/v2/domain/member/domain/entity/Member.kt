@@ -1,6 +1,7 @@
 package com.dotori.v2.domain.member.domain.entity
 
 import com.dotori.v2.domain.member.enums.*
+import com.dotori.v2.domain.rule.domain.entity.RuleViolation
 import com.dotori.v2.global.entity.BaseTimeEntity
 import java.time.LocalDateTime
 import javax.persistence.*
@@ -28,6 +29,10 @@ class Member(
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "Role", joinColumns = [JoinColumn(name = "member_id")])
     val roles: MutableList<Role>,
+
+    @OneToMany(mappedBy = "member")
+    val ruleViolation: MutableList<RuleViolation>
+
 ) : BaseTimeEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -89,7 +94,7 @@ class Member(
         this.musicStatus = musicStatus
     }
 
-    fun updateMassageStatus(massageStatus: MassageStatus){
+    fun updateMassageStatus(massageStatus: MassageStatus) {
         this.massageStatus = massageStatus
     }
 }
