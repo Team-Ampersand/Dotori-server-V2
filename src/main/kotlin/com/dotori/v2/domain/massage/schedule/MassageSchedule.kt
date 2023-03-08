@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 class MassageSchedule(
     private val updateMassageStatusService: UpdateMassageStatusService
 ) {
-    @Scheduled(initialDelay = 1000, fixedDelay = 1000)
+    @Scheduled(cron = "0 0 2 ? * MON-FRI")
     fun weekdaySelfStudyStatusReset(){
         updateMassageStatusService.execute()
     }
