@@ -34,6 +34,7 @@ class SignupReqDto(
             password = password,
             email = email,
             gender = gender,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            ruleViolation = mutableListOf()
         )
 }
