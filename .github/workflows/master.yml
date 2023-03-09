@@ -1,8 +1,10 @@
-name: Java CI with Gradle
+name: Java CICD with Gradle
 
 on:
   push:
-    branches: [ "feat/cicd" ]
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
   build:
