@@ -18,7 +18,7 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/v2/auth")
-class AuthController(
+class AuthController (
     private val signupService: SignupService,
     private val signInService: SignInService,
     private val refreshService: RefreshService,
