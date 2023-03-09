@@ -4,9 +4,6 @@ on:
   push:
     branches: [ "feat/cicd" ]
 
-permissions:
-  contents: read | write
-
 jobs:
   build:
 
