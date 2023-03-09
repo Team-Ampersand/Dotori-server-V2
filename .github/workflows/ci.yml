@@ -23,6 +23,11 @@ jobs:
         touch ./src/main/resources/application.yml
         echo "${{ secrets.APPLICATION_YML }}" >> ./src/main/resources/application.yml   
 
+    - name: Create application-prod.yml
+      run: |
+        touch ./src/main/resources/application-prod.yml
+        echo "${{ secrets.APPLICATION_PROD_YML }}" >> ./src/main/resources/application-prod.yml
+
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
 
