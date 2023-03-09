@@ -33,14 +33,15 @@ class ApplySelfStudyServiceTest : BehaviorSpec({
         saveSelfStudyUtil,
         validDayOfWeekAndHourUtil
     )
-    given("유저가 주어지고"){
+    given("유저가 주어지고") {
         val testMember = Member(
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
             password = "test",
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            ruleViolation = mutableListOf()
         )
         val selfStudyCount = SelfStudyCount(id = 1)
         every { validDayOfWeekAndHourUtil.validateApply() } returns Unit
@@ -48,20 +49,20 @@ class ApplySelfStudyServiceTest : BehaviorSpec({
         every { findSelfStudyCountUtil.findSelfStudyCount() } returns selfStudyCount
         every { selfStudyCheckUtil.isSelfStudyStatusCan(testMember) } returns Unit
         every { saveSelfStudyUtil.save(testMember) } returns Unit
-        `when`("서비스를 실행하면"){
+        `when`("서비스를 실행하면") {
             service.execute()
-            then("save가 실행되어야함"){
+            then("save가 실행되어야함") {
                 verify(exactly = 1) { saveSelfStudyUtil.save(testMember) }
             }
-            then("selfStudyCount가 올라가야함"){
+            then("selfStudyCount가 올라가야함") {
                 selfStudyCount.count shouldBe 1
             }
         }
-        `when`("신청자가 50명 이상일때"){
-            for (i : Int in 1..50){
+        `when`("신청자가 50명 이상일때") {
+            for (i: Int in 1..50) {
                 selfStudyCount.addCount()
             }
-            then("SelfStudyOverException이 터져야함"){
+            then("SelfStudyOverException이 터져야함") {
                 shouldThrow<SelfStudyOverException> { service.execute() }
             }
         }

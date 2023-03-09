@@ -18,14 +18,15 @@ class GetSelfStudyStuNumServiceTest : BehaviorSpec({
     val selfStudyRepository = mockk<SelfStudyRepository>()
     val getSelfStudyByStuNumServiceImpl = GetSelfStudyByStuNumServiceImpl(selfStudyRepository)
 
-    given("유저가 주어지고 자습이 주어지고"){
+    given("유저가 주어지고 자습이 주어지고") {
         val testMember = Member(
             memberName = "test",
             stuNum = "3217",
             email = "test@gsm.hs.kr",
             password = "test",
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            ruleViolation = mutableListOf()
         )
         val otherMember = Member(
             memberName = "other",
@@ -33,16 +34,17 @@ class GetSelfStudyStuNumServiceTest : BehaviorSpec({
             email = "other@gsm.hs.kr",
             password = "test",
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            ruleViolation = mutableListOf()
         )
         val selfStudy1 = SelfStudy(id = 1, testMember)
         val selfStudy2 = SelfStudy(id = 2, otherMember)
         val list = listOf(selfStudy1.member, selfStudy2.member)
         every { selfStudyRepository.findAllByStuNum("32") } returns list
-        `when`("서비스를 실행하면"){
+        `when`("서비스를 실행하면") {
             val result = getSelfStudyByStuNumServiceImpl.execute("32")
-            then("결과값은 otherMember가 리턴되어야함"){
-                result shouldBe SelfStudyMemberListResDto(list.map { SelfStudyMemberResDto(it) })
+            then("결과값은 otherMember가 리턴되어야함") {
+                result shouldBe SelfStudyMemberListResDto(list.map { SelfStudyMemberResDto(1, it) })
             }
         }
     }
