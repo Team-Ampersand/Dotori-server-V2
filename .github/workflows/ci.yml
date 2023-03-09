@@ -36,7 +36,7 @@ jobs:
         password: ${{secrets.DOCKERHUB_TOKEN}}
 
     - name: Build the Docker image
-      run: docker build --platform amd64 --build-arg DEPENDENCY=build/dependency -t ds4ouj/test-app --platform linux/amd64 .
+      run: docker build --platform amd64 --build-arg DEPENDENCY=build/dependency -t ${{secrets.DOCKERHUB_USERNAME}}/dotori --platform linux/amd64 .
 
     - name: Docker Push
       run: docker push ${{secrets.DOCKERHUB_USERNAME}}/dotori
