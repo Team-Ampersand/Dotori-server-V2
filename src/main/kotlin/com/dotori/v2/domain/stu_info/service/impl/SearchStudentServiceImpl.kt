@@ -7,8 +7,10 @@ import com.dotori.v2.domain.stu_info.presentation.data.res.SearchStudentListResD
 import com.dotori.v2.domain.stu_info.service.SearchStudentService
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional(readOnly = true, rollbackFor = [Exception::class])
 class SearchStudentServiceImpl(
     private val memberRepository: MemberRepository
 ) : SearchStudentService {

@@ -5,9 +5,11 @@ import com.dotori.v2.domain.stu_info.presentation.data.res.FindAllStudentResDto
 import com.dotori.v2.domain.stu_info.service.FindAllMemberService
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 
 @Service
+@Transactional(readOnly = true, rollbackFor = [Exception::class])
 class FindAllMemberServiceImpl(
     private val memberRepository: MemberRepository
 ) : FindAllMemberService {
