@@ -32,7 +32,7 @@ class ApplyMusicServiceImpl(
 
     private fun toDto(applyMusicReqDto: ApplyMusicReqDto): ApplyMusicDto =
         ApplyMusicDto(
-            url = applyMusicReqDto.url + "hello"
+            url = applyMusicReqDto.url
         )
 
     private fun validDayOfWeek(dayOfWeek: DayOfWeek) {
