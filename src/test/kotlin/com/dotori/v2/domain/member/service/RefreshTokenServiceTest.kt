@@ -20,7 +20,7 @@ class RefreshTokenServiceTest : BehaviorSpec({
     val memberRepository = mockk<MemberRepository>()
 
     val refreshTokenServiceImpl = RefreshTokenServiceImpl(memberRepository, tokenProvider)
-    given("리프레시 토큰이랑 유저가 주어지고"){
+    given("리프레시 토큰이랑 유저가 주어지고") {
         val refreshToken = "testRefreshToken"
         val testMember = Member(
             memberName = "test",
@@ -28,19 +28,20 @@ class RefreshTokenServiceTest : BehaviorSpec({
             email = "test@gsm.hs.kr",
             password = "test",
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            ruleViolation = mutableListOf()
         )
         init(tokenProvider, refreshToken, testMember, memberRepository)
-        `when`("서비스를 실행하면"){
+        `when`("서비스를 실행하면") {
             val result = refreshTokenServiceImpl.execute(refreshToken)
-            then("토큰이 새로 발급되어야함"){
+            then("토큰이 새로 발급되어야함") {
                 result.accessToken shouldBe "newAccess"
                 result.refreshToken shouldBe "newRefresh"
             }
         }
-        `when`("리프레시 토큰이 아닐때"){
+        `when`("리프레시 토큰이 아닐때") {
             every { tokenProvider.isRefreshToken(refreshToken) } returns false
-            then("TokenTypeNotValidException이 터져야함"){
+            then("TokenTypeNotValidException이 터져야함") {
                 shouldThrow<TokenTypeNotValidException> {
                     refreshTokenServiceImpl.execute(refreshToken)
                 }

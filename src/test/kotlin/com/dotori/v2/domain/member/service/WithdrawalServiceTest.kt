@@ -23,53 +23,55 @@ class WithdrawalServiceTest : BehaviorSpec({
     val userUtil = mockk<UserUtil>()
     val passwordEncoder = mockk<PasswordEncoder>()
     val withdrawalServiceImpl = WithdrawalServiceImpl(memberRepository, passwordEncoder, userUtil)
-    given("유저와 dto가 주어지고"){
+    given("유저와 dto가 주어지고") {
         val testMember = Member(
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
             password = "test",
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            ruleViolation = mutableListOf()
         )
         val request = WithdrawalReqDto("test@gsm.hs.kr", "1234")
         init(userUtil, testMember, memberRepository, request, passwordEncoder)
-        `when`("서비스를 실행하면"){
+        `when`("서비스를 실행하면") {
             withdrawalServiceImpl.execute(request)
-            then("delete가 실행되어야함"){
+            then("delete가 실행되어야함") {
                 verify(exactly = 1) { memberRepository.delete(testMember) }
             }
         }
-        `when`("유저를 찾을 수 없을때"){
+        `when`("유저를 찾을 수 없을때") {
             every { memberRepository.findByEmail(request.email) } returns null
-            then("MemberNotFoundException이 터져야함"){
+            then("MemberNotFoundException이 터져야함") {
                 shouldThrow<MemberNotFoundException> {
                     withdrawalServiceImpl.execute(request)
                 }
             }
         }
         init(userUtil, testMember, memberRepository, request, passwordEncoder)
-        `when`("패스워드가 일치하지 않을때"){
+        `when`("패스워드가 일치하지 않을때") {
             every { passwordEncoder.matches(request.password, testMember.password) } returns false
-            then("PasswordMismatchException이 터져야함"){
+            then("PasswordMismatchException이 터져야함") {
                 shouldThrow<PasswordMismatchException> {
                     withdrawalServiceImpl.execute(request)
                 }
             }
         }
         init(userUtil, testMember, memberRepository, request, passwordEncoder)
-        `when`("현재 로그인된 유저와 요청에서 가져온 유저가 일치하지 않을때"){
+        `when`("현재 로그인된 유저와 요청에서 가져온 유저가 일치하지 않을때") {
             val otherMember = Member(
                 "test1",
                 "0000",
                 "other@gsm.hs.kr",
                 "test1",
                 Gender.MAN,
-                Collections.singletonList(Role.ROLE_MEMBER)
+                Collections.singletonList(Role.ROLE_MEMBER),
+                ruleViolation = mutableListOf()
             )
             every { memberRepository.findByEmail(request.email) } returns otherMember
             every { passwordEncoder.matches(request.password, otherMember.password) } returns true
-            then("MemberNotSameException이 터져야함"){
+            then("MemberNotSameException이 터져야함") {
                 shouldThrow<MemberNotSameException> {
                     withdrawalServiceImpl.execute(request)
                 }
