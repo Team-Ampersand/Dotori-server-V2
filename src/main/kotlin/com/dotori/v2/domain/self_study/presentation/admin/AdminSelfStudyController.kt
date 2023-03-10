@@ -2,10 +2,7 @@ package com.dotori.v2.domain.self_study.presentation.admin
 
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
-import com.dotori.v2.domain.self_study.service.GetSelfStudyByMemberNameService
-import com.dotori.v2.domain.self_study.service.GetSelfStudyByStuNumService
-import com.dotori.v2.domain.self_study.service.GetSelfStudyInfoService
-import com.dotori.v2.domain.self_study.service.GetSelfStudyRankService
+import com.dotori.v2.domain.self_study.service.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -15,7 +12,9 @@ class AdminSelfStudyController(
     private val getSelfStudyInfoService: GetSelfStudyInfoService,
     private val getSelfStudyRankService: GetSelfStudyRankService,
     private val getSelfStudyByMemberNameService: GetSelfStudyByMemberNameService,
-    private val getSelfStudyByStuNumService: GetSelfStudyByStuNumService
+    private val getSelfStudyByStuNumService: GetSelfStudyByStuNumService,
+    private val banSelfStudyService: BanSelfStudyService,
+    private val cancelBanSelfStudyService: CancelBanSelfStudyService
 ) {
 
     @GetMapping("/info")
@@ -33,4 +32,14 @@ class AdminSelfStudyController(
     @GetMapping("/{classId}")
     fun getSelfStudyByStuNum(@PathVariable classId: String): ResponseEntity<SelfStudyMemberListResDto> =
         ResponseEntity.ok(getSelfStudyByStuNumService.execute(classId))
+
+    @PutMapping("/ban/{user_id}")
+    fun banSelfStudyDeveloper(@PathVariable("user_id") id: Long): ResponseEntity<Void> =
+        banSelfStudyService.execute(id)
+            .run { ResponseEntity.ok().build() }
+
+    @PutMapping("/ban/cancel/{user_id}")
+    fun cancelBanSelfStudyDeveloper(@PathVariable("user_id") id: Long): ResponseEntity<Void> =
+        cancelBanSelfStudyService.execute(id)
+            .run { ResponseEntity.ok().build() }
 }

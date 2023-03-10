@@ -14,7 +14,9 @@ class CouncillorSelfStudyController(
     private val getSelfStudyRankService: GetSelfStudyRankService,
     private val cancelSelfStudyService: CancelSelfStudyService,
     private val getSelfStudyByMemberNameService: GetSelfStudyByMemberNameService,
-    private val getSelfStudyByStuNumService: GetSelfStudyByStuNumService
+    private val getSelfStudyByStuNumService: GetSelfStudyByStuNumService,
+    private val banSelfStudyService: BanSelfStudyService,
+    private val cancelBanSelfStudyService: CancelBanSelfStudyService
 ) {
     @PostMapping
     fun applySelfStudy(): ResponseEntity<Void> =
@@ -41,4 +43,14 @@ class CouncillorSelfStudyController(
     @GetMapping("/{classId}")
     fun getSelfStudyByStuNum(@PathVariable classId: String): ResponseEntity<SelfStudyMemberListResDto> =
         ResponseEntity.ok(getSelfStudyByStuNumService.execute(classId))
+
+    @PutMapping("/ban/{user_id}")
+    fun banSelfStudyCouncillor(@PathVariable("user_id") id: Long): ResponseEntity<Void> =
+        banSelfStudyService.execute(id)
+            .run { ResponseEntity.ok().build() }
+
+    @PutMapping("/ban/cancel/{user_id}")
+    fun cancelBanSelfStudyCouncillor(@PathVariable("user_id") id: Long): ResponseEntity<Void> =
+        cancelBanSelfStudyService.execute(id)
+            .run { ResponseEntity.ok().build() }
 }
