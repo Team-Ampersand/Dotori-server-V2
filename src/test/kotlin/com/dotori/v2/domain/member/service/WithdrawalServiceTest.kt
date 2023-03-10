@@ -61,6 +61,7 @@ class WithdrawalServiceTest : BehaviorSpec({
         init(userUtil, testMember, memberRepository, request, passwordEncoder)
         `when`("현재 로그인된 유저와 요청에서 가져온 유저가 일치하지 않을때") {
             val otherMember = Member(
+                0,
                 "test1",
                 "0000",
                 "other@gsm.hs.kr",
