@@ -97,4 +97,9 @@ class Member(
     fun updateMassageStatus(massageStatus: MassageStatus) {
         this.massageStatus = massageStatus
     }
+
+    fun updateSelfStudyExpiredDate(localDateTime: LocalDateTime?) {
+        this.selfStudyExpiredDate = localDateTime
+    }
+
 }

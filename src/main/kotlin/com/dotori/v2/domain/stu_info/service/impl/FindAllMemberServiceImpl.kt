@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional
 class FindAllMemberServiceImpl(
     private val memberRepository: MemberRepository
 ) : FindAllMemberService {
-    override fun execute(): List<FindAllStudentResDto> {
-        val map = memberRepository.findAll(Sort.by(Sort.Direction.ASC, "stuNum"))
+    override fun execute(): List<FindAllStudentResDto> =
+        memberRepository.findAll(Sort.by(Sort.Direction.ASC, "stuNum"))
             .map {
                 FindAllStudentResDto(
                     id = it.id,
@@ -22,9 +22,7 @@ class FindAllMemberServiceImpl(
                     memberName = it.memberName,
                     stuNum = it.stuNum,
                     role = it.roles[0],
-                    selfStudyCheck = it.selfStudyCheck
+                    selfStudyStatus = it.selfStudyStatus
                 )
             }
-        return map
-    }
 }
