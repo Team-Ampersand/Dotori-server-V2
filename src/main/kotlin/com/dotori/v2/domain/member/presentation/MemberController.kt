@@ -30,4 +30,5 @@ class MemberController(
     fun changePassword(@Valid @RequestBody newPasswordReqDto: NewPasswordReqDto): ResponseEntity<Void> =
         changePasswordService.execute(newPasswordReqDto)
             .run { ResponseEntity.ok().build() }
+
 }

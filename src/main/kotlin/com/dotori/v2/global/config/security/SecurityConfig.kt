@@ -51,6 +51,7 @@ class SecurityConfig(
             .antMatchers("/v2/councillor/**").hasRole("COUNCILLOR")
             .antMatchers("/v2/developer/**").hasRole("DEVELOPER")
             .antMatchers("/v2/posting/**").hasRole("MEMBER")
+            .antMatchers("/v2/student-info/**").hasAnyRole("ADMIN", "COUNCILLOR", "DEVELOPER")
 
             .antMatchers("/v2/email/**").permitAll()
 
