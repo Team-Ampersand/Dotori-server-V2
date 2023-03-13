@@ -55,6 +55,8 @@ class SecurityConfig(
 
             .antMatchers("/v2/email/**").permitAll()
 
+            .antMatchers("/v2/members/**").authenticated()
+
             .antMatchers(HttpMethod.GET, "/v2/home/board").authenticated()
             .antMatchers(HttpMethod.GET, "/v2/home").authenticated()
 

@@ -4,7 +4,7 @@ import com.dotori.v2.domain.email.presentation.dto.request.EmailCheckReqDto
 import com.dotori.v2.domain.email.presentation.dto.request.EmailReqDto
 import com.dotori.v2.domain.email.service.EmailCheckService
 import com.dotori.v2.domain.email.service.PasswordChangeEmailSendService
-import com.dotori.v2.domain.email.service.SingupEmailSendService
+import com.dotori.v2.domain.email.service.SignupEmailSendService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/v2/email")
 class EmailController(
-    private val signupEmailSendService: SingupEmailSendService,
+    private val signupEmailSendService: SignupEmailSendService,
     private val passwordChangeEmailSendService: PasswordChangeEmailSendService,
     private val emailCheckService: EmailCheckService
 ) {

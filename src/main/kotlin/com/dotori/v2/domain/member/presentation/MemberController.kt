@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("/v2/member")
+@RequestMapping("/v2/members")
 class MemberController(
     private val logoutService: LogoutService,
     private val withdrawalService: WithdrawalService,
