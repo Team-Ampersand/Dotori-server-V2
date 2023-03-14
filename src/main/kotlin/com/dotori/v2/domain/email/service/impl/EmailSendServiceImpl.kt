@@ -7,9 +7,11 @@ import com.dotori.v2.domain.email.service.EmailSendService
 import com.dotori.v2.global.email.EmailSender
 import com.dotori.v2.global.util.KeyUtil
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
+@Transactional(rollbackFor = [Exception::class])
 class EmailSendServiceImpl(
     private val emailCertificateRepository: EmailCertificateRepository,
     private val keyUtil: KeyUtil,
@@ -19,7 +21,8 @@ class EmailSendServiceImpl(
     override fun execute(emailReqDto: EmailReqDto): String {
         val key = keyUtil.keyIssuance()
         emailSender.send(emailReqDto.email, key)
-        emailCertificateRepository.deleteByEmail(emailReqDto.email)
+        if (emailCertificateRepository.existsByEmail(emailReqDto.email))
+            emailCertificateRepository.deleteByEmail(emailReqDto.email)
         val emailCertificate = EmailCertificate(
             email = emailReqDto.email,
             key = key,
