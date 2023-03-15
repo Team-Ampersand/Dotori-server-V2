@@ -42,8 +42,8 @@ class GetSelfStudyMemberNameServiceTest : BehaviorSpec({
         every { selfStudyRepository.findAllByMemberName("other") } returns list
         `when`("서비스를 실행하면") {
             val result = getSelfStudyByMemberNameServiceImpl.execute("other")
-            then("결과값은 otherMember가 리턴되어야함") {
-                result shouldBe SelfStudyMemberListResDto(list.map { SelfStudyMemberResDto(1, it) })
+            then("결과값은 otherMember가 리턴되어야함"){
+                result shouldBe SelfStudyMemberListResDto(list.mapIndexed{index, it -> SelfStudyMemberResDto(index + 1L, it) })
             }
         }
     }

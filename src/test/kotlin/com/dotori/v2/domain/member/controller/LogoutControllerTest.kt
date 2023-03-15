@@ -2,6 +2,7 @@ package com.dotori.v2.domain.member.controller
 
 import com.dotori.v2.domain.member.presentation.MemberController
 import com.dotori.v2.domain.member.presentation.data.res.LogoutResDto
+import com.dotori.v2.domain.member.service.ChangeAuthPasswordService
 import com.dotori.v2.domain.member.service.ChangePasswordService
 import com.dotori.v2.domain.member.service.LogoutService
 import com.dotori.v2.domain.member.service.WithdrawalService
@@ -15,7 +16,7 @@ import org.springframework.http.HttpStatus
 class LogoutControllerTest : BehaviorSpec({
     val logoutService = mockk<LogoutService>()
     val withdrawalService = mockk<WithdrawalService>()
-    val changePasswordService = mockk<ChangePasswordService>()
+    val changePasswordService = mockk<ChangeAuthPasswordService>()
     val authController = MemberController(logoutService, withdrawalService, changePasswordService)
 
     given("요청이 들어오면") {

@@ -15,7 +15,8 @@ class RefreshTokenControllerTest : BehaviorSpec({
     val signupService = mockk<SignupService>()
     val signInService = mockk<SignInService>()
     val refreshService = mockk<RefreshService>()
-    val authController = AuthController(signupService, signInService, refreshService)
+    val changePasswordService = mockk<ChangePasswordService>()
+    val authController = AuthController(signupService, signInService, refreshService, changePasswordService)
 
     given("요청이 들어오면") {
         `when`("is received") {
