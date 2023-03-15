@@ -1,9 +1,11 @@
 package com.dotori.v2.domain.member.presentation
 
+import com.dotori.v2.domain.member.presentation.data.req.NewPasswordReqDto
 import com.dotori.v2.domain.member.presentation.data.req.SignInReqDto
 import com.dotori.v2.domain.member.presentation.data.req.SignupReqDto
 import com.dotori.v2.domain.member.presentation.data.res.RefreshResDto
 import com.dotori.v2.domain.member.presentation.data.res.SignInResDto
+import com.dotori.v2.domain.member.service.ChangePasswordService
 import com.dotori.v2.domain.member.service.RefreshService
 import com.dotori.v2.domain.member.service.SignInService
 import com.dotori.v2.domain.member.service.SignupService
@@ -22,6 +24,7 @@ class AuthController(
     private val signupService: SignupService,
     private val signInService: SignInService,
     private val refreshService: RefreshService,
+    private val changePasswordService: ChangePasswordService
 ) {
     @PostMapping("/signup")
     fun signup(@Valid @RequestBody signupReqDto: SignupReqDto): ResponseEntity<Void> =
@@ -35,4 +38,9 @@ class AuthController(
     @PatchMapping
     fun refresh(@RequestHeader refreshToken: String): ResponseEntity<RefreshResDto> =
         ResponseEntity.ok(refreshService.execute(refreshToken))
+
+    @PatchMapping("/password")
+    fun changePassword(@Valid @RequestBody newPasswordReqDto: NewPasswordReqDto): ResponseEntity<Void> =
+        changePasswordService.execute(newPasswordReqDto)
+            .run { ResponseEntity.ok().build() }
 }
