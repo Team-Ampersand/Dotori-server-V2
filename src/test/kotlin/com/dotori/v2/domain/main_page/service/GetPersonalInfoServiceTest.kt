@@ -23,7 +23,8 @@ class GetPersonalInfoServiceTest : BehaviorSpec({
             email = "test@gsm.hs.kr",
             password = "test",
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            ruleViolation = mutableListOf()
         )
         every { userUtil.fetchCurrentUser() } returns testMember
         `when`("서비스를 실행하면"){

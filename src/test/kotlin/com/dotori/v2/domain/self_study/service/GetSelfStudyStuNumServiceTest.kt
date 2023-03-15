@@ -3,6 +3,7 @@ package com.dotori.v2.domain.self_study.service
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
+import com.dotori.v2.domain.rule.domain.entity.RuleViolation
 import com.dotori.v2.domain.self_study.domain.entity.SelfStudy
 import com.dotori.v2.domain.self_study.domain.repository.SelfStudyRepository
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
@@ -25,7 +26,8 @@ class GetSelfStudyStuNumServiceTest : BehaviorSpec({
             email = "test@gsm.hs.kr",
             password = "test",
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            ruleViolation = mutableListOf()
         )
         val otherMember = Member(
             memberName = "other",
@@ -33,7 +35,8 @@ class GetSelfStudyStuNumServiceTest : BehaviorSpec({
             email = "other@gsm.hs.kr",
             password = "test",
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            ruleViolation = mutableListOf()
         )
         val selfStudy1 = SelfStudy(id = 1, testMember)
         val selfStudy2 = SelfStudy(id = 2, otherMember)
@@ -42,7 +45,7 @@ class GetSelfStudyStuNumServiceTest : BehaviorSpec({
         `when`("서비스를 실행하면"){
             val result = getSelfStudyByStuNumServiceImpl.execute("32")
             then("결과값은 otherMember가 리턴되어야함"){
-                result shouldBe SelfStudyMemberListResDto(list.map { SelfStudyMemberResDto(it) })
+                result shouldBe SelfStudyMemberListResDto(list.mapIndexed { index, member -> SelfStudyMemberResDto(index+1L, member) })
             }
         }
     }

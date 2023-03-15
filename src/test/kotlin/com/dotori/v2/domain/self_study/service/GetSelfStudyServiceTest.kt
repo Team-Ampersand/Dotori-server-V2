@@ -27,7 +27,8 @@ class GetSelfStudyServiceTest : BehaviorSpec({
             email = "test@gsm.hs.kr",
             password = "test",
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            ruleViolation = mutableListOf()
         )
         val selfStudy1 = SelfStudy(id = 1, testMember)
         val selfStudy2 = SelfStudy(id = 2, testMember)
@@ -39,7 +40,7 @@ class GetSelfStudyServiceTest : BehaviorSpec({
                 verify { selfStudyRepository.findAllOrderByCreatedDateAsc() }
             }
             then("result는 list의 값이랑 같아야함"){
-                result shouldBe SelfStudyMemberListResDto(list.map { SelfStudyMemberResDto(it.member) })
+                result shouldBe SelfStudyMemberListResDto(list.mapIndexed {index, it -> SelfStudyMemberResDto(index + 1L, it.member) })
             }
         }
 

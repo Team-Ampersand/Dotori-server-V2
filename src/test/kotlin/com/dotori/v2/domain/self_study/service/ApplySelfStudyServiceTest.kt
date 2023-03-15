@@ -40,7 +40,8 @@ class ApplySelfStudyServiceTest : BehaviorSpec({
             email = "test@gsm.hs.kr",
             password = "test",
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            ruleViolation = mutableListOf()
         )
         val selfStudyCount = SelfStudyCount(id = 1)
         every { validDayOfWeekAndHourUtil.validateApply() } returns Unit

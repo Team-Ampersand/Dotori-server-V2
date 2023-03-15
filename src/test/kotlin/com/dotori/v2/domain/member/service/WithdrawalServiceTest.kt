@@ -30,7 +30,8 @@ class WithdrawalServiceTest : BehaviorSpec({
             email = "test@gsm.hs.kr",
             password = "test",
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            ruleViolation = mutableListOf()
         )
         val request = WithdrawalReqDto("test@gsm.hs.kr", "1234")
         init(userUtil, testMember, memberRepository, request, passwordEncoder)
@@ -65,7 +66,8 @@ class WithdrawalServiceTest : BehaviorSpec({
                 "other@gsm.hs.kr",
                 "test1",
                 Gender.MAN,
-                Collections.singletonList(Role.ROLE_MEMBER)
+                Collections.singletonList(Role.ROLE_MEMBER),
+                ruleViolation = mutableListOf()
             )
             every { memberRepository.findByEmail(request.email) } returns otherMember
             every { passwordEncoder.matches(request.password, otherMember.password) } returns true

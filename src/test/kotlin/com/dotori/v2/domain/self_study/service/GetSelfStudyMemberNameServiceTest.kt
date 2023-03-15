@@ -24,7 +24,8 @@ class GetSelfStudyMemberNameServiceTest : BehaviorSpec({
             email = "test@gsm.hs.kr",
             password = "test",
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            ruleViolation = mutableListOf()
         )
         val otherMember = Member(
             memberName = "other",
@@ -32,7 +33,8 @@ class GetSelfStudyMemberNameServiceTest : BehaviorSpec({
             email = "other@gsm.hs.kr",
             password = "test",
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            ruleViolation = mutableListOf()
         )
         val selfStudy1 = SelfStudy(id = 1, testMember)
         val selfStudy2 = SelfStudy(id = 2, otherMember)
@@ -41,7 +43,7 @@ class GetSelfStudyMemberNameServiceTest : BehaviorSpec({
         `when`("서비스를 실행하면"){
             val result = getSelfStudyByMemberNameServiceImpl.execute("other")
             then("결과값은 otherMember가 리턴되어야함"){
-                result shouldBe SelfStudyMemberListResDto(list.map { SelfStudyMemberResDto(it) })
+                result shouldBe SelfStudyMemberListResDto(list.mapIndexed{index, it -> SelfStudyMemberResDto(index + 1L, it) })
             }
         }
     }
