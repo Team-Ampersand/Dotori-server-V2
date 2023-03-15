@@ -18,8 +18,10 @@ class ApplySelfStudyControllerTest : BehaviorSpec({
     val getSelfStudyRankService = mockk<GetSelfStudyRankService>()
     val getSelfStudyByMemberNameService = mockk<GetSelfStudyByMemberNameService>()
     val getSelfStudyByStuNumService = mockk<GetSelfStudyByStuNumService>()
-    val councillorSelfStudyController = CouncillorSelfStudyController(service, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, getSelfStudyByMemberNameService, getSelfStudyByStuNumService)
-    val developerSelfStudyController = DeveloperSelfStudyController(service, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, getSelfStudyByMemberNameService, getSelfStudyByStuNumService)
+    val banSelfStudyService = mockk<BanSelfStudyService>()
+    val cancelBanSelfStudyService = mockk<CancelBanSelfStudyService>()
+    val councillorSelfStudyController = CouncillorSelfStudyController(service, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, getSelfStudyByMemberNameService, getSelfStudyByStuNumService, banSelfStudyService, cancelBanSelfStudyService)
+    val developerSelfStudyController = DeveloperSelfStudyController(service, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, getSelfStudyByMemberNameService, getSelfStudyByStuNumService, cancelBanSelfStudyService, banSelfStudyService)
     val memberSelfStudyController = MemberSelfStudyController(service, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, getSelfStudyByMemberNameService, getSelfStudyByStuNumService)
 
     every { service.execute() } returns Unit

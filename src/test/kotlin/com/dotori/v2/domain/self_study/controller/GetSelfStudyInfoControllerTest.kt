@@ -21,10 +21,12 @@ class GetSelfStudyInfoControllerTest : BehaviorSpec({
     val getSelfStudyRankService = mockk<GetSelfStudyRankService>()
     val getSelfStudyByMemberNameService = mockk<GetSelfStudyByMemberNameService>()
     val getSelfStudyByStuNumService = mockk<GetSelfStudyByStuNumService>()
-    val councillorSelfStudyController = CouncillorSelfStudyController(applySelfStudyService, service, getSelfStudyRankService, cancelSelfStudyService, getSelfStudyByMemberNameService, getSelfStudyByStuNumService)
-    val developerSelfStudyController = DeveloperSelfStudyController(applySelfStudyService, service, getSelfStudyRankService, cancelSelfStudyService, getSelfStudyByMemberNameService, getSelfStudyByStuNumService)
+    val banSelfStudyService = mockk<BanSelfStudyService>()
+    val cancelBanSelfStudyService = mockk<CancelBanSelfStudyService>()
+    val councillorSelfStudyController = CouncillorSelfStudyController(applySelfStudyService, service, getSelfStudyRankService, cancelSelfStudyService, getSelfStudyByMemberNameService, getSelfStudyByStuNumService, banSelfStudyService, cancelBanSelfStudyService)
+    val developerSelfStudyController = DeveloperSelfStudyController(applySelfStudyService, service, getSelfStudyRankService, cancelSelfStudyService, getSelfStudyByMemberNameService, getSelfStudyByStuNumService, cancelBanSelfStudyService, banSelfStudyService)
     val memberSelfStudyController = MemberSelfStudyController(applySelfStudyService, service, getSelfStudyRankService, cancelSelfStudyService, getSelfStudyByMemberNameService, getSelfStudyByStuNumService)
-    val adminSelfStudyController = AdminSelfStudyController(service, getSelfStudyRankService, getSelfStudyByMemberNameService, getSelfStudyByStuNumService)
+    val adminSelfStudyController = AdminSelfStudyController(service, getSelfStudyRankService, getSelfStudyByMemberNameService, getSelfStudyByStuNumService, banSelfStudyService, cancelBanSelfStudyService)
     every { service.execute() } returns SelfStudyInfoResDto(1, SelfStudyStatus.CAN)
     given("요청이 들어오면") {
         `when`("councillorController is received") {

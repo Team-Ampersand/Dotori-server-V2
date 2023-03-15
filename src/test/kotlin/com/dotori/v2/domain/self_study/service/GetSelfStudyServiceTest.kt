@@ -9,7 +9,6 @@ import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListR
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberResDto
 import com.dotori.v2.domain.self_study.service.impl.GetSelfStudyRankServiceImpl
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.ints.exactly
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
@@ -20,7 +19,7 @@ class GetSelfStudyServiceTest : BehaviorSpec({
     val selfStudyRepository = mockk<SelfStudyRepository>()
 
     val getSelfStudyRankServiceImpl = GetSelfStudyRankServiceImpl(selfStudyRepository)
-    given("윺저와 자습이 주어지고"){
+    given("윺저와 자습이 주어지고") {
         val testMember = Member(
             memberName = "test",
             stuNum = "2116",
@@ -34,9 +33,9 @@ class GetSelfStudyServiceTest : BehaviorSpec({
         val selfStudy2 = SelfStudy(id = 2, testMember)
         val list = listOf(selfStudy1, selfStudy2)
         every { selfStudyRepository.findAllOrderByCreatedDateAsc() } returns list
-        `when`("서비스를 실행하면"){
+        `when`("서비스를 실행하면") {
             val result = getSelfStudyRankServiceImpl.execute()
-            then("findAllOrderByCreatedDateAsc 메서드가 실행되어야함"){
+            then("findAllOrderByCreatedDateAsc 메서드가 실행되어야함") {
                 verify { selfStudyRepository.findAllOrderByCreatedDateAsc() }
             }
             then("result는 list의 값이랑 같아야함"){

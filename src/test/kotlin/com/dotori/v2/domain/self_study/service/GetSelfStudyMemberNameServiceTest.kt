@@ -17,7 +17,7 @@ import java.util.*
 class GetSelfStudyMemberNameServiceTest : BehaviorSpec({
     val selfStudyRepository = mockk<SelfStudyRepository>()
     val getSelfStudyByMemberNameServiceImpl = GetSelfStudyByMemberNameServiceImpl(selfStudyRepository)
-    given("유저가 주어지고 자습이 주어지고"){
+    given("유저가 주어지고 자습이 주어지고") {
         val testMember = Member(
             memberName = "test",
             stuNum = "2116",
@@ -40,7 +40,7 @@ class GetSelfStudyMemberNameServiceTest : BehaviorSpec({
         val selfStudy2 = SelfStudy(id = 2, otherMember)
         val list = listOf(selfStudy2.member)
         every { selfStudyRepository.findAllByMemberName("other") } returns list
-        `when`("서비스를 실행하면"){
+        `when`("서비스를 실행하면") {
             val result = getSelfStudyByMemberNameServiceImpl.execute("other")
             then("결과값은 otherMember가 리턴되어야함"){
                 result shouldBe SelfStudyMemberListResDto(list.mapIndexed{index, it -> SelfStudyMemberResDto(index + 1L, it) })

@@ -9,6 +9,11 @@ import javax.persistence.*
 
 @Entity
 class Member(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
+    val id: Long = 0,
+
     @Column(name = "member_name", nullable = false)
     val memberName: String,
 
@@ -34,11 +39,6 @@ class Member(
     val ruleViolation: MutableList<RuleViolation>
 
 ) : BaseTimeEntity() {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
-    val id: Long = 0
-
     @Column(name = "member_refreshToken")
     var refreshToken: String = ""
         private set
@@ -96,5 +96,9 @@ class Member(
 
     fun updateMassageStatus(massageStatus: MassageStatus) {
         this.massageStatus = massageStatus
+    }
+
+    fun updateSelfStudyExpiredDate(localDateTime: LocalDateTime?) {
+        this.selfStudyExpiredDate = localDateTime
     }
 }

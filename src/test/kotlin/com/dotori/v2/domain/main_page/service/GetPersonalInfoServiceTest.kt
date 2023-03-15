@@ -16,7 +16,7 @@ class GetPersonalInfoServiceTest : BehaviorSpec({
     val userUtil = mockk<UserUtil>()
     val getPersonalInfoServiceImpl = GetPersonalInfoServiceImpl(userUtil)
 
-    given("유저가 주어지고"){
+    given("유저가 주어지고") {
         val testMember = Member(
             memberName = "test",
             stuNum = "2116",
@@ -27,9 +27,9 @@ class GetPersonalInfoServiceTest : BehaviorSpec({
             ruleViolation = mutableListOf()
         )
         every { userUtil.fetchCurrentUser() } returns testMember
-        `when`("서비스를 실행하면"){
+        `when`("서비스를 실행하면") {
             val result = getPersonalInfoServiceImpl.execute()
-            then("유저의 정보가 dto로 반환되어야한다"){
+            then("유저의 정보가 dto로 반환되어야한다") {
                 result shouldBe PersonalInfoResDto(testMember)
             }
         }

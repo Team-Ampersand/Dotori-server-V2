@@ -16,7 +16,7 @@ import java.util.*
 class BoardAlarmServiceTest : BehaviorSpec({
     val boardRepository = mockk<BoardRepository>()
     val boardAlarmServiceImpl = BoardAlarmServiceImpl(boardRepository)
-    given("유저랑 작성된 게시물이 존재하고"){
+    given("유저랑 작성된 게시물이 존재하고") {
         val testMember = Member(
             memberName = "test",
             stuNum = "2116",
@@ -28,9 +28,9 @@ class BoardAlarmServiceTest : BehaviorSpec({
         )
         val board = Board(1, testMember, "title", "content")
         every { boardRepository.findLastBoard() } returns board
-        `when`("서비스를 실행하면"){
+        `when`("서비스를 실행하면") {
             val response = boardAlarmServiceImpl.execute()
-            then("해당 게시물의 내용이 반환되어야함"){
+            then("해당 게시물의 내용이 반환되어야함") {
                 response shouldBe BoardAlarmResDto(board)
             }
         }
