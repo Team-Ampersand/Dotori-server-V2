@@ -38,8 +38,8 @@ class GetSelfStudyServiceTest : BehaviorSpec({
             then("findAllOrderByCreatedDateAsc 메서드가 실행되어야함") {
                 verify { selfStudyRepository.findAllOrderByCreatedDateAsc() }
             }
-            then("result는 list의 값이랑 같아야함") {
-                result shouldBe SelfStudyMemberListResDto(list.map { SelfStudyMemberResDto(1, it.member) })
+            then("result는 list의 값이랑 같아야함"){
+                result shouldBe SelfStudyMemberListResDto(list.mapIndexed {index, it -> SelfStudyMemberResDto(index + 1L, it.member) })
             }
         }
 

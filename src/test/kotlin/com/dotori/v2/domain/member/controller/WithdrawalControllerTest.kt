@@ -15,7 +15,7 @@ import org.springframework.http.HttpStatus
 class WithdrawalControllerTest : BehaviorSpec({
     val logoutService = mockk<LogoutService>()
     val withdrawalService = mockk<WithdrawalService>()
-    val changePasswordService = mockk<ChangePasswordService>()
+    val changePasswordService = mockk<ChangeAuthPasswordService>()
     val authController = MemberController(logoutService, withdrawalService, changePasswordService)
 
     given("요청이 들어오면") {

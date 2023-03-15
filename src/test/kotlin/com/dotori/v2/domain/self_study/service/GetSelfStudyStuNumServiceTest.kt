@@ -3,6 +3,7 @@ package com.dotori.v2.domain.self_study.service
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
+import com.dotori.v2.domain.rule.domain.entity.RuleViolation
 import com.dotori.v2.domain.self_study.domain.entity.SelfStudy
 import com.dotori.v2.domain.self_study.domain.repository.SelfStudyRepository
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
@@ -43,8 +44,8 @@ class GetSelfStudyStuNumServiceTest : BehaviorSpec({
         every { selfStudyRepository.findAllByStuNum("32") } returns list
         `when`("서비스를 실행하면") {
             val result = getSelfStudyByStuNumServiceImpl.execute("32")
-            then("결과값은 otherMember가 리턴되어야함") {
-                result shouldBe SelfStudyMemberListResDto(list.map { SelfStudyMemberResDto(1, it) })
+            then("결과값은 otherMember가 리턴되어야함"){
+                result shouldBe SelfStudyMemberListResDto(list.mapIndexed { index, member -> SelfStudyMemberResDto(index+1L, member) })
             }
         }
     }
