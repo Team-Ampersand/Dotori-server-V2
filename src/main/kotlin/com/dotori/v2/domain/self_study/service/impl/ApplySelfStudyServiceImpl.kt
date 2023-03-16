@@ -24,7 +24,7 @@ class ApplySelfStudyServiceImpl(
         validDayOfWeekAndHourUtil.validateApply()
         val member = userUtil.fetchCurrentUser()
         val selfStudyCount = findSelfStudyCountUtil.findSelfStudyCount()
-        if (selfStudyCount.count >= 50)
+        if (selfStudyCount.count >= selfStudyCount.limit)
             throw SelfStudyOverException()
         selfStudyCheckUtil.isSelfStudyStatusCan(member)
         member.updateSelfStudyStatus(SelfStudyStatus.APPLIED)

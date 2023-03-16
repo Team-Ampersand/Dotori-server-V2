@@ -16,13 +16,13 @@ class ApplySelfStudyControllerTest : BehaviorSpec({
     val getSelfStudyInfoService = mockk<GetSelfStudyInfoService>()
     val cancelSelfStudyService = mockk<CancelSelfStudyService>()
     val getSelfStudyRankService = mockk<GetSelfStudyRankService>()
-    val getSelfStudyByMemberNameService = mockk<GetSelfStudyByMemberNameService>()
-    val getSelfStudyByStuNumService = mockk<GetSelfStudyByStuNumService>()
     val banSelfStudyService = mockk<BanSelfStudyService>()
     val cancelBanSelfStudyService = mockk<CancelBanSelfStudyService>()
-    val councillorSelfStudyController = CouncillorSelfStudyController(service, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, getSelfStudyByMemberNameService, getSelfStudyByStuNumService, banSelfStudyService, cancelBanSelfStudyService)
-    val developerSelfStudyController = DeveloperSelfStudyController(service, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, getSelfStudyByMemberNameService, getSelfStudyByStuNumService, cancelBanSelfStudyService, banSelfStudyService)
-    val memberSelfStudyController = MemberSelfStudyController(service, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, getSelfStudyByMemberNameService, getSelfStudyByStuNumService)
+    val selfStudyByStuNumAndNameService = mockk<GetSelfStudyByStuNumAndNameService>()
+    val changeSelfStudyLimitService = mockk<ChangeSelfStudyLimitService>()
+    val councillorSelfStudyController = CouncillorSelfStudyController(service, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, banSelfStudyService, cancelBanSelfStudyService, changeSelfStudyLimitService, selfStudyByStuNumAndNameService)
+    val developerSelfStudyController = DeveloperSelfStudyController(service, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, cancelBanSelfStudyService, banSelfStudyService, changeSelfStudyLimitService, selfStudyByStuNumAndNameService)
+    val memberSelfStudyController = MemberSelfStudyController(service, getSelfStudyInfoService, getSelfStudyRankService, cancelSelfStudyService, selfStudyByStuNumAndNameService)
 
     every { service.execute() } returns Unit
     given("요청이 들어오면") {

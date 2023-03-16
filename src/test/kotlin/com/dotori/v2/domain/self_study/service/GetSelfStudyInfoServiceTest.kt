@@ -7,6 +7,7 @@ import com.dotori.v2.domain.self_study.domain.entity.SelfStudyCount
 import com.dotori.v2.domain.self_study.domain.repository.SelfStudyCountRepository
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.service.impl.GetSelfStudyInfoServiceImpl
+import com.dotori.v2.domain.self_study.util.ValidDayOfWeekAndHourUtil
 import com.dotori.v2.global.util.UserUtil
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -16,9 +17,10 @@ import java.util.*
 
 class GetSelfStudyInfoServiceTest : BehaviorSpec({
     val selfStudyCountRepository = mockk<SelfStudyCountRepository>()
+    val validDayOfWeekAndHourUtil = mockk<ValidDayOfWeekAndHourUtil>()
     val userUtil = mockk<UserUtil>()
 
-    val service = GetSelfStudyInfoServiceImpl(selfStudyCountRepository, userUtil)
+    val service = GetSelfStudyInfoServiceImpl(selfStudyCountRepository, validDayOfWeekAndHourUtil, userUtil)
     given("유저가 주어지고"){
         val testMember = Member(
             memberName = "test",
@@ -37,7 +39,7 @@ class GetSelfStudyInfoServiceTest : BehaviorSpec({
         `when`("서비스를 실행하면"){
             val result = service.execute()
             then("결괴값이 유저의 정보와 2가 반환되어야함"){
-                result shouldBe SelfStudyInfoResDto(selfStudyStatus = testMember.selfStudyStatus, count = selfStudyCount.count)
+                result shouldBe SelfStudyInfoResDto(selfStudyStatus = testMember.selfStudyStatus, limit = 50, count = selfStudyCount.count)
             }
         }
     }

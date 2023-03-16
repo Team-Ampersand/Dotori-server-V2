@@ -1,8 +1,10 @@
 package com.dotori.v2.domain.self_study.presentation.councillor
 
+import com.dotori.v2.domain.self_study.presentation.dto.req.SelfStudyLimitReqDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
 import com.dotori.v2.domain.self_study.service.*
+import com.dotori.v2.domain.stu_info.presentation.data.req.SearchRequestDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -13,10 +15,10 @@ class CouncillorSelfStudyController(
     private val getSelfStudyInfoService: GetSelfStudyInfoService,
     private val getSelfStudyRankService: GetSelfStudyRankService,
     private val cancelSelfStudyService: CancelSelfStudyService,
-    private val getSelfStudyByMemberNameService: GetSelfStudyByMemberNameService,
-    private val getSelfStudyByStuNumService: GetSelfStudyByStuNumService,
     private val banSelfStudyService: BanSelfStudyService,
-    private val cancelBanSelfStudyService: CancelBanSelfStudyService
+    private val cancelBanSelfStudyService: CancelBanSelfStudyService,
+    private val changeSelfStudyLimitService: ChangeSelfStudyLimitService,
+    private val getSelfStudyByStuNumAndNameService: GetSelfStudyByStuNumAndNameService
 ) {
     @PostMapping
     fun applySelfStudy(): ResponseEntity<Void> =
@@ -36,13 +38,9 @@ class CouncillorSelfStudyController(
     fun getSelfStudyRank(): ResponseEntity<SelfStudyMemberListResDto> =
         ResponseEntity.ok(getSelfStudyRankService.execute())
 
-    @GetMapping
-    fun getSelfStudyByMemberName(@RequestParam memberName: String): ResponseEntity<SelfStudyMemberListResDto> =
-        ResponseEntity.ok(getSelfStudyByMemberNameService.execute(memberName))
-
-    @GetMapping("/{classId}")
-    fun getSelfStudyByStuNum(@PathVariable classId: String): ResponseEntity<SelfStudyMemberListResDto> =
-        ResponseEntity.ok(getSelfStudyByStuNumService.execute(classId))
+    @GetMapping("/search")
+    fun searchSelfStudy(searchRequestDto: SearchRequestDto): ResponseEntity<SelfStudyMemberListResDto> =
+        ResponseEntity.ok(getSelfStudyByStuNumAndNameService.execute(searchRequestDto))
 
     @PutMapping("/ban/{user_id}")
     fun banSelfStudyCouncillor(@PathVariable("user_id") id: Long): ResponseEntity<Void> =
@@ -52,5 +50,10 @@ class CouncillorSelfStudyController(
     @PutMapping("/ban/cancel/{user_id}")
     fun cancelBanSelfStudyCouncillor(@PathVariable("user_id") id: Long): ResponseEntity<Void> =
         cancelBanSelfStudyService.execute(id)
+            .run { ResponseEntity.ok().build() }
+
+    @PatchMapping("/limit")
+    fun updateSelfStudyLimit(@RequestBody changeSelfStudyLimitReqDto: SelfStudyLimitReqDto): ResponseEntity<Void> =
+        changeSelfStudyLimitService.execute(changeSelfStudyLimitReqDto)
             .run { ResponseEntity.ok().build() }
 }
