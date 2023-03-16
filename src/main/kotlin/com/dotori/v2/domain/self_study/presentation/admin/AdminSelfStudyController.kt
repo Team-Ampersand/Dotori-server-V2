@@ -1,5 +1,6 @@
 package com.dotori.v2.domain.self_study.presentation.admin
 
+import com.dotori.v2.domain.self_study.presentation.dto.req.SelfStudyLimitReqDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
 import com.dotori.v2.domain.self_study.service.*
@@ -14,7 +15,8 @@ class AdminSelfStudyController(
     private val getSelfStudyByMemberNameService: GetSelfStudyByMemberNameService,
     private val getSelfStudyByStuNumService: GetSelfStudyByStuNumService,
     private val banSelfStudyService: BanSelfStudyService,
-    private val cancelBanSelfStudyService: CancelBanSelfStudyService
+    private val cancelBanSelfStudyService: CancelBanSelfStudyService,
+    private val changeSelfStudyLimitService: ChangeSelfStudyLimitService
 ) {
 
     @GetMapping("/info")
@@ -41,5 +43,10 @@ class AdminSelfStudyController(
     @PutMapping("/ban/cancel/{user_id}")
     fun cancelBanSelfStudyDeveloper(@PathVariable("user_id") id: Long): ResponseEntity<Void> =
         cancelBanSelfStudyService.execute(id)
+            .run { ResponseEntity.ok().build() }
+
+    @PatchMapping("/limit")
+    fun updateSelfStudyLimit(@RequestBody changeSelfStudyLimitReqDto: SelfStudyLimitReqDto): ResponseEntity<Void> =
+        changeSelfStudyLimitService.execute(changeSelfStudyLimitReqDto)
             .run { ResponseEntity.ok().build() }
 }
