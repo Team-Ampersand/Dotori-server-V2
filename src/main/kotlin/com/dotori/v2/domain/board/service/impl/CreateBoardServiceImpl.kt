@@ -52,7 +52,8 @@ class CreateBoardServiceImpl(
         Board(
             content = createBoardDto.content,
             title = createBoardDto.title,
-            member = member
+            member = member,
+            boardImage = listOf()
         )
 
     private fun toEntity(board: Board, uploadFileUrl: String): BoardImage =
