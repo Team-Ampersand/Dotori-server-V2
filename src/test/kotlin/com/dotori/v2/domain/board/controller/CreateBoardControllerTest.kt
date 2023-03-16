@@ -68,7 +68,8 @@ class CreateBoardControllerTest : BehaviorSpec({
         val board = Board(
             title = "thisIsTitle",
             content = "thisIsContent",
-            member = member
+            member = member,
+            boardImage = listOf()
         )
         every { createBoardService.execute(createBoardReqDto, multipartFiles) } returns board
         `when`("councillorController is received") {
