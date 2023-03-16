@@ -1,5 +1,6 @@
 package com.dotori.v2.domain.main_page.controller
 
+import com.dotori.v2.domain.board.presentation.data.dto.BoardDto
 import com.dotori.v2.domain.main_page.presentation.BoardAlarmController
 import com.dotori.v2.domain.main_page.presentation.dto.res.BoardAlarmResDto
 import com.dotori.v2.domain.main_page.service.BoardAlarmService
@@ -19,7 +20,8 @@ class BoardAlarmControllerTest : BehaviorSpec({
     val controller = BoardAlarmController(boardAlarmService)
     given("요청이 들어오면") {
         `when`("is received") {
-            val target = BoardAlarmResDto(1, "test", Collections.singletonList(Role.ROLE_DEVELOPER), LocalDate.now())
+            val boardDto = BoardDto(id =1, title = "test", roles = Collections.singletonList(Role.ROLE_DEVELOPER), createdDate = LocalDate.now(), boardImages = listOf())
+            val target = BoardAlarmResDto(listOf(boardDto))
             every { boardAlarmService.execute() } returns target
             val response = controller.getBoardAlarm()
             then("서비스가 한번은 실행되어야 함") {

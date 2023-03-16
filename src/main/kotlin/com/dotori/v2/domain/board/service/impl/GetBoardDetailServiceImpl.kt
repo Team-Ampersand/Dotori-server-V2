@@ -19,11 +19,7 @@ class GetBoardDetailServiceImpl(
 ) : GetBoardDetailService {
     override fun execute(boardId: Long): DetailBoardResDto {
         val boardInfo: Board = boardRepository.findByIdOrNull(boardId) ?: throw BoardNotExistsException()
-        val boardImages: List<BoardImage> = boardImageRepository.findAllByBoard_Id(boardInfo.id)
-        if (boardImages.count() { true } == 0) {
-            return toResponse(boardInfo)
-        }
-        return toResponse(boardInfo, boardImages)
+        return toResponse(boardInfo)
     }
 
     private fun toResponse(board: Board): DetailBoardResDto =
@@ -32,20 +28,8 @@ class GetBoardDetailServiceImpl(
             title = board.title,
             content = board.content,
             roles = board.member.roles,
-            boardImage = listOf(),
+            boardImage = board.boardImage,
             createdDate = board.createdDate,
             modifiedDate = board.modifiedDate
         )
-
-    private fun toResponse(board: Board, boardImages: List<BoardImage>): DetailBoardResDto =
-        DetailBoardResDto(
-            id = board.id,
-            title = board.title,
-            content = board.content,
-            roles = board.member.roles,
-            boardImage = boardImages,
-            createdDate = board.createdDate,
-            modifiedDate = board.modifiedDate
-        )
-
 }

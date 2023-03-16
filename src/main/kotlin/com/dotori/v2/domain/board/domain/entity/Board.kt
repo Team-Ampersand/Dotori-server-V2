@@ -20,7 +20,10 @@ class Board(
     @Column(name = "board_title", nullable = false)
     var title: String,
     @Column(name = "board_content", length = 5000, nullable = false)
-    var content: String
+    var content: String,
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
+    val boardImage: List<BoardImage>
+
 ) : BaseTimeEntity() {
     fun updateBoard(title: String, content: String) {
         this.title = title

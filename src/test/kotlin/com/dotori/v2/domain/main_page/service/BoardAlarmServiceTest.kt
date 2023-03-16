@@ -26,12 +26,12 @@ class BoardAlarmServiceTest : BehaviorSpec({
             roles = Collections.singletonList(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf()
         )
-        val board = Board(1, testMember, "title", "content")
-        every { boardRepository.findLastBoard() } returns board
+        val board = Board(1, testMember, "title", "content", boardImage = listOf())
+        every { boardRepository.findAll() } returns listOf(board)
         `when`("서비스를 실행하면") {
             val response = boardAlarmServiceImpl.execute()
             then("해당 게시물의 내용이 반환되어야함") {
-                response shouldBe BoardAlarmResDto(board)
+                response shouldBe BoardAlarmResDto(content = listOf(boardAlarmServiceImpl.toDto(board)))
             }
         }
     }
