@@ -24,6 +24,8 @@ class FindMemberRuleServiceImpl(
 
     private fun RuleViolation.toDto(): RuleDto =
         RuleDto(
-            rule = this.rule
+            id = this.id,
+            rule = this.rule,
+            createdDate = this.date
         )
 }
