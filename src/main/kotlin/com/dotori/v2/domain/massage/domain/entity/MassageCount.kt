@@ -12,14 +12,14 @@ class MassageCount(
     @Id
     val id: Long = 1,
     count: Long = 0,
-    limit: Byte = 5
+    limit: Int = 5
 ) {
     @Column(name = "massage_count")
     var count: Long = count
     private set
 
     @Column(name = "massage_limit")
-    var limit: Byte = limit
+    var limit: Int = limit
     private set
 
     fun addCount() {
@@ -34,7 +34,7 @@ class MassageCount(
         count = 0L
     }
 
-    fun updateLimit(limit: Byte){
+    fun updateLimit(limit: Int){
         this.limit = limit
     }
 }

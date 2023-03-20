@@ -4,6 +4,6 @@ import com.dotori.v2.domain.member.enums.SelfStudyStatus
 
 data class SelfStudyInfoResDto (
     val count: Long,
-    val limit: Short,
+    val limit: Int,
     val selfStudyStatus: SelfStudyStatus
 )

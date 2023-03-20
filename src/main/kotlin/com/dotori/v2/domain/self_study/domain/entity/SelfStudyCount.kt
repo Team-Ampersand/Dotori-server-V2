@@ -12,14 +12,14 @@ class SelfStudyCount(
     @Column(name = "selfStudyCount_id")
     val id: Long = 1,
     count: Long = 0,
-    limit: Short = 50
+    limit: Int = 50
 ) {
     @Column(name = "selfStudyCount_count")
     var count: Long = count
     private set
 
     @Column(name = "selfStudyCount_limit")
-    var limit: Short = limit
+    var limit: Int = limit
     private set
 
     fun addCount() {
@@ -34,7 +34,7 @@ class SelfStudyCount(
         this.count = count ?: this.count
     }
 
-    fun updateLimit(limit: Short){
+    fun updateLimit(limit: Int){
         this.limit = limit
     }
 }

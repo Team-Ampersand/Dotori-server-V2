@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/v2/admin/massage")
@@ -29,7 +30,7 @@ class AdminMassageController(
         ResponseEntity.ok(getMassageInfoService.execute())
 
     @PatchMapping("/limit")
-    fun updateMassageLimit(@RequestBody massageLimitReqDto: MassageLimitReqDto): ResponseEntity<Void> =
+    fun updateMassageLimit(@Valid @RequestBody massageLimitReqDto: MassageLimitReqDto): ResponseEntity<Void> =
         updateMassageLimitService.execute(massageLimitReqDto)
             .run { ResponseEntity.ok().build() }
 }

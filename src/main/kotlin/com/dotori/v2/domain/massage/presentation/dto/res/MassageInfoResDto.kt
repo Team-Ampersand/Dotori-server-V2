@@ -5,5 +5,5 @@ import com.dotori.v2.domain.member.enums.MassageStatus
 data class MassageInfoResDto(
     val count: Long,
     val massageStatus: MassageStatus,
-    val limit: Byte
+    val limit: Int
 )

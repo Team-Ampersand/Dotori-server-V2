@@ -6,6 +6,7 @@ import com.dotori.v2.domain.massage.presentation.dto.res.MassageMemberListResDto
 import com.dotori.v2.domain.massage.service.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/v2/developer/massage")
@@ -35,7 +36,7 @@ class DeveloperMassageController(
         ResponseEntity.ok(getMassageInfoService.execute())
 
     @PatchMapping("/limit")
-    fun updateMassageLimit(@RequestBody massageLimitReqDto: MassageLimitReqDto): ResponseEntity<Void> =
+    fun updateMassageLimit(@Valid @RequestBody massageLimitReqDto: MassageLimitReqDto): ResponseEntity<Void> =
         updateMassageLimitService.execute(massageLimitReqDto)
             .run { ResponseEntity.ok().build() }
 }

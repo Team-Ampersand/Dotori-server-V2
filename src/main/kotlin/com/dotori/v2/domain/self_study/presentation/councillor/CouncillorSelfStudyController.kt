@@ -8,6 +8,7 @@ import com.dotori.v2.domain.self_study.service.*
 import com.dotori.v2.domain.stu_info.presentation.data.req.SearchRequestDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/v2/councillor/self-study")
@@ -60,7 +61,7 @@ class CouncillorSelfStudyController(
             .run { ResponseEntity.ok().build() }
 
     @PatchMapping("/check/{memberId}")
-    fun updateSelfStudyCheck(@PathVariable memberId: Long, @RequestBody selfStudyCheckReqDto: SelfStudyCheckReqDto): ResponseEntity<Void> =
+    fun updateSelfStudyCheck(@PathVariable memberId: Long, @Valid @RequestBody selfStudyCheckReqDto: SelfStudyCheckReqDto): ResponseEntity<Void> =
         updateSelfStudyCheckService.execute(memberId, selfStudyCheckReqDto)
             .run { ResponseEntity.ok().build() }
 }
