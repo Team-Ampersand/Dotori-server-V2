@@ -17,8 +17,8 @@ class UpdateSelfStudyCheckServiceImpl(
     private val memberRepository: MemberRepository
 ) : UpdateSelfStudyCheckService {
     override fun execute(memberId: Long, selfStudyCheckReqDto: SelfStudyCheckReqDto) {
-        val member = (memberRepository.findByIdOrNull(memberId)
-            ?: throw MemberNotFoundException())
+        val member = memberRepository.findByIdOrNull(memberId)
+            ?: throw MemberNotFoundException()
         if (!selfStudyRepository.existsByMember(member))
             throw NotSelfStudyAppliedException()
         member.updateSelfStudyCheck(selfStudyCheckReqDto.selfStudyCheck)
