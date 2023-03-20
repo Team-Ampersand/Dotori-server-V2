@@ -24,7 +24,7 @@ class ApplyMassageServiceImpl(
         validDayOfWeekAndHourMassageUtil.validateApply()
         val member = userUtil.fetchCurrentUser()
         val massageCount = findMassageCountUtil.findMassageCount()
-        if (massageCount.count >= 50)
+        if (massageCount.count >= massageCount.limit)
             throw MassageOverException()
         massageCheckUtil.isMassageStatusCan(member)
         member.updateMassageStatus(MassageStatus.APPLIED)

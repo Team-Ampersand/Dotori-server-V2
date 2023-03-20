@@ -27,12 +27,14 @@ class GetMassageInfoServiceImpl(
         } catch (ex: BasicException){
             return MassageInfoResDto(
                 count = massageCount.count,
-                massageStatus = MassageStatus.CANT
+                massageStatus = MassageStatus.CANT,
+                limit = massageCount.limit
             )
         }
         return MassageInfoResDto(
             count = massageCount.count,
-            massageStatus = member.massageStatus
+            massageStatus = member.massageStatus,
+            limit = massageCount.limit
         )
     }
 }
