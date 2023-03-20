@@ -3,10 +3,7 @@ package com.dotori.v2.domain.rule.presentation.admin
 import com.dotori.v2.domain.rule.presentation.data.req.RuleGrantReqDto
 import com.dotori.v2.domain.rule.presentation.data.res.MemberListResDto
 import com.dotori.v2.domain.rule.presentation.data.res.RuleListResDto
-import com.dotori.v2.domain.rule.service.FindAdminRuleService
-import com.dotori.v2.domain.rule.service.FindAllAdminRuleService
-import com.dotori.v2.domain.rule.service.FindStudentService
-import com.dotori.v2.domain.rule.service.InsertRuleService
+import com.dotori.v2.domain.rule.service.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -17,7 +14,8 @@ class AdminRuleController(
     private val insertRuleService: InsertRuleService,
     private val findAllAdminRuleService: FindAllAdminRuleService,
     private val findAdminRuleService: FindAdminRuleService,
-    private val findStudentService: FindStudentService
+    private val findStudentService: FindStudentService,
+    private val deleteRuleService: DeleteRuleService
 ) {
 
     @PostMapping
@@ -39,5 +37,10 @@ class AdminRuleController(
         @RequestParam(value = "stuNum", required = false) stuNum: String?
     ): ResponseEntity<MemberListResDto> =
         ResponseEntity.status(HttpStatus.OK).body(findStudentService.execute(stuNum = stuNum, memberName = memberName))
+
+    @DeleteMapping("/{rule_id}")
+    fun deleteRule(@PathVariable rule_id: Long): ResponseEntity<Void> =
+        deleteRuleService.execute(rule_id)
+            .run { ResponseEntity.status(HttpStatus.OK).build() }
 
 }
