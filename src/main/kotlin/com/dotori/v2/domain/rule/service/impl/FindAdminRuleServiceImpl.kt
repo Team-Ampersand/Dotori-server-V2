@@ -4,7 +4,7 @@ import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
 import com.dotori.v2.domain.rule.domain.entity.RuleViolation
 import com.dotori.v2.domain.rule.domain.repository.RuleRepository
-import com.dotori.v2.domain.rule.presentation.data.dto.RuleDto
+import com.dotori.v2.domain.rule.presentation.data.res.RuleResDto
 import com.dotori.v2.domain.rule.presentation.data.res.RuleListResDto
 import com.dotori.v2.domain.rule.service.FindAdminRuleService
 import org.springframework.stereotype.Service
@@ -24,8 +24,8 @@ class FindAdminRuleServiceImpl(
                 .map { it.toDto() }
         )
 
-    private fun RuleViolation.toDto(): RuleDto =
-        RuleDto(
+    private fun RuleViolation.toDto(): RuleResDto =
+        RuleResDto(
             id = this.id,
             rule = this.rule,
             createdDate = this.date
