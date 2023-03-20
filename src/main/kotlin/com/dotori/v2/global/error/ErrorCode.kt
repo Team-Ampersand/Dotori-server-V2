@@ -52,6 +52,7 @@ enum class ErrorCode(
     SELF_STUDY_CANT_REQUEST_TIME(HttpStatus.ACCEPTED.value(), "자습신청은 오후 8시부터 오후 10시까지만 가능합니다."),
     SELF_STUDY_CANT_CANCEL_DATE(HttpStatus.ACCEPTED.value(), "자습신청을 취소 하실 수 없는 요일입니다."),
     SELF_STUDY_CANT_CANCEL_TIME(HttpStatus.ACCEPTED.value(), "자습신청은 오후 8시부터 오후 10시까지만 취소가 가능합니다."),
+    SELF_STUDY_NOT_APPLIED(HttpStatus.BAD_REQUEST.value(), "자습신청을 하지 않았습니다."),
 
 
     // *** MUSIC ***

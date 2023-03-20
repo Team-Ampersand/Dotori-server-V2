@@ -24,9 +24,10 @@ class GetSelfStudyRankControllerTest : BehaviorSpec({
     val cancelBanSelfStudyService = mockk<CancelBanSelfStudyService>()
     val changeSelfStudyLimitService = mockk<ChangeSelfStudyLimitService>()
     val selfStudyByStuNumAndNameService = mockk<GetSelfStudyByStuNumAndNameService>()
-    val adminSelfStudyController = AdminSelfStudyController(getSelfStudyInfoService, service, banSelfStudyService, cancelBanSelfStudyService, changeSelfStudyLimitService, selfStudyByStuNumAndNameService)
-    val councillorSelfStudyController = CouncillorSelfStudyController(applySelfStudyService, getSelfStudyInfoService, service, cancelSelfStudyService, banSelfStudyService, cancelBanSelfStudyService, changeSelfStudyLimitService, selfStudyByStuNumAndNameService)
-    val developerSelfStudyController = DeveloperSelfStudyController(applySelfStudyService, getSelfStudyInfoService, service, cancelSelfStudyService, cancelBanSelfStudyService, banSelfStudyService, changeSelfStudyLimitService, selfStudyByStuNumAndNameService)
+    val updateSelfStudyCheckService = mockk<UpdateSelfStudyCheckService>()
+    val adminSelfStudyController = AdminSelfStudyController(getSelfStudyInfoService, service, banSelfStudyService, cancelBanSelfStudyService, changeSelfStudyLimitService, selfStudyByStuNumAndNameService, updateSelfStudyCheckService)
+    val councillorSelfStudyController = CouncillorSelfStudyController(applySelfStudyService, getSelfStudyInfoService, service, cancelSelfStudyService, banSelfStudyService, cancelBanSelfStudyService, changeSelfStudyLimitService, selfStudyByStuNumAndNameService, updateSelfStudyCheckService)
+    val developerSelfStudyController = DeveloperSelfStudyController(applySelfStudyService, getSelfStudyInfoService, service, cancelSelfStudyService, cancelBanSelfStudyService, banSelfStudyService, changeSelfStudyLimitService, selfStudyByStuNumAndNameService, updateSelfStudyCheckService)
     val memberSelfStudyController = MemberSelfStudyController(applySelfStudyService, getSelfStudyInfoService, service, cancelSelfStudyService, selfStudyByStuNumAndNameService)
     every { service.execute() } returns SelfStudyMemberListResDto(mutableListOf())
     given("요청이 들어오면") {
