@@ -16,35 +16,45 @@ class SearchStudentServiceImpl(
 ) : SearchStudentService {
     override fun execute(
         searchRequestDto: SearchRequestDto
+    ): List<SearchStudentListResDto> =
+        getMemberCondition(
+            searchRequestDto,
+            if (searchRequestDto.name != null)
+                memberRepository.findAllByMemberNameStartingWithOrderByStuNumAsc(searchRequestDto.name)
+            else
+                memberRepository.findAllByOrderByStuNumAsc()
+        )
+
+
+    private fun getMemberCondition(
+        searchRequestDto: SearchRequestDto,
+        memberList: List<Member>
     ): List<SearchStudentListResDto> {
-        val memberList = memberRepository.findAll(Sort.by(Sort.Direction.ASC, "stuNum"))
-        return getMemberCondition(searchRequestDto, memberList)
-    }
 
-    private fun getMemberCondition(searchRequestDto: SearchRequestDto, memberList: List<Member>): List<SearchStudentListResDto> {
-        var filterMember: List<Member> = memberList
-
-        if(searchRequestDto.name != null)
-            filterMember = filterMember.filter { it.memberName == searchRequestDto.name }
-        if(searchRequestDto.grade != null)
-            filterMember = filterMember.filter { it.stuNum.substring(0, 1) == searchRequestDto.grade}
-        if(searchRequestDto.classNum != null)
-            filterMember = filterMember.filter { it.stuNum.substring(1, 2) == searchRequestDto.classNum }
-        if(searchRequestDto.gender != null)
-            filterMember = filterMember.filter { it.gender.name == searchRequestDto.gender }
-        if(searchRequestDto.role != null)
-            filterMember = filterMember.filter { it.roles[0].name == searchRequestDto.role }
-        if(searchRequestDto.selfStudyCheck != null) {
-            filterMember = filterMember.filter { it.selfStudyCheck == searchRequestDto.selfStudyCheck }
+        val filterMember = searchRequestDto.run {
+            memberList.asSequence().filter {
+                if (grade != null) it.stuNum.startsWith(grade) else true
+            }.filter {
+                if (classNum != null) it.stuNum.substring(1, 2) == classNum else true
+            }.filter {
+                if (gender != null) it.gender.name == gender else true
+            }.filter {
+                if (role != null) it.roles.getOrNull(0)?.name == role else true
+            }.filter {
+                if (selfStudyCheck != null) it.selfStudyCheck == selfStudyCheck else true
+            }.toList()
         }
-        return filterMember.
-                map { SearchStudentListResDto(
-                    email = it.email,
-                    memberName = it.memberName,
-                    stuNum = it.stuNum,
-                    gender = it.gender,
-                    role = it.roles[0],
-                    selfStudyCheck = it.selfStudyCheck
-                ) }
+
+        return filterMember.map {
+            SearchStudentListResDto(
+                id = it.id,
+                email = it.email,
+                memberName = it.memberName,
+                stuNum = it.stuNum,
+                gender = it.gender,
+                role = it.roles[0],
+                selfStudyCheck = it.selfStudyCheck
+            )
+        }
     }
 }

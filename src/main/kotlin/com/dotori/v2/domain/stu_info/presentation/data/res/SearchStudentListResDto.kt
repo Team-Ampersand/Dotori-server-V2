@@ -4,6 +4,7 @@ import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 
 data class SearchStudentListResDto(
+    val id: Long,
     val email: String?,
     val memberName: String,
     val stuNum: String,
