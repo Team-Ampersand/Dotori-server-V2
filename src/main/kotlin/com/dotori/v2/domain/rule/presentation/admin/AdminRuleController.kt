@@ -1,6 +1,7 @@
 package com.dotori.v2.domain.rule.presentation.admin
 
 import com.dotori.v2.domain.rule.presentation.data.req.RuleGrantReqDto
+import com.dotori.v2.domain.rule.presentation.data.req.StudentListReqDto
 import com.dotori.v2.domain.rule.presentation.data.res.MemberListResDto
 import com.dotori.v2.domain.rule.presentation.data.res.RuleListResDto
 import com.dotori.v2.domain.rule.service.*
@@ -23,24 +24,17 @@ class AdminRuleController(
         insertRuleService.execute(ruleGrantReqDto)
             .run { ResponseEntity.status(HttpStatus.CREATED).build() }
 
-    @GetMapping("/all/{stuNum}")
-    fun findAllViolationOfTheRule(@PathVariable stuNum: String): ResponseEntity<RuleListResDto> =
-        ResponseEntity.status(HttpStatus.OK).body(findAllAdminRuleService.execute(stuNum))
-
     @GetMapping("/{stuMum}")
     fun findViolationOfTheRule(@PathVariable stuMum: String): ResponseEntity<RuleListResDto> =
         ResponseEntity.status(HttpStatus.OK).body(findAdminRuleService.execute(stuMum))
 
     @GetMapping
-    fun findStudentByMemberNameAndClassId(
-        @RequestParam(value = "memberName", required = false) memberName: String?,
-        @RequestParam(value = "stuNum", required = false) stuNum: String?
-    ): ResponseEntity<MemberListResDto> =
-        ResponseEntity.status(HttpStatus.OK).body(findStudentService.execute(stuNum = stuNum, memberName = memberName))
+    fun findStudentByMemberNameAndClassId(studentListReqDto: StudentListReqDto): ResponseEntity<MemberListResDto> =
+        ResponseEntity.status(HttpStatus.OK).body(findStudentService.execute(studentListReqDto = studentListReqDto))
 
-    @DeleteMapping("/{rule_id}")
-    fun deleteRule(@PathVariable rule_id: Long): ResponseEntity<Void> =
-        deleteRuleService.execute(rule_id)
+    @DeleteMapping("/{ruleId}")
+    fun deleteRule(@PathVariable ruleId: Long): ResponseEntity<Void> =
+        deleteRuleService.execute(ruleId)
             .run { ResponseEntity.status(HttpStatus.OK).build() }
 
 }
