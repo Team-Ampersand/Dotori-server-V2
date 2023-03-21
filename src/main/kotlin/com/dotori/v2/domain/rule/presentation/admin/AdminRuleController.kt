@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/v2/admin/rule")
 class AdminRuleController(
     private val insertRuleService: InsertRuleService,
-    private val findAllAdminRuleService: FindAllAdminRuleService,
     private val findAdminRuleService: FindAdminRuleService,
     private val findStudentService: FindStudentService,
     private val deleteRuleService: DeleteRuleService
