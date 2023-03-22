@@ -9,10 +9,9 @@ interface MemberRepository : JpaRepository<Member, Long> {
     fun findByEmail(email: String?): Member?
     fun existsByEmail(email: String): Boolean
     fun findByStuNum(stuNum: String): Member?
-    fun findAllByMemberName(memberName: String): List<Member>
-    fun findAllByStuNum(stuNum: String): List<Member>
-    fun findAllByStuNumAndMemberName(stuNum: String, memberName: String): List<Member>
     fun findAllBySelfStudyCheck(check: Boolean): List<Member>
     fun findAllBySelfStudyStatus(selfStudyStatus: SelfStudyStatus): List<Member>
     fun findAllByMassageStatusOrMassageStatus(first: MassageStatus, second: MassageStatus): List<Member>
+    fun findAllByMemberNameStartingWithOrderByStuNumAsc(memberName: String): List<Member>
+    fun findAllByOrderByStuNumAsc(): List<Member>
 }

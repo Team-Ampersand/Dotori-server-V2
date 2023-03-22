@@ -6,6 +6,5 @@ data class MemberDto(
     val id: Long,
     val memberName: String,
     val stuNum: String,
-    val selfStudyStatus: Boolean,
     val rule: List<Rule>
 )
