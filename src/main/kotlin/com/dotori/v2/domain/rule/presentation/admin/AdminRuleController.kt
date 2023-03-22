@@ -23,16 +23,16 @@ class AdminRuleController(
         insertRuleService.execute(ruleGrantReqDto)
             .run { ResponseEntity.status(HttpStatus.CREATED).build() }
 
-    @GetMapping("/{stuMum}")
-    fun findViolationOfTheRule(@PathVariable stuMum: String): ResponseEntity<RuleListResDto> =
-        ResponseEntity.status(HttpStatus.OK).body(findAdminRuleService.execute(stuMum))
+    @GetMapping("/{stu_num}")
+    fun findViolationOfTheRule(@PathVariable("stu_num") stuNum: String): ResponseEntity<RuleListResDto> =
+        ResponseEntity.status(HttpStatus.OK).body(findAdminRuleService.execute(stuNum))
 
     @GetMapping
     fun findStudentByMemberNameAndClassId(studentListReqDto: StudentListReqDto): ResponseEntity<MemberListResDto> =
         ResponseEntity.status(HttpStatus.OK).body(findStudentService.execute(studentListReqDto = studentListReqDto))
 
-    @DeleteMapping("/{ruleId}")
-    fun deleteRule(@PathVariable ruleId: Long): ResponseEntity<Void> =
+    @DeleteMapping("/{rule_id}")
+    fun deleteRule(@PathVariable("rule_id") ruleId: Long): ResponseEntity<Void> =
         deleteRuleService.execute(ruleId)
             .run { ResponseEntity.status(HttpStatus.OK).build() }
 
