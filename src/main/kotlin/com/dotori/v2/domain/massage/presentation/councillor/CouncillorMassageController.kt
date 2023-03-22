@@ -1,17 +1,12 @@
 package com.dotori.v2.domain.massage.presentation.councillor
 
+import com.dotori.v2.domain.massage.presentation.dto.req.MassageLimitReqDto
 import com.dotori.v2.domain.massage.presentation.dto.res.MassageInfoResDto
 import com.dotori.v2.domain.massage.presentation.dto.res.MassageMemberListResDto
-import com.dotori.v2.domain.massage.service.ApplyMassageService
-import com.dotori.v2.domain.massage.service.CancelMassageService
-import com.dotori.v2.domain.massage.service.GetMassageInfoService
-import com.dotori.v2.domain.massage.service.GetMassageRankService
+import com.dotori.v2.domain.massage.service.*
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/v2/councillor/massage")
@@ -20,6 +15,7 @@ class CouncillorMassageController(
     private val cancelMassageService: CancelMassageService,
     private val getMassageRankService: GetMassageRankService,
     private val getMassageInfoService: GetMassageInfoService,
+    private val updateMassageLimitService: UpdateMassageLimitService
 ) {
     @PostMapping
     fun applyMassage(): ResponseEntity<Void> =
@@ -38,4 +34,9 @@ class CouncillorMassageController(
     @GetMapping
     fun getMassageInfo(): ResponseEntity<MassageInfoResDto> =
         ResponseEntity.ok(getMassageInfoService.execute())
+
+    @PatchMapping("/limit")
+    fun updateMassageLimit(@Valid @RequestBody massageLimitReqDto: MassageLimitReqDto): ResponseEntity<Void> =
+        updateMassageLimitService.execute(massageLimitReqDto)
+            .run { ResponseEntity.ok().build() }
 }
