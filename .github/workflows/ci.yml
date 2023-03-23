@@ -2,7 +2,6 @@ name: Java CICD with Gradle
 
 on: [ pull_request ]
 
-
 jobs:
   build:
 
