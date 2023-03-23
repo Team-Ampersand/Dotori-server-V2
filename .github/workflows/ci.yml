@@ -1,6 +1,10 @@
 name: Java CICD with Gradle
 
-on: [ pull_request ]
+on:
+  pull_request:
+    branches:
+      - 'develop'
+      - 'master'
 
 jobs:
   build:
