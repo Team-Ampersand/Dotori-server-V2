@@ -57,7 +57,7 @@ class DevMemberConfig(
             email = "s00003@gsm.hs.kr",
             gender = Gender.MAN,
             password = passwordEncoder.encode("string1!"),
-            roles = mutableListOf(Role.ROLE_DEVELOPER),
+            roles = mutableListOf(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf()
         )
         memberRepository.save(man)
@@ -68,7 +68,7 @@ class DevMemberConfig(
             email = "s00004@gsm.hs.kr",
             gender = Gender.WOMAN,
             password = passwordEncoder.encode("string1!"),
-            roles = mutableListOf(Role.ROLE_DEVELOPER),
+            roles = mutableListOf(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf()
         )
         memberRepository.save(woman)
