@@ -2,7 +2,7 @@ package com.dotori.v2.domain.rule.service.impl
 
 import com.dotori.v2.domain.rule.domain.entity.RuleViolation
 import com.dotori.v2.domain.rule.domain.repository.RuleRepository
-import com.dotori.v2.domain.rule.presentation.data.dto.RuleDto
+import com.dotori.v2.domain.rule.presentation.data.res.RuleResDto
 import com.dotori.v2.domain.rule.presentation.data.res.RuleListResDto
 import com.dotori.v2.domain.rule.service.FindDeveloperRuleService
 import com.dotori.v2.global.util.UserUtil
@@ -26,8 +26,10 @@ class FindDeveloperRuleServiceImpl(
         )
 
 
-    private fun RuleViolation.toDto(): RuleDto =
-        RuleDto(
-            rule = this.rule
+    private fun RuleViolation.toDto(): RuleResDto =
+        RuleResDto(
+            id = this.id,
+            rule = this.rule,
+            createdDate = this.date
         )
 }
