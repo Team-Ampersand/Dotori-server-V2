@@ -1,10 +1,6 @@
 name: Java CICD with Gradle
 
-on:
-  push:
-    branches: [ "develop" ]
-  pull_request:
-    branches: [ "develop" ]
+on: [ pull_request ]
 
 jobs:
   build:
@@ -24,6 +20,11 @@ jobs:
           mkdir ./src/main/resources
           touch ./src/main/resources/application.yml
           echo "${{ secrets.APPLICATION_YML }}" >> ./src/main/resources/application.yml   
+
+      - name: Create application-dev.yml
+        run: |
+          touch ./src/main/resources/application-dev.yml
+          echo "${{ secrets.APPLICATION_DEV_YML }}" >> ./src/main/resources/application-dev.yml
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
