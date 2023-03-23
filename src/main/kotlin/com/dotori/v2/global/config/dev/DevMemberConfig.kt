@@ -23,7 +23,7 @@ class DevMemberConfig(
             stuNum = "0000",
             email = "s00000@gsm.hs.kr",
             gender = Gender.PENDING,
-            password = passwordEncoder.encode("string"),
+            password = passwordEncoder.encode("string1!"),
             roles = mutableListOf(Role.ROLE_ADMIN),
             ruleViolation = mutableListOf()
         )
@@ -34,7 +34,7 @@ class DevMemberConfig(
             stuNum = "0001",
             email = "s00001@gsm.hs.kr",
             gender = Gender.PENDING,
-            password = passwordEncoder.encode("string"),
+            password = passwordEncoder.encode("string1!"),
             roles = mutableListOf(Role.ROLE_DEVELOPER),
             ruleViolation = mutableListOf()
         )
@@ -45,7 +45,7 @@ class DevMemberConfig(
             stuNum = "0002",
             email = "s00002@gsm.hs.kr",
             gender = Gender.PENDING,
-            password = passwordEncoder.encode("string"),
+            password = passwordEncoder.encode("string1!"),
             roles = mutableListOf(Role.ROLE_COUNCILLOR),
             ruleViolation = mutableListOf()
         )
@@ -56,7 +56,7 @@ class DevMemberConfig(
             stuNum = "3101",
             email = "s00003@gsm.hs.kr",
             gender = Gender.MAN,
-            password = passwordEncoder.encode("string"),
+            password = passwordEncoder.encode("string1!"),
             roles = mutableListOf(Role.ROLE_DEVELOPER),
             ruleViolation = mutableListOf()
         )
@@ -66,8 +66,8 @@ class DevMemberConfig(
             memberName = "여성유저",
             stuNum = "3201",
             email = "s00004@gsm.hs.kr",
-            gender = Gender.MAN,
-            password = passwordEncoder.encode("string"),
+            gender = Gender.WOMAN,
+            password = passwordEncoder.encode("string1!"),
             roles = mutableListOf(Role.ROLE_DEVELOPER),
             ruleViolation = mutableListOf()
         )
