@@ -21,7 +21,7 @@ class ApplyMassageServiceImpl(
     private val massageCheckUtil: MassageCheckUtil,
 ) : ApplyMassageService {
     override fun execute() {
-        validDayOfWeekAndHourMassageUtil.validateApply()
+//        validDayOfWeekAndHourMassageUtil.validateApply()
         val member = userUtil.fetchCurrentUser()
         val massageCount = findMassageCountUtil.findMassageCount()
         if (massageCount.count >= massageCount.limit)
