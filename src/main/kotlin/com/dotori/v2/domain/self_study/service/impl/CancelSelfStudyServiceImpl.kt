@@ -20,7 +20,7 @@ class CancelSelfStudyServiceImpl(
     private val selfStudyCheckUtil: SelfStudyCheckUtil
 ) : CancelSelfStudyService {
     override fun execute() {
-        validDayOfWeekAndHourUtil.validateCancel()
+//        validDayOfWeekAndHourUtil.validateCancel()
         val findSelfStudyCount = findSelfStudyCountUtil.findSelfStudyCount()
         val member = userUtil.fetchCurrentUser()
         selfStudyCheckUtil.isSelfStudyStatusApplied(member)
