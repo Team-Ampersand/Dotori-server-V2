@@ -23,6 +23,7 @@ class FindStudentServiceImpl(
             else
                 memberRepository.findAllByOrderByStuNumAsc()
         )
+
     private fun getMemberCondition(studentListReqDto: StudentListReqDto, memberList: List<Member>): MemberListResDto =
         MemberListResDto(
             students = studentListReqDto.run {
@@ -42,6 +43,7 @@ class FindStudentServiceImpl(
             id = this.id,
             stuNum = this.stuNum,
             memberName = this.memberName,
+            gender = this.gender,
             rule = this.ruleViolation
                 .map { it.rule }
         )
