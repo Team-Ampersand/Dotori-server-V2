@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query
 
 interface MassageRepository : JpaRepository<Massage, Long>{
     fun deleteByMember(member: Member)
-    @Query("select selfStudy from SelfStudy selfStudy order by selfStudy.createdDate asc")
-    fun findAllOrderByCreatedDateAsc(): List<SelfStudy>
+    @Query("select massage from Massage massage order by massage.createdDate asc")
+    fun findAllOrderByCreatedDateAsc(): List<Massage>
 }
