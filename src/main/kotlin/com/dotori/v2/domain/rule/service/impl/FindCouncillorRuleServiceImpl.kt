@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = true, rollbackFor = [Exception::class])
-class FindCouncillorServiceImpl(
+class FindCouncillorRuleServiceImpl(
     private val userUtil: UserUtil
 ) : FindCouncillorRuleService {
     override fun execute(): RuleListResDto {
