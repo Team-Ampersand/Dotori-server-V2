@@ -21,7 +21,7 @@ class ApplySelfStudyServiceImpl(
     private val validDayOfWeekAndHourUtil: ValidDayOfWeekAndHourUtil
 ) : ApplySelfStudyService{
     override fun execute() {
-//        validDayOfWeekAndHourUtil.validateApply()
+        validDayOfWeekAndHourUtil.validateApply()
         val member = userUtil.fetchCurrentUser()
         val selfStudyCount = findSelfStudyCountUtil.findSelfStudyCount()
         if (selfStudyCount.count >= selfStudyCount.limit)
