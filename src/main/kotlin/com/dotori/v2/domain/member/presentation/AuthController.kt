@@ -1,6 +1,6 @@
 package com.dotori.v2.domain.member.presentation
 
-import com.dotori.v2.domain.member.presentation.data.req.NewPasswordReqDto
+import com.dotori.v2.domain.member.presentation.data.req.NoAuthNewPasswordReqDto
 import com.dotori.v2.domain.member.presentation.data.req.SignInReqDto
 import com.dotori.v2.domain.member.presentation.data.req.SignupReqDto
 import com.dotori.v2.domain.member.presentation.data.res.RefreshResDto
@@ -40,7 +40,7 @@ class AuthController (
         ResponseEntity.ok(refreshService.execute(refreshToken))
 
     @PatchMapping("/password")
-    fun changePassword(@Valid @RequestBody newPasswordReqDto: NewPasswordReqDto): ResponseEntity<Void> =
+    fun changePassword(@Valid @RequestBody newPasswordReqDto: NoAuthNewPasswordReqDto): ResponseEntity<Void> =
         changePasswordService.execute(newPasswordReqDto)
             .run { ResponseEntity.ok().build() }
 }

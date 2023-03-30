@@ -3,7 +3,7 @@ package com.dotori.v2.domain.member.service.impl
 import com.dotori.v2.domain.email.domain.repository.EmailCertificateRepository
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.email.exception.EmailNotBeenException
-import com.dotori.v2.domain.email.exception.EmailSendFailException
+import com.dotori.v2.domain.email.exception.EmailAuthNotFoundException
 import com.dotori.v2.domain.member.exception.MemberAlreadyException
 import com.dotori.v2.domain.member.presentation.data.req.SignupReqDto
 import com.dotori.v2.domain.member.service.SignupService
@@ -20,7 +20,7 @@ class SignupServiceImpl(
 ): SignupService {
     override fun execute(signupReqDto: SignupReqDto): Long {
         val emailCertificate = emailCertificateRepository.findByEmail(signupReqDto.email)
-            ?: throw EmailSendFailException()
+            ?: throw EmailAuthNotFoundException()
         if(!emailCertificate.authentication)
             throw EmailNotBeenException()
         emailCertificateRepository.delete(emailCertificate)
