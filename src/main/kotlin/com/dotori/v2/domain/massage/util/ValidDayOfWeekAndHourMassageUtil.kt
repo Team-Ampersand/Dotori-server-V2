@@ -19,7 +19,7 @@ class ValidDayOfWeekAndHourMassageUtil {
             throw NotMassageApplyDayException()
         if (hour == 20 && minute > 20)
             return
-        throw NotMassageCancelHourException()
+        throw NotMassageApplyHourException()
     }
 
     fun validateCancel() {
