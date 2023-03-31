@@ -23,7 +23,7 @@ class GetBoardsServiceImpl(
             id = this.id,
             title = this.title,
             content = this.content,
-            roles = this.member.roles[0],
+            role = this.member.roles[0],
             createdDate = this.createdDate
         )
 
