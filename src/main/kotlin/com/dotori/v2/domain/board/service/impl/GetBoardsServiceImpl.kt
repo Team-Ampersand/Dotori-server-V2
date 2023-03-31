@@ -24,7 +24,7 @@ class GetBoardsServiceImpl(
         BoardResDto(
             id = board.id,
             title = board.title,
-            roles = board.member.roles,
+            roles = board.member.roles[0],
             createdDate = board.createdDate
         )
 

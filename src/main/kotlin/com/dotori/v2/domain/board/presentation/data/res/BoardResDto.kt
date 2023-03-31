@@ -6,6 +6,6 @@ import java.time.LocalDateTime
 data class BoardResDto(
     val id: Long,
     val title: String,
-    val roles: List<Role>,
+    val roles: Role,
     val createdDate: LocalDateTime
 )

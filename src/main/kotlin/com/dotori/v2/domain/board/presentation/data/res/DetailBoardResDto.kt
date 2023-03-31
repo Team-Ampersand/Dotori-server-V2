@@ -8,7 +8,7 @@ data class DetailBoardResDto(
     val id: Long,
     val title: String,
     val content: String,
-    val roles: List<Role>,
+    val role: Role,
     val boardImage: List<BoardImage>,
     val createdDate: LocalDateTime,
     val modifiedDate: LocalDateTime?
