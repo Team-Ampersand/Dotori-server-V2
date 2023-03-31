@@ -72,5 +72,8 @@ enum class ErrorCode(
 
     // *** RULE ***
     RULE_NO_HISTORY(HttpStatus.ACCEPTED.value(), "규정위반 내역이 없습니다."),
-    RULE_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "해당 규정위반 내역을 찾지 못하였습니다.")
+    RULE_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "해당 규정위반 내역을 찾지 못하였습니다."),
+
+    //*** MAIL ***
+    MAIL_AUTH_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "메일을 발송하지 않았거나 만료되었습니다.")
 }

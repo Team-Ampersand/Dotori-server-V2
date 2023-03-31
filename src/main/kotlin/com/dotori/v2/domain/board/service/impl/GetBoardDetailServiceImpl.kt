@@ -27,7 +27,7 @@ class GetBoardDetailServiceImpl(
             id = board.id,
             title = board.title,
             content = board.content,
-            roles = board.member.roles,
+            role = board.member.roles[0],
             boardImage = board.boardImage,
             createdDate = board.createdDate,
             modifiedDate = board.modifiedDate
