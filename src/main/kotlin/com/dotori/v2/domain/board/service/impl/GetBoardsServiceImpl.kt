@@ -13,19 +13,18 @@ import org.springframework.transaction.annotation.Transactional
 class GetBoardsServiceImpl(
     private val boardRepository: BoardRepository,
 ) : GetBoardsService {
-    override fun execute(): ListBoardResDto {
-        return ListBoardResDto(
-            content = boardRepository.findAll()
-                .map { toDto(it) }
-        )
-    }
+    override fun execute(): ListBoardResDto = ListBoardResDto(
+        boardList = boardRepository.findAll()
+            .map { it.toDto() }
+    )
 
-    private fun toDto(board: Board): BoardResDto =
+    private fun Board.toDto(): BoardResDto =
         BoardResDto(
-            id = board.id,
-            title = board.title,
-            roles = board.member.roles[0],
-            createdDate = board.createdDate
+            id = this.id,
+            title = this.title,
+            content = this.content,
+            roles = this.member.roles[0],
+            createdDate = this.createdDate
         )
 
 }
