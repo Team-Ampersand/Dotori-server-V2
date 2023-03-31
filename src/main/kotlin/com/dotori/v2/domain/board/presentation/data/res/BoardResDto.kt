@@ -7,6 +7,6 @@ data class BoardResDto(
     val id: Long,
     val title: String,
     val content: String,
-    val roles: Role,
+    val role: Role,
     val createdDate: LocalDateTime
 )
