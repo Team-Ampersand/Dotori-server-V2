@@ -5,7 +5,7 @@ import com.dotori.v2.global.entity.BaseTimeEntity
 import javax.persistence.*
 
 @Entity
-@Table(name = "Massage")
+@Table(name = "massage")
 class Massage(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

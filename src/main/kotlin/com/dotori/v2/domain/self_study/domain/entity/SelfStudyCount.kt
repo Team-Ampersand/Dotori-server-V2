@@ -6,7 +6,7 @@ import javax.persistence.Id
 import javax.persistence.Table
 
 @Entity
-@Table(name = "SelfStudyCount")
+@Table(name = "self_study_count")
 class SelfStudyCount(
     @Id
     @Column(name = "selfStudyCount_id")
