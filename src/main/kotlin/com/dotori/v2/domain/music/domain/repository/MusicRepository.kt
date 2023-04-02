@@ -12,6 +12,6 @@ interface MusicRepository : JpaRepository<Music, Long> {
     @Query("update Member member set member.member_music = 'CAN'", nativeQuery = true)
     fun updateMusicStatusMemberByMember()
 
-    @Query(value = "select * from Music music where music.created_date like :date%", nativeQuery = true)
+    @Query(value = "select * from music where created_date like :date%", nativeQuery = true)
     fun findAllByCreatedDate(@Param("date") date: LocalDate): List<Music>
 }
