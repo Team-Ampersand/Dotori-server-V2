@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@Table(name = "Email_Certificate")
+@Table(name = "email_certificate")
 class EmailCertificate(
     @Column(name = "certificate_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

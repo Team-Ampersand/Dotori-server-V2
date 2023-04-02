@@ -6,7 +6,7 @@ import javax.persistence.*
 
 
 @Entity
-@Table(name = "Music")
+@Table(name = "music")
 class Music(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

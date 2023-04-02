@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 
-@Entity
+@Entity(name = "member")
 class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
