@@ -8,7 +8,7 @@ import javax.persistence.*
 
 
 @Entity
-@Table(name = "RuleViolation")
+@Table(name = "rule_violation")
 class RuleViolation(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
