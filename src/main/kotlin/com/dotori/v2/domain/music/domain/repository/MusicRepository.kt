@@ -9,7 +9,7 @@ import java.time.LocalDate
 
 interface MusicRepository : JpaRepository<Music, Long> {
     @Modifying
-    @Query("update Member member set member.member_music = 'CAN'", nativeQuery = true)
+    @Query("update member set member_music = 'CAN'", nativeQuery = true)
     fun updateMusicStatusMemberByMember()
 
     @Query(value = "select * from music where created_date like :date%", nativeQuery = true)
