@@ -18,7 +18,7 @@ class BoardAlarmServiceImpl(
 ) : BoardAlarmService {
     override fun execute(): BoardAlarmResDto =
         BoardAlarmResDto(
-            content = boardRepository.findAll()
+            content = boardRepository.findAllByOrderByCreatedDateDesc()
                 .map { toDto(it) }
         )
 
