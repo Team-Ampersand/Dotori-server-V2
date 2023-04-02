@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.Query
 import java.time.LocalDateTime
 
 interface BoardRepository : JpaRepository<Board, Long> {
+    fun findAllByOrderByCreatedDateDesc(): List<Board>
 }
