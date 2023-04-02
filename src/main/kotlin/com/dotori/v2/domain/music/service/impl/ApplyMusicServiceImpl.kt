@@ -36,7 +36,7 @@ class ApplyMusicServiceImpl(
         )
 
     private fun validDayOfWeek(dayOfWeek: DayOfWeek) {
-        if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
+        if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY)
             throw MusicCantRequestDateException()
     }
 
