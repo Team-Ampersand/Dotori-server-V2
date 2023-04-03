@@ -4,6 +4,7 @@ import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.self_study.domain.repository.SelfStudyRepository
 import com.dotori.v2.domain.self_study.service.UpdateSelfStudyStatusService
+import com.dotori.v2.domain.self_study.util.FindSelfStudyCountUtil
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
@@ -14,12 +15,14 @@ import java.time.LocalDateTime
 class UpdateSelfStudyStatusServiceImpl(
     private val selfStudyRepository: SelfStudyRepository,
     private val memberRepository: MemberRepository,
+    private val selfStudyCountUtil: FindSelfStudyCountUtil
 ) : UpdateSelfStudyStatusService{
     override fun execute(){
         selfStudyRepository.deleteAll()
         updateSelfStudyStatus()
         updateUnBanSelfStudy()
         updateSelfStudyCheck()
+        selfStudyCountUtil.findSelfStudyCount().updateCount(0)
     }
 
     private fun updateSelfStudyCheck() {
