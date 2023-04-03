@@ -13,9 +13,9 @@ enum class ErrorCode(
     // *** MASSAGE ***
     MASSAGE_ALREADY(HttpStatus.CONFLICT.value(), "이미 안마의자 신청을 신청하신 회원입니다."),
     MASSAGE_OVER(HttpStatus.CONFLICT.value(), "안마의자 신청 인원이 5명을 초과 하였습니다."),
-    MASSAGE_CANT_REQUEST_THIS_TIME(HttpStatus.ACCEPTED.value(), "안마의자 신청은 오후 8시부터 오후 10시까지만 신청이 가능합니다."),
+    MASSAGE_CANT_REQUEST_THIS_TIME(HttpStatus.ACCEPTED.value(), "안마의자 신청은 오후 8시 20분부터 오후 9시까지만 신청이 가능합니다."),
     MASSAGE_CANT_REQUEST_THIS_DATE(HttpStatus.ACCEPTED.value(), "안마의자 신청을 하실 수 없는 요일입니다."),
-    MASSAGE_CANT_CANCEL_THIS_TIME(HttpStatus.ACCEPTED.value(), "안마의자 신청 취소는 오후 8시부터 오후 10시까지만 신청 취소가 가능합니다."),
+    MASSAGE_CANT_CANCEL_THIS_TIME(HttpStatus.ACCEPTED.value(), "안마의자 신청 취소는 오후 8시 20분부터 오후 9시까지만 신청 취소가 가능합니다."),
     MASSAGE_CANT_CANCEL_THIS_DATE(HttpStatus.ACCEPTED.value(), "안마의자 신청 취소를 할 수 없는 요일입니다."),
     MASSAGE_ANYONE_NOT_REQUEST(HttpStatus.ACCEPTED.value(), "안마의자를 신청한 학생이 없습니다"),
     MASSAGE_CANT_CANCEL_REQUEST(HttpStatus.ACCEPTED.value(), "안마의자 신청을 취소할 수 있는 상태가 아닙니다."),
@@ -49,9 +49,9 @@ enum class ErrorCode(
     SELF_STUDY_NOT_FOUND(HttpStatus.ACCEPTED.value(), "자습신청한 학생이 없습니다."),
     SELF_STUDY_CANT_CANCEL(HttpStatus.ACCEPTED.value(), "자습신청을 취소할 수 있는 상태가 아닙니다."),
     SELF_STUDY_CANT_REQUEST_DATE(HttpStatus.ACCEPTED.value(), "자습신청을 하실 수 없는 요일입니다."),
-    SELF_STUDY_CANT_REQUEST_TIME(HttpStatus.ACCEPTED.value(), "자습신청은 오후 8시부터 오후 10시까지만 가능합니다."),
+    SELF_STUDY_CANT_REQUEST_TIME(HttpStatus.ACCEPTED.value(), "자습신청은 오후 8시부터 오후 9시까지만 가능합니다."),
     SELF_STUDY_CANT_CANCEL_DATE(HttpStatus.ACCEPTED.value(), "자습신청을 취소 하실 수 없는 요일입니다."),
-    SELF_STUDY_CANT_CANCEL_TIME(HttpStatus.ACCEPTED.value(), "자습신청은 오후 8시부터 오후 10시까지만 취소가 가능합니다."),
+    SELF_STUDY_CANT_CANCEL_TIME(HttpStatus.ACCEPTED.value(), "자습신청은 오후 8시부터 오후 9시까지만 취소가 가능합니다."),
     SELF_STUDY_NOT_APPLIED(HttpStatus.BAD_REQUEST.value(), "자습신청을 하지 않았습니다."),
 
 
