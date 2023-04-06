@@ -1,6 +1,8 @@
 package com.dotori.v2.domain.self_study.service.impl
 
+import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
+import com.dotori.v2.domain.self_study.domain.entity.SelfStudyCount
 import com.dotori.v2.domain.self_study.domain.repository.SelfStudyCountRepository
 import com.dotori.v2.domain.self_study.excetpion.SelfStudyOverException
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
@@ -21,21 +23,29 @@ class GetSelfStudyInfoServiceImpl(
     override fun execute(): SelfStudyInfoResDto {
         val selfStudyCount = selfStudyCountRepository.findSelfStudyCountById(1)
         val member = userUtil.fetchCurrentUser()
-        try {
-            validDayOfWeekAndHourUtil.validateApply()
-            if (selfStudyCount.count >= selfStudyCount.limit)
-                throw SelfStudyOverException()
-        } catch (ex: BasicException){
+        if (isSelfStudyStatusCan(member) && validSelfStudyApplyCant(selfStudyCount))
             return SelfStudyInfoResDto(
                 count = selfStudyCount.count,
                 limit = selfStudyCount.limit,
                 selfStudyStatus = SelfStudyStatus.CANT
             )
-        }
         return SelfStudyInfoResDto(
             count = selfStudyCount.count,
             limit = selfStudyCount.limit,
             selfStudyStatus = member.selfStudyStatus
         )
+    }
+
+    private fun isSelfStudyStatusCan(member: Member) = member.selfStudyStatus == SelfStudyStatus.CAN
+
+    private fun validSelfStudyApplyCant(selfStudyCount: SelfStudyCount): Boolean {
+        try {
+            validDayOfWeekAndHourUtil.validateApply()
+            if (selfStudyCount.count >= selfStudyCount.limit)
+                throw SelfStudyOverException()
+        } catch (ex: BasicException) {
+            return true
+        }
+        return false
     }
 }
