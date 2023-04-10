@@ -21,7 +21,7 @@ class ChangePasswordControllerTest : BehaviorSpec({
 
     given("요청이 들어오면") {
         `when`("is received") {
-            val request = NewPasswordReqDto("", "")
+            val request = NewPasswordReqDto("", "", "")
             every { changePasswordService.execute(request) } returns Unit
             val response = authController.changePassword(request)
             then("서비스가 한번은 실행되어야 함") {

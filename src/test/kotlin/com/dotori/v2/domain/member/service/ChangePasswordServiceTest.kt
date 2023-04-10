@@ -36,10 +36,9 @@ class ChangePasswordServiceTest : BehaviorSpec({
             roles = Collections.singletonList(Role.ROLE_MEMBER)
         )
         val emailCertificate = EmailCertificate(1, testMember.email, "testKey", LocalDateTime.now(), true)
-        val request = NoAuthNewPasswordReqDto("test@gsm.hs.kr", testMember.password, "1234")
+        val request = NoAuthNewPasswordReqDto("test@gsm.hs.kr", "1234")
         every { repository.findByEmail(request.email) } returns testMember
         every { emailCertificateRepository.findByEmail(testMember.email) } returns emailCertificate
-        every { passwordEncoder.matches(request.currentPassword, testMember.password) } returns true
         every { passwordEncoder.encode(request.newPassword) } returns request.newPassword
         `when`("서비스를 실행하면"){
             changePasswordServiceImpl.execute(request)

@@ -26,8 +26,6 @@ class ChangePasswordServiceImpl(
             throw EmailNotBeenException()
         val member = (memberRepository.findByEmail(newPasswordReqDto.email)
             ?: throw MemberNotFoundException())
-        if (!passwordEncoder.matches(newPasswordReqDto.currentPassword, member.password))
-            throw PasswordMismatchException()
         member.updatePassword(passwordEncoder.encode(newPasswordReqDto.newPassword))
     }
 }
