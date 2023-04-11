@@ -34,6 +34,7 @@ class GetSelfStudyInfoServiceTest : BehaviorSpec({
         every { userUtil.fetchCurrentUser() } returns testMember
         val selfStudyCount = SelfStudyCount(id = 1)
         every { selfStudyCountRepository.findSelfStudyCountById(1) } returns selfStudyCount
+        every { validDayOfWeekAndHourUtil.validateApply() } returns Unit
         selfStudyCount.addCount()
         selfStudyCount.addCount()
         `when`("서비스를 실행하면"){
