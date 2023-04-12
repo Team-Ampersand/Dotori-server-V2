@@ -46,7 +46,7 @@ class DeveloperBoardController(
         deleteBoardService.execute(board_id)
             .run { ResponseEntity.status(HttpStatus.OK).build() }
 
-    @DeleteMapping()
+    @DeleteMapping
     fun deleteMultipleBoard(@RequestBody deleteMultipleBoardReqDto: DeleteMultipleBoardReqDto): ResponseEntity<Void> =
         deleteMultipleBoardService.execute(deleteMultipleBoardReqDto)
             .run { ResponseEntity.status(HttpStatus.OK).build() }
