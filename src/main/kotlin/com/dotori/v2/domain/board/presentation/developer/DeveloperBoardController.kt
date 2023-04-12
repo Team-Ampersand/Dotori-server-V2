@@ -1,6 +1,7 @@
 package com.dotori.v2.domain.board.presentation.developer
 
 import com.dotori.v2.domain.board.presentation.data.req.CreateBoardReqDto
+import com.dotori.v2.domain.board.presentation.data.req.DeleteMultipleBoardReqDto
 import com.dotori.v2.domain.board.presentation.data.req.ModifyBoardReqDto
 import com.dotori.v2.domain.board.presentation.data.res.DetailBoardResDto
 import com.dotori.v2.domain.board.presentation.data.res.ListBoardResDto
@@ -20,6 +21,7 @@ class DeveloperBoardController(
     private val createBoardService: CreateBoardService,
     private val modifyBoardService: ModifyBoardService,
     private val deleteBoardService: DeleteBoardService,
+    private val deleteMultipleBoardService: DeleteMultipleBoardService,
     private val getBoardsService: GetBoardsService,
     private val getBoardDetailService: GetBoardDetailService
 ) {
@@ -42,6 +44,11 @@ class DeveloperBoardController(
     @DeleteMapping("/{board_id}")
     fun deleteBoard(@PathVariable board_id: Long): ResponseEntity<Void> =
         deleteBoardService.execute(board_id)
+            .run { ResponseEntity.status(HttpStatus.OK).build() }
+
+    @DeleteMapping()
+    fun deleteMultipleBoard(@RequestBody deleteMultipleBoardReqDto: DeleteMultipleBoardReqDto): ResponseEntity<Void> =
+        deleteMultipleBoardService.execute(deleteMultipleBoardReqDto)
             .run { ResponseEntity.status(HttpStatus.OK).build() }
 
     @GetMapping

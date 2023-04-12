@@ -1,6 +1,5 @@
 package com.dotori.v2.domain.email.domain.entity
 
-import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.global.entity.BaseTimeEntity
 import java.time.LocalDateTime
 import javax.persistence.*
