@@ -58,6 +58,7 @@ enum class ErrorCode(
     // *** MUSIC ***
     MUSIC_ALREADY(HttpStatus.CONFLICT.value(), "이미 음악을 신청하신 회원입니다."),
     MUSIC_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "해당 신청된 음악을 찾을 수 없습니다."),
+    MUSIC_NOT_MY(HttpStatus.FORBIDDEN.value(),"자신이 신청한 음악이 아닙니다"),
     MUSIC_NOT_REQUESTED(HttpStatus.ACCEPTED.value(), "신청된 음악이 없습니다."),
     MUSIC_CANT_REQUEST_DATE(HttpStatus.ACCEPTED.value(), "음악신청을 하실 수 없는 요일입니다."),
     MUSIC_TODAY_NOT_REQUESTED(HttpStatus.ACCEPTED.value(), "오늘 신청된 음악이 없습니다."),

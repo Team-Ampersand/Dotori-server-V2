@@ -30,10 +30,11 @@ dependencies {
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
-    testImplementation("io.kotest:kotest-runner-junit5:5.3.2")
+    testImplementation("io.kotest:kotest-runner-junit5:5.5.5")
     testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
-    testImplementation("io.kotest:kotest-assertions-core:5.3.2")
-    testImplementation("io.mockk:mockk:1.12.0")
+    testImplementation("io.kotest:kotest-assertions-core:5.5.5")
+    testImplementation("io.kotest:kotest-framework-engine-jvm:5.5.5")
+    testImplementation("io.mockk:mockk:1.13.4")
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
@@ -52,3 +53,15 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+buildscript {
+    repositories {
+        maven {
+            url = uri("https://plugins.gradle.org/m2/")
+        }
+    }
+    dependencies {
+        classpath("io.kotest:kotest-gradle-plugin:0.4.10")
+    }
+}
+apply(plugin = "io.kotest")

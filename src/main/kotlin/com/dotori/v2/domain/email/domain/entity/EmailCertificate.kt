@@ -16,7 +16,7 @@ class EmailCertificate(
     val email: String,
     @Column(name = "certificate_key", nullable = false)
     val key: String,
-    @Column(name = "certificate_expiredTime", nullable = false)
+    @Column(name = "certificate_expired_time", nullable = false)
     val expiredTime: LocalDateTime,
     @Column(name = "certificate_authentication", nullable = false)
     val authentication: Boolean
