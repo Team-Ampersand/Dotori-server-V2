@@ -4,6 +4,7 @@ import com.dotori.v2.domain.music.presentation.data.req.ApplyMusicReqDto
 import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
 import com.dotori.v2.domain.music.service.ApplyMusicService
 import com.dotori.v2.domain.music.service.DeleteMusicService
+import com.dotori.v2.domain.music.service.DeleteMyMusicService
 import com.dotori.v2.domain.music.service.FindMusicsService
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
@@ -17,7 +18,7 @@ import java.time.LocalDateTime
 class MemberMusicController(
     private val applyMusicService: ApplyMusicService,
     private val findMusicsService: FindMusicsService,
-    private val deleteMusicService: DeleteMusicService
+    private val deleteMyMusicService: DeleteMyMusicService
 ) {
     @PostMapping
     fun applyMusic(@RequestBody applyMusicReqDto: ApplyMusicReqDto): ResponseEntity<Void> =
@@ -35,6 +36,6 @@ class MemberMusicController(
 
     @DeleteMapping("/{music_id}")
     fun deleteMusic(@PathVariable music_id: Long): ResponseEntity<Void> =
-        deleteMusicService.execute(music_id)
+        deleteMyMusicService.execute(music_id)
             .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
 }
