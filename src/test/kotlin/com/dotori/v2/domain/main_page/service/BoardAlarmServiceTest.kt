@@ -27,7 +27,7 @@ class BoardAlarmServiceTest : BehaviorSpec({
             ruleViolation = mutableListOf()
         )
         val board = Board(1, testMember, "title", "content", boardImage = listOf())
-        every { boardRepository.findAll() } returns listOf(board)
+        every { boardRepository.findAllByOrderByCreatedDateDesc() } returns listOf(board)
         `when`("서비스를 실행하면") {
             val response = boardAlarmServiceImpl.execute()
             then("해당 게시물의 내용이 반환되어야함") {
