@@ -35,7 +35,7 @@ class MemberMusicController(
         ResponseEntity.status(HttpStatus.OK).body(findMusicsService.execute(date))
 
     @DeleteMapping("/{music_id}")
-    fun deleteMusic(@PathVariable music_id: Long): ResponseEntity<Void> =
-        deleteMyMusicService.execute(music_id)
+    fun deleteMusic(@PathVariable("music_id") musicId: Long): ResponseEntity<Void> =
+        deleteMyMusicService.execute(musicId)
             .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
 }
