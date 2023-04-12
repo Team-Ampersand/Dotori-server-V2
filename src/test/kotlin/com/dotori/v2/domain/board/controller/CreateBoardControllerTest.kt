@@ -41,7 +41,8 @@ class CreateBoardControllerTest : BehaviorSpec({
             modifyBoardService = modifyBoardService,
             deleteBoardService = deleteBoardService,
             getBoardsService = getBoardsService,
-            getBoardDetailService = getBoardDetailService
+            getBoardDetailService = getBoardDetailService,
+            deleteMultipleBoardService = deleteMultipleBoardService
         )
     val adminCreateBoardController =
         AdminBoardController(
@@ -49,7 +50,8 @@ class CreateBoardControllerTest : BehaviorSpec({
             modifyBoardService = modifyBoardService,
             deleteBoardService = deleteBoardService,
             getBoardsService = getBoardsService,
-            getBoardDetailService = getBoardDetailService
+            getBoardDetailService = getBoardDetailService,
+            deleteMultipleBoardService = deleteMultipleBoardService
         )
 
     given("요청이 들어오면") {
