@@ -2,6 +2,7 @@ package com.dotori.v2.domain.stu_info.service.impl
 
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
+import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.stu_info.presentation.data.req.SearchRequestDto
 import com.dotori.v2.domain.stu_info.presentation.data.res.SearchStudentListResDto
 import com.dotori.v2.domain.stu_info.service.SearchStudentService
@@ -41,7 +42,8 @@ class SearchStudentServiceImpl(
             }.filter {
                 if (role != null) it.roles.getOrNull(0)?.name == role else true
             }.filter {
-                if (selfStudyCheck != null) it.selfStudyCheck == selfStudyCheck else true
+                if(selfStudyStatus == SelfStudyStatus.IMPOSSIBLE) it.selfStudyStatus == selfStudyStatus || it.selfStudyStatus == SelfStudyStatus.CANT
+                else if (selfStudyStatus != null) it.selfStudyStatus == selfStudyStatus else true
             }.toList()
         }
 
@@ -53,7 +55,7 @@ class SearchStudentServiceImpl(
                 stuNum = it.stuNum,
                 gender = it.gender,
                 role = it.roles[0],
-                selfStudyCheck = it.selfStudyCheck
+                selfStudyStatus = it.selfStudyStatus
             )
         }
     }
