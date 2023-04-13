@@ -24,6 +24,7 @@ class CreateBoardControllerTest : BehaviorSpec({
     val deleteBoardService = mockk<DeleteBoardService>()
     val getBoardsService = mockk<GetBoardsService>()
     val getBoardDetailService = mockk<GetBoardDetailService>()
+    val deleteMultipleBoardService = mockk<DeleteMultipleBoardService>()
 
     val councillorCreateBoardController =
         CouncillorBoardController(
@@ -31,7 +32,8 @@ class CreateBoardControllerTest : BehaviorSpec({
             modifyBoardService = modifyBoardService,
             deleteBoardService = deleteBoardService,
             getBoardsService = getBoardsService,
-            getBoardDetailService
+            getBoardDetailService = getBoardDetailService,
+            deleteMultipleBoardService = deleteMultipleBoardService
         )
     val developerCreateBoardController =
         DeveloperBoardController(
@@ -39,7 +41,8 @@ class CreateBoardControllerTest : BehaviorSpec({
             modifyBoardService = modifyBoardService,
             deleteBoardService = deleteBoardService,
             getBoardsService = getBoardsService,
-            getBoardDetailService = getBoardDetailService
+            getBoardDetailService = getBoardDetailService,
+            deleteMultipleBoardService = deleteMultipleBoardService
         )
     val adminCreateBoardController =
         AdminBoardController(
@@ -47,7 +50,8 @@ class CreateBoardControllerTest : BehaviorSpec({
             modifyBoardService = modifyBoardService,
             deleteBoardService = deleteBoardService,
             getBoardsService = getBoardsService,
-            getBoardDetailService = getBoardDetailService
+            getBoardDetailService = getBoardDetailService,
+            deleteMultipleBoardService = deleteMultipleBoardService
         )
 
     given("요청이 들어오면") {
