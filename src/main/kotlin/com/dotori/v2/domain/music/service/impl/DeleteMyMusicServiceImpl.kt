@@ -7,6 +7,7 @@ import com.dotori.v2.domain.music.domain.repository.MusicRepository
 import com.dotori.v2.domain.music.exception.MusicNotFoundException
 import com.dotori.v2.domain.music.exception.NotMyMusicException
 import com.dotori.v2.domain.music.service.DeleteMusicService
+import com.dotori.v2.domain.music.service.DeleteMyMusicService
 import com.dotori.v2.global.util.UserUtil
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -17,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional
 class DeleteMyMusicServiceImpl(
     private val musicRepository: MusicRepository,
     private val userUtil: UserUtil
-) : DeleteMusicService {
+) : DeleteMyMusicService {
     override fun execute(musicId: Long) {
         val music: Music = musicRepository.findByIdOrNull(musicId) ?: throw MusicNotFoundException()
         val member: Member = userUtil.fetchCurrentUser()

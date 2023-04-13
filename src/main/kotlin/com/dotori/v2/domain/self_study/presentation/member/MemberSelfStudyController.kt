@@ -3,6 +3,7 @@ package com.dotori.v2.domain.self_study.presentation.member
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
 import com.dotori.v2.domain.self_study.service.*
+import com.dotori.v2.domain.stu_info.exception.SelfStudySearchReqDto
 import com.dotori.v2.domain.stu_info.presentation.data.req.SearchRequestDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -36,6 +37,6 @@ class MemberSelfStudyController(
         ResponseEntity.ok(getSelfStudyRankService.execute())
 
     @GetMapping("/search")
-    fun searchSelfStudy(searchRequestDto: SearchRequestDto): ResponseEntity<SelfStudyMemberListResDto> =
+    fun searchSelfStudy(searchRequestDto: SelfStudySearchReqDto): ResponseEntity<SelfStudyMemberListResDto> =
         ResponseEntity.ok(getSelfStudyByStuNumAndNameService.execute(searchRequestDto))
 }
