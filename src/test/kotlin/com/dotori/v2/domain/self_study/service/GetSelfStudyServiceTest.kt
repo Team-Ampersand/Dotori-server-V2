@@ -19,7 +19,7 @@ class GetSelfStudyServiceTest : BehaviorSpec({
     val selfStudyRepository = mockk<SelfStudyRepository>()
 
     val getSelfStudyRankServiceImpl = GetSelfStudyRankServiceImpl(selfStudyRepository)
-    given("윺저와 자습이 주어지고") {
+    given("유저와 자습이 주어지고") {
         val testMember = Member(
             memberName = "test",
             stuNum = "2116",
