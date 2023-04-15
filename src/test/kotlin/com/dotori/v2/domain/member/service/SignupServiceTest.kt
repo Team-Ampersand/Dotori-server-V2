@@ -26,7 +26,6 @@ class SignupServiceTest : BehaviorSpec({
     val emailCertificateRepository = mockk<EmailCertificateRepository>()
     val memberRepository = mockk<MemberRepository>()
     val passwordEncoder = mockk<PasswordEncoder>()
-
     val signupServiceImpl = SignupServiceImpl(emailCertificateRepository, memberRepository, passwordEncoder)
     given("signupReqDto가 주어지고"){
         val reqDto = SignupReqDto(
