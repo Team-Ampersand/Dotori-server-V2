@@ -3,7 +3,11 @@ package com.dotori.v2.domain.self_study.service
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
+import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.self_study.domain.entity.SelfStudyCount
+import com.dotori.v2.domain.self_study.excetpion.AlreadyApplySelfStudyException
+import com.dotori.v2.domain.self_study.excetpion.NotSelfStudyApplyDayException
+import com.dotori.v2.domain.self_study.excetpion.NotSelfStudyApplyHourException
 import com.dotori.v2.domain.self_study.excetpion.SelfStudyOverException
 import com.dotori.v2.domain.self_study.service.impl.ApplySelfStudyServiceImpl
 import com.dotori.v2.domain.self_study.util.FindSelfStudyCountUtil
@@ -44,11 +48,7 @@ class ApplySelfStudyServiceTest : BehaviorSpec({
             ruleViolation = mutableListOf()
         )
         val selfStudyCount = SelfStudyCount(id = 1)
-        every { validDayOfWeekAndHourUtil.validateApply() } returns Unit
-        every { userUtil.fetchCurrentUser() } returns testMember
-        every { findSelfStudyCountUtil.findSelfStudyCount() } returns selfStudyCount
-        every { selfStudyCheckUtil.isSelfStudyStatusCan(testMember) } returns Unit
-        every { saveSelfStudyUtil.save(testMember) } returns Unit
+        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, saveSelfStudyUtil)
         `when`("서비스를 실행하면") {
             service.execute()
             then("save가 실행되어야함") {
@@ -57,14 +57,64 @@ class ApplySelfStudyServiceTest : BehaviorSpec({
             then("selfStudyCount가 올라가야함") {
                 selfStudyCount.count shouldBe 1
             }
-        }
-        `when`("신청자가 50명 이상일때") {
-            for (i: Int in 1..50) {
-                selfStudyCount.addCount()
+            then("유저의 자습신청 상태는 신청된 상태가 되야함"){
+                testMember.selfStudyStatus shouldBe SelfStudyStatus.APPLIED
             }
+        }
+
+        every { findSelfStudyCountUtil.findSelfStudyCount() } returns SelfStudyCount(id = 1, count = 50)
+        `when`("신청자가 50명 이상일때") {
             then("SelfStudyOverException이 터져야함") {
-                shouldThrow<SelfStudyOverException> { service.execute() }
+                shouldThrow<SelfStudyOverException> {
+                    service.execute()
+                }
+            }
+        }
+        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, saveSelfStudyUtil)
+
+        every { validDayOfWeekAndHourUtil.validateApply() } throws NotSelfStudyApplyDayException()
+        `when`("신청할 수 없는 요일일때") {
+            then("NotSelfStudyApplyDayException이 발생해야함") {
+                shouldThrow<NotSelfStudyApplyDayException> {
+                    service.execute()
+                }
+            }
+        }
+        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, saveSelfStudyUtil)
+
+        every { validDayOfWeekAndHourUtil.validateApply() } throws NotSelfStudyApplyHourException()
+        `when`("신청할 수 없는 시간알때") {
+            then("NotSelfStudyApplyHourException이 발생해야함") {
+                shouldThrow<NotSelfStudyApplyHourException> {
+                    service.execute()
+                }
+            }
+        }
+        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, saveSelfStudyUtil)
+
+        every { selfStudyCheckUtil.isSelfStudyStatusCan(testMember) } throws AlreadyApplySelfStudyException()
+        `when`("이미 신청한 유저일때") {
+            then("AlreadyApplySelfStudyException이 발생해야함") {
+                shouldThrow<AlreadyApplySelfStudyException> {
+                    service.execute()
+                }
             }
         }
     }
 })
+
+private fun init(
+    validDayOfWeekAndHourUtil: ValidDayOfWeekAndHourUtil,
+    userUtil: UserUtil,
+    testMember: Member,
+    findSelfStudyCountUtil: FindSelfStudyCountUtil,
+    selfStudyCount: SelfStudyCount,
+    selfStudyCheckUtil: SelfStudyCheckUtil,
+    saveSelfStudyUtil: SaveSelfStudyUtil
+) {
+    every { validDayOfWeekAndHourUtil.validateApply() } returns Unit
+    every { userUtil.fetchCurrentUser() } returns testMember
+    every { findSelfStudyCountUtil.findSelfStudyCount() } returns selfStudyCount
+    every { selfStudyCheckUtil.isSelfStudyStatusCan(testMember) } returns Unit
+    every { saveSelfStudyUtil.save(testMember) } returns Unit
+}
