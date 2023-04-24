@@ -38,7 +38,7 @@ class BanSelfStudyServiceTest : BehaviorSpec({
             then("유저의 자습신청 상태는 불가능이여야함") {
                 testMember.selfStudyStatus shouldBe SelfStudyStatus.IMPOSSIBLE
             }
-            then("자습 금지 헤제일은 일주일뒤여야함") {
+            then("자습 금지 해제일은 일주일뒤여야함") {
                 testMember.selfStudyExpiredDate!!.toLocalDate() shouldBe LocalDate.now().plusDays(7)
             }
         }
