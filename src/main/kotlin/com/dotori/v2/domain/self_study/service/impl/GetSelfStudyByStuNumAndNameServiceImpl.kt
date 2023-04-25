@@ -1,13 +1,11 @@
 package com.dotori.v2.domain.self_study.service.impl
 
 import com.dotori.v2.domain.member.domain.entity.Member
-import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.self_study.domain.repository.SelfStudyRepository
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberResDto
 import com.dotori.v2.domain.self_study.service.GetSelfStudyByStuNumAndNameService
-import com.dotori.v2.domain.stu_info.exception.SelfStudySearchReqDto
-import com.dotori.v2.domain.stu_info.presentation.data.req.SearchRequestDto
+import com.dotori.v2.domain.self_study.presentation.dto.req.SelfStudySearchReqDto
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

@@ -2,8 +2,8 @@ package com.dotori.v2.domain.self_study.util
 
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
-import com.dotori.v2.domain.self_study.excetpion.AlreadyApplySelfStudyException
-import com.dotori.v2.domain.self_study.excetpion.NotAppliedException
+import com.dotori.v2.domain.self_study.exception.AlreadyApplySelfStudyException
+import com.dotori.v2.domain.self_study.exception.NotAppliedException
 import org.springframework.stereotype.Component
 
 @Component

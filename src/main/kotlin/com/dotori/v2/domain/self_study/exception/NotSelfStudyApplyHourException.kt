@@ -1,4 +1,4 @@
-package com.dotori.v2.domain.self_study.excetpion
+package com.dotori.v2.domain.self_study.exception
 
 import com.dotori.v2.global.error.ErrorCode
 import com.dotori.v2.global.error.exception.BasicException

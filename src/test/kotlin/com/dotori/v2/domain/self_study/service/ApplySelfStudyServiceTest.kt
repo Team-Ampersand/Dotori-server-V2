@@ -5,10 +5,10 @@ import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.self_study.domain.entity.SelfStudyCount
-import com.dotori.v2.domain.self_study.excetpion.AlreadyApplySelfStudyException
-import com.dotori.v2.domain.self_study.excetpion.NotSelfStudyApplyDayException
-import com.dotori.v2.domain.self_study.excetpion.NotSelfStudyApplyHourException
-import com.dotori.v2.domain.self_study.excetpion.SelfStudyOverException
+import com.dotori.v2.domain.self_study.exception.AlreadyApplySelfStudyException
+import com.dotori.v2.domain.self_study.exception.NotSelfStudyApplyDayException
+import com.dotori.v2.domain.self_study.exception.NotSelfStudyApplyHourException
+import com.dotori.v2.domain.self_study.exception.SelfStudyOverException
 import com.dotori.v2.domain.self_study.service.impl.ApplySelfStudyServiceImpl
 import com.dotori.v2.domain.self_study.util.FindSelfStudyCountUtil
 import com.dotori.v2.domain.self_study.util.SaveSelfStudyUtil

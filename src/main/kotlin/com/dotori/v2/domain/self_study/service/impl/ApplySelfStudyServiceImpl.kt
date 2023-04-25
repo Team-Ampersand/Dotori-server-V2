@@ -1,7 +1,7 @@
 package com.dotori.v2.domain.self_study.service.impl
 
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
-import com.dotori.v2.domain.self_study.excetpion.SelfStudyOverException
+import com.dotori.v2.domain.self_study.exception.SelfStudyOverException
 import com.dotori.v2.domain.self_study.service.ApplySelfStudyService
 import com.dotori.v2.domain.self_study.util.FindSelfStudyCountUtil
 import com.dotori.v2.domain.self_study.util.SaveSelfStudyUtil
