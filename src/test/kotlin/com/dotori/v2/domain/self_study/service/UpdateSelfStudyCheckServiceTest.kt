@@ -7,7 +7,7 @@ import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
 import com.dotori.v2.domain.self_study.domain.entity.SelfStudy
 import com.dotori.v2.domain.self_study.domain.repository.SelfStudyRepository
-import com.dotori.v2.domain.self_study.excetpion.NotSelfStudyAppliedException
+import com.dotori.v2.domain.self_study.exception.NotSelfStudyAppliedException
 import com.dotori.v2.domain.self_study.presentation.dto.req.SelfStudyCheckReqDto
 import com.dotori.v2.domain.self_study.service.impl.UpdateSelfStudyCheckServiceImpl
 import io.kotest.assertions.throwables.shouldThrow

@@ -1,9 +1,9 @@
 package com.dotori.v2.domain.self_study.util
 
-import com.dotori.v2.domain.self_study.excetpion.NotSelfStudyApplyDayException
-import com.dotori.v2.domain.self_study.excetpion.NotSelfStudyApplyHourException
-import com.dotori.v2.domain.self_study.excetpion.NotSelfStudyCancelDayException
-import com.dotori.v2.domain.self_study.excetpion.NotSelfStudyCancelHourException
+import com.dotori.v2.domain.self_study.exception.NotSelfStudyApplyDayException
+import com.dotori.v2.domain.self_study.exception.NotSelfStudyApplyHourException
+import com.dotori.v2.domain.self_study.exception.NotSelfStudyCancelDayException
+import com.dotori.v2.domain.self_study.exception.NotSelfStudyCancelHourException
 import org.springframework.stereotype.Component
 import java.time.DayOfWeek
 import java.time.LocalDateTime

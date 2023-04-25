@@ -6,9 +6,9 @@ import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.self_study.domain.entity.SelfStudyCount
 import com.dotori.v2.domain.self_study.domain.repository.SelfStudyRepository
-import com.dotori.v2.domain.self_study.excetpion.NotAppliedException
-import com.dotori.v2.domain.self_study.excetpion.NotSelfStudyCancelDayException
-import com.dotori.v2.domain.self_study.excetpion.NotSelfStudyCancelHourException
+import com.dotori.v2.domain.self_study.exception.NotAppliedException
+import com.dotori.v2.domain.self_study.exception.NotSelfStudyCancelDayException
+import com.dotori.v2.domain.self_study.exception.NotSelfStudyCancelHourException
 import com.dotori.v2.domain.self_study.service.impl.CancelSelfStudyServiceImpl
 import com.dotori.v2.domain.self_study.util.FindSelfStudyCountUtil
 import com.dotori.v2.domain.self_study.util.SelfStudyCheckUtil

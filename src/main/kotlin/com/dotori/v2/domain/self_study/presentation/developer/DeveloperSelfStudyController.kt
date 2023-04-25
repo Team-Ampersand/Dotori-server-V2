@@ -5,8 +5,7 @@ import com.dotori.v2.domain.self_study.presentation.dto.req.SelfStudyLimitReqDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
 import com.dotori.v2.domain.self_study.service.*
-import com.dotori.v2.domain.stu_info.exception.SelfStudySearchReqDto
-import com.dotori.v2.domain.stu_info.presentation.data.req.SearchRequestDto
+import com.dotori.v2.domain.self_study.presentation.dto.req.SelfStudySearchReqDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid

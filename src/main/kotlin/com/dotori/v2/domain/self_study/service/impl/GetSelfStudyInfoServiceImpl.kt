@@ -4,7 +4,7 @@ import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.self_study.domain.entity.SelfStudyCount
 import com.dotori.v2.domain.self_study.domain.repository.SelfStudyCountRepository
-import com.dotori.v2.domain.self_study.excetpion.SelfStudyOverException
+import com.dotori.v2.domain.self_study.exception.SelfStudyOverException
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.service.GetSelfStudyInfoService
 import com.dotori.v2.domain.self_study.util.ValidDayOfWeekAndHourUtil
