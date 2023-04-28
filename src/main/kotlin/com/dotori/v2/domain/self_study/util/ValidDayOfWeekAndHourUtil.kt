@@ -9,9 +9,11 @@ import java.time.DayOfWeek
 import java.time.LocalDateTime
 
 @Component
-class ValidDayOfWeekAndHourUtil {
+class ValidDayOfWeekAndHourUtil(
+    private val currentTime: LocalDateTime? = null
+) {
      fun validateApply() {
-         val currentTime = LocalDateTime.now()
+         val currentTime = currentTime ?: LocalDateTime.now()
          val dayOfWeek = currentTime.dayOfWeek
          val hour = currentTime.hour
          if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
@@ -21,7 +23,7 @@ class ValidDayOfWeekAndHourUtil {
     }
 
     fun validateCancel() {
-        val currentTime = LocalDateTime.now()
+        val currentTime = currentTime ?: LocalDateTime.now()
         val dayOfWeek = currentTime.dayOfWeek
         val hour = currentTime.hour
         if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
