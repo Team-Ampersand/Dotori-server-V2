@@ -12,10 +12,9 @@ import io.mockk.mockk
 class GetPersonalInfoServiceTest : BehaviorSpec({
     val userUtil = mockk<UserUtil>()
     val getPersonalInfoServiceImpl = GetPersonalInfoServiceImpl(userUtil)
-    val memberUtil = MemberUtil()
 
     given("유저가 주어지고") {
-        val testMember = memberUtil.createMember()
+        val testMember = MemberUtil.createMember()
         every { userUtil.fetchCurrentUser() } returns testMember
         `when`("서비스를 실행하면") {
             val result = getPersonalInfoServiceImpl.execute()
