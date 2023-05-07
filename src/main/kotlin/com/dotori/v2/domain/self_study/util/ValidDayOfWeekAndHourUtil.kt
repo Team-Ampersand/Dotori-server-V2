@@ -16,7 +16,7 @@ class ValidDayOfWeekAndHourUtil(
          val currentTime = currentTime ?: LocalDateTime.now()
          val dayOfWeek = currentTime.dayOfWeek
          val hour = currentTime.hour
-         if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
+         if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY)
             throw NotSelfStudyApplyDayException()
         if (hour != 20)
             throw NotSelfStudyApplyHourException()
@@ -26,7 +26,7 @@ class ValidDayOfWeekAndHourUtil(
         val currentTime = currentTime ?: LocalDateTime.now()
         val dayOfWeek = currentTime.dayOfWeek
         val hour = currentTime.hour
-        if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
+        if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY)
             throw NotSelfStudyCancelDayException()
         if (hour != 20)
             throw NotSelfStudyCancelHourException()

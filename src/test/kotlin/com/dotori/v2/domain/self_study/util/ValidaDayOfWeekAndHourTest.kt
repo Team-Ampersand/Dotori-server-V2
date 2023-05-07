@@ -71,6 +71,7 @@ class ValidaDayOfWeekAndHourTest : BehaviorSpec({
                 }
             }
         }
+        /*
         validDayOfWeekAndHourUtil = validDayOfWeekAndHourUtil(2023, 4, 30, 20, 0, 0)
         `when`("일요일에 신청가능한지 검증할때") {
             then("NotSelfStudyApplyHourException이 발생해야함") {
@@ -85,7 +86,7 @@ class ValidaDayOfWeekAndHourTest : BehaviorSpec({
                     validDayOfWeekAndHourUtil.validateCancel()
                 }
             }
-        }
+        }*/
     }
 })
 
