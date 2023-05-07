@@ -15,5 +15,4 @@ class DeleteRuleServiceImpl(
     override fun execute(ruleId: Long) =
         ruleRepository.findByIdOrNull(ruleId)
             .let { if (it == null) throw NotFoundRuleException() else ruleRepository.delete(it) }
-
 }

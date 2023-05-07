@@ -1,4 +1,4 @@
-package com.dotori.v2.domain.stu_info.exception
+package com.dotori.v2.domain.self_study.presentation.dto.req
 
 import org.springframework.web.bind.annotation.RequestParam
 
