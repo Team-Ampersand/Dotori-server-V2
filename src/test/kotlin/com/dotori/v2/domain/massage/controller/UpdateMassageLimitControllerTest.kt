@@ -44,7 +44,7 @@ class UpdateMassageLimitControllerTest : BehaviorSpec({
                 response.statusCode shouldBe HttpStatus.OK
             }
         }
-        `when`("memberController is received") {
+        `when`("adminController is received") {
             val response = adminMassageController.updateMassageLimit(request)
             then("서비스가 한번은 실행되어야 함") {
                 verify { service.execute(request) }
