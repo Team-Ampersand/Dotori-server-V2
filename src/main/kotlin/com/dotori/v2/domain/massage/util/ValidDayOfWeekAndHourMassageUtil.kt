@@ -29,7 +29,7 @@ class ValidDayOfWeekAndHourMassageUtil {
         val minute = currentTime.minute
         if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
             throw NotMassageCancelDayException()
-        if (hour == 20 && minute > 20)
+        if (hour == 20 && minute >= 20)
             return
         throw NotMassageCancelHourException()
     }
