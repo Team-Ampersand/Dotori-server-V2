@@ -25,7 +25,7 @@ class DeleteMultipleBoardServiceImpl(
 
                 val boardImages: List<BoardImage> = boardImageRepository.findAllByBoard_Id(it)
 
-                if (boardImages.count() { true } == 0) {
+                if (boardImages.isEmpty()) {
                     boardRepository.delete(boardInfo)
                 } else {
                     for (boardImage in boardImages) {
