@@ -21,14 +21,17 @@ class EmailSendServiceImpl(
     override fun execute(emailReqDto: EmailReqDto): String {
         val key = keyUtil.keyIssuance()
         emailSender.send(emailReqDto.email, key)
+
         if (emailCertificateRepository.existsByEmail(emailReqDto.email))
             emailCertificateRepository.deleteByEmail(emailReqDto.email)
+
         val emailCertificate = EmailCertificate(
             email = emailReqDto.email,
             key = key,
             expiredTime = LocalDateTime.now().plusMinutes(5),
             authentication = false
         )
+
         emailCertificateRepository.save(emailCertificate)
         return key
     }

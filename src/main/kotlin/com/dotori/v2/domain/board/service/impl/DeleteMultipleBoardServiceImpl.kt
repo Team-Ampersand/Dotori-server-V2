@@ -20,8 +20,11 @@ class DeleteMultipleBoardServiceImpl(
     override fun execute(deleteMultipleBoardReqDto: DeleteMultipleBoardReqDto) {
         deleteMultipleBoardReqDto.boardIdList
             .forEach {
-                val boardInfo: Board = boardRepository.findByIdOrNull(it) ?: throw BoardNotExistsException()
+                val boardInfo: Board = boardRepository.findByIdOrNull(it)
+                    ?: throw BoardNotExistsException()
+
                 val boardImages: List<BoardImage> = boardImageRepository.findAllByBoard_Id(it)
+
                 if (boardImages.count() { true } == 0) {
                     boardRepository.delete(boardInfo)
                 } else {

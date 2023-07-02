@@ -17,6 +17,7 @@ class SignupEmailSendServiceImpl(
     override fun execute(emailReqDto: EmailReqDto): String {
         if (memberRepository.existsByEmail(emailReqDto.email))
             throw MemberAlreadyException()
+
         return emailSendService.execute(emailReqDto)
     }
 }
