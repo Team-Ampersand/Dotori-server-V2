@@ -16,8 +16,10 @@ class ChangeAuthPasswordServiceImpl(
 ): ChangeAuthPasswordService {
     override fun execute(newPasswordReqDto: NewPasswordReqDto) {
         val member = userUtil.fetchCurrentUser()
+
         if (!passwordEncoder.matches(newPasswordReqDto.currentPassword, member.password))
             throw PasswordMismatchException()
+
         member.updatePassword(passwordEncoder.encode(newPasswordReqDto.newPassword))
     }
 }

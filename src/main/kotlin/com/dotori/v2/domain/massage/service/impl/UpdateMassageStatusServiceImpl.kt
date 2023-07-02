@@ -24,6 +24,6 @@ class UpdateMassageStatusServiceImpl(
     private fun updateSelfStudyStatus() {
         memberRepository.findAllByMassageStatusOrMassageStatus(MassageStatus.APPLIED, MassageStatus.CANT)
             .forEach { it.updateMassageStatus(MassageStatus.CAN)
-                println("it = ${it}")}
+                println("it = $it")}
     }
 }

@@ -21,10 +21,15 @@ class CancelSelfStudyServiceImpl(
 ) : CancelSelfStudyService {
     override fun execute() {
         validDayOfWeekAndHourUtil.validateCancel()
+
         val findSelfStudyCount = findSelfStudyCountUtil.findSelfStudyCount()
+
         val member = userUtil.fetchCurrentUser()
+
         selfStudyCheckUtil.isSelfStudyStatusApplied(member)
+
         member.updateSelfStudyStatus(SelfStudyStatus.CANT)
+
         selfStudyRepository.deleteByMember(member)
         findSelfStudyCount.removeCount()
     }

@@ -22,10 +22,13 @@ class ChangePasswordServiceImpl(
     override fun execute(newPasswordReqDto: NoAuthNewPasswordReqDto) {
         val emailCertificate = emailCertificateRepository.findByEmail(newPasswordReqDto.email)
             ?: throw EmailAuthNotFoundException()
+
         if (!emailCertificate.authentication)
             throw EmailNotBeenException()
+
         val member = (memberRepository.findByEmail(newPasswordReqDto.email)
             ?: throw MemberNotFoundException())
+
         member.updatePassword(passwordEncoder.encode(newPasswordReqDto.newPassword))
     }
 }
