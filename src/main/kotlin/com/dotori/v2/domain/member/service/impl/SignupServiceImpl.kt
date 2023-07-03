@@ -21,13 +21,18 @@ class SignupServiceImpl(
     override fun execute(signupReqDto: SignupReqDto): Long {
         val emailCertificate = emailCertificateRepository.findByEmail(signupReqDto.email)
             ?: throw EmailAuthNotFoundException()
+
         if(!emailCertificate.authentication)
             throw EmailNotBeenException()
+
         emailCertificateRepository.delete(emailCertificate)
+
         if(memberRepository.existsByEmail(signupReqDto.email))
             throw MemberAlreadyException()
+
         val encodedPassword = passwordEncoder.encode(signupReqDto.password)
         val member = signupReqDto.toEntity(encodedPassword)
+
         return memberRepository.save(member).id
     }
 }

@@ -23,12 +23,14 @@ class GetSelfStudyInfoServiceImpl(
     override fun execute(): SelfStudyInfoResDto {
         val selfStudyCount = selfStudyCountRepository.findSelfStudyCountById(1)
         val member = userUtil.fetchCurrentUser()
+
         if (isSelfStudyStatusCan(member) && validSelfStudyApplyCant(selfStudyCount))
             return SelfStudyInfoResDto(
                 count = selfStudyCount.count,
                 limit = selfStudyCount.limit,
                 selfStudyStatus = SelfStudyStatus.CANT
             )
+
         return SelfStudyInfoResDto(
             count = selfStudyCount.count,
             limit = selfStudyCount.limit,

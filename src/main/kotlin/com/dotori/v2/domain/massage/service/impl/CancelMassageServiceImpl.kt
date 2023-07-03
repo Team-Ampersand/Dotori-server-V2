@@ -21,8 +21,11 @@ class CancelMassageServiceImpl(
 ) : CancelMassageService {
     override fun execute() {
         validDayOfWeekAndHourMassageUtil.validateCancel()
+
         val findMassageCount = findMassageCountUtil.findMassageCount()
+
         val member = userUtil.fetchCurrentUser()
+
         massageCheckUtil.isMassageStatusApplied(member)
         member.updateMassageStatus(MassageStatus.CANT)
         massageRepository.deleteByMember(member)

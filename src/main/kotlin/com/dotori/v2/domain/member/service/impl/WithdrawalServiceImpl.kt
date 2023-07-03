@@ -20,12 +20,16 @@ class WithdrawalServiceImpl(
 ) : WithdrawalService {
     override fun execute(withdrawalReqDto: WithdrawalReqDto) {
         val currentUser = userUtil.fetchCurrentUser()
+
         val member = memberRepository.findByEmail(withdrawalReqDto.email)
             ?: throw MemberNotFoundException()
+
         if (!passwordEncoder.matches(withdrawalReqDto.password, member.password))
             throw PasswordMismatchException()
+
         if (currentUser != member)
             throw MemberNotSameException()
+
         memberRepository.delete(member)
     }
 }
