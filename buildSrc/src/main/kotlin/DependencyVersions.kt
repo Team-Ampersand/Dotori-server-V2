@@ -1,5 +1,3 @@
-package com.dotori
-
 object DependencyVersions {
 
     // spring
@@ -22,4 +20,8 @@ object DependencyVersions {
     // aws
     const val AWS_SES_VERSION = "1.12.347"
     const val KOTLIN_SES_VERSION = "0.16.0"
+
+    // querydsl
+    const val QUERY_DSL_VERSION = "5.0.0"
+    const val QUERY_DSL_APT_VERSION = "5.0.0"
 }

@@ -1,5 +1,3 @@
-package com.dotori
-
 object Dependencies {
 
     // spring
@@ -43,5 +41,9 @@ object Dependencies {
     // aws
     const val AWS_SES = "com.amazonaws:aws-java-sdk-ses:${DependencyVersions.AWS_SES_VERSION}"
     const val KOTLIN_SES = "org.springframework.cloud:spring-cloud-starter-aws:${DependencyVersions.KOTLIN_SES_VERSION}"
+
+    // querydsl
+    const val QUERY_DSL = "com.querydsl:querydsl-jpa:${DependencyVersions.QUERY_DSL_VERSION}"
+    const val QUERY_DSL_APT = "com.querydsl:querydsl-apt:${DependencyVersions.QUERY_DSL_APT_VERSION}:jpa"
 
 }

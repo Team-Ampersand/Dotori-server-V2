@@ -1,13 +1,15 @@
-import com.dotori.Dependencies
-import com.dotori.PluginVersions
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.springframework.boot") version PluginVersions.SPRING_BOOT_VERSION
     id("io.spring.dependency-management") version PluginVersions.SPRING_MANAGE_VERSION
+    id("com.ewerk.gradle.plugins.querydsl") version PluginVersions.QUERY_DSL_PLUGIN_VERSION
+
     kotlin("jvm") version PluginVersions.JVM_VERSION
     kotlin("plugin.spring") version PluginVersions.SPRING_PLUG_IN_VERSION
     kotlin("plugin.jpa") version PluginVersions.JPA_VERSION
+    kotlin("kapt") version PluginVersions.KAPT_VERSION
+    idea
 }
 
 group = "com.dotori"
@@ -43,6 +45,8 @@ dependencies {
     implementation(Dependencies.AWS_SES)
     implementation(Dependencies.KOTLIN_SES)
     implementation(Dependencies.SPRING_CLOUD)
+    implementation(Dependencies.QUERY_DSL)
+    implementation(Dependencies.QUERY_DSL_APT)
 }
 
 tasks.withType<KotlinCompile> {
@@ -56,6 +60,14 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+idea {
+    module {
+        val kaptMain = file("build/generated/source/kapt/main")
+        sourceDirs.add(kaptMain)
+        generatedSourceDirs.add(kaptMain)
+    }
+}
+
 buildscript {
     repositories {
         maven {
@@ -66,4 +78,7 @@ buildscript {
         classpath(Dependencies.KOTEST_PLUG_IN)
     }
 }
+
+
+
 apply(plugin = "io.kotest")
