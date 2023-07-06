@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional
 class SearchStudentServiceImpl(
     private val memberRepository: MemberRepository
 ) : SearchStudentService {
+
     override fun execute(
         searchRequestDto: SearchRequestDto
     ): List<SearchStudentListResDto> =
