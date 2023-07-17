@@ -1,5 +1,6 @@
 package com.dotori.v2.domain.member.controller
 
+import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.presentation.AuthController
 import com.dotori.v2.domain.member.presentation.data.req.SignInReqDto
 import com.dotori.v2.domain.member.presentation.data.res.RefreshResDto
@@ -16,6 +17,7 @@ import io.mockk.verify
 import org.springframework.http.HttpStatus
 import java.time.LocalDate
 import java.time.ZonedDateTime
+import java.util.*
 
 class SignInControllerTest : BehaviorSpec({
     val signupService = mockk<SignupService>()
@@ -30,7 +32,8 @@ class SignInControllerTest : BehaviorSpec({
             val resDto = SignInResDto(
                 accessToken = "testAccessToken",
                 refreshToken = "testRefreshToken",
-                expiresAt = ZonedDateTime.now()
+                expiresAt = ZonedDateTime.now(),
+                Collections.singletonList(Role.ROLE_MEMBER)
             )
             every { signInService.execute(reqDto) } returns resDto
             val response = authController.signIn(reqDto)

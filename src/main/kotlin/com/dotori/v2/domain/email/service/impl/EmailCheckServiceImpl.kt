@@ -14,10 +14,14 @@ class EmailCheckServiceImpl(
 ) : EmailCheckService {
     @Transactional(rollbackFor = [Exception::class])
     override fun execute(key: String): Boolean {
-        val findByKey = emailCertificateRepository.findByKey(key) ?: throw AuthKeyNotFoundException()
+        val findByKey = emailCertificateRepository.findByKey(key)
+            ?: throw AuthKeyNotFoundException()
+
         if (!findByKey.expiredTime.isAfter(LocalDateTime.now()))
             throw AuthKeyTimeOutException()
+
         val emailCertificate = findByKey.verify()
+
         emailCertificateRepository.save(emailCertificate)
         return true
     }

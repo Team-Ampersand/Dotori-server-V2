@@ -19,9 +19,12 @@ class DeleteBoardServiceImpl(
     private val s3Service: S3Service
 ) : DeleteBoardService {
     override fun execute(boardId: Long) {
-        val boardInfo: Board = boardRepository.findByIdOrNull(boardId) ?: throw BoardNotExistsException()
+        val boardInfo: Board = boardRepository.findByIdOrNull(boardId)
+            ?: throw BoardNotExistsException()
+
         val boardImages: List<BoardImage> = boardImageRepository.findAllByBoard_Id(boardId)
-        if (boardImages.count() { true } == 0) {
+
+        if (boardImages.isEmpty()) {
             boardRepository.delete(boardInfo)
         } else {
             for (boardImage in boardImages) {

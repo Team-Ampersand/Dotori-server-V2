@@ -44,7 +44,8 @@ class SignInServiceTest : BehaviorSpec({
             val target = SignInResDto(
                 accessToken = "testAccessToken",
                 refreshToken = "testRefreshToken",
-                expiresAt = tokenProvider.accessExpiredTime
+                expiresAt = tokenProvider.accessExpiredTime,
+                roles = testMember.roles
             )
             val result = signInServiceImpl.execute(reqDto)
             then("updateRefreshToken이 실행되어야함"){

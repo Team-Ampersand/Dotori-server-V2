@@ -15,6 +15,7 @@ class PasswordChangeEmailSendServiceImpl(
     override fun execute(emailReqDto: EmailReqDto): String {
         if (!memberRepository.existsByEmail(emailReqDto.email))
             throw MemberNotFoundException()
+
         return emailSendService.execute(emailReqDto)
     }
 }

@@ -28,13 +28,16 @@ class CreateBoardServiceImpl(
     override fun execute(createBoardReqDto: CreateBoardReqDto, multipartFiles: List<MultipartFile>?): Board {
         val member: Member = userUtil.fetchCurrentUser()
         val createBoardDto: CreateBoardDto = toDto(createBoardReqDto = createBoardReqDto)
+
         if (multipartFiles == null) {
             return toEntity(createBoardDto, member)
                 .let { boardSaveUtil.saveBoard(board = it) }
         }
+
         val uploadFile: List<String> = s3Service.uploadFile(multipartFiles)
         val board: Board = toEntity(createBoardDto, member)
             .let { boardSaveUtil.saveBoard(board = it) }
+
         for (uploadFileUrl: String in uploadFile) {
             toEntity(board = board, uploadFileUrl)
                 .let { boardSaveUtil.saveBoardImage(boardImage = it) }

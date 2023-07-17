@@ -18,7 +18,9 @@ class GetBoardDetailServiceImpl(
     private val boardImageRepository: BoardImageRepository,
 ) : GetBoardDetailService {
     override fun execute(boardId: Long): DetailBoardResDto {
-        val boardInfo: Board = boardRepository.findByIdOrNull(boardId) ?: throw BoardNotExistsException()
+        val boardInfo: Board = boardRepository.findByIdOrNull(boardId)
+            ?: throw BoardNotExistsException()
+
         return toResponse(boardInfo)
     }
 

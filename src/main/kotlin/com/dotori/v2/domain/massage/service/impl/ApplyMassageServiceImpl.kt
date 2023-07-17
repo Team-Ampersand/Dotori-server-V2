@@ -22,10 +22,13 @@ class ApplyMassageServiceImpl(
 ) : ApplyMassageService {
     override fun execute() {
         validDayOfWeekAndHourMassageUtil.validateApply()
+
         val member = userUtil.fetchCurrentUser()
         val massageCount = findMassageCountUtil.findMassageCount()
+
         if (massageCount.count >= massageCount.limit)
             throw MassageOverException()
+
         massageCheckUtil.isMassageStatusCan(member)
         member.updateMassageStatus(MassageStatus.APPLIED)
         massageCount.addCount()

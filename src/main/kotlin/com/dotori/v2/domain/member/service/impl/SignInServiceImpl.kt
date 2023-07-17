@@ -21,16 +21,21 @@ class SignInServiceImpl(
     override fun execute(signInReqDto: SignInReqDto): SignInResDto {
         val member = memberRepository.findByEmail(signInReqDto.email)
             ?: throw MemberNotFoundException()
+
         if(!passwordEncoder.matches(signInReqDto.password, member.password))
             throw PasswordMismatchException()// 패스워드 일치 X
+
         val accessToken = tokenProvider.createAccessToken(member.email, member.roles)
         val refreshToken = tokenProvider.createRefreshToken(member.email)
         val accessExpiredTime = tokenProvider.accessExpiredTime
+
         member.updateRefreshToken(refreshToken)
+
         return SignInResDto(
             accessToken = accessToken,
             refreshToken = refreshToken,
-            expiresAt = accessExpiredTime
+            expiresAt = accessExpiredTime,
+            roles = member.roles
         )
     }
 }

@@ -2,7 +2,6 @@ package com.dotori.v2.domain.self_study.domain.repository
 
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.self_study.domain.entity.SelfStudy
-import kotlinx.coroutines.selects.select
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param

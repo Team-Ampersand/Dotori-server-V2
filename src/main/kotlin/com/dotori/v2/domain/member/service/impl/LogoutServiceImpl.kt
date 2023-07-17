@@ -12,8 +12,7 @@ class LogoutServiceImpl(
     private val userUtil: UserUtil,
 ) : LogoutService{
     override fun execute(): LogoutResDto =
-        userUtil.fetchCurrentUser()
-            .let { it.updateRefreshToken("") }
+        userUtil.fetchCurrentUser().updateRefreshToken("")
             .let { LogoutResDto(it) }
 
 }

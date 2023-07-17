@@ -25,12 +25,14 @@ class GetMassageInfoServiceImpl(
     override fun execute(): MassageInfoResDto {
         val massageCount = massageCountRepository.findMassageCountById(1L)
         val member = userUtil.fetchCurrentUser()
+
         if (isMassageStatusCan(member) && validMassageApplyCant(massageCount))
             return MassageInfoResDto(
                 count = massageCount.count,
                 massageStatus = MassageStatus.CANT,
                 limit = massageCount.limit
             )
+
         return MassageInfoResDto(
             count = massageCount.count,
             massageStatus = member.massageStatus,

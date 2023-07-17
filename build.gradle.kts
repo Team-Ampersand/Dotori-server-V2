@@ -1,11 +1,15 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.7.5"
-    id("io.spring.dependency-management") version "1.0.15.RELEASE"
-    kotlin("jvm") version "1.6.21"
-    kotlin("plugin.spring") version "1.6.21"
-    kotlin("plugin.jpa") version "1.6.21"
+    id("org.springframework.boot") version PluginVersions.SPRING_BOOT_VERSION
+    id("io.spring.dependency-management") version PluginVersions.SPRING_MANAGE_VERSION
+    id("com.ewerk.gradle.plugins.querydsl") version PluginVersions.QUERY_DSL_PLUGIN_VERSION
+
+    kotlin("jvm") version PluginVersions.JVM_VERSION
+    kotlin("plugin.spring") version PluginVersions.SPRING_PLUG_IN_VERSION
+    kotlin("plugin.jpa") version PluginVersions.JPA_VERSION
+    kotlin("kapt") version PluginVersions.KAPT_VERSION
+    idea
 }
 
 group = "com.dotori"
@@ -17,30 +21,32 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-data-redis")
-    implementation("org.springframework.boot:spring-boot-starter-mail")
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    runtimeOnly("com.h2database:h2")
-    runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.security:spring-security-test")
-    testImplementation("io.kotest:kotest-runner-junit5:5.5.5")
-    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
-    testImplementation("io.kotest:kotest-assertions-core:5.5.5")
-    testImplementation("io.kotest:kotest-framework-engine-jvm:5.5.5")
-    testImplementation("io.mockk:mockk:1.13.4")
-    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
-    implementation("com.amazonaws:aws-java-sdk-ses:1.12.347")
-    implementation("aws.sdk.kotlin:ses:0.16.0")
-    implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
+    implementation(Dependencies.SPRING_JPA)
+    implementation(Dependencies.SPRING_REDIS)
+    implementation(Dependencies.MAIL)
+    implementation(Dependencies.SECURITY)
+    implementation(Dependencies.VALIDATION)
+    implementation(Dependencies.WEB)
+    implementation(Dependencies.KOTLIN_JACKSON)
+    implementation(Dependencies.KOTLIN_REFLECT)
+    implementation(Dependencies.KOTLIN_STDLIB)
+    runtimeOnly(Dependencies.H2_DATABASE)
+    runtimeOnly(Dependencies.MARIA_DATABASE)
+    testImplementation(Dependencies.SPRING_TEST)
+    testImplementation(Dependencies.SECURITY_TEST)
+    testImplementation(Dependencies.KOTEST_RUNNER)
+    testImplementation(Dependencies.KOTEST_EXTENSION)
+    testImplementation(Dependencies.KOTEST_ASSERTIONS)
+    testImplementation(Dependencies.KOTEST_JVM)
+    testImplementation(Dependencies.MOCKK)
+    implementation(Dependencies.JWT_API)
+    runtimeOnly(Dependencies.JWT_IMPL)
+    runtimeOnly(Dependencies.JWT_JACKSON)
+    implementation(Dependencies.AWS_SES)
+    implementation(Dependencies.KOTLIN_SES)
+    implementation(Dependencies.SPRING_CLOUD)
+    implementation(Dependencies.QUERY_DSL)
+    implementation(Dependencies.QUERY_DSL_APT)
 }
 
 tasks.withType<KotlinCompile> {
@@ -54,6 +60,14 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+idea {
+    module {
+        val kaptMain = file("build/generated/source/kapt/main")
+        sourceDirs.add(kaptMain)
+        generatedSourceDirs.add(kaptMain)
+    }
+}
+
 buildscript {
     repositories {
         maven {
@@ -61,7 +75,10 @@ buildscript {
         }
     }
     dependencies {
-        classpath("io.kotest:kotest-gradle-plugin:0.4.10")
+        classpath(Dependencies.KOTEST_PLUG_IN)
     }
 }
+
+
+
 apply(plugin = "io.kotest")

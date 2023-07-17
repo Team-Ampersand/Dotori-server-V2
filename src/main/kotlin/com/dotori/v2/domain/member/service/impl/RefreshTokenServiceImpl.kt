@@ -18,17 +18,23 @@ class RefreshTokenServiceImpl(
     override fun execute(refreshToken: String): RefreshResDto {
         if (!tokenProvider.isRefreshToken(refreshToken))
             throw TokenTypeNotValidException()
+
         val email = tokenProvider.getUserEmail(refreshToken)
+
         val member = (memberRepository.findByEmail(email)
             ?: throw MemberNotFoundException())
+
         val newAccessToken = tokenProvider.createAccessToken(member.email, member.roles)
         val newRefreshToken = tokenProvider.createRefreshToken(member.email)
         val expiredTime = tokenProvider.accessExpiredTime
+
         member.updateRefreshToken(newRefreshToken)
+
         return RefreshResDto(
             newAccessToken,
             newRefreshToken,
-            expiredTime
+            expiredTime,
+            roles = member.roles
         )
     }
 }

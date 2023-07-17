@@ -22,11 +22,16 @@ class ApplyMusicServiceImpl(
 ) : ApplyMusicService {
     override fun execute(applyMusicReqDto: ApplyMusicReqDto, dayOfWeek: DayOfWeek): Music {
         validDayOfWeek(dayOfWeek)
+
         val memberInfo: Member = userUtil.fetchCurrentUser()
+
         isCanApplyMusicStatus(memberInfo)
+
         val music: Music = toDto(applyMusicReqDto)
             .let { musicRepository.save(toEntity(it, memberInfo)) }
+
         memberInfo.updateMusicStatus(MusicStatus.APPLIED)
+
         return music
     }
 

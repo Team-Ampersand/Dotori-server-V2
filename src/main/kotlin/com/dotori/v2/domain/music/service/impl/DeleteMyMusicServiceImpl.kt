@@ -22,7 +22,9 @@ class DeleteMyMusicServiceImpl(
     override fun execute(musicId: Long) {
         val music: Music = musicRepository.findByIdOrNull(musicId) ?: throw MusicNotFoundException()
         val member: Member = userUtil.fetchCurrentUser()
+
         validMusic(music, member)
+
         musicRepository.delete(music)
         music.member.updateMusicStatus(MusicStatus.CAN)
     }
