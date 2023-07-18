@@ -35,8 +35,8 @@ object Dependencies {
 
     // jwt
     const val JWT_API = "io.jsonwebtoken:jjwt-api:${DependencyVersions.JWT_API_VERSION}"
-    const val JWT_IMPL = "io.jsonwebtoken:jjwt-api:${DependencyVersions.JWT_IMPL_VERSION}"
-    const val JWT_JACKSON = "io.jsonwebtoken:jjwt-api:${DependencyVersions.JWT_JACKSON_VERSION}"
+    const val JWT_IMPL = "io.jsonwebtoken:jjwt-impl:${DependencyVersions.JWT_IMPL_VERSION}"
+    const val JWT_JACKSON = "io.jsonwebtoken:jjwt-jackson:${DependencyVersions.JWT_JACKSON_VERSION}"
 
     // aws
     const val AWS_SES = "com.amazonaws:aws-java-sdk-ses:${DependencyVersions.AWS_SES_VERSION}"
