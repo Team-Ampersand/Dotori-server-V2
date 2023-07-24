@@ -17,7 +17,7 @@ class ValidDayOfWeekAndHourUtil(
          val dayOfWeek = currentTime.dayOfWeek
          val hour = currentTime.hour
 
-         if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY)
+         if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
             throw NotSelfStudyApplyDayException()
 
          if (hour != 20)
@@ -29,7 +29,7 @@ class ValidDayOfWeekAndHourUtil(
         val dayOfWeek = currentTime.dayOfWeek
         val hour = currentTime.hour
 
-        if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY)
+        if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
             throw NotSelfStudyCancelDayException()
 
         if (hour != 20)
