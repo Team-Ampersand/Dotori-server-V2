@@ -18,46 +18,22 @@ class SearchStudentServiceImpl(
 
     override fun execute(
         searchRequestDto: SearchRequestDto
-    ): List<SearchStudentListResDto> =
-        getMemberCondition(
-            searchRequestDto,
-            if (searchRequestDto.name != null)
-                memberRepository.findAllByMemberNameStartingWithOrderByStuNumAsc(searchRequestDto.name)
-            else
-                memberRepository.findAllByOrderByStuNumAsc()
-        )
-
-
-    private fun getMemberCondition(
-        searchRequestDto: SearchRequestDto,
-        memberList: List<Member>
     ): List<SearchStudentListResDto> {
 
-        val filterMember = searchRequestDto.run {
-            memberList.asSequence().filter {
-                if (grade != null) it.stuNum.startsWith(grade) else true
-            }.filter {
-                if (classNum != null) it.stuNum.substring(1, 2) == classNum else true
-            }.filter {
-                if (gender != null) it.gender.name == gender else true
-            }.filter {
-                if (role != null) it.roles.getOrNull(0)?.name == role else true
-            }.filter {
-                if(selfStudyStatus == SelfStudyStatus.IMPOSSIBLE) it.selfStudyStatus == selfStudyStatus || it.selfStudyStatus == SelfStudyStatus.CANT
-                else if (selfStudyStatus != null) it.selfStudyStatus == selfStudyStatus else true
-            }.toList()
-        }
+        val members = memberRepository.search(searchRequestDto)
 
-        return filterMember.map {
+        return members.map {
             SearchStudentListResDto(
                 id = it.id,
                 email = it.email,
                 memberName = it.memberName,
                 stuNum = it.stuNum,
                 gender = it.gender,
-                role = it.roles[0],
+                role = it.roles.firstOrNull() ?: ,
                 selfStudyStatus = it.selfStudyStatus
+
             )
         }
     }
+
 }
