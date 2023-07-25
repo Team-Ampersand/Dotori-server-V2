@@ -3,6 +3,7 @@ package com.dotori.v2.domain.stu_info.service.impl
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
+import com.dotori.v2.domain.member.exception.MemberNotFoundException
 import com.dotori.v2.domain.stu_info.presentation.data.req.SearchRequestDto
 import com.dotori.v2.domain.stu_info.presentation.data.res.SearchStudentListResDto
 import com.dotori.v2.domain.stu_info.service.SearchStudentService
@@ -29,7 +30,7 @@ class SearchStudentServiceImpl(
                 memberName = it.memberName,
                 stuNum = it.stuNum,
                 gender = it.gender,
-                role = it.roles.firstOrNull() ?: ,
+                role = it.roles[0],
                 selfStudyStatus = it.selfStudyStatus
 
             )
