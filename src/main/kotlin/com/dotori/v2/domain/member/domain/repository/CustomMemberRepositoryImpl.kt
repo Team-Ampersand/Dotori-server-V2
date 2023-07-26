@@ -31,7 +31,7 @@ class CustomMemberRepositoryImpl(
             .fetch()
     }
 
-    override fun selfStudySearch(selfStudySearchReqDto: SelfStudySearchReqDto): List<Member> {
+    override fun searchSelfStudyMember(selfStudySearchReqDto: SelfStudySearchReqDto): List<Member> {
         return queryFactory.selectFrom(member)
             .where(
                 nameEq(selfStudySearchReqDto.name),

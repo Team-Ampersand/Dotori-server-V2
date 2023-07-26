@@ -6,5 +6,5 @@ import com.dotori.v2.domain.stu_info.presentation.data.req.SearchRequestDto
 
 interface CustomMemberRepository {
     fun search(searchRequestDto: SearchRequestDto): List<Member>
-    fun selfStudySearch(selfStudySearchReqDto: SelfStudySearchReqDto): List<Member>
+    fun searchSelfStudyMember(selfStudySearchReqDto: SelfStudySearchReqDto): List<Member>
 }
