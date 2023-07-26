@@ -25,4 +25,5 @@ class FindAllMemberServiceImpl(
                     selfStudyStatus = it.selfStudyStatus
                 )
             }
+
 }

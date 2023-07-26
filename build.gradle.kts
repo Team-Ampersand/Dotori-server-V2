@@ -47,6 +47,7 @@ dependencies {
     implementation(Dependencies.SPRING_CLOUD)
     implementation(Dependencies.QUERY_DSL)
     implementation(Dependencies.QUERY_DSL_APT)
+    kapt(Dependencies.QUERY_DSL_APT)
 }
 
 tasks.withType<KotlinCompile> {
@@ -78,7 +79,5 @@ buildscript {
         classpath(Dependencies.KOTEST_PLUG_IN)
     }
 }
-
-
 
 apply(plugin = "io.kotest")
