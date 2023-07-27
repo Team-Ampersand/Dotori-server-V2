@@ -3,13 +3,10 @@ package com.dotori.v2.domain.main_page.service.impl
 import com.dotori.v2.domain.board.domain.entity.Board
 import com.dotori.v2.domain.board.domain.repository.BoardRepository
 import com.dotori.v2.domain.board.presentation.data.dto.BoardDto
-import com.dotori.v2.domain.board.presentation.data.res.BoardResDto
 import com.dotori.v2.domain.main_page.presentation.dto.res.BoardAlarmResDto
 import com.dotori.v2.domain.main_page.service.BoardAlarmService
-import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDateTime
 
 @Service
 @Transactional(rollbackFor = [Exception::class], readOnly = true)
