@@ -5,6 +5,7 @@ import com.dotori.v2.domain.member.domain.entity.QMember.member
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
+import com.dotori.v2.domain.self_study.presentation.dto.req.SelfStudySearchReqDto
 import com.dotori.v2.domain.stu_info.presentation.data.req.SearchRequestDto
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
@@ -25,6 +26,18 @@ class CustomMemberRepositoryImpl(
                 genderEq(searchRequestDto.gender),
                 roleEq(searchRequestDto.role),
                 selfStudyStatusEq(searchRequestDto.selfStudyStatus)
+            )
+            .orderBy(member.stuNum.asc())
+            .fetch()
+    }
+
+    override fun searchSelfStudyMember(selfStudySearchReqDto: SelfStudySearchReqDto): List<Member> {
+        return queryFactory.selectFrom(member)
+            .where(
+                nameEq(selfStudySearchReqDto.name),
+                gradeEq(selfStudySearchReqDto.grade),
+                classNumEq(selfStudySearchReqDto.classNum),
+                genderEq(selfStudySearchReqDto.gender)
             )
             .orderBy(member.stuNum.asc())
             .fetch()
