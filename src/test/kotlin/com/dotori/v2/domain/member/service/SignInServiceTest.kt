@@ -9,7 +9,7 @@ import com.dotori.v2.domain.member.exception.PasswordMismatchException
 import com.dotori.v2.domain.member.presentation.data.req.SignInReqDto
 import com.dotori.v2.domain.member.presentation.data.res.SignInResDto
 import com.dotori.v2.domain.member.service.impl.SignInServiceImpl
-import com.dotori.v2.global.config.security.jwt.TokenProvider
+import com.dotori.v2.global.security.jwt.TokenProvider
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe

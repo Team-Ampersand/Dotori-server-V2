@@ -1,9 +1,9 @@
-package com.dotori.v2.global.config.security
+package com.dotori.v2.global.security
 
-import com.dotori.v2.global.config.security.handler.CustomAccessDeniedHandler
-import com.dotori.v2.global.config.security.handler.CustomAuthenticationEntryPointHandler
-import com.dotori.v2.global.config.security.jwt.JwtExceptionFilter
-import com.dotori.v2.global.config.security.jwt.JwtReqFilter
+import com.dotori.v2.global.security.handler.CustomAccessDeniedHandler
+import com.dotori.v2.global.security.handler.CustomAuthenticationEntryPointHandler
+import com.dotori.v2.global.security.jwt.JwtExceptionFilter
+import com.dotori.v2.global.security.jwt.JwtReqFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
