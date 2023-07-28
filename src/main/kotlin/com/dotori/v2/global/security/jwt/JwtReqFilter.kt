@@ -1,4 +1,4 @@
-package com.dotori.v2.global.config.security.jwt
+package com.dotori.v2.global.security.jwt
 
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder

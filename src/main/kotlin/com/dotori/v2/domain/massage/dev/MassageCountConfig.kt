@@ -14,7 +14,7 @@ class MassageCountConfig(
 ) {
     private val log = LoggerFactory.getLogger(this::class.simpleName)
     @PostConstruct
-    fun selfStudyCountEntitySetting() {
+    fun massageCountEntitySetting() {
         massageCountRepository.deleteAll()
         massageCountRepository.save(
             MassageCount(

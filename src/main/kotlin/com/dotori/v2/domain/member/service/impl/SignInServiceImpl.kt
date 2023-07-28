@@ -6,7 +6,7 @@ import com.dotori.v2.domain.member.exception.PasswordMismatchException
 import com.dotori.v2.domain.member.presentation.data.req.SignInReqDto
 import com.dotori.v2.domain.member.presentation.data.res.SignInResDto
 import com.dotori.v2.domain.member.service.SignInService
-import com.dotori.v2.global.config.security.jwt.TokenProvider
+import com.dotori.v2.global.security.jwt.TokenProvider
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

@@ -1,4 +1,4 @@
-package com.dotori.v2.global.config.security.auth
+package com.dotori.v2.global.security.auth
 
 import com.dotori.v2.domain.member.domain.entity.Member
 import org.springframework.security.core.GrantedAuthority
