@@ -12,6 +12,12 @@ data class BoardDto(
     val createdDate: LocalDate
 ) {
     companion object {
-        fun of(board: Board): BoardDto =
+        fun of(board: Board): BoardDto = BoardDto(
+            id = board.id,
+            title = board.title,
+            roles = board.member.roles,
+            boardImages = board.boardImage.map { BoardImageDto.of(it) },
+            createdDate = board.createdDate.toLocalDate()
+        )
     }
 }
