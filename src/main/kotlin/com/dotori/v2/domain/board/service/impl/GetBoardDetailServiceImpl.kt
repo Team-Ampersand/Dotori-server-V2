@@ -24,5 +24,4 @@ class GetBoardDetailServiceImpl(
         return DetailBoardResDto.of(board)
     }
 
-
 }
