@@ -7,7 +7,7 @@ import com.dotori.v2.domain.board.domain.repository.BoardRepository
 import com.dotori.v2.domain.board.exception.BoardNotExistsException
 import com.dotori.v2.domain.board.presentation.data.req.DeleteMultipleBoardReqDto
 import com.dotori.v2.domain.board.service.DeleteMultipleBoardService
-import com.dotori.v2.domain.board.service.S3Service
+import com.dotori.v2.global.thirdparty.aws.s3.S3Service
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 

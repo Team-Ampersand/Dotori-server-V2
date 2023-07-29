@@ -1,7 +1,6 @@
 package com.dotori.v2.domain.board.presentation.data.res
 
 import com.dotori.v2.domain.board.domain.entity.Board
-import com.dotori.v2.domain.board.domain.entity.BoardImage
 import com.dotori.v2.domain.board.presentation.data.dto.BoardImageDto
 import com.dotori.v2.domain.member.enums.Role
 import java.time.LocalDateTime
