@@ -9,6 +9,7 @@ import com.dotori.v2.domain.board.service.impl.DeleteMultipleBoardServiceImpl
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
+import com.dotori.v2.global.thirdparty.aws.s3.S3Service
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.every
 import io.mockk.mockk

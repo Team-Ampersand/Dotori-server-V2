@@ -1,4 +1,4 @@
-package com.dotori.v2.domain.board.service
+package com.dotori.v2.global.thirdparty.aws.s3
 
 import org.springframework.web.multipart.MultipartFile
 

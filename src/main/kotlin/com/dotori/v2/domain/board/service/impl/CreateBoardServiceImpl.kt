@@ -5,7 +5,7 @@ import com.dotori.v2.domain.board.domain.entity.BoardImage
 import com.dotori.v2.domain.board.presentation.data.dto.CreateBoardDto
 import com.dotori.v2.domain.board.presentation.data.req.CreateBoardReqDto
 import com.dotori.v2.domain.board.service.CreateBoardService
-import com.dotori.v2.domain.board.service.S3Service
+import com.dotori.v2.global.thirdparty.aws.s3.S3Service
 import com.dotori.v2.domain.board.util.BoardSaveUtil
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.global.util.UserUtil
@@ -21,6 +21,7 @@ class CreateBoardServiceImpl(
     private val s3Service: S3Service,
     private val boardSaveUtil: BoardSaveUtil
 ) : CreateBoardService {
+
 
     @Value("\${cloud.aws.s3.url}")
     private val S3_ADDRESS: String? = null

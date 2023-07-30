@@ -2,6 +2,7 @@ package com.dotori.v2.domain.main_page.service
 
 import com.dotori.v2.domain.board.domain.entity.Board
 import com.dotori.v2.domain.board.domain.repository.BoardRepository
+import com.dotori.v2.domain.board.presentation.data.dto.BoardDto
 import com.dotori.v2.domain.main_page.presentation.dto.res.BoardAlarmResDto
 import com.dotori.v2.domain.main_page.service.impl.BoardAlarmServiceImpl
 import com.dotori.v2.domain.member.domain.entity.Member
@@ -31,7 +32,7 @@ class BoardAlarmServiceTest : BehaviorSpec({
         `when`("서비스를 실행하면") {
             val response = boardAlarmServiceImpl.execute()
             then("해당 게시물의 내용이 반환되어야함") {
-                response shouldBe BoardAlarmResDto(content = listOf(boardAlarmServiceImpl.toDto(board)))
+                response shouldBe BoardAlarmResDto(content = listOf(BoardDto.of(board)))
             }
         }
     }
