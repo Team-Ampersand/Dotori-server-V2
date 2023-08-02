@@ -20,11 +20,10 @@ class WithdrawalControllerTest : BehaviorSpec({
 
     given("요청이 들어오면") {
         `when`("is received") {
-            val reqDto = WithdrawalReqDto("test@gsm.hs.kr", "1234")
-            every { withdrawalService.execute(reqDto) } returns Unit
-            val response = authController.withdrawal(reqDto)
+            every { withdrawalService.execute() } returns Unit
+            val response = authController.withdrawal()
             then("서비스가 한번은 실행되어야 함") {
-                verify(exactly = 1) { withdrawalService.execute(reqDto) }
+                verify(exactly = 1) { withdrawalService.execute() }
             }
             then("response status should be ok") {
                 response.statusCode shouldBe HttpStatus.OK

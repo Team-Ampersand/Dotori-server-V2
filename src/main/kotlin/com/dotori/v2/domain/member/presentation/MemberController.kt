@@ -22,9 +22,9 @@ class MemberController(
         logoutService.execute()
             .run { ResponseEntity.ok().build() }
 
-    @PostMapping("/withdrawal")
-    fun withdrawal(@Valid @RequestBody withdrawalReqDto: WithdrawalReqDto): ResponseEntity<Void> =
-        withdrawalService.execute(withdrawalReqDto)
+    @DeleteMapping("/withdrawal")
+    fun withdrawal(): ResponseEntity<Void> =
+        withdrawalService.execute()
             .run { ResponseEntity.ok().build() }
 
     @PatchMapping("/password")
