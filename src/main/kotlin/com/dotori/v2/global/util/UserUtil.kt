@@ -3,7 +3,7 @@ package com.dotori.v2.global.util
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
-import com.dotori.v2.global.config.security.auth.AuthDetails
+import com.dotori.v2.global.security.auth.AuthDetails
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 

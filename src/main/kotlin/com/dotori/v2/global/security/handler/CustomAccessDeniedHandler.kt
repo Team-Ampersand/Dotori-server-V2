@@ -1,4 +1,4 @@
-package com.dotori.v2.global.config.security.handler
+package com.dotori.v2.global.security.handler
 
 import org.slf4j.LoggerFactory
 import org.springframework.security.access.AccessDeniedException

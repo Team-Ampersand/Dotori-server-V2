@@ -15,21 +15,11 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(rollbackFor = [Exception::class])
 class WithdrawalServiceImpl(
     private val memberRepository: MemberRepository,
-    private val passwordEncoder: PasswordEncoder,
     private val userUtil: UserUtil,
 ) : WithdrawalService {
-    override fun execute(withdrawalReqDto: WithdrawalReqDto) {
+    override fun execute() {
         val currentUser = userUtil.fetchCurrentUser()
 
-        val member = memberRepository.findByEmail(withdrawalReqDto.email)
-            ?: throw MemberNotFoundException()
-
-        if (!passwordEncoder.matches(withdrawalReqDto.password, member.password))
-            throw PasswordMismatchException()
-
-        if (currentUser != member)
-            throw MemberNotSameException()
-
-        memberRepository.delete(member)
+        memberRepository.delete(currentUser)
     }
 }

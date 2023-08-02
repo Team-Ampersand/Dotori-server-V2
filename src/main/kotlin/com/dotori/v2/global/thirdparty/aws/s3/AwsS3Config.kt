@@ -1,4 +1,4 @@
-package com.dotori.v2.global.config.aws
+package com.dotori.v2.global.thirdparty.aws.s3
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider
 import com.amazonaws.auth.BasicAWSCredentials

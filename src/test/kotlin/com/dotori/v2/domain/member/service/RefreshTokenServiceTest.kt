@@ -6,7 +6,7 @@ import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.exception.TokenTypeNotValidException
 import com.dotori.v2.domain.member.service.impl.RefreshTokenServiceImpl
-import com.dotori.v2.global.config.security.jwt.TokenProvider
+import com.dotori.v2.global.security.jwt.TokenProvider
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe

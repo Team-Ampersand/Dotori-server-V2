@@ -1,11 +1,10 @@
-package com.dotori.v2.domain.board.service.impl
+package com.dotori.v2.global.thirdparty.aws.s3
 
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.DeleteObjectRequest
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.services.s3.model.PutObjectRequest
-import com.dotori.v2.domain.board.service.S3Service
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile

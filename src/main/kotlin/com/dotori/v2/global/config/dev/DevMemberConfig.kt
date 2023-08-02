@@ -4,7 +4,7 @@ import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
-import com.dotori.v2.global.config.security.jwt.TokenProvider
+import com.dotori.v2.global.security.jwt.TokenProvider
 import org.springframework.context.annotation.Profile
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component

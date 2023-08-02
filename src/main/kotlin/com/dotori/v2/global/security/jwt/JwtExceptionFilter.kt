@@ -1,4 +1,4 @@
-package com.dotori.v2.global.config.security.jwt
+package com.dotori.v2.global.security.jwt
 
 import com.dotori.v2.global.error.ErrorCode
 import com.dotori.v2.global.error.ErrorResponse
