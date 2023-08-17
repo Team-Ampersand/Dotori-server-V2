@@ -1,6 +1,5 @@
 package com.dotori.v2.domain.self_study.service.impl
 
-import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.self_study.domain.repository.SelfStudyRepository
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
@@ -13,15 +12,18 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true, rollbackFor = [Exception::class])
 class GetSelfStudyByStuNumAndNameServiceImpl(
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
+    private val selfStudyRepository: SelfStudyRepository
 ) : GetSelfStudyByStuNumAndNameService {
     override fun execute(searchRequestDto: SelfStudySearchReqDto): SelfStudyMemberListResDto {
-        val members = memberRepository.searchSelfStudyMember(searchRequestDto)
+        val memberList = memberRepository.searchSelfStudyMember(searchRequestDto)
+        val selfStudyList = memberList.map { selfStudyRepository.findByMember(it) }
 
         return SelfStudyMemberListResDto(
-            members.mapIndexed{index, it ->
-                SelfStudyMemberResDto(index + 1L, it)
+            selfStudyList.mapIndexed{index, it ->
+                SelfStudyMemberResDto(index + 1L, it.member)
             }
         )
     }
+
 }
