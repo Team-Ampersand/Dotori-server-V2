@@ -42,7 +42,7 @@ jobs:
           password: ${{secrets.DOCKERHUB_TOKEN}}
 
       - name: Build the Docker image
-        run: docker build --platform amd64 --build-arg DEPENDENCY=build/dependency -f DockerfileProd -t ${{secrets.DOCKERHUB_USERNAME}}/dotori-prod --platform linux/amd64 .
+        run: docker build --platform linux/amd64 --build-arg DEPENDENCY=build/dependency -f DockerfileProd -t ${{secrets.DOCKERHUB_USERNAME}}/dotori-prod --platform .
 
       - name: Docker Push
         run: docker push ${{secrets.DOCKERHUB_USERNAME}}/dotori-prod
