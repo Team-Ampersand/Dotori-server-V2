@@ -17,7 +17,7 @@ class GetSelfStudyByStuNumAndNameServiceImpl(
 ) : GetSelfStudyByStuNumAndNameService {
     override fun execute(searchRequestDto: SelfStudySearchReqDto): SelfStudyMemberListResDto {
         val memberList = memberRepository.searchSelfStudyMember(searchRequestDto)
-        val selfStudyList = memberList.map { selfStudyRepository.findByMember(it) }
+        val selfStudyList = selfStudyRepository.findByMemberIn(memberList)
 
         return SelfStudyMemberListResDto(
             selfStudyList.mapIndexed{index, it ->
