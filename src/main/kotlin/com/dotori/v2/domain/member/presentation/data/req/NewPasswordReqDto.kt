@@ -6,9 +6,6 @@ import javax.validation.constraints.Size
 
 data class NewPasswordReqDto(
     @field:NotBlank
-    @field:Pattern(regexp = "^[a-zA-Z0-9]+@gsm.hs.kr$")
-    val email: String,
-    @field:NotBlank
     @field:Size(min = 4)
     val currentPassword: String,
     @field:NotBlank
