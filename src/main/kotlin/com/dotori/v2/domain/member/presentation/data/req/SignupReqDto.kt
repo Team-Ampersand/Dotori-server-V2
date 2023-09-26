@@ -35,6 +35,7 @@ class SignupReqDto(
             email = email,
             gender = gender,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
 }

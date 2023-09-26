@@ -6,8 +6,8 @@ import com.dotori.v2.global.entity.BaseTimeEntity
 import java.time.LocalDateTime
 import javax.persistence.*
 
-
-@Entity(name = "member")
+@Entity
+@Table(name = "member")
 class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,14 +36,16 @@ class Member(
     val roles: MutableList<Role>,
 
     @OneToMany(mappedBy = "member")
-    val ruleViolation: MutableList<RuleViolation>
+    val ruleViolation: MutableList<RuleViolation>,
+
+    var profileImage: String?
 
 ) : BaseTimeEntity() {
     @Column(name = "member_refreshToken")
     var refreshToken: String = ""
         private set
 
-    @Column(name = "member_point", columnDefinition = "Long default 0")
+    @Column(name = "member_point")
     val point: Long = 0
 
     @Column(name = "self_study_check")
@@ -100,5 +102,19 @@ class Member(
 
     fun updateSelfStudyExpiredDate(localDateTime: LocalDateTime?) {
         this.selfStudyExpiredDate = localDateTime
+    }
+
+    fun updateProfileImage(profileImage: String?): Member {
+        return Member(
+            id = this.id,
+            memberName = this.memberName,
+            stuNum = this.stuNum,
+            email = this.email,
+            password = this.password,
+            gender = this.gender,
+            roles = this.roles,
+            ruleViolation = this.ruleViolation,
+            profileImage = profileImage
+        )
     }
 }
