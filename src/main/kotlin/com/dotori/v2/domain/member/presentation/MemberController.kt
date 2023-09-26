@@ -1,13 +1,10 @@
 package com.dotori.v2.domain.member.presentation
 
 import com.dotori.v2.domain.member.presentation.data.req.NewPasswordReqDto
-import com.dotori.v2.domain.member.presentation.data.req.WithdrawalReqDto
-import com.dotori.v2.domain.member.service.ChangeAuthPasswordService
-import com.dotori.v2.domain.member.service.ChangePasswordService
-import com.dotori.v2.domain.member.service.LogoutService
-import com.dotori.v2.domain.member.service.WithdrawalService
+import com.dotori.v2.domain.member.service.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 import javax.validation.Valid
 
 @RestController
@@ -15,7 +12,8 @@ import javax.validation.Valid
 class MemberController(
     private val logoutService: LogoutService,
     private val withdrawalService: WithdrawalService,
-    private val changeAuthPasswordService: ChangeAuthPasswordService
+    private val changeAuthPasswordService: ChangeAuthPasswordService,
+    private val uploadProfileImageService: UploadProfileImageService
 ) {
     @DeleteMapping("/logout")
     fun logout(): ResponseEntity<Void> =
@@ -30,6 +28,11 @@ class MemberController(
     @PatchMapping("/password")
     fun changePassword(@Valid @RequestBody newPasswordReqDto: NewPasswordReqDto): ResponseEntity<Void> =
         changeAuthPasswordService.execute(newPasswordReqDto)
+            .run { ResponseEntity.ok().build() }
+
+    @PostMapping("/profileImage")
+    fun upLoadProfileImage(@RequestParam(value = "images") multipartFiles: List<MultipartFile>): ResponseEntity<Void> =
+        uploadProfileImageService.execute(multipartFiles)
             .run { ResponseEntity.ok().build() }
 
 }
