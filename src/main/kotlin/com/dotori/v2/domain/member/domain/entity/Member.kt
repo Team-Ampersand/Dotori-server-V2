@@ -38,6 +38,7 @@ class Member(
     @OneToMany(mappedBy = "member")
     val ruleViolation: MutableList<RuleViolation>,
 
+    @Column(name = "profileImage")
     var profileImage: String?
 
 ) : BaseTimeEntity() {

@@ -29,7 +29,8 @@ class RefreshTokenServiceTest : BehaviorSpec({
             password = "test",
             gender = Gender.MAN,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         init(tokenProvider, refreshToken, testMember, memberRepository)
         `when`("서비스를 실행하면") {

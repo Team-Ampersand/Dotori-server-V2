@@ -70,7 +70,8 @@ private fun createLiftedBanMember() : Member {
         password = "applied",
         gender = Gender.MAN,
         roles = Collections.singletonList(Role.ROLE_MEMBER),
-        ruleViolation = mutableListOf()
+        ruleViolation = mutableListOf(),
+        profileImage = null
     )
     member.updateSelfStudyStatus(SelfStudyStatus.IMPOSSIBLE)
     member.updateSelfStudyExpiredDate(LocalDateTime.now())
@@ -85,7 +86,8 @@ private fun createBanedMember() : Member {
         password = "applied",
         gender = Gender.MAN,
         roles = Collections.singletonList(Role.ROLE_MEMBER),
-        ruleViolation = mutableListOf()
+        ruleViolation = mutableListOf(),
+        profileImage = null
     )
     member.updateSelfStudyStatus(SelfStudyStatus.IMPOSSIBLE)
     member.updateSelfStudyExpiredDate(LocalDateTime.now().plusDays(7))
@@ -100,7 +102,8 @@ private fun createAppliedMember() : Member {
         password = "applied",
         gender = Gender.MAN,
         roles = Collections.singletonList(Role.ROLE_MEMBER),
-        ruleViolation = mutableListOf()
+        ruleViolation = mutableListOf(),
+        profileImage = null
     )
     member.updateSelfStudyStatus(SelfStudyStatus.APPLIED)
     member.updateSelfStudyCheck(true)

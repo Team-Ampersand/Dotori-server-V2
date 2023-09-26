@@ -42,7 +42,8 @@ class SignupServiceTest : BehaviorSpec({
             password = "test",
             ruleViolation = mutableListOf(),
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            profileImage = null
         )
         val mockReq = reqToMock(reqDto)
         val emailCertificate = EmailCertificate(mockReq.email, "testKey", LocalDateTime.now(), true)

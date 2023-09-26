@@ -37,7 +37,8 @@ class ChangePasswordServiceTest : BehaviorSpec({
             password = "test",
             ruleViolation = mutableListOf(),
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            profileImage = null
         )
         val emailCertificate = EmailCertificate(1, testMember.email, "testKey", LocalDateTime.now(), true)
         val request = NoAuthNewPasswordReqDto("test@gsm.hs.kr", "1234")

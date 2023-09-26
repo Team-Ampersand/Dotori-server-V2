@@ -36,7 +36,8 @@ class SignInServiceTest : BehaviorSpec({
             password = "test",
             gender = Gender.PENDING,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
 
         init(memberRepository, reqDto, testMember, passwordEncoder, tokenProvider)

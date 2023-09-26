@@ -27,7 +27,8 @@ class GetSelfStudyServiceTest : BehaviorSpec({
             password = "test",
             gender = Gender.MAN,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         val selfStudy1 = SelfStudy(id = 1, testMember)
         val selfStudy2 = SelfStudy(id = 2, testMember)

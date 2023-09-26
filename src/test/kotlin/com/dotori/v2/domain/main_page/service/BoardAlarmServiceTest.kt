@@ -25,7 +25,8 @@ class BoardAlarmServiceTest : BehaviorSpec({
             password = "test",
             gender = Gender.MAN,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         val board = Board(1, testMember, "title", "content", boardImage = listOf())
         every { boardRepository.findAllByOrderByCreatedDateDesc() } returns listOf(board)
