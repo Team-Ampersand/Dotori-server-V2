@@ -35,7 +35,7 @@ class CreateBoardServiceImpl(
                 .let { boardSaveUtil.saveBoard(board = it) }
         }
 
-        val uploadFile: List<String> = s3Service.uploadFile(multipartFiles)
+        val uploadFile: List<String> = s3Service.uploadListFile(multipartFiles)
         val board: Board = toEntity(createBoardDto, member)
             .let { boardSaveUtil.saveBoard(board = it) }
 
