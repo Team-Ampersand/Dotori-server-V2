@@ -31,7 +31,7 @@ class MemberController(
             .run { ResponseEntity.ok().build() }
 
     @PostMapping("/profileImage")
-    fun upLoadProfileImage(@RequestParam(value = "images") multipartFiles: List<MultipartFile>): ResponseEntity<Void> =
+    fun uploadProfileImage(@RequestParam(value = "images") multipartFiles: MultipartFile?): ResponseEntity<Void> =
         uploadProfileImageService.execute(multipartFiles)
             .run { ResponseEntity.ok().build() }
 

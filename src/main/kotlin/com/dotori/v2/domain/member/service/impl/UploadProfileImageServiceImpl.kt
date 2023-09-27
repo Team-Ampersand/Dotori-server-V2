@@ -16,13 +16,12 @@ class UploadProfileImageServiceImpl(
     private val userUtil: UserUtil,
     private val s3Service: S3Service,
 ) : UploadProfileImageService {
-    override fun execute(multipartFiles: List<MultipartFile>) {
+    override fun execute(multipartFiles: MultipartFile?) {
         val member: Member = userUtil.fetchCurrentUser()
-        val uploadFile: List<String> = s3Service.uploadFile(multipartFiles)
+        val uploadFile: String? = s3Service.uploadSingleFile(multipartFiles)
 
-        uploadFile.map {
-            member.updateProfileImage(it)
-                .let { memberRepository.save(it) }
-        }
+        member.updateProfileImage(uploadFile)
+            .let { memberRepository.save(it) }
+
     }
 }
