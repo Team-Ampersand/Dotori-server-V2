@@ -22,7 +22,6 @@ class CreateBoardServiceImpl(
     private val boardSaveUtil: BoardSaveUtil
 ) : CreateBoardService {
 
-
     @Value("\${cloud.aws.s3.url}")
     private val S3_ADDRESS: String? = null
 

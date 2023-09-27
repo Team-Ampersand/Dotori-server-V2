@@ -43,25 +43,27 @@ class S3ServiceImpl(
     }
 
     override fun uploadSingleFile(multipartFile: MultipartFile?): String? {
-
-        multipartFile?.let { file ->
-            val fileName: String = createFileName(file.originalFilename.toString())
-            val objectMetadata = ObjectMetadata()
-            objectMetadata.contentLength = file.size
-            objectMetadata.contentType = file.contentType
-            try {
-                val inputStream: InputStream = file.inputStream
-                amazonS3.putObject(
-                    PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
-                        .withCannedAcl(CannedAccessControlList.PublicRead)
-                )
-                return fileName
-            } catch (e: IOException) {
-                throw IllegalStateException("파일 업로드에 실패했습니다.")
-            }
+        if (multipartFile == null || multipartFile.isEmpty) {
+            return null
         }
-        return null
+
+        val fileName = createFileName(multipartFile.originalFilename.orEmpty())
+        val objectMetadata = ObjectMetadata().apply {
+            contentLength = multipartFile.size
+            contentType = multipartFile.contentType
+        }
+
+        try {
+            amazonS3.putObject(
+                PutObjectRequest(bucket, fileName, multipartFile.inputStream, objectMetadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead)
+            )
+            return fileName
+        } catch (e: IOException) {
+            throw IllegalStateException("파일 업로드에 실패했습니다.")
+        }
     }
+
     override fun deleteFile(fileName: String) {
         amazonS3.deleteObject(DeleteObjectRequest(bucket, fileName))
     }
