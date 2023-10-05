@@ -29,7 +29,8 @@ class ModifyStudentInfoServiceImpl(
             password = member.password,
             gender = modifyStudentInfoRequest.gender,
             roles = Collections.singletonList(modifyStudentInfoRequest.role),
-            ruleViolation = member.ruleViolation
+            ruleViolation = member.ruleViolation,
+            profileImage = member.profileImage
         )
         memberRepository.save(newMember)
     }

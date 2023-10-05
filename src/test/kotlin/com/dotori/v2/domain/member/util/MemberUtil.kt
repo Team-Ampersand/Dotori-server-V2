@@ -16,8 +16,9 @@ class MemberUtil {
             password: String = "test",
             gender: Gender = Gender.MAN,
             roles: MutableList<Role> = mutableListOf(Role.ROLE_MEMBER),
-            ruleViolation: MutableList<RuleViolation> = mutableListOf()
-        ) = Member(id, memberName, stuNum, email, password, gender, roles, ruleViolation)
+            ruleViolation: MutableList<RuleViolation> = mutableListOf(),
+            profileImage: String? = null
+        ) = Member(id, memberName, stuNum, email, password, gender, roles, ruleViolation, profileImage)
     }
 
 }

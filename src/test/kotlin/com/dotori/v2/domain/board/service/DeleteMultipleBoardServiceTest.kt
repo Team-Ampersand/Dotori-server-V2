@@ -21,7 +21,6 @@ class DeleteMultipleBoardServiceTest : BehaviorSpec({
     val boardRepository = mockk<BoardRepository>()
     val boardImageRepository = mockk<BoardImageRepository>()
     val s3Service = mockk<S3Service>()
-
     val deleteMultipleBoardServiceImpl = DeleteMultipleBoardServiceImpl(boardRepository, boardImageRepository, s3Service)
 
     Given("공지사항 과 공지사항안에 이미자가 주어지면") {
@@ -32,7 +31,8 @@ class DeleteMultipleBoardServiceTest : BehaviorSpec({
             password = "test",
             gender = Gender.MAN,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         val board = Board(
             id = 0,

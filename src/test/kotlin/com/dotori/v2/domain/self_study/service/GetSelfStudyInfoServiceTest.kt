@@ -29,7 +29,8 @@ class GetSelfStudyInfoServiceTest : BehaviorSpec({
             password = "test",
             gender = Gender.MAN,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         every { userUtil.fetchCurrentUser() } returns testMember
         val selfStudyCount = SelfStudyCount(id = 1)

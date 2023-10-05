@@ -4,7 +4,6 @@ import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
-import com.dotori.v2.global.security.jwt.TokenProvider
 import org.springframework.context.annotation.Profile
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
@@ -25,7 +24,8 @@ class DevMemberConfig(
             gender = Gender.PENDING,
             password = passwordEncoder.encode("string1!"),
             roles = mutableListOf(Role.ROLE_ADMIN),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         memberRepository.save(admin)
 
@@ -36,7 +36,8 @@ class DevMemberConfig(
             gender = Gender.PENDING,
             password = passwordEncoder.encode("string1!"),
             roles = mutableListOf(Role.ROLE_DEVELOPER),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         memberRepository.save(developer)
 
@@ -47,7 +48,8 @@ class DevMemberConfig(
             gender = Gender.PENDING,
             password = passwordEncoder.encode("string1!"),
             roles = mutableListOf(Role.ROLE_COUNCILLOR),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         memberRepository.save(councillor)
 
@@ -58,7 +60,8 @@ class DevMemberConfig(
             gender = Gender.MAN,
             password = passwordEncoder.encode("string1!"),
             roles = mutableListOf(Role.ROLE_MEMBER),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         memberRepository.save(man)
 
@@ -69,7 +72,8 @@ class DevMemberConfig(
             gender = Gender.WOMAN,
             password = passwordEncoder.encode("string1!"),
             roles = mutableListOf(Role.ROLE_MEMBER),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         memberRepository.save(woman)
     }

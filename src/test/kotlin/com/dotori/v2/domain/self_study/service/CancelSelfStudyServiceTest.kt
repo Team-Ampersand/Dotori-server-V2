@@ -43,7 +43,8 @@ class CancelSelfStudyServiceTest : BehaviorSpec({
             password = "test",
             gender = Gender.MAN,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         val selfStudyCount = SelfStudyCount(id = 1, count = 1)
         init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository)

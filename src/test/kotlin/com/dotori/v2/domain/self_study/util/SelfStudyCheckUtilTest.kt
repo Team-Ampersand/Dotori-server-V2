@@ -21,7 +21,8 @@ class SelfStudyCheckUtilTest : BehaviorSpec({
             password = "test",
             ruleViolation = mutableListOf(),
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            profileImage = null
         )
         `when`("자습 신청이 가능한지 검사하면") {
             val result = selfStudyCheckUtil.isSelfStudyStatusCan(canMember)
@@ -46,7 +47,8 @@ class SelfStudyCheckUtilTest : BehaviorSpec({
             password = "test",
             ruleViolation = mutableListOf(),
             gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER)
+            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            profileImage = null
         )
         appliedMember.updateSelfStudyStatus(SelfStudyStatus.APPLIED)
         `when`("자습 신청이 가능한지 검사하면") {
