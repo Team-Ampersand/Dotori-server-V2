@@ -20,6 +20,9 @@ class S3ServiceImpl(
     @Value("\${cloud.aws.s3.bucket}")
     private val bucket: String? = null
 
+    @Value("\${cloud.aws.s3.url}")
+    private val url: String = ""
+
     override fun uploadListFile(multipartFiles: List<MultipartFile>?): List<String> {
         val fileNameList = ArrayList<String>()
 
@@ -37,7 +40,7 @@ class S3ServiceImpl(
             } catch (e: IOException) {
                 throw IllegalStateException("파일 업로드에 실패했습니다.")
             }
-            fileNameList.add(fileName)
+            fileNameList.add(url+fileName)
         }
         return fileNameList
     }
@@ -58,7 +61,7 @@ class S3ServiceImpl(
                 PutObjectRequest(bucket, fileName, multipartFile.inputStream, objectMetadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead)
             )
-            return fileName
+            return url+fileName
         } catch (e: IOException) {
             throw IllegalStateException("파일 업로드에 실패했습니다.")
         }

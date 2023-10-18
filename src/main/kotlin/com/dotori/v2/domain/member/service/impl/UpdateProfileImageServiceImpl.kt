@@ -18,7 +18,6 @@ class UpdateProfileImageServiceImpl(
     override fun execute(multipartFiles: MultipartFile?) {
         val member = userUtil.fetchCurrentUser()
         var uploadFile: String? = s3Service.uploadSingleFile(multipartFiles)
-        uploadFile = "https://dotori-s3.s3.ap-northeast-2.amazonaws.com/img/$uploadFile"
         s3Service.deleteFile(member.profileImage!!)
         member.updateProfileImage(uploadFile)
             .let { memberRepository.save(it) }
