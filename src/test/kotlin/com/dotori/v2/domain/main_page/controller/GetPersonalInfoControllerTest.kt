@@ -17,7 +17,7 @@ class GetPersonalInfoControllerTest : BehaviorSpec({
 
     given("요청이 들어오면") {
         `when`("is received") {
-            val target = PersonalInfoResDto(1, "test", "test", Gender.MAN)
+            val target = PersonalInfoResDto(1, "test", "test", Gender.MAN, null)
             every { getPersonalInfoService.execute() } returns target
             val response = controller.getPersonalInfo()
             then("서비스가 한번은 실행되어야 함") {
