@@ -18,10 +18,9 @@ class UploadProfileImageServiceImpl(
 ) : UploadProfileImageService {
     override fun execute(multipartFiles: MultipartFile?) {
         val member: Member = userUtil.fetchCurrentUser()
-        val uploadFile: String? = s3Service.uploadSingleFile(multipartFiles)
-
+        var uploadFile: String? = s3Service.uploadSingleFile(multipartFiles)
+        uploadFile = "https://dotori-s3.s3.ap-northeast-2.amazonaws.com/img/$uploadFile"
         member.updateProfileImage(uploadFile)
             .let { memberRepository.save(it) }
-
     }
 }
