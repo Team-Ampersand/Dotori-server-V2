@@ -9,7 +9,8 @@ data class SelfStudyMemberResDto(
     val stuNum: String,
     val memberName: String,
     val gender: Gender,
-    val selfStudyCheck: Boolean
+    val selfStudyCheck: Boolean,
+    val profileUrl: String?
 ) {
-    constructor(rank: Long, member: Member) : this(rank = rank, id = member.id, stuNum = member.stuNum, memberName = member.memberName, gender = member.gender, selfStudyCheck = member.selfStudyCheck)
+    constructor(rank: Long, member: Member) : this(rank = rank, id = member.id, stuNum = member.stuNum, memberName = member.memberName, gender = member.gender, selfStudyCheck = member.selfStudyCheck, profileUrl = member.profileImage)
 }
