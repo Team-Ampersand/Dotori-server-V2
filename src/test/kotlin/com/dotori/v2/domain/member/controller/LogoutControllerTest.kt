@@ -16,7 +16,8 @@ class LogoutControllerTest : BehaviorSpec({
     val changePasswordService = mockk<ChangeAuthPasswordService>()
     val uploadProfileImageService = mockk<UploadProfileImageService>()
     val updateProfileImageService = mockk<UpdateProfileImageService>()
-    val authController = MemberController(logoutService, withdrawalService, changePasswordService, uploadProfileImageService, updateProfileImageService)
+    val deleteProfileImageService = mockk<DeleteProfileImageService>()
+    val authController = MemberController(logoutService, withdrawalService, changePasswordService, uploadProfileImageService, updateProfileImageService, deleteProfileImageService)
 
     given("요청이 들어오면") {
         `when`("is received") {
