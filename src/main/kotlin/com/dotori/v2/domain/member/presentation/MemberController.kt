@@ -45,6 +45,6 @@ class MemberController(
     @DeleteMapping("/profileImage")
     fun deleteProfileImage(): ResponseEntity<Void> =
         deleteProfileImageService.execute()
-            .run { ResponseEntity.noContent().build() }
+            .run { ResponseEntity.ok().build() }
 
 }
