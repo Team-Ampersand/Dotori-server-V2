@@ -14,7 +14,8 @@ class MemberController(
     private val withdrawalService: WithdrawalService,
     private val changeAuthPasswordService: ChangeAuthPasswordService,
     private val uploadProfileImageService: UploadProfileImageService,
-    private val updateProfileImageService: UpdateProfileImageService
+    private val updateProfileImageService: UpdateProfileImageService,
+    private val deleteProfileImageService: DeleteProfileImageService
 ) {
     @DeleteMapping("/logout")
     fun logout(): ResponseEntity<Void> =
@@ -32,13 +33,18 @@ class MemberController(
             .run { ResponseEntity.ok().build() }
 
     @PostMapping("/profileImage")
-    fun uploadProfileImage(@RequestParam(value = "images") multipartFiles: MultipartFile?): ResponseEntity<Void> =
+    fun uploadProfileImage(@RequestParam(value = "image") multipartFiles: MultipartFile?): ResponseEntity<Void> =
         uploadProfileImageService.execute(multipartFiles)
             .run { ResponseEntity.ok().build() }
 
     @PatchMapping("/profileImage")
-    fun updateProfileImage(@RequestParam(value = "images") multipartFiles: MultipartFile?): ResponseEntity<Void> =
+    fun updateProfileImage(@RequestParam(value = "image") multipartFiles: MultipartFile?): ResponseEntity<Void> =
         updateProfileImageService.execute(multipartFiles)
+            .run { ResponseEntity.ok().build() }
+
+    @DeleteMapping("/profileImage")
+    fun deleteProfileImage(): ResponseEntity<Void> =
+        deleteProfileImageService.execute()
             .run { ResponseEntity.ok().build() }
 
 }

@@ -8,7 +8,8 @@ data class MassageMemberResDto(
     val id: Long,
     val stuNum: String,
     val memberName: String,
-    val gender: Gender
+    val gender: Gender,
+    val profileUrl: String?
 ) {
-    constructor(rank: Long, member: Member) : this(rank = rank, id = member.id, stuNum = member.stuNum, memberName = member.memberName, gender = member.gender)
+    constructor(rank: Long, member: Member) : this(rank = rank, id = member.id, stuNum = member.stuNum, memberName = member.memberName, gender = member.gender, profileUrl = member.profileImage)
 }

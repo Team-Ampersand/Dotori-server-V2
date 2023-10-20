@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile
 class UploadProfileImageServiceImpl(
     private val memberRepository: MemberRepository,
     private val userUtil: UserUtil,
-    private val s3Service: S3Service,
+    private val s3Service: S3Service
 ): UploadProfileImageService {
     override fun execute(multipartFiles: MultipartFile?) {
         val member: Member = userUtil.fetchCurrentUser()
