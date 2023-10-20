@@ -33,12 +33,12 @@ class MemberController(
             .run { ResponseEntity.ok().build() }
 
     @PostMapping("/profileImage")
-    fun uploadProfileImage(@RequestParam(value = "images") multipartFiles: MultipartFile?): ResponseEntity<Void> =
+    fun uploadProfileImage(@RequestParam(value = "image") multipartFiles: MultipartFile?): ResponseEntity<Void> =
         uploadProfileImageService.execute(multipartFiles)
             .run { ResponseEntity.ok().build() }
 
     @PatchMapping("/profileImage")
-    fun updateProfileImage(@RequestParam(value = "images") multipartFiles: MultipartFile?): ResponseEntity<Void> =
+    fun updateProfileImage(@RequestParam(value = "image") multipartFiles: MultipartFile?): ResponseEntity<Void> =
         updateProfileImageService.execute(multipartFiles)
             .run { ResponseEntity.ok().build() }
 
