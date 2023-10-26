@@ -44,7 +44,7 @@ class CustomMemberRepositoryImpl(
     }
 
     private fun nameEq(name: String?): BooleanExpression? =
-        if(hasText(name)) member.memberName.eq(name) else null
+        if(hasText(name)) member.memberName.contains(name) else null
 
     private fun gradeEq(grade: String?): BooleanExpression? =
         if(hasText(grade)) member.stuNum.startsWith(grade) else null
