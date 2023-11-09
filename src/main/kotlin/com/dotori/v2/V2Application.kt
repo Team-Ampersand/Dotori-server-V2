@@ -8,8 +8,6 @@ import org.springframework.scheduling.annotation.EnableScheduling
 import java.util.*
 import javax.annotation.PostConstruct
 
-@EnableScheduling
-@EnableFeignClients
 @SpringBootApplication
 class V2Application{
 	val log = LoggerFactory.getLogger(this::class.java.name)!!
