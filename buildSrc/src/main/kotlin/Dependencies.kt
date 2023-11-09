@@ -8,7 +8,7 @@ object Dependencies {
     const val VALIDATION = "org.springframework.boot:spring-boot-starter-validation"
     const val WEB = "org.springframework.boot:spring-boot-starter-web"
     const val SPRING_CLOUD = "org.springframework.cloud:spring-cloud-starter-aws:${DependencyVersions.SPRING_CLOUD_VERSION}"
-
+    const val SPRING_OPEN_FEIGN = "org.springframework.cloud:spring-cloud-starter-openfeign:${DependencyVersions.SPRING_CLOUD_OPEN_FEIGN}"
 
     // kotlin
     const val KOTLIN_JACKSON = "com.fasterxml.jackson.module:jackson-module-kotlin"
@@ -45,5 +45,11 @@ object Dependencies {
     // querydsl
     const val QUERY_DSL = "com.querydsl:querydsl-jpa:${DependencyVersions.QUERY_DSL_VERSION}"
     const val QUERY_DSL_APT = "com.querydsl:querydsl-apt:${DependencyVersions.QUERY_DSL_APT_VERSION}:jpa"
+
+    // youtube
+    const val GOOGLE_API_CLIENT = "com.google.api-client:google-api-client:${DependencyVersions.GOOGLE_API_CLIENT_VERSION}"
+    const val GOOGLE_OAUTH_CLIENT = "com.google.oauth-client:google-oauth-client-jetty:${DependencyVersions.GOOGLE_OAUTH_VERSION}"
+    const val YOUTUBE_ANALYTICS = "com.google.apis:google-api-services-youtubeAnalytics:${DependencyVersions.YOUTUBE_ANALYTICS_VERSION}"
+    const val GOOGLE_API_SERVICE = "com.google.apis:google-api-services-youtube:${DependencyVersions.GOOGLE_API_SERVICE_VERSION}"
 
 }
