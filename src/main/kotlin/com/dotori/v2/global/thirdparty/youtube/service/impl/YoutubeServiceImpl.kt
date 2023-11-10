@@ -28,6 +28,9 @@ class YoutubeServiceImpl(
         )
     }
 
+    /**
+     * YouTube videoId를 추출하는 로직입니다.
+     */
     private fun extractVideoId(videoUrl: String): String {
         val startIndex = videoUrl.indexOf("v=")
         if (startIndex != -1) {
