@@ -31,12 +31,8 @@ class YoutubeServiceImpl(
     /**
      * YouTube videoId를 추출하는 로직입니다.
      */
-    private fun extractVideoId(videoUrl: String): String {
-        val startIndex = videoUrl.indexOf("v=")
-        if (startIndex != -1) {
-            val endIndex = videoUrl.indexOfAny(charArrayOf('&', 't'), startIndex)
-            return videoUrl.substring(startIndex + 2, endIndex.takeIf { it != -1 } ?: videoUrl.length)
-        }
-        return ""
+    private fun extractVideoId(url: String): String {
+        val pattern = Regex("""(?:youtu\.be/|v/|vi/|u/\w/|embed/|watch\?v(?:i)?=|&v(?:i)?=)([^#\&\?]+)""")
+        return pattern.find(url.orEmpty())?.groupValues?.get(1) ?: ""
     }
 }
