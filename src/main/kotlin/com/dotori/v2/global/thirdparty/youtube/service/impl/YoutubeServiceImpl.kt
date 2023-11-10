@@ -33,6 +33,6 @@ class YoutubeServiceImpl(
      */
     private fun extractVideoId(url: String): String {
         val pattern = Regex("""(?:youtu\.be/|v/|vi/|u/\w/|embed/|watch\?v(?:i)?=|&v(?:i)?=)([^#\&\?]+)""")
-        return pattern.find(url.orEmpty())?.groupValues?.get(1) ?: ""
+        return pattern.find(url)?.groupValues?.get(1) ?: ""
     }
 }
