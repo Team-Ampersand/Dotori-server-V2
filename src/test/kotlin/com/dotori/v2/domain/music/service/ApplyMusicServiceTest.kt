@@ -11,6 +11,7 @@ import com.dotori.v2.domain.music.exception.MusicCantRequestDateException
 import com.dotori.v2.domain.music.presentation.data.req.ApplyMusicReqDto
 import com.dotori.v2.domain.music.service.impl.ApplyMusicServiceImpl
 import com.dotori.v2.global.thirdparty.youtube.data.res.YoutubeResDto
+import com.dotori.v2.global.thirdparty.youtube.exception.NotValidUrlException
 import com.dotori.v2.global.thirdparty.youtube.service.YoutubeService
 import com.dotori.v2.global.util.UserUtil
 import io.kotest.assertions.throwables.shouldThrow
@@ -49,6 +50,9 @@ class ApplyMusicServiceTest : BehaviorSpec({
         val applyMusicReqDto = ApplyMusicReqDto(
             url = "https://www.youtube.com/watch?v=ajeoinsweecmwcskownmsoo"
         )
+        val notValidApplyMusicReqDto = ApplyMusicReqDto(
+            url = "sdjfwjeiowow"
+        )
         val youtubeResDto = YoutubeResDto(
             title = "test",
             thumbnail = "test"
@@ -74,6 +78,14 @@ class ApplyMusicServiceTest : BehaviorSpec({
             val invalidDay = DayOfWeek.FRIDAY
             shouldThrow<MusicCantRequestDateException> {
                 applyMusicService.execute(applyMusicReqDto, invalidDay)
+            }
+        }
+        `when`("유효하지 않은 youtube url 로 요청하면") {
+            val invalidDay = DayOfWeek.THURSDAY
+            testMember.updateMusicStatus(MusicStatus.CAN)
+            every { youtubeService.getYoutubeInfo(notValidApplyMusicReqDto.url) } throws NotValidUrlException()
+            shouldThrow<NotValidUrlException> {
+                applyMusicService.execute(notValidApplyMusicReqDto, invalidDay)
             }
         }
         `when`("이미 음악신청을 했으면") {
