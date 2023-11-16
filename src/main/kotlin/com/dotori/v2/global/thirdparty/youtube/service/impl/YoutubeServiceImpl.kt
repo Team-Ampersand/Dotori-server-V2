@@ -2,6 +2,7 @@ package com.dotori.v2.global.thirdparty.youtube.service.impl
 
 import com.dotori.v2.global.thirdparty.youtube.service.YoutubeService
 import com.dotori.v2.global.thirdparty.youtube.data.res.YoutubeResDto
+import com.dotori.v2.global.thirdparty.youtube.exception.NotValidUrlException
 import com.dotori.v2.global.thirdparty.youtube.feign.YouTubeFeignClient
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -33,6 +34,6 @@ class YoutubeServiceImpl(
      */
     private fun extractVideoId(url: String): String {
         val pattern = Regex("""(?:youtu\.be/|v/|vi/|u/\w/|embed/|watch\?v(?:i)?=|&v(?:i)?=)([^#\&\?]+)""")
-        return pattern.find(url)?.groupValues?.get(1) ?: ""
+        return pattern.find(url)?.groupValues?.get(1) ?: throw NotValidUrlException()
     }
 }
