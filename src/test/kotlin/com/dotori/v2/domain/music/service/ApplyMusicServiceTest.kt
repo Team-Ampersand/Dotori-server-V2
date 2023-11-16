@@ -42,13 +42,13 @@ class ApplyMusicServiceTest : BehaviorSpec({
         )
         val testMusic = Music(
             id = 0L,
-            url = "https://www.youtube.com/watch?v=ajeoinsweecmwcskownmso",
+            url = "https://youtu.be/72vIkM5mUVM?si=DFmSX2mjpERPS0tY",
             member = testMember,
             title = "test",
             thumbnail = "test",
         )
         val applyMusicReqDto = ApplyMusicReqDto(
-            url = "https://www.youtube.com/watch?v=ajeoinsweecmwcskownmsoo"
+            url = "https://youtu.be/72vIkM5mUVM?si=DFmSX2mjpERPS0tY"
         )
         val notValidApplyMusicReqDto = ApplyMusicReqDto(
             url = "sdjfwjeiowow"
