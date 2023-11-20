@@ -9,6 +9,8 @@ import com.dotori.v2.domain.music.exception.MusicCantRequestDateException
 import com.dotori.v2.domain.music.presentation.data.dto.ApplyMusicDto
 import com.dotori.v2.domain.music.presentation.data.req.ApplyMusicReqDto
 import com.dotori.v2.domain.music.service.ApplyMusicService
+import com.dotori.v2.global.thirdparty.youtube.service.YoutubeService
+import com.dotori.v2.global.thirdparty.youtube.data.res.YoutubeResDto
 import com.dotori.v2.global.util.UserUtil
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -18,7 +20,8 @@ import java.time.DayOfWeek
 @Transactional(rollbackFor = [Exception::class])
 class ApplyMusicServiceImpl(
     private val userUtil: UserUtil,
-    private val musicRepository: MusicRepository
+    private val musicRepository: MusicRepository,
+    private val youtubeService: YoutubeService
 ) : ApplyMusicService {
     override fun execute(applyMusicReqDto: ApplyMusicReqDto, dayOfWeek: DayOfWeek): Music {
         validDayOfWeek(dayOfWeek)
@@ -27,9 +30,9 @@ class ApplyMusicServiceImpl(
 
         isCanApplyMusicStatus(memberInfo)
 
+        val youtubeInfo = youtubeService.getYoutubeInfo(applyMusicReqDto.url)
         val music: Music = toDto(applyMusicReqDto)
-            .let { musicRepository.save(toEntity(it, memberInfo)) }
-
+            .let { musicRepository.save(toEntity(it, memberInfo, youtubeInfo)) }
         memberInfo.updateMusicStatus(MusicStatus.APPLIED)
 
         return music
@@ -49,9 +52,11 @@ class ApplyMusicServiceImpl(
         if (member.musicStatus != MusicStatus.CAN) throw MusicAlreadyException()
     }
 
-    private fun toEntity(applyMusicDto: ApplyMusicDto, member: Member): Music =
+    private fun toEntity(applyMusicDto: ApplyMusicDto, member: Member, youtubeResDto: YoutubeResDto): Music =
         Music(
             url = applyMusicDto.url,
-            member = member
+            member = member,
+            title = youtubeResDto.title,
+            thumbnail = youtubeResDto.thumbnail
         )
 }

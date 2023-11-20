@@ -2,6 +2,7 @@ object DependencyVersions {
 
     // spring
     const val SPRING_CLOUD_VERSION = "2.2.6.RELEASE"
+    const val SPRING_CLOUD_OPEN_FEIGN = "3.1.8"
 
     // kotest
     const val KOTEST_RUNNER_VERSION = "5.5.5"
@@ -24,4 +25,10 @@ object DependencyVersions {
     // querydsl
     const val QUERY_DSL_VERSION = "5.0.0"
     const val QUERY_DSL_APT_VERSION = "5.0.0"
+
+    // youtube
+    const val GOOGLE_API_CLIENT_VERSION = "1.31.1"
+    const val GOOGLE_OAUTH_VERSION = "1.23.0"
+    const val YOUTUBE_ANALYTICS_VERSION = "v2-rev16-1.23.0"
+    const val GOOGLE_API_SERVICE_VERSION = "v3-rev20210915-1.32.1"
 }
