@@ -42,12 +42,22 @@ class ApplyMusicServiceTest : BehaviorSpec({
         )
         val testMusic = Music(
             id = 0L,
+            url = "https://www.youtube.com/watch?v=ajeoinsweecmwcssfdkownmsoo",
+            member = testMember,
+            title = "test",
+            thumbnail = "test",
+        )
+        val testMusic2 = Music(
+            id = 1L,
             url = "https://youtu.be/72vIkM5mUVM?si=DFmSX2mjpERPS0tY",
             member = testMember,
             title = "test",
             thumbnail = "test",
         )
         val applyMusicReqDto = ApplyMusicReqDto(
+            url = "https://www.youtube.com/watch?v=ajeoinsweecmwcssfdkownmsoo"
+        )
+        val applyMusicReqDto2 = ApplyMusicReqDto(
             url = "https://youtu.be/72vIkM5mUVM?si=DFmSX2mjpERPS0tY"
         )
         val notValidApplyMusicReqDto = ApplyMusicReqDto(
@@ -62,8 +72,8 @@ class ApplyMusicServiceTest : BehaviorSpec({
         every { youtubeService.getYoutubeInfo(applyMusicReqDto.url) } returns youtubeResDto
         every { musicRepository.save(any()) } returns testMusic
 
-        `when`("서비스를 실행하면") {
-            val result = applyMusicService.execute(applyMusicReqDto, DayOfWeek.MONDAY)
+        `when`("applyMusicReqDto으로 요청하면") {
+            val result = applyMusicService.execute(applyMusicReqDto, DayOfWeek.THURSDAY)
             then("save가 실행되어야함") {
                 verify(exactly = 1) { musicRepository.save(any()) }
             }
@@ -72,6 +82,24 @@ class ApplyMusicServiceTest : BehaviorSpec({
             }
             then("music이 반환되어야함") {
                 result shouldBe testMusic
+            }
+        }
+
+        every { userUtil.fetchCurrentUser() } returns testMember
+        every { youtubeService.getYoutubeInfo(applyMusicReqDto2.url) } returns youtubeResDto
+        every { musicRepository.save(any()) } returns testMusic2
+        testMember.updateMusicStatus(MusicStatus.CAN)
+
+        `when`("applyMusicReqDto2로 요청하면") {
+            val result = applyMusicService.execute(applyMusicReqDto2, DayOfWeek.THURSDAY)
+            then("save가 실행되어야함") {
+                verify(exactly = 2) { musicRepository.save(any()) }
+            }
+            then("유저의 음악신청 상태가 신청된 상태가 되어야함") {
+                testMember.musicStatus shouldBe MusicStatus.APPLIED
+            }
+            then("music이 반환되어야함") {
+                result shouldBe testMusic2
             }
         }
         `when`("유효하지 않은 날짜로 실행하면") {
