@@ -6,7 +6,6 @@ import com.dotori.v2.domain.music.domain.entity.Music
 import com.dotori.v2.domain.music.domain.repository.MusicRepository
 import com.dotori.v2.domain.music.exception.MusicNotFoundException
 import com.dotori.v2.domain.music.exception.NotMyMusicException
-import com.dotori.v2.domain.music.service.DeleteMusicService
 import com.dotori.v2.domain.music.service.DeleteMyMusicService
 import com.dotori.v2.global.util.UserUtil
 import org.springframework.data.repository.findByIdOrNull

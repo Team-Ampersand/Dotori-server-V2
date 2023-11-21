@@ -3,7 +3,6 @@ package com.dotori.v2.domain.board.domain.entity
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.global.entity.BaseTimeEntity
 import java.time.LocalDateTime
-import java.time.ZonedDateTime
 import javax.persistence.*
 
 

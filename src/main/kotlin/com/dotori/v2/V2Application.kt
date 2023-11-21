@@ -2,12 +2,12 @@ package com.dotori.v2
 
 import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
-import org.springframework.cloud.openfeign.EnableFeignClients
-import org.springframework.scheduling.annotation.EnableScheduling
 import java.util.*
 import javax.annotation.PostConstruct
 
+@ConfigurationPropertiesScan
 @SpringBootApplication
 class V2Application{
 	val log = LoggerFactory.getLogger(this::class.java.name)!!
