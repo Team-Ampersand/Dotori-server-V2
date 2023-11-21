@@ -1,41 +1,108 @@
 package com.dotori.v2.domain.member.service.impl
 
+import com.dotori.v2.domain.auth.exception.RoleNotExistException
+import com.dotori.v2.domain.auth.util.AuthUtil
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
-import com.dotori.v2.domain.member.exception.MemberNotFoundException
-import com.dotori.v2.domain.member.exception.PasswordMismatchException
-import com.dotori.v2.domain.member.presentation.data.req.SignInReqDto
+import com.dotori.v2.domain.member.enums.Role
+import com.dotori.v2.domain.member.presentation.data.dto.SignInDto
 import com.dotori.v2.domain.member.presentation.data.res.SignInResDto
 import com.dotori.v2.domain.member.service.SignInService
+import com.dotori.v2.global.config.gauth.properties.GAuthProperties
 import com.dotori.v2.global.security.jwt.TokenProvider
-import org.springframework.security.crypto.password.PasswordEncoder
+import gauth.GAuth
+import gauth.GAuthToken
+import gauth.GAuthUserInfo
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.ZonedDateTime
 
 @Service
 @Transactional(rollbackFor = [Exception::class])
 class SignInServiceImpl(
+    private val gAuthProperties: GAuthProperties,
     private val memberRepository: MemberRepository,
-    private val passwordEncoder: PasswordEncoder,
     private val tokenProvider: TokenProvider,
+    private val gAuth: GAuth,
+    private val authUtil: AuthUtil,
 ) : SignInService {
-    override fun execute(signInReqDto: SignInReqDto): SignInResDto {
-        val member = memberRepository.findByEmail(signInReqDto.email)
-            ?: throw MemberNotFoundException()
 
-        if(!passwordEncoder.matches(signInReqDto.password, member.password))
-            throw PasswordMismatchException()// 패스워드 일치 X
+    override fun execute(signInDto: SignInDto): SignInResDto {
+        val gAuthToken: GAuthToken = gAuth.generateToken(
+            signInDto.code,
+            gAuthProperties.clientId,
+            gAuthProperties.clientSecret,
+            gAuthProperties.redirectUri
+        )
+        val gAuthUserInfo: GAuthUserInfo = gAuth.getUserInfo(gAuthToken.accessToken)
+        val role = getRoleByGauthInfo(gAuthUserInfo.role, gAuthUserInfo.email)
 
-        val accessToken = tokenProvider.createAccessToken(member.email, member.roles)
-        val refreshToken = tokenProvider.createRefreshToken(member.email)
-        val accessExpiredTime = tokenProvider.accessExpiredTime
+        val accessToken: String = tokenProvider.generateAccessToken(gAuthUserInfo.email, role)
+        val refreshToken: String = tokenProvider.generateRefreshToken(gAuthUserInfo.email, role)
+        val accessExp: ZonedDateTime = tokenProvider.accessExpiredTime
+        val refreshExp: ZonedDateTime = tokenProvider.refreshExpiredTime
 
-        member.updateRefreshToken(refreshToken)
+        when (role) {
+            Role.ROLE_ADMIN -> {
+                createAdminOrRefreshToken(gAuthUserInfo, refreshToken)
+            } Role.ROLE_DEVELOPER -> {
+            createDeveloperOrRefreshToken(gAuthUserInfo, refreshToken)
+        } Role.ROLE_COUNCILLOR -> {
+            createCouncillorOrRefreshToken(gAuthUserInfo, refreshToken)
+        } else -> createMemberOrRefreshToken(gAuthUserInfo, refreshToken)
+        }
 
         return SignInResDto(
             accessToken = accessToken,
             refreshToken = refreshToken,
-            expiresAt = accessExpiredTime,
-            roles = member.roles
+            accessExp = accessExp,
+            refreshExp = refreshExp
         )
     }
+
+    private fun getRoleByGauthInfo(role: String, email: String): Role {
+        val user = memberRepository.findByEmail(email) ?:
+        return when (role) {
+            "ROLE_STUDENT" -> Role.ROLE_MEMBER
+            "ROLE_ADMIN" -> Role.ROLE_ADMIN
+            else -> throw RoleNotExistException()
+        }
+        return Role.ROLE_MEMBER
+    }
+
+    private fun createMemberOrRefreshToken(gAuthUserInfo: GAuthUserInfo, refreshToken: String) {
+        val userInfo = memberRepository.findByEmail(gAuthUserInfo.email)
+        if (userInfo == null) {
+            authUtil.saveNewUser(gAuthUserInfo, refreshToken)
+        } else {
+            authUtil.saveNewRefreshToken(userInfo, refreshToken)
+        }
+    }
+
+    private fun createAdminOrRefreshToken(gAuthUserInfo: GAuthUserInfo, refreshToken: String) {
+        val adminInfo = memberRepository.findByEmail(gAuthUserInfo.email)
+        if (adminInfo == null) {
+            authUtil.saveNewAdmin(gAuthUserInfo, refreshToken)
+        } else {
+            authUtil.saveNewRefreshToken(adminInfo, refreshToken)
+        }
+    }
+
+    private fun createCouncillorOrRefreshToken(gAuthUserInfo: GAuthUserInfo, refreshToken: String) {
+        val teacherInfo = memberRepository.findByEmail(gAuthUserInfo.email)
+        if (teacherInfo == null) {
+            authUtil.saveNewCouncillor(gAuthUserInfo, refreshToken)
+        } else {
+            authUtil.saveNewRefreshToken(teacherInfo, refreshToken)
+        }
+    }
+
+    private fun createDeveloperOrRefreshToken(gAuthUserInfo: GAuthUserInfo, refreshToken: String) {
+        val teacherInfo = memberRepository.findByEmail(gAuthUserInfo.email)
+        if (teacherInfo == null) {
+            authUtil.saveNewDeveloper(gAuthUserInfo, refreshToken)
+        } else {
+            authUtil.saveNewRefreshToken(teacherInfo, refreshToken)
+        }
+    }
+
 }
