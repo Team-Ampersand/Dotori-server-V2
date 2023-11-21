@@ -2,7 +2,6 @@ package com.dotori.v2.domain.self_study.service
 
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
-import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
 import com.dotori.v2.domain.self_study.domain.entity.SelfStudy
@@ -24,17 +23,17 @@ class UpdateSelfStudyCheckServiceTest : BehaviorSpec({
     val updateSelfStudyCheckServiceImpl = UpdateSelfStudyCheckServiceImpl(selfStudyRepository, memberRepository)
     given("유저와 자습신청 정보가 있고 요청이 주어지면") {
         val testMember = Member(
+            id = UUID.randomUUID(),
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
-            password = "test",
-            gender = Gender.MAN,
+            gender = "MALE",
             roles = Collections.singletonList(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf(),
             profileImage = null
         )
         val selfStudy = SelfStudy(
-            id = testMember.id,
+            id = 0L,
             member = testMember
         )
         var request = SelfStudyCheckReqDto(selfStudyCheck = true)

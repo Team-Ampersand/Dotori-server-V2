@@ -6,7 +6,6 @@ import com.dotori.v2.domain.board.presentation.data.dto.BoardDto
 import com.dotori.v2.domain.main_page.presentation.dto.res.BoardAlarmResDto
 import com.dotori.v2.domain.main_page.service.impl.BoardAlarmServiceImpl
 import com.dotori.v2.domain.member.domain.entity.Member
-import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -19,11 +18,11 @@ class BoardAlarmServiceTest : BehaviorSpec({
     val boardAlarmServiceImpl = BoardAlarmServiceImpl(boardRepository)
     given("유저랑 작성된 게시물이 존재하고") {
         val testMember = Member(
+            id = UUID.randomUUID(),
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
-            password = "test",
-            gender = Gender.MAN,
+            gender = "MALE",
             roles = Collections.singletonList(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf(),
             profileImage = null

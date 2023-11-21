@@ -2,12 +2,13 @@ package com.dotori.v2.domain.self_study.presentation.developer
 
 import com.dotori.v2.domain.self_study.presentation.dto.req.SelfStudyCheckReqDto
 import com.dotori.v2.domain.self_study.presentation.dto.req.SelfStudyLimitReqDto
+import com.dotori.v2.domain.self_study.presentation.dto.req.SelfStudySearchReqDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
 import com.dotori.v2.domain.self_study.service.*
-import com.dotori.v2.domain.self_study.presentation.dto.req.SelfStudySearchReqDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.util.*
 import javax.validation.Valid
 
 @RestController
@@ -46,12 +47,12 @@ class DeveloperSelfStudyController(
         ResponseEntity.ok(getSelfStudyByStuNumAndNameService.execute(searchRequestDto))
 
     @PutMapping("/ban/{user_id}")
-    fun banSelfStudyDeveloper(@PathVariable("user_id") id: Long): ResponseEntity<Void> =
+    fun banSelfStudyDeveloper(@PathVariable("user_id") id: UUID): ResponseEntity<Void> =
         banSelfStudyService.execute(id)
             .run { ResponseEntity.ok().build() }
 
     @PutMapping("/ban/cancel/{user_id}")
-    fun cancelBanSelfStudyDeveloper(@PathVariable("user_id") id: Long): ResponseEntity<Void> =
+    fun cancelBanSelfStudyDeveloper(@PathVariable("user_id") id: UUID): ResponseEntity<Void> =
         cancelBanSelfStudyService.execute(id)
             .run { ResponseEntity.ok().build() }
 
@@ -61,7 +62,7 @@ class DeveloperSelfStudyController(
             .run { ResponseEntity.ok().build() }
 
     @PatchMapping("/check/{memberId}")
-    fun updateSelfStudyCheck(@PathVariable memberId: Long,@Valid @RequestBody selfStudyCheckReqDto: SelfStudyCheckReqDto): ResponseEntity<Void> =
+    fun updateSelfStudyCheck(@PathVariable memberId: UUID, @Valid @RequestBody selfStudyCheckReqDto: SelfStudyCheckReqDto): ResponseEntity<Void> =
         updateSelfStudyCheckService.execute(memberId, selfStudyCheckReqDto)
             .run { ResponseEntity.ok().build() }
 }

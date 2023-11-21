@@ -7,7 +7,6 @@ import com.dotori.v2.domain.board.domain.repository.BoardRepository
 import com.dotori.v2.domain.board.presentation.data.req.DeleteMultipleBoardReqDto
 import com.dotori.v2.domain.board.service.impl.DeleteMultipleBoardServiceImpl
 import com.dotori.v2.domain.member.domain.entity.Member
-import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.global.thirdparty.aws.s3.S3Service
 import io.kotest.core.spec.style.BehaviorSpec
@@ -25,11 +24,11 @@ class DeleteMultipleBoardServiceTest : BehaviorSpec({
 
     Given("공지사항 과 공지사항안에 이미자가 주어지면") {
         val testMember = Member(
+            id = UUID.randomUUID(),
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
-            password = "test",
-            gender = Gender.MAN,
+            gender = "MALE",
             roles = Collections.singletonList(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf(),
             profileImage = null

@@ -1,7 +1,6 @@
 package com.dotori.v2.domain.self_study.service
 
 import com.dotori.v2.domain.member.domain.entity.Member
-import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.self_study.domain.entity.SelfStudyCount
@@ -37,11 +36,11 @@ class CancelSelfStudyServiceTest : BehaviorSpec({
     )
     given("유저가 주어지고") {
         val testMember = Member(
+            id = UUID.randomUUID(),
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
-            password = "test",
-            gender = Gender.MAN,
+            gender = "MALE",
             roles = Collections.singletonList(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf(),
             profileImage = null
@@ -64,9 +63,9 @@ class CancelSelfStudyServiceTest : BehaviorSpec({
         every { validDayOfWeekAndHourUtil.validateCancel() } throws NotSelfStudyCancelDayException()
         `when`("취소를 할 수 없는 요일일때") {
             then("NotSelfStudyCancelDayException이 발생해야함") {
-                    shouldThrow<NotSelfStudyCancelDayException> {
-                        serviceImpl.execute()
-                    }
+                shouldThrow<NotSelfStudyCancelDayException> {
+                    serviceImpl.execute()
+                }
             }
         }
         init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository)

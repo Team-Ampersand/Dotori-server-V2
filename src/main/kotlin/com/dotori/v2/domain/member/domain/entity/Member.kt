@@ -1,18 +1,24 @@
 package com.dotori.v2.domain.member.domain.entity
 
-import com.dotori.v2.domain.member.enums.*
+import com.dotori.v2.domain.member.enums.MassageStatus
+import com.dotori.v2.domain.member.enums.MusicStatus
+import com.dotori.v2.domain.member.enums.Role
+import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.rule.domain.entity.RuleViolation
 import com.dotori.v2.global.entity.BaseTimeEntity
+import org.hibernate.annotations.GenericGenerator
 import java.time.LocalDateTime
+import java.util.*
 import javax.persistence.*
 
 @Entity
 @Table(name = "member")
 class Member(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
-    val id: Long = 0,
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(columnDefinition = "BINARY(16)")
+    val id: UUID,
 
     @Column(name = "member_name", nullable = false)
     val memberName: String,
@@ -23,11 +29,8 @@ class Member(
     @Column(name = "member_email", nullable = false, unique = true)
     val email: String,
 
-    password: String,
-
-    @Enumerated(EnumType.STRING)
     @Column(name = "member_gender")
-    val gender: Gender,
+    val gender: String,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "Role")
@@ -42,19 +45,12 @@ class Member(
     var profileImage: String?
 
 ) : BaseTimeEntity() {
-    @Column(name = "member_refreshToken")
-    var refreshToken: String = ""
-        private set
 
     @Column(name = "member_point")
     val point: Long = 0
 
     @Column(name = "self_study_check")
     var selfStudyCheck = false
-        private set
-
-    @Column(name = "member_password", nullable = false)
-    var password: String = password
         private set
 
     @Column(name = "self_study_expired_date")
@@ -75,15 +71,6 @@ class Member(
     @Column(name = "member_massage", nullable = false)
     var massageStatus: MassageStatus = MassageStatus.CAN
         private set
-
-    fun updateRefreshToken(newRefreshToken: String): String {
-        this.refreshToken = newRefreshToken
-        return this.refreshToken
-    }
-
-    fun updatePassword(newPassword: String) {
-        this.password = newPassword
-    }
 
     fun updateSelfStudyStatus(selfStudyStatus: SelfStudyStatus) {
         this.selfStudyStatus = selfStudyStatus
@@ -111,7 +98,6 @@ class Member(
             memberName = this.memberName,
             stuNum = this.stuNum,
             email = this.email,
-            password = this.password,
             gender = this.gender,
             roles = this.roles,
             ruleViolation = this.ruleViolation,

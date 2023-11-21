@@ -1,7 +1,6 @@
 package com.dotori.v2.domain.self_study.service
 
 import com.dotori.v2.domain.member.domain.entity.Member
-import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.self_study.domain.entity.SelfStudyCount
 import com.dotori.v2.domain.self_study.domain.repository.SelfStudyCountRepository
@@ -23,11 +22,11 @@ class GetSelfStudyInfoServiceTest : BehaviorSpec({
     val service = GetSelfStudyInfoServiceImpl(selfStudyCountRepository, validDayOfWeekAndHourUtil, userUtil)
     given("유저가 주어지고"){
         val testMember = Member(
+            id = UUID.randomUUID(),
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
-            password = "test",
-            gender = Gender.MAN,
+            gender = "MALE",
             roles = Collections.singletonList(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf(),
             profileImage = null

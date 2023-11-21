@@ -2,7 +2,6 @@ package com.dotori.v2.domain.self_study.service
 
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
-import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.self_study.domain.entity.SelfStudyCount
@@ -64,11 +63,11 @@ private fun init(
 
 private fun createLiftedBanMember() : Member {
     val member = Member(
-        memberName = "applied",
+        id = UUID.randomUUID(),
+        memberName = "test",
         stuNum = "2116",
-        email = "applied@gsm.hs.kr",
-        password = "applied",
-        gender = Gender.MAN,
+        email = "test@gsm.hs.kr",
+        gender = "MALE",
         roles = Collections.singletonList(Role.ROLE_MEMBER),
         ruleViolation = mutableListOf(),
         profileImage = null
@@ -80,11 +79,11 @@ private fun createLiftedBanMember() : Member {
 
 private fun createBanedMember() : Member {
     val member = Member(
-        memberName = "applied",
+        id = UUID.randomUUID(),
+        memberName = "test",
         stuNum = "2116",
-        email = "applied@gsm.hs.kr",
-        password = "applied",
-        gender = Gender.MAN,
+        email = "test@gsm.hs.kr",
+        gender = "MALE",
         roles = Collections.singletonList(Role.ROLE_MEMBER),
         ruleViolation = mutableListOf(),
         profileImage = null
@@ -96,11 +95,11 @@ private fun createBanedMember() : Member {
 
 private fun createAppliedMember() : Member {
     val member = Member(
-        memberName = "applied",
+        id = UUID.randomUUID(),
+        memberName = "test",
         stuNum = "2116",
-        email = "applied@gsm.hs.kr",
-        password = "applied",
-        gender = Gender.MAN,
+        email = "test@gsm.hs.kr",
+        gender = "MALE",
         roles = Collections.singletonList(Role.ROLE_MEMBER),
         ruleViolation = mutableListOf(),
         profileImage = null
