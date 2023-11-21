@@ -31,6 +31,7 @@ enum class ErrorCode(
 
     // *** MEMBER ***
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "해당 유저를 찾을 수 없습니다."),
+    MEMBER_ROLE_NOT_EXIST(HttpStatus.NOT_FOUND.value(), "역할이 존재하지 않습니다"),
     MEMBER_ALREADY(HttpStatus.CONFLICT.value(), "이미 가입된 유저입니다."),
     MEMBER_PASSWORD_NOT_MATCHING(HttpStatus.BAD_REQUEST.value(), "비밀번호가 올바르지 않습니다."),
     MEMBER_AUTHENTICATION_KEY_NOT_MATCHING(HttpStatus.BAD_REQUEST.value(), "인증 키가 일치하지 않습니다."),
