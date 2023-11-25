@@ -45,10 +45,10 @@ class SignInServiceImpl(
             Role.ROLE_ADMIN -> {
                 createAdminOrRefreshToken(gAuthUserInfo, refreshToken)
             } Role.ROLE_DEVELOPER -> {
-            createDeveloperOrRefreshToken(gAuthUserInfo, refreshToken)
-        } Role.ROLE_COUNCILLOR -> {
-            createCouncillorOrRefreshToken(gAuthUserInfo, refreshToken)
-        } else -> createMemberOrRefreshToken(gAuthUserInfo, refreshToken)
+                createDeveloperOrRefreshToken(gAuthUserInfo, refreshToken)
+            } Role.ROLE_COUNCILLOR -> {
+                createCouncillorOrRefreshToken(gAuthUserInfo, refreshToken)
+            } else -> createMemberOrRefreshToken(gAuthUserInfo, refreshToken)
         }
 
         return SignInResDto(
