@@ -12,6 +12,7 @@ import com.dotori.v2.global.security.jwt.TokenProvider
 import gauth.GAuth
 import gauth.GAuthToken
 import gauth.GAuthUserInfo
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.ZonedDateTime
@@ -25,6 +26,9 @@ class SignInServiceImpl(
     private val gAuth: GAuth,
     private val authUtil: AuthUtil,
 ) : SignInService {
+
+    @Value("\${secret-email}")
+    val secretEmail: String = ""
 
     override fun execute(signInDto: SignInDto): SignInResDto {
         val gAuthToken: GAuthToken = gAuth.generateToken(
@@ -60,10 +64,14 @@ class SignInServiceImpl(
     }
 
     private fun getRoleByGauthInfo(role: String, email: String): Role {
+
+        if (email == secretEmail) {
+            return Role.ROLE_ADMIN
+        }
+
         val user = memberRepository.findByEmail(email) ?:
         return when (role) {
             "ROLE_STUDENT" -> Role.ROLE_MEMBER
-            "ROLE_ADMIN" -> Role.ROLE_ADMIN
             else -> throw RoleNotExistException()
         }
         return Role.ROLE_MEMBER
