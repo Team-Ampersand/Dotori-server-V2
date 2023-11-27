@@ -24,7 +24,6 @@ class DeleteMultipleBoardServiceTest : BehaviorSpec({
 
     Given("공지사항 과 공지사항안에 이미자가 주어지면") {
         val testMember = Member(
-            id = UUID.randomUUID(),
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",

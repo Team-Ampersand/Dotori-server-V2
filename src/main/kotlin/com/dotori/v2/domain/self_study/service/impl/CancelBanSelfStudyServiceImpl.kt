@@ -9,14 +9,13 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
-import java.util.*
 
 @Service
 @Transactional(rollbackFor = [Exception::class])
 class CancelBanSelfStudyServiceImpl(
     private val memberRepository: MemberRepository
 ) : CancelBanSelfStudyService{
-    override fun execute(id: UUID) {
+    override fun execute(id: Long) {
         val member = memberRepository.findByIdOrNull(id) ?: throw MemberNotFoundException()
         updateSelfStudyAndExpiredDate(member, SelfStudyStatus.CAN, null)
 

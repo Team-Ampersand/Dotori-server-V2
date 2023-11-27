@@ -14,7 +14,6 @@ class SelfStudyCheckUtilTest : BehaviorSpec({
     val selfStudyCheckUtil = SelfStudyCheckUtil()
     given("자습 신청가능한 유저가 주어지고") {
         val canMember = Member(
-            id = UUID.randomUUID(),
             memberName = "test",
             stuNum = "1111",
             email = "test@gsm.hs.kr",
@@ -40,7 +39,6 @@ class SelfStudyCheckUtilTest : BehaviorSpec({
 
     given("자습 신청한 유저가 주어지고") {
         val appliedMember = Member(
-            id = UUID.randomUUID(),
             memberName = "test",
             stuNum = "1111",
             email = "test@gsm.hs.kr",

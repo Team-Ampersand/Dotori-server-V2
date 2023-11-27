@@ -13,14 +13,12 @@ import io.mockk.every
 import io.mockk.mockk
 import org.springframework.data.repository.findByIdOrNull
 import java.time.LocalDate
-import java.util.*
 
 class BanSelfStudyServiceTest : BehaviorSpec({
     val memberRepository = mockk<MemberRepository>()
     val banSelfStudyServiceImpl = BanSelfStudyServiceImpl(memberRepository)
     given("유저가 주어지고") {
         val testMember = Member(
-            id = UUID.randomUUID(),
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",

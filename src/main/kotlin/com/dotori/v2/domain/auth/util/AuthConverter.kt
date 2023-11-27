@@ -5,7 +5,6 @@ import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.presentation.data.dto.SignInDto
 import com.dotori.v2.domain.member.presentation.data.req.SignInReqDto
 import gauth.GAuthUserInfo
-import java.util.*
 
 interface AuthConverter {
 
@@ -21,6 +20,6 @@ interface AuthConverter {
 
     fun toEntity(memberInfo: Member, refreshToken: String): RefreshToken
 
-    fun toEntity(memberId: UUID?, refreshToken: String): RefreshToken
+    fun toEntity(memberId: Long?, refreshToken: String): RefreshToken
 
 }

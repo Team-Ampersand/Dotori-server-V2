@@ -23,7 +23,6 @@ class UpdateSelfStudyCheckServiceTest : BehaviorSpec({
     val updateSelfStudyCheckServiceImpl = UpdateSelfStudyCheckServiceImpl(selfStudyRepository, memberRepository)
     given("유저와 자습신청 정보가 있고 요청이 주어지면") {
         val testMember = Member(
-            id = UUID.randomUUID(),
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",

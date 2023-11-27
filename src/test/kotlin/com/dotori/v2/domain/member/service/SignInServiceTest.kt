@@ -20,7 +20,6 @@ import io.mockk.Called
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import java.util.*
 
 class SignInServiceTest : BehaviorSpec({
     val clientId = "thisIsClientId"
@@ -70,7 +69,7 @@ class SignInServiceTest : BehaviorSpec({
         val refreshToken = "thisIsRefreshToken"
 
         val role = Role.ROLE_MEMBER
-        val member = Member(UUID.randomUUID(), "최민욱", "2216", "s22034@gsm.hs.kr", "MALE", mutableListOf(role), mutableListOf(), null)
+        val member = Member(1, "최민욱", "2216", "s22034@gsm.hs.kr", "MALE", mutableListOf(role), mutableListOf(), null)
 
         val userMap: Map<String, Any> = mapOf(
             "email" to member.email,

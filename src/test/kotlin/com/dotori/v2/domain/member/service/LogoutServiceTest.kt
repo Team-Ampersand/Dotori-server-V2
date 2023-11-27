@@ -18,7 +18,6 @@ class LogoutServiceTest : BehaviorSpec({
     val logoutService = LogoutServiceImpl(userUtil, refreshTokenRepository)
     given("refreshToken이 'testRefreshToken'인 유저가 주어지고") {
         val testMember = Member(
-            id = UUID.randomUUID(),
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",

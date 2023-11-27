@@ -10,7 +10,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.springframework.http.HttpStatus
-import java.util.*
 
 class BanSelfStudyControllerTest : BehaviorSpec({
     val applySelfStudyService = mockk<ApplySelfStudyService>()
@@ -25,31 +24,30 @@ class BanSelfStudyControllerTest : BehaviorSpec({
     val councillorSelfStudyController = CouncillorSelfStudyController(applySelfStudyService, getSelfStudyService, getSelfStudyRankService, cancelSelfStudyService, service, cancelBanSelfStudyService, changeSelfStudyLimitService, selfStudyByStuNumAndNameService, updateSelfStudyCheckService)
     val developerSelfStudyController = DeveloperSelfStudyController(applySelfStudyService, getSelfStudyService, getSelfStudyRankService, cancelSelfStudyService, cancelBanSelfStudyService, service, changeSelfStudyLimitService, selfStudyByStuNumAndNameService, updateSelfStudyCheckService)
     val adminSelfStudyController = AdminSelfStudyController(getSelfStudyService, getSelfStudyRankService, service, cancelBanSelfStudyService, changeSelfStudyLimitService, selfStudyByStuNumAndNameService, updateSelfStudyCheckService)
-    val memberId = UUID.randomUUID()
-    every { service.execute(memberId) } returns Unit
+    every { service.execute(1) } returns Unit
     given("요청이 들어오면") {
         `when`("councillorController is received") {
-            val response = councillorSelfStudyController.banSelfStudyCouncillor(memberId)
+            val response = councillorSelfStudyController.banSelfStudyCouncillor(1)
             then("서비스가 한번은 실행되어야 함") {
-                verify(exactly = 1) { service.execute(memberId) }
+                verify(exactly = 1) { service.execute(1) }
             }
             then("response status should be ok") {
                 response.statusCode shouldBe HttpStatus.OK
             }
         }
         `when`("developerController is received") {
-            val response = developerSelfStudyController.banSelfStudyDeveloper(memberId)
+            val response = developerSelfStudyController.banSelfStudyDeveloper(1)
             then("서비스가 한번은 실행되어야 함") {
-                verify(exactly = 2) { service.execute(memberId) }
+                verify(exactly = 2) { service.execute(1) }
             }
             then("response status should be ok") {
                 response.statusCode shouldBe HttpStatus.OK
             }
         }
         `when`("adminController is received") {
-            val response = adminSelfStudyController.banSelfStudyDeveloper(memberId)
+            val response = adminSelfStudyController.banSelfStudyDeveloper(1)
             then("서비스가 한번은 실행되어야 함") {
-                verify(exactly = 3) { service.execute(memberId) }
+                verify(exactly = 3) { service.execute(1) }
             }
             then("response status should be ok") {
                 response.statusCode shouldBe HttpStatus.OK

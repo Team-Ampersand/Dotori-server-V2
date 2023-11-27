@@ -20,7 +20,6 @@ class GetSelfStudyServiceTest : BehaviorSpec({
     val getSelfStudyRankServiceImpl = GetSelfStudyRankServiceImpl(selfStudyRepository)
     given("유저와 자습이 주어지고") {
         val testMember = Member(
-            id = UUID.randomUUID(),
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",

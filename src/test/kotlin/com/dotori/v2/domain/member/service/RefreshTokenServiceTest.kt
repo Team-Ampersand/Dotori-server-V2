@@ -11,7 +11,6 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import java.time.ZonedDateTime
-import java.util.*
 
 class RefreshTokenServiceTest : BehaviorSpec({
 
@@ -40,7 +39,7 @@ class RefreshTokenServiceTest : BehaviorSpec({
         every { tokenProvider.exactRoleFromRefreshToken(refreshToken) } returns role
 
         val refreshTokenEntity = RefreshToken(
-            memberId = UUID.randomUUID(),
+            memberId = 1,
             token = refreshToken
         )
 

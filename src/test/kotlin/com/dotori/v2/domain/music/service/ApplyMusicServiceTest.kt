@@ -30,7 +30,6 @@ class ApplyMusicServiceTest : BehaviorSpec({
 
     given("유저가 주어지고") {
         val testMember = Member(
-            id = UUID.randomUUID(),
             memberName = "test",
             stuNum = "2402",
             email = "test@gsm.hs.kr",

@@ -2,7 +2,6 @@ package com.dotori.v2.testUtil
 
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.Role
-import java.util.*
 
 object MemberDataUtil {
     private fun email() = listOf("email", "email1" ,"email2").random()
@@ -11,7 +10,6 @@ object MemberDataUtil {
     fun profileImage() = listOf("이미지", "이미지1", "이미지2").random()
 
     fun entity() = Member(
-        id = UUID.randomUUID(),
         memberName = memberName(),
         stuNum = memberNum(),
         email = email(),

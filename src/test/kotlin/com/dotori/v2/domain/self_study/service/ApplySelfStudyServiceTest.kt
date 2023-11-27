@@ -38,7 +38,6 @@ class ApplySelfStudyServiceTest : BehaviorSpec({
     )
     given("유저가 주어지고") {
         val testMember = Member(
-            id = UUID.randomUUID(),
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",

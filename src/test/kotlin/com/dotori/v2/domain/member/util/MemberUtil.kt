@@ -3,13 +3,11 @@ package com.dotori.v2.domain.member.util
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.rule.domain.entity.RuleViolation
-import java.util.*
-
 
 class MemberUtil {
     companion object {
         fun createMember(
-            id: UUID = UUID.randomUUID(),
+            id: Long = 0,
             memberName: String = "테스트 이름",
             stuNum: String = "0000",
             email: String = "s00000@gsm.hs.kr",

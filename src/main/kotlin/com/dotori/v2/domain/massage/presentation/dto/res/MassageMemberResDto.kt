@@ -1,11 +1,10 @@
 package com.dotori.v2.domain.massage.presentation.dto.res
 
 import com.dotori.v2.domain.member.domain.entity.Member
-import java.util.*
 
 data class MassageMemberResDto(
     val rank: Long,
-    val id: UUID,
+    val id: Long,
     val stuNum: String,
     val memberName: String,
     val gender: String,

@@ -8,7 +8,6 @@ import com.dotori.v2.domain.member.presentation.data.dto.SignInDto
 import com.dotori.v2.domain.member.presentation.data.req.SignInReqDto
 import gauth.GAuthUserInfo
 import org.springframework.stereotype.Component
-import java.util.*
 
 @Component
 class AuthConverterImpl : AuthConverter {
@@ -19,7 +18,6 @@ class AuthConverterImpl : AuthConverter {
 
     override fun toEntity(gAuthUserInfo: GAuthUserInfo): Member =
         Member(
-            id = UUID.randomUUID(),
             memberName = gAuthUserInfo.name,
             stuNum = "${gAuthUserInfo.grade}${gAuthUserInfo.classNum}${gAuthUserInfo.num}",
             email = gAuthUserInfo.email,
@@ -31,7 +29,6 @@ class AuthConverterImpl : AuthConverter {
 
     override fun toAdminEntity(gAuthUserInfo: GAuthUserInfo): Member =
         Member(
-            id = UUID.randomUUID(),
             memberName = gAuthUserInfo.name,
             stuNum = "${gAuthUserInfo.grade}${gAuthUserInfo.classNum}${gAuthUserInfo.num}",
             email = gAuthUserInfo.email,
@@ -43,7 +40,6 @@ class AuthConverterImpl : AuthConverter {
 
     override fun toCouncillorEntity(gAuthUserInfo: GAuthUserInfo): Member =
         Member(
-            id = UUID.randomUUID(),
             memberName = gAuthUserInfo.name,
             stuNum = "${gAuthUserInfo.grade}${gAuthUserInfo.classNum}${gAuthUserInfo.num}",
             email = gAuthUserInfo.email,
@@ -55,7 +51,6 @@ class AuthConverterImpl : AuthConverter {
 
     override fun toDeveloperEntity(gAuthUserInfo: GAuthUserInfo): Member =
         Member(
-            id = UUID.randomUUID(),
             memberName = gAuthUserInfo.name,
             stuNum = "${gAuthUserInfo.grade}${gAuthUserInfo.classNum}${gAuthUserInfo.num}",
             email = gAuthUserInfo.email,
@@ -72,7 +67,7 @@ class AuthConverterImpl : AuthConverter {
         )
 
 
-    override fun toEntity(memberId: UUID?, refreshToken: String): RefreshToken =
+    override fun toEntity(memberId: Long?, refreshToken: String): RefreshToken =
         RefreshToken(
             memberId = memberId,
             token = refreshToken

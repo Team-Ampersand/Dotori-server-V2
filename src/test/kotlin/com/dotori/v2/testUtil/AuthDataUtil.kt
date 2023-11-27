@@ -5,7 +5,6 @@ import com.dotori.v2.domain.member.presentation.data.dto.SignInDto
 import com.dotori.v2.domain.member.presentation.data.req.SignInReqDto
 import com.dotori.v2.domain.member.presentation.data.res.SignInResDto
 import java.time.ZonedDateTime
-import java.util.*
 
 object AuthDataUtil {
     fun signInRequestDto(code: String) = SignInReqDto(
@@ -28,7 +27,7 @@ object AuthDataUtil {
         refreshExp = refreshExp
     )
 
-    fun entity(memberId: UUID) =
+    fun entity(memberId: Long) =
         RefreshToken(
             memberId = memberId,
             token = "thisIsRefreshToken"

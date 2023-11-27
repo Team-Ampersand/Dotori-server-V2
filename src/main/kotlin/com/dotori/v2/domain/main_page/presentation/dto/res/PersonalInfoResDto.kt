@@ -1,10 +1,9 @@
 package com.dotori.v2.domain.main_page.presentation.dto.res
 
 import com.dotori.v2.domain.member.domain.entity.Member
-import java.util.*
 
 data class PersonalInfoResDto(
-    val id: UUID,
+    val id: Long,
     val stuNum: String,
     val name: String,
     val gender: String,

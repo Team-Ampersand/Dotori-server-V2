@@ -6,19 +6,17 @@ import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.rule.domain.entity.RuleViolation
 import com.dotori.v2.global.entity.BaseTimeEntity
-import org.hibernate.annotations.GenericGenerator
 import java.time.LocalDateTime
-import java.util.*
 import javax.persistence.*
 
 @Entity
 @Table(name = "member")
 class Member(
+
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
-    val id: UUID,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
+    val id: Long = 0,
 
     @Column(name = "member_name", nullable = false)
     val memberName: String,

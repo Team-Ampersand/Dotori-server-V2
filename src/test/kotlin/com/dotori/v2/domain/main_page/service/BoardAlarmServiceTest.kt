@@ -18,7 +18,6 @@ class BoardAlarmServiceTest : BehaviorSpec({
     val boardAlarmServiceImpl = BoardAlarmServiceImpl(boardRepository)
     given("유저랑 작성된 게시물이 존재하고") {
         val testMember = Member(
-            id = UUID.randomUUID(),
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",

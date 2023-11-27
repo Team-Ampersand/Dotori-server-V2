@@ -63,7 +63,6 @@ private fun init(
 
 private fun createLiftedBanMember() : Member {
     val member = Member(
-        id = UUID.randomUUID(),
         memberName = "test",
         stuNum = "2116",
         email = "test@gsm.hs.kr",
@@ -79,7 +78,6 @@ private fun createLiftedBanMember() : Member {
 
 private fun createBanedMember() : Member {
     val member = Member(
-        id = UUID.randomUUID(),
         memberName = "test",
         stuNum = "2116",
         email = "test@gsm.hs.kr",
@@ -95,7 +93,6 @@ private fun createBanedMember() : Member {
 
 private fun createAppliedMember() : Member {
     val member = Member(
-        id = UUID.randomUUID(),
         memberName = "test",
         stuNum = "2116",
         email = "test@gsm.hs.kr",

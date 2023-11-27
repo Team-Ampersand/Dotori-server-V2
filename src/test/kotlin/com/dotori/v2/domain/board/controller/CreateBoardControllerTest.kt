@@ -60,7 +60,6 @@ class CreateBoardControllerTest : BehaviorSpec({
         )
         val multipartFiles = listOf<MultipartFile>()
         val member = Member(
-            id = UUID.randomUUID(),
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
