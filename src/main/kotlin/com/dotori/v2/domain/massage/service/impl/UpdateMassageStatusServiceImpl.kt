@@ -8,7 +8,6 @@ import com.dotori.v2.domain.member.enums.MassageStatus
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.logging.Logger
 
 @Service
 @Transactional(rollbackFor = [Exception::class])

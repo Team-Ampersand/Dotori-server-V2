@@ -2,7 +2,6 @@ package com.dotori.v2.domain.member.domain.repository
 
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.entity.QMember.member
-import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.self_study.presentation.dto.req.SelfStudySearchReqDto
@@ -53,7 +52,7 @@ class CustomMemberRepositoryImpl(
         if(hasText(classNum)) member.stuNum.substring(1,2).eq(classNum) else null
 
     private fun genderEq(gender: String?): BooleanExpression? =
-        if(hasText(gender)) member.gender.eq(Gender.valueOf(gender!!)) else null
+        if(hasText(gender)) member.gender.eq(gender) else null
 
     private fun roleEq(role: String?): BooleanExpression? =
         if(hasText(role)) member.roles.any().eq(Role.valueOf(role!!)) else null

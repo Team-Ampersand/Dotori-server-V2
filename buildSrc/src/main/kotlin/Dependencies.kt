@@ -52,4 +52,6 @@ object Dependencies {
     const val YOUTUBE_ANALYTICS = "com.google.apis:google-api-services-youtubeAnalytics:${DependencyVersions.YOUTUBE_ANALYTICS_VERSION}"
     const val GOOGLE_API_SERVICE = "com.google.apis:google-api-services-youtube:${DependencyVersions.GOOGLE_API_SERVICE_VERSION}"
 
+    // gauth
+    const val GAUTH = "com.github.GSM-MSG:GAuth-SDK-Java:${DependencyVersions.GAUTH_VERSION}"
 }

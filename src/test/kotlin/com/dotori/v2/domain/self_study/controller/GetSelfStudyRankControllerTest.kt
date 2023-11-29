@@ -1,10 +1,8 @@
 package com.dotori.v2.domain.self_study.controller
 
-import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.self_study.presentation.admin.AdminSelfStudyController
 import com.dotori.v2.domain.self_study.presentation.councillor.CouncillorSelfStudyController
 import com.dotori.v2.domain.self_study.presentation.developer.DeveloperSelfStudyController
-import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyMemberListResDto
 import com.dotori.v2.domain.self_study.presentation.member.MemberSelfStudyController
 import com.dotori.v2.domain.self_study.service.*

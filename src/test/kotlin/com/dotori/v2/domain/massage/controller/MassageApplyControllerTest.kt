@@ -1,6 +1,5 @@
 package com.dotori.v2.domain.massage.controller
 
-import com.dotori.v2.domain.massage.presentation.admin.AdminMassageController
 import com.dotori.v2.domain.massage.presentation.councillor.CouncillorMassageController
 import com.dotori.v2.domain.massage.presentation.developer.DeveloperMassageController
 import com.dotori.v2.domain.massage.presentation.member.MemberMassageController

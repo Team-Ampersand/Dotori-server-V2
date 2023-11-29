@@ -4,7 +4,6 @@ import com.dotori.v2.domain.self_study.presentation.admin.AdminSelfStudyControll
 import com.dotori.v2.domain.self_study.presentation.councillor.CouncillorSelfStudyController
 import com.dotori.v2.domain.self_study.presentation.developer.DeveloperSelfStudyController
 import com.dotori.v2.domain.self_study.presentation.dto.req.SelfStudyCheckReqDto
-import com.dotori.v2.domain.self_study.presentation.dto.req.SelfStudyLimitReqDto
 import com.dotori.v2.domain.self_study.service.*
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
