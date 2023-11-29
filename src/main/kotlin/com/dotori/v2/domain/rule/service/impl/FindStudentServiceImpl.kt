@@ -32,7 +32,7 @@ class FindStudentServiceImpl(
                 }.filter {
                     if (classNum != null) it.stuNum.substring(1, 2) == classNum else true
                 }.filter {
-                    if (gender != null) it.gender.name == gender else true
+                    if (gender != null) it.gender == gender else true
                 }.toList().map { it.toDto() }
             }
         )

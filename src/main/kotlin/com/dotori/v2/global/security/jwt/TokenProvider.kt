@@ -1,98 +1,115 @@
 package com.dotori.v2.global.security.jwt
 
+import com.dotori.v2.domain.auth.exception.RoleNotExistException
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.global.security.auth.AuthDetailService
+import com.dotori.v2.global.security.exception.TokenExpiredException
+import com.dotori.v2.global.security.exception.TokenInvalidException
+import com.dotori.v2.global.security.jwt.properties.JwtProperties
+import com.dotori.v2.global.security.jwt.properties.JwtTimeProperties
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
-import io.jsonwebtoken.security.Keys
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.stereotype.Component
-import java.nio.charset.StandardCharsets
-import java.security.Key
-import java.util.*
 import org.springframework.security.core.Authentication
+import org.springframework.stereotype.Component
+import java.security.Key
 import java.time.ZonedDateTime
+import java.util.*
+import javax.servlet.http.HttpServletRequest
 
 
 @Component
 class TokenProvider(
+    private val jwtProperties: JwtProperties,
+    private val tokenTimeProperties: JwtTimeProperties,
     private val authDetailService: AuthDetailService,
 ) {
-    private val ACCESS_TOKEN_EXPIRE_TIME:Long = 1000 * 60 * 60 * 3// 3시간
-    private val REFRESH_TOKEN_EXPIRE_TIME:Long= ACCESS_TOKEN_EXPIRE_TIME/3 * 24 * 30 * 6
-    @Value("\${security.jwt.token.secretKey}")
-    private val SECRET_KEY:String = ""
+    companion object {
+        const val ACCESS_TYPE = "access"
+        const val REFRESH_TYPE = "refresh"
+        const val TOKEN_PREFIX = "Bearer "
+        const val AUTHORITY = "authority"
+    }
+
     val accessExpiredTime: ZonedDateTime
-        get() = ZonedDateTime.now().plusSeconds(ACCESS_TOKEN_EXPIRE_TIME)
+        get() = ZonedDateTime.now().plusSeconds(tokenTimeProperties.accessTime)
 
+    val refreshExpiredTime: ZonedDateTime
+        get() = ZonedDateTime.now().plusSeconds(tokenTimeProperties.refreshTime)
 
-    private enum class TokenType(val value: String) {
-        ACCESS_TOKEN("accessToken"),
-        REFRESH_TOKEN("refreshToken")
+    fun generateAccessToken(email: String, role: Role): String =
+        generateToken(email, ACCESS_TYPE, jwtProperties.accessSecret, tokenTimeProperties.accessTime, role)
+
+    fun generateRefreshToken(email: String, role: Role): String =
+        generateToken(email, REFRESH_TYPE, jwtProperties.refreshSecret, tokenTimeProperties.refreshTime, role)
+
+    fun resolveToken(req: HttpServletRequest): String? {
+        val token = req.getHeader("Authorization") ?: return null
+        return parseToken(token)
     }
 
-    private enum class TokenClaimName(val value: String) {
-        USER_EMAIL("userEmail"),
-        TOKEN_TYPE("tokenType"),
-        ROLES("roles")
+    fun exactEmailFromRefreshToken(refresh: String): String {
+        return getTokenSubject(refresh, jwtProperties.refreshSecret)
     }
 
-    private fun getSignInKey(secretKey: String): Key {
-        val bytes = secretKey.toByteArray(StandardCharsets.UTF_8)
-        return Keys.hmacShaKeyFor(bytes)
-    }
+    fun exactRoleFromRefreshToken(refresh: String): Role {
+        val authority = getTokenBody(refresh, jwtProperties.refreshSecret)
+            .get(AUTHORITY, String::class.java)
 
-    private fun extractAllClaims(token: String): Claims {
-        val tokenR = token.replace("Bearer ", "")
-        return Jwts.parserBuilder()
-            .setSigningKey(getSignInKey(SECRET_KEY))
-            .build()
-            .parseClaimsJws(tokenR)
-            .body
-    }
-
-    fun getUserEmail(token: String): String = extractAllClaims(token).get(TokenClaimName.USER_EMAIL.value, String::class.java)
-
-    fun getTokenType(token: String): String = extractAllClaims(token).get(TokenClaimName.TOKEN_TYPE.value, String::class.java)
-
-    fun isTokenExpired(token: String): Boolean =
-        try{
-            extractAllClaims(token).expiration
-            false
-        }catch (e: ExpiredJwtException){
-            true
+        return when (authority) {
+            "ROLE_MEMBER" -> Role.ROLE_MEMBER
+            "ROLE_ADMIN" -> Role.ROLE_ADMIN
+            "ROLE_COUNCILLOR" -> Role.ROLE_COUNCILLOR
+            "ROLE_DEVELOPER" -> Role.ROLE_DEVELOPER
+            else -> throw RoleNotExistException()
         }
-
-    private fun createToken(type: TokenType, email: String, expiredTime: Long, claims: Claims): String {
-        claims[TokenClaimName.USER_EMAIL.value] = email
-        claims[TokenClaimName.TOKEN_TYPE.value] = type.value
-        return Jwts.builder()
-            .addClaims(claims)
-            .setIssuedAt(Date(System.currentTimeMillis()))
-            .setExpiration(Date(System.currentTimeMillis() + expiredTime))
-            .signWith(getSignInKey(SECRET_KEY), SignatureAlgorithm.HS256)
-            .compact()
     }
 
-    fun createAccessToken(email: String, roles: List<Role>): String {
-        val claims = Jwts.claims()
-        claims[TokenClaimName.ROLES.value] = roles
-        return createToken(TokenType.ACCESS_TOKEN, email, ACCESS_TOKEN_EXPIRE_TIME, claims)
-    }
+    fun exactTypeFromRefreshToken(refresh: String): String =
+        getTokenSubject(refresh, jwtProperties.refreshSecret)
 
-    fun createRefreshToken(email: String): String = createToken(TokenType.REFRESH_TOKEN, email, REFRESH_TOKEN_EXPIRE_TIME, Jwts.claims())
-
-    fun validateToken(token: String?): Boolean = !isTokenExpired(token!!)
-
-    fun getAuthentication(token: String?): Authentication {
-        val userDetails: UserDetails = authDetailService.loadUserByUsername(getUserEmail(token!!))
+    fun authentication(token: String): Authentication {
+        val userDetails = authDetailService.loadUserByUsername(getTokenSubject(token, jwtProperties.accessSecret))
         return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)
     }
 
-    fun isRefreshToken(token: String): Boolean =
-        getTokenType(token) == TokenType.REFRESH_TOKEN.value
+    fun parseToken(token: String): String? =
+        if (token.startsWith(TOKEN_PREFIX))
+            token.replace(TOKEN_PREFIX, "")
+        else
+            null
+
+    fun generateToken(email: String, type: String, secret: Key, exp: Long, role: Role): String {
+        val claims = Jwts.claims().setSubject(email)
+        claims["type"] = type
+        claims[AUTHORITY] = role
+        return Jwts.builder()
+            .setHeaderParam("typ", "JWT")
+            .signWith(secret, SignatureAlgorithm.HS256)
+            .setClaims(claims)
+            .setIssuedAt(Date())
+            .setExpiration(Date(System.currentTimeMillis() + exp * 1000))
+            .compact()
+    }
+
+    private fun getTokenBody(token: String, secret: Key): Claims {
+        return try {
+            Jwts.parserBuilder()
+                .setSigningKey(secret)
+                .build()
+                .parseClaimsJws(token)
+                .body
+        } catch (e: ExpiredJwtException) {
+
+            throw TokenExpiredException()
+        } catch (e: Exception) {
+
+            throw TokenInvalidException()
+        }
+    }
+
+    private fun getTokenSubject(token: String, secret: Key): String =
+        getTokenBody(token, secret).subject
 }

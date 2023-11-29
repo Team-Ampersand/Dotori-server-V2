@@ -31,4 +31,7 @@ object DependencyVersions {
     const val GOOGLE_OAUTH_VERSION = "1.23.0"
     const val YOUTUBE_ANALYTICS_VERSION = "v2-rev16-1.23.0"
     const val GOOGLE_API_SERVICE_VERSION = "v3-rev20210915-1.32.1"
+
+    // gauth
+    const val GAUTH_VERSION = "v2.0.0"
 }

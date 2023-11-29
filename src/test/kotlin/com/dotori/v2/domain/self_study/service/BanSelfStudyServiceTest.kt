@@ -2,7 +2,6 @@ package com.dotori.v2.domain.self_study.service
 
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
-import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
@@ -14,9 +13,6 @@ import io.mockk.every
 import io.mockk.mockk
 import org.springframework.data.repository.findByIdOrNull
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.*
-import javax.validation.constraints.Null
 
 class BanSelfStudyServiceTest : BehaviorSpec({
     val memberRepository = mockk<MemberRepository>()
@@ -26,9 +22,8 @@ class BanSelfStudyServiceTest : BehaviorSpec({
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
-            password = "test",
-            gender = Gender.MAN,
-            roles = Collections.singletonList(Role.ROLE_MEMBER),
+            gender = "MALE",
+            roles = mutableListOf(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf(),
             profileImage = null
         )

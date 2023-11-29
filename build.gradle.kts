@@ -18,6 +18,7 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
@@ -53,6 +54,7 @@ dependencies {
     implementation(Dependencies.GOOGLE_OAUTH_CLIENT)
     implementation(Dependencies.YOUTUBE_ANALYTICS)
     implementation(Dependencies.GOOGLE_API_SERVICE)
+    implementation(Dependencies.GAUTH)
 }
 
 tasks.withType<KotlinCompile> {

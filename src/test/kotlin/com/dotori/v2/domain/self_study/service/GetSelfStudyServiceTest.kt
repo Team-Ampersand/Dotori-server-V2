@@ -1,7 +1,6 @@
 package com.dotori.v2.domain.self_study.service
 
 import com.dotori.v2.domain.member.domain.entity.Member
-import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.self_study.domain.entity.SelfStudy
 import com.dotori.v2.domain.self_study.domain.repository.SelfStudyRepository
@@ -24,8 +23,7 @@ class GetSelfStudyServiceTest : BehaviorSpec({
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
-            password = "test",
-            gender = Gender.MAN,
+            gender = "MALE",
             roles = Collections.singletonList(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf(),
             profileImage = null
