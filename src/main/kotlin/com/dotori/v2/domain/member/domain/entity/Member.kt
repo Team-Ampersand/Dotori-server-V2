@@ -6,6 +6,7 @@ import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.rule.domain.entity.RuleViolation
 import com.dotori.v2.global.entity.BaseTimeEntity
+import org.hibernate.annotations.ColumnDefault
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -20,6 +21,9 @@ class Member(
 
     @Column(name = "member_name", nullable = false)
     val memberName: String,
+
+    @Column(name = "member_password", nullable = true)
+    val password: String = "string1!",
 
     @Column(name = "member_stuNum", nullable = false)
     val stuNum: String,
@@ -94,6 +98,7 @@ class Member(
         return Member(
             id = this.id,
             memberName = this.memberName,
+            password = this.password,
             stuNum = this.stuNum,
             email = this.email,
             gender = this.gender,
