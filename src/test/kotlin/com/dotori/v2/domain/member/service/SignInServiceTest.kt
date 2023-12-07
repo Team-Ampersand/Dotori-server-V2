@@ -148,6 +148,10 @@ class SignInServiceTest : BehaviorSpec({
                 memberRepository.findByEmail(gAuthUserInfo.email)
             } returns null
 
+            every {
+                memberRepository.existsByEmail(gAuthUserInfo.email)
+            } returns false
+
             then("user insert 쿼리가 실행되어야 함") {
                 verify(exactly = 1) { memberRepository.save(member) }
             }
@@ -173,12 +177,16 @@ class SignInServiceTest : BehaviorSpec({
                 memberRepository.findByEmail(gAuthUserInfo.email)
             } returns member
 
+            every {
+                memberRepository.existsByEmail(gAuthUserInfo.email)
+            } returns true
+
             then("user insert 쿼리가 실행되지 않는다") {
                 verify { memberRepository.save(member) wasNot Called }
             }
 
             then("refreshToken update 쿼리가 실행되어야 함") {
-                verify(exactly = 2) { refreshTokenRepository.save(refreshTokenEntity) }
+                verify(exactly = 1) { refreshTokenRepository.save(refreshTokenEntity) }
             }
 
             val result = signInService.execute(signInDto)
