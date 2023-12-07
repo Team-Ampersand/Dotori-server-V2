@@ -186,7 +186,7 @@ class SignInServiceTest : BehaviorSpec({
             }
 
             then("refreshToken update 쿼리가 실행되어야 함") {
-                verify(exactly = 1) { refreshTokenRepository.save(refreshTokenEntity) }
+                verify(exactly = 2) { refreshTokenRepository.save(refreshTokenEntity) }
             }
 
             val result = signInService.execute(signInDto)
