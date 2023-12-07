@@ -1,11 +1,13 @@
 package com.dotori.v2.domain.member.controller
 
+import com.dotori.v2.domain.auth.presentation.AuthController
 import com.dotori.v2.domain.auth.util.AuthConverter
 import com.dotori.v2.domain.auth.util.impl.AuthConverterImpl
-import com.dotori.v2.domain.member.presentation.AuthController
-import com.dotori.v2.domain.member.presentation.data.res.RefreshResDto
-import com.dotori.v2.domain.member.service.RefreshTokenService
-import com.dotori.v2.domain.member.service.SignInService
+import com.dotori.v2.domain.auth.presentation.data.res.RefreshResDto
+import com.dotori.v2.domain.auth.service.LogoutService
+import com.dotori.v2.domain.auth.service.RefreshTokenService
+import com.dotori.v2.domain.auth.service.SignInEmailAndPasswordService
+import com.dotori.v2.domain.auth.service.SignInGAuthService
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -22,12 +24,17 @@ class RefreshTokenControllerTest : BehaviorSpec({
         AuthConverterImpl()
 
     val refreshTokenService = mockk<RefreshTokenService>()
-    val signInService = mockk<SignInService>()
+    val signInGAuthService = mockk<SignInGAuthService>()
+    val signInEmailAndPasswordService = mockk<SignInEmailAndPasswordService>()
+    val logoutService = mockk<LogoutService>()
     val authController = AuthController(
         authConverter = authConverter(),
-        signInService = signInService,
+        signInGAuthService = signInGAuthService,
+        signInEmailAndPasswordService =signInEmailAndPasswordService,
         refreshTokenService = refreshTokenService,
+        logoutService = logoutService
     )
+
 
     given("요청이 들어오면") {
         val refreshToken = "thisIsRefresh"
