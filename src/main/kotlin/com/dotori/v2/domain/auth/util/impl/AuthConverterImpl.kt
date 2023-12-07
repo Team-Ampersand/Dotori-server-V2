@@ -1,28 +1,36 @@
 package com.dotori.v2.domain.auth.util.impl
 
 import com.dotori.v2.domain.auth.domain.entity.RefreshToken
+import com.dotori.v2.domain.auth.presentation.data.dto.SignInEmailAndPasswordDto
 import com.dotori.v2.domain.auth.util.AuthConverter
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.Role
-import com.dotori.v2.domain.member.presentation.data.dto.SignInDto
-import com.dotori.v2.domain.member.presentation.data.req.SignInReqDto
+import com.dotori.v2.domain.auth.presentation.data.dto.SignInGAuthDto
+import com.dotori.v2.domain.auth.presentation.data.req.SignInEmailAndPasswordReqDto
+import com.dotori.v2.domain.auth.presentation.data.req.SignInGAuthReqDto
 import gauth.GAuthUserInfo
 import org.springframework.stereotype.Component
 
 @Component
 class AuthConverterImpl : AuthConverter {
-    override fun toDto(signInReqDto: SignInReqDto): SignInDto =
-        SignInDto(
+    override fun toDto(signInReqDto: SignInGAuthReqDto): SignInGAuthDto =
+        SignInGAuthDto(
                 code = signInReqDto.code
         )
 
-    override fun toEntity(gAuthUserInfo: GAuthUserInfo): Member =
+    override fun toDto(signInEmailAndPasswordReqDto: SignInEmailAndPasswordReqDto): SignInEmailAndPasswordDto =
+        SignInEmailAndPasswordDto(
+            email = signInEmailAndPasswordReqDto.email,
+            password = signInEmailAndPasswordReqDto.password
+        )
+
+    override fun toEntity(gAuthUserInfo: GAuthUserInfo, role: Role): Member =
         Member(
             memberName = gAuthUserInfo.name,
             stuNum = "${gAuthUserInfo.grade}${gAuthUserInfo.classNum}${gAuthUserInfo.num}",
             email = gAuthUserInfo.email,
             gender = gAuthUserInfo.gender,
-            roles = mutableListOf(Role.ROLE_MEMBER),
+            roles = mutableListOf(role),
             ruleViolation = mutableListOf(),
             profileImage = gAuthUserInfo.profileUrl
         )

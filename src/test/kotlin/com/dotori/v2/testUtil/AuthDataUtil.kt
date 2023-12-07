@@ -1,17 +1,17 @@
 package com.dotori.v2.testUtil
 
 import com.dotori.v2.domain.auth.domain.entity.RefreshToken
-import com.dotori.v2.domain.member.presentation.data.dto.SignInDto
-import com.dotori.v2.domain.member.presentation.data.req.SignInReqDto
-import com.dotori.v2.domain.member.presentation.data.res.SignInResDto
+import com.dotori.v2.domain.auth.presentation.data.dto.SignInGAuthDto
+import com.dotori.v2.domain.auth.presentation.data.req.SignInGAuthReqDto
+import com.dotori.v2.domain.auth.presentation.data.res.SignInResDto
 import java.time.ZonedDateTime
 
 object AuthDataUtil {
-    fun signInRequestDto(code: String) = SignInReqDto(
+    fun signInRequestDto(code: String) = SignInGAuthReqDto(
         code = code
     )
 
-    fun signInDto(code: String) = SignInDto(
+    fun signInDto(code: String) = SignInGAuthDto(
         code = code
     )
 
