@@ -1,5 +1,7 @@
 package com.dotori.v2.domain.auth.service.impl
 
+import com.dotori.v2.domain.auth.domain.entity.RefreshToken
+import com.dotori.v2.domain.auth.domain.repository.RefreshTokenRepository
 import com.dotori.v2.domain.auth.presentation.data.dto.SignInEmailAndPasswordDto
 import com.dotori.v2.domain.auth.presentation.data.res.SignInResDto
 import com.dotori.v2.domain.auth.service.SignInEmailAndPasswordService
@@ -17,6 +19,7 @@ class SignInEmailAndPasswordServiceImpl(
     private val memberRepository: MemberRepository,
     private val tokenProvider: TokenProvider,
     private val passwordEncoder: PasswordEncoder,
+    private val refreshTokenRepository: RefreshTokenRepository
 ) : SignInEmailAndPasswordService {
     override fun execute(signInEmailAndPasswordDto: SignInEmailAndPasswordDto): SignInResDto {
 
@@ -31,6 +34,12 @@ class SignInEmailAndPasswordServiceImpl(
                 tokenProvider.generateRefreshToken(signInEmailAndPasswordDto.email, role = member.roles.first())
             val refreshExp = tokenProvider.refreshExpiredTime
 
+            refreshTokenRepository.save(
+                RefreshToken(
+                    memberId = member.id,
+                    token = refreshToken
+                )
+            )
             return toResponse(
                 accessToken,
                 refreshToken,
