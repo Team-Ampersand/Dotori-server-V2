@@ -31,7 +31,7 @@ class SignInControllerTest : BehaviorSpec({
     val authController = AuthController(
         authConverter = authConverter(),
         signInGAuthService = signInGAuthService,
-        signInEmailAndPasswordService =signInEmailAndPasswordService,
+        signInEmailAndPasswordService = signInEmailAndPasswordService,
         refreshTokenService = refreshTokenService,
         logoutService = logoutService
     )
