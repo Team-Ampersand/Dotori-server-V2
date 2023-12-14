@@ -7,8 +7,8 @@ import com.dotori.v2.domain.auth.util.impl.AuthUtilImpl
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.enums.Role
-import com.dotori.v2.domain.member.presentation.data.dto.SignInDto
-import com.dotori.v2.domain.member.service.impl.SignInServiceImpl
+import com.dotori.v2.domain.auth.presentation.data.dto.SignInGAuthDto
+import com.dotori.v2.domain.auth.service.impl.SignInGAuthServiceImpl
 import com.dotori.v2.global.config.gauth.properties.GAuthProperties
 import com.dotori.v2.global.security.jwt.TokenProvider
 import gauth.GAuth
@@ -35,15 +35,15 @@ class SignInServiceTest : BehaviorSpec({
     val authUtil = AuthUtilImpl(
         refreshTokenRepository = refreshTokenRepository,
         authConverter = authConverter,
-        memberRepository = memberRepository
     )
 
-    val signInService = SignInServiceImpl(
+    val signInService = SignInGAuthServiceImpl(
         gAuthProperties = gAuthProperties,
         memberRepository = memberRepository,
         tokenProvider = tokenProvider,
         gAuth = gAuth,
         authUtil = authUtil,
+        authConverter = authConverter
     )
 
     given("gAuth로 로그인 요청이 갔을때") {
@@ -69,7 +69,7 @@ class SignInServiceTest : BehaviorSpec({
         val refreshToken = "thisIsRefreshToken"
 
         val role = Role.ROLE_MEMBER
-        val member = Member(1, "최민욱", "2216", "s22034@gsm.hs.kr", "MALE", mutableListOf(role), mutableListOf(), null)
+        val member = Member(1, "최민욱", "string1!","2216", "s22034@gsm.hs.kr", "MALE", mutableListOf(role), mutableListOf(), null)
 
         val userMap: Map<String, Any> = mapOf(
             "email" to member.email,
@@ -99,7 +99,7 @@ class SignInServiceTest : BehaviorSpec({
             authUtil.saveNewRefreshToken(memberInfo = member, refreshToken = refreshToken)
         } returns refreshTokenEntity
 
-        val signInDto = SignInDto(
+        val signInDto = SignInGAuthDto(
             code = "thisIsCode"
         )
 
@@ -123,7 +123,7 @@ class SignInServiceTest : BehaviorSpec({
         } returns refreshExp
 
         every {
-            authConverter.toEntity(gAuthUserInfo)
+            authConverter.toEntity(gAuthUserInfo, role)
         } returns member
 
         every {
@@ -147,6 +147,10 @@ class SignInServiceTest : BehaviorSpec({
             every {
                 memberRepository.findByEmail(gAuthUserInfo.email)
             } returns null
+
+            every {
+                memberRepository.existsByEmail(gAuthUserInfo.email)
+            } returns false
 
             then("user insert 쿼리가 실행되어야 함") {
                 verify(exactly = 1) { memberRepository.save(member) }
@@ -172,6 +176,10 @@ class SignInServiceTest : BehaviorSpec({
             every {
                 memberRepository.findByEmail(gAuthUserInfo.email)
             } returns member
+
+            every {
+                memberRepository.existsByEmail(gAuthUserInfo.email)
+            } returns true
 
             then("user insert 쿼리가 실행되지 않는다") {
                 verify { memberRepository.save(member) wasNot Called }

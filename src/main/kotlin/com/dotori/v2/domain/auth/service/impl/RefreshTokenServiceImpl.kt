@@ -1,10 +1,10 @@
-package com.dotori.v2.domain.member.service.impl
+package com.dotori.v2.domain.auth.service.impl
 
 import com.dotori.v2.domain.auth.domain.repository.RefreshTokenRepository
 import com.dotori.v2.domain.auth.util.AuthConverter
 import com.dotori.v2.domain.member.enums.Role
-import com.dotori.v2.domain.member.presentation.data.res.RefreshResDto
-import com.dotori.v2.domain.member.service.RefreshTokenService
+import com.dotori.v2.domain.auth.presentation.data.res.RefreshResDto
+import com.dotori.v2.domain.auth.service.RefreshTokenService
 import com.dotori.v2.global.security.exception.TokenExpiredException
 import com.dotori.v2.global.security.exception.TokenInvalidException
 import com.dotori.v2.global.security.jwt.TokenProvider

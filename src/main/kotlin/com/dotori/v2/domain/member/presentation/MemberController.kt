@@ -1,7 +1,6 @@
 package com.dotori.v2.domain.member.presentation
 
 import com.dotori.v2.domain.member.service.DeleteProfileImageService
-import com.dotori.v2.domain.member.service.LogoutService
 import com.dotori.v2.domain.member.service.UpdateProfileImageService
 import com.dotori.v2.domain.member.service.UploadProfileImageService
 import org.springframework.http.ResponseEntity
@@ -11,15 +10,10 @@ import org.springframework.web.multipart.MultipartFile
 @RestController
 @RequestMapping("/v2/members")
 class MemberController(
-    private val logoutService: LogoutService,
     private val uploadProfileImageService: UploadProfileImageService,
     private val updateProfileImageService: UpdateProfileImageService,
     private val deleteProfileImageService: DeleteProfileImageService
 ) {
-    @DeleteMapping("/logout")
-    fun logout(): ResponseEntity<Void> =
-        logoutService.execute()
-            .run { ResponseEntity.ok().build() }
 
     @PostMapping("/profileImage")
     fun uploadProfileImage(@RequestParam(value = "image") multipartFiles: MultipartFile?): ResponseEntity<Void> =

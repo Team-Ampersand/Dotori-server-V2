@@ -1,9 +1,9 @@
 package com.dotori.v2.domain.member.service
 
 import com.dotori.v2.domain.auth.domain.repository.RefreshTokenRepository
+import com.dotori.v2.domain.auth.service.impl.LogoutServiceImpl
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.Role
-import com.dotori.v2.domain.member.service.impl.LogoutServiceImpl
 import com.dotori.v2.global.util.UserUtil
 import com.dotori.v2.testUtil.TestUtils
 import io.kotest.core.spec.style.BehaviorSpec

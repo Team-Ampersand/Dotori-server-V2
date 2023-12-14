@@ -78,5 +78,10 @@ enum class ErrorCode(
     RULE_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "해당 규정위반 내역을 찾지 못하였습니다."),
 
     //*** MAIL ***
-    MAIL_AUTH_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "메일을 발송하지 않았거나 만료되었습니다.")
+    MAIL_AUTH_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "메일을 발송하지 않았거나 만료되었습니다."),
+
+    //. *** GAUTH ***
+    SERVICE_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "gAuth 서비스를 찾을 수 없습니다."),
+    SECRET_MISMATCH(HttpStatus.BAD_REQUEST.value(), "gAuth Secret 코드가 잘못되었습니다"),
+    EXPIRED_CODE(HttpStatus.UNAUTHORIZED.value(), "만료된 토큰입니다")
 }

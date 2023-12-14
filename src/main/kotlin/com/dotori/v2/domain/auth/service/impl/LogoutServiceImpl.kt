@@ -1,10 +1,10 @@
-package com.dotori.v2.domain.member.service.impl
+package com.dotori.v2.domain.auth.service.impl
 
 import com.dotori.v2.domain.auth.domain.entity.RefreshToken
 import com.dotori.v2.domain.auth.domain.repository.RefreshTokenRepository
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
-import com.dotori.v2.domain.member.service.LogoutService
+import com.dotori.v2.domain.auth.service.LogoutService
 import com.dotori.v2.global.util.UserUtil
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 class LogoutServiceImpl(
     private val userUtil: UserUtil,
     private val refreshTokenRepository: RefreshTokenRepository
-) : LogoutService{
+) : LogoutService {
     override fun execute() {
         val member: Member = userUtil.fetchCurrentUser()
 

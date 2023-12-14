@@ -42,6 +42,16 @@ class CustomMemberRepositoryImpl(
             .fetch()
     }
 
+    override fun existMemberByEmail(email: String): Boolean {
+        val fetchOne = queryFactory
+            .selectOne()
+            .from(member)
+            .where(member.email.eq(email))
+            .fetchFirst()
+
+        return fetchOne != null
+    }
+
     private fun nameEq(name: String?): BooleanExpression? =
         if(hasText(name)) member.memberName.contains(name) else null
 

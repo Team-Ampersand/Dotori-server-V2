@@ -2,9 +2,9 @@ package com.dotori.v2.domain.member.service
 
 import com.dotori.v2.domain.auth.domain.entity.RefreshToken
 import com.dotori.v2.domain.auth.domain.repository.RefreshTokenRepository
+import com.dotori.v2.domain.auth.service.impl.RefreshTokenServiceImpl
 import com.dotori.v2.domain.auth.util.AuthConverter
 import com.dotori.v2.domain.member.enums.Role
-import com.dotori.v2.domain.member.service.impl.RefreshTokenServiceImpl
 import com.dotori.v2.global.security.jwt.TokenProvider
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe

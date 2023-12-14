@@ -10,12 +10,13 @@ class MemberUtil {
             id: Long = 0,
             memberName: String = "테스트 이름",
             stuNum: String = "0000",
+            password: String = "string1!",
             email: String = "s00000@gsm.hs.kr",
             gender: String = "MALE",
             roles: MutableList<Role> = mutableListOf(Role.ROLE_MEMBER),
             ruleViolation: MutableList<RuleViolation> = mutableListOf(),
             profileImage: String? = null
-        ) = Member(id, memberName, stuNum, email, gender, roles, ruleViolation, profileImage)
+        ) = Member(id, memberName, password , stuNum,email, gender, roles, ruleViolation, profileImage)
     }
 
 }
