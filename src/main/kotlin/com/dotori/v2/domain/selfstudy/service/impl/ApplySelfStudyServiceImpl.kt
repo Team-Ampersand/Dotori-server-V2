@@ -9,10 +9,11 @@ import com.dotori.v2.domain.selfstudy.util.SelfStudyCheckUtil
 import com.dotori.v2.domain.selfstudy.util.ValidDayOfWeekAndHourUtil
 import com.dotori.v2.global.util.UserUtil
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-@Transactional(rollbackFor = [Exception::class])
+@Transactional(rollbackFor = [Exception::class], isolation = Isolation.SERIALIZABLE)
 class ApplySelfStudyServiceImpl(
     private val userUtil: UserUtil,
     private val findSelfStudyCountUtil: FindSelfStudyCountUtil,
