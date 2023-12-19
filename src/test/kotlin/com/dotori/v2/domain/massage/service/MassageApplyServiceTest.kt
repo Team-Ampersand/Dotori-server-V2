@@ -10,7 +10,7 @@ import com.dotori.v2.domain.massage.util.*
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.MassageStatus
 import com.dotori.v2.domain.member.util.MemberUtil
-import com.dotori.v2.domain.self_study.exception.AlreadyApplySelfStudyException
+import com.dotori.v2.domain.selfstudy.exception.AlreadyApplySelfStudyException
 import com.dotori.v2.global.util.UserUtil
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec

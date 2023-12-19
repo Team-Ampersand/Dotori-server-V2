@@ -1,20 +1,20 @@
-package com.dotori.v2.domain.massage.util
+package com.dotori.v2.domain.selfstudy.util
 
 import com.dotori.v2.domain.member.domain.entity.Member
-import com.dotori.v2.domain.member.enums.MassageStatus
+import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.selfstudy.exception.AlreadyApplySelfStudyException
 import com.dotori.v2.domain.selfstudy.exception.NotAppliedException
 import org.springframework.stereotype.Component
 
 @Component
-class MassageCheckUtil {
-    fun isMassageStatusCan(member: Member){
-        if (member.massageStatus != MassageStatus.CAN)
+class SelfStudyCheckUtil {
+    fun isSelfStudyStatusCan(member: Member){
+        if (member.selfStudyStatus != SelfStudyStatus.CAN)
             throw AlreadyApplySelfStudyException()
     }
 
-    fun isMassageStatusApplied(member: Member){
-        if (member.massageStatus != MassageStatus.APPLIED)
+    fun isSelfStudyStatusApplied(member: Member){
+        if (member.selfStudyStatus != SelfStudyStatus.APPLIED)
             throw NotAppliedException()
     }
 }
