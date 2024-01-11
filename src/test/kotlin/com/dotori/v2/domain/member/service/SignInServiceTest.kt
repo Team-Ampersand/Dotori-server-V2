@@ -9,6 +9,7 @@ import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.auth.presentation.data.dto.SignInGAuthDto
 import com.dotori.v2.domain.auth.service.impl.SignInGAuthServiceImpl
+import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.global.config.gauth.properties.GAuthProperties
 import com.dotori.v2.global.security.jwt.TokenProvider
 import gauth.GAuth
@@ -69,7 +70,7 @@ class SignInServiceTest : BehaviorSpec({
         val refreshToken = "thisIsRefreshToken"
 
         val role = Role.ROLE_MEMBER
-        val member = Member(1, "최민욱", "string1!","2216", "s22034@gsm.hs.kr", "MALE", mutableListOf(role), mutableListOf(), null)
+        val member = Member(1, "최민욱", "string1!","2216", "s22034@gsm.hs.kr", Gender.MAN, mutableListOf(role), mutableListOf(), null)
 
         val userMap: Map<String, Any> = mapOf(
             "email" to member.email,

@@ -1,6 +1,7 @@
 package com.dotori.v2.testUtil
 
 import com.dotori.v2.domain.member.domain.entity.Member
+import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 
 object MemberDataUtil {
@@ -13,7 +14,8 @@ object MemberDataUtil {
         memberName = memberName(),
         stuNum = memberNum(),
         email = email(),
-        gender = "MALE",
+        password = "password1234",
+        gender = Gender.MAN,
         roles = mutableListOf(Role.ROLE_MEMBER),
         ruleViolation = mutableListOf(),
         profileImage = profileImage(),

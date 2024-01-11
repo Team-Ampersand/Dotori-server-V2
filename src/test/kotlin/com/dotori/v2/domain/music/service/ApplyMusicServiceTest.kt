@@ -1,6 +1,7 @@
 package com.dotori.v2.domain.music.service
 
 import com.dotori.v2.domain.member.domain.entity.Member
+import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.MusicStatus
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.music.domain.entity.Music
@@ -33,7 +34,8 @@ class ApplyMusicServiceTest : BehaviorSpec({
             memberName = "test",
             stuNum = "2402",
             email = "test@gsm.hs.kr",
-            gender = "MALE",
+            password = "password1234",
+            gender = Gender.MAN,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf(),
             profileImage = null

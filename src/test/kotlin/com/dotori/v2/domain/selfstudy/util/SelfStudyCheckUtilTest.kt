@@ -1,6 +1,7 @@
 package com.dotori.v2.domain.selfstudy.util
 
 import com.dotori.v2.domain.member.domain.entity.Member
+import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.selfstudy.exception.AlreadyApplySelfStudyException
@@ -17,8 +18,9 @@ class SelfStudyCheckUtilTest : BehaviorSpec({
             memberName = "test",
             stuNum = "1111",
             email = "test@gsm.hs.kr",
+            password = "password1234",
             ruleViolation = mutableListOf(),
-            gender = "MALE",
+            gender = Gender.MAN,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
             profileImage = null
         )
@@ -42,8 +44,9 @@ class SelfStudyCheckUtilTest : BehaviorSpec({
             memberName = "test",
             stuNum = "1111",
             email = "test@gsm.hs.kr",
+            password = "password1234",
             ruleViolation = mutableListOf(),
-            gender = "MALE",
+            gender = Gender.MAN,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
             profileImage = null
         )

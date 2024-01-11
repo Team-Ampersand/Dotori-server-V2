@@ -40,7 +40,8 @@ class ApplySelfStudyServiceSynchronicityTest  : BehaviorSpec({
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
-            gender = Gender.MAN.name,
+            password = "password1234",
+            gender = Gender.MAN,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf(),
             profileImage = null

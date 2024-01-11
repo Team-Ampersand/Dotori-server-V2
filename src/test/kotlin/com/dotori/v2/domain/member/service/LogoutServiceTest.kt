@@ -3,6 +3,7 @@ package com.dotori.v2.domain.member.service
 import com.dotori.v2.domain.auth.domain.repository.RefreshTokenRepository
 import com.dotori.v2.domain.auth.service.impl.LogoutServiceImpl
 import com.dotori.v2.domain.member.domain.entity.Member
+import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.global.util.UserUtil
 import com.dotori.v2.testUtil.TestUtils
@@ -21,7 +22,8 @@ class LogoutServiceTest : BehaviorSpec({
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
-            gender = "MALE",
+            password = "password1234",
+            gender = Gender.MAN,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf(),
             profileImage = null
