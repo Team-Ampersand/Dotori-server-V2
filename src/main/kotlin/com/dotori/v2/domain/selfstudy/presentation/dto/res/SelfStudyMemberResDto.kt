@@ -1,13 +1,14 @@
 package com.dotori.v2.domain.selfstudy.presentation.dto.res
 
 import com.dotori.v2.domain.member.domain.entity.Member
+import com.dotori.v2.domain.member.enums.Gender
 
 data class SelfStudyMemberResDto(
     val rank: Long,
     val id: Long,
     val stuNum: String,
     val memberName: String,
-    val gender: String,
+    val gender: Gender,
     val selfStudyCheck: Boolean,
     val profileUrl: String?
 ) {
