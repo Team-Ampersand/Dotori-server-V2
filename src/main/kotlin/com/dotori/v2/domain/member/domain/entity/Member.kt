@@ -1,12 +1,8 @@
 package com.dotori.v2.domain.member.domain.entity
 
-import com.dotori.v2.domain.member.enums.MassageStatus
-import com.dotori.v2.domain.member.enums.MusicStatus
-import com.dotori.v2.domain.member.enums.Role
-import com.dotori.v2.domain.member.enums.SelfStudyStatus
+import com.dotori.v2.domain.member.enums.*
 import com.dotori.v2.domain.rule.domain.entity.RuleViolation
 import com.dotori.v2.global.entity.BaseTimeEntity
-import org.hibernate.annotations.ColumnDefault
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -22,17 +18,17 @@ class Member(
     @Column(name = "member_name", nullable = false)
     val memberName: String,
 
-    @Column(name = "member_password", nullable = true)
-    val password: String = "string1!",
-
     @Column(name = "member_stuNum", nullable = false)
     val stuNum: String,
 
     @Column(name = "member_email", nullable = false, unique = true)
     val email: String,
 
+    password: String,
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "member_gender")
-    val gender: String,
+    val gender: Gender,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "Role")
@@ -55,6 +51,10 @@ class Member(
     var selfStudyCheck = false
         private set
 
+    @Column(name = "member_password", nullable = false)
+    var password: String = password
+        private set
+
     @Column(name = "self_study_expired_date")
     var selfStudyExpiredDate: LocalDateTime? = null
         private set
@@ -73,6 +73,10 @@ class Member(
     @Column(name = "member_massage", nullable = false)
     var massageStatus: MassageStatus = MassageStatus.CAN
         private set
+
+    fun updatePassword(newPassword: String) {
+        this.password = newPassword
+    }
 
     fun updateSelfStudyStatus(selfStudyStatus: SelfStudyStatus) {
         this.selfStudyStatus = selfStudyStatus

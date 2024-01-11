@@ -26,6 +26,7 @@ class ModifyStudentInfoServiceImpl(
             memberName = modifyStudentInfoRequest.memberName,
             stuNum = modifyStudentInfoRequest.stuNum,
             email = member.email,
+            password = member.password,
             gender = modifyStudentInfoRequest.gender,
             roles = Collections.singletonList(modifyStudentInfoRequest.role),
             ruleViolation = member.ruleViolation,
