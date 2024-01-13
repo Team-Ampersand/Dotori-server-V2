@@ -7,6 +7,7 @@ import com.dotori.v2.domain.board.presentation.data.req.CreateBoardReqDto
 import com.dotori.v2.domain.board.presentation.developer.DeveloperBoardController
 import com.dotori.v2.domain.board.service.*
 import com.dotori.v2.domain.member.domain.entity.Member
+import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -63,7 +64,8 @@ class CreateBoardControllerTest : BehaviorSpec({
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
-            gender = "MALE",
+            password = "password1234",
+            gender = Gender.MAN,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf(),
             profileImage = null

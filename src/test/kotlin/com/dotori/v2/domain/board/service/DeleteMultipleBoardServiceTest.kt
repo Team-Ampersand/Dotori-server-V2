@@ -7,6 +7,7 @@ import com.dotori.v2.domain.board.domain.repository.BoardRepository
 import com.dotori.v2.domain.board.presentation.data.req.DeleteMultipleBoardReqDto
 import com.dotori.v2.domain.board.service.impl.DeleteMultipleBoardServiceImpl
 import com.dotori.v2.domain.member.domain.entity.Member
+import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.global.thirdparty.aws.s3.S3Service
 import io.kotest.core.spec.style.BehaviorSpec
@@ -27,7 +28,8 @@ class DeleteMultipleBoardServiceTest : BehaviorSpec({
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
-            gender = "MALE",
+            password = "password1234",
+            gender = Gender.MAN,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf(),
             profileImage = null

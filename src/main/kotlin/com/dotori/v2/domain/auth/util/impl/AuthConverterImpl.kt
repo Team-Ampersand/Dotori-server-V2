@@ -8,6 +8,7 @@ import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.auth.presentation.data.dto.SignInGAuthDto
 import com.dotori.v2.domain.auth.presentation.data.req.SignInEmailAndPasswordReqDto
 import com.dotori.v2.domain.auth.presentation.data.req.SignInGAuthReqDto
+import com.dotori.v2.domain.member.enums.Gender
 import gauth.GAuthUserInfo
 import org.springframework.stereotype.Component
 
@@ -29,7 +30,8 @@ class AuthConverterImpl : AuthConverter {
             memberName = gAuthUserInfo.name,
             stuNum = "${gAuthUserInfo.grade}${gAuthUserInfo.classNum}${gAuthUserInfo.num}",
             email = gAuthUserInfo.email,
-            gender = gAuthUserInfo.gender,
+            password = "",
+            gender = convertGender(gAuthUserInfo.gender),
             roles = mutableListOf(role),
             ruleViolation = mutableListOf(),
             profileImage = gAuthUserInfo.profileUrl
@@ -40,7 +42,8 @@ class AuthConverterImpl : AuthConverter {
             memberName = gAuthUserInfo.name,
             stuNum = "${gAuthUserInfo.grade}${gAuthUserInfo.classNum}${gAuthUserInfo.num}",
             email = gAuthUserInfo.email,
-            gender = gAuthUserInfo.gender,
+            password = "",
+            gender = convertGender(gAuthUserInfo.gender),
             roles = mutableListOf(Role.ROLE_ADMIN),
             ruleViolation = mutableListOf(),
             profileImage = gAuthUserInfo.profileUrl
@@ -51,7 +54,8 @@ class AuthConverterImpl : AuthConverter {
             memberName = gAuthUserInfo.name,
             stuNum = "${gAuthUserInfo.grade}${gAuthUserInfo.classNum}${gAuthUserInfo.num}",
             email = gAuthUserInfo.email,
-            gender = gAuthUserInfo.gender,
+            password = "",
+            gender = convertGender(gAuthUserInfo.gender),
             roles = mutableListOf(Role.ROLE_COUNCILLOR),
             ruleViolation = mutableListOf(),
             profileImage = gAuthUserInfo.profileUrl
@@ -62,7 +66,8 @@ class AuthConverterImpl : AuthConverter {
             memberName = gAuthUserInfo.name,
             stuNum = "${gAuthUserInfo.grade}${gAuthUserInfo.classNum}${gAuthUserInfo.num}",
             email = gAuthUserInfo.email,
-            gender = gAuthUserInfo.gender,
+            password = "",
+            gender = convertGender(gAuthUserInfo.gender),
             roles = mutableListOf(Role.ROLE_DEVELOPER),
             ruleViolation = mutableListOf(),
             profileImage = gAuthUserInfo.profileUrl
@@ -80,4 +85,12 @@ class AuthConverterImpl : AuthConverter {
             memberId = memberId,
             token = refreshToken
         )
+
+    private fun convertGender(gender: String): Gender =
+        when (gender) {
+            "MALE" -> Gender.MAN
+            "FEMALE" -> Gender.WOMAN
+            else -> Gender.PENDING
+        }
+
 }

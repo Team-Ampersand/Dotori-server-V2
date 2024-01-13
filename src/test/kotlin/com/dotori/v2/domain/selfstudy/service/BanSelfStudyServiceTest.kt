@@ -2,6 +2,7 @@ package com.dotori.v2.domain.selfstudy.service
 
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
+import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
@@ -22,7 +23,8 @@ class BanSelfStudyServiceTest : BehaviorSpec({
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
-            gender = "MALE",
+            password = "password1234",
+            gender = Gender.MAN,
             roles = mutableListOf(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf(),
             profileImage = null

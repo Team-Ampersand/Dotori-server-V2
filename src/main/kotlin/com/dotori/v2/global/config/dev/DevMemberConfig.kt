@@ -2,6 +2,7 @@ package com.dotori.v2.global.config.dev
 
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
+import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import org.springframework.context.annotation.Profile
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -22,7 +23,7 @@ class DevMemberConfig(
             stuNum = "0000",
             email = "s00000@gsm.hs.kr",
             password = password,
-            gender = "PENDING",
+            gender = Gender.PENDING,
             roles = mutableListOf(Role.ROLE_ADMIN),
             ruleViolation = mutableListOf(),
             profileImage = null
@@ -34,7 +35,7 @@ class DevMemberConfig(
             stuNum = "0001",
             email = "s00001@gsm.hs.kr",
             password = password,
-            gender = "PENDING",
+            gender = Gender.PENDING,
             roles = mutableListOf(Role.ROLE_DEVELOPER),
             ruleViolation = mutableListOf(),
             profileImage = null
@@ -46,7 +47,7 @@ class DevMemberConfig(
             stuNum = "0002",
             email = "s00002@gsm.hs.kr",
             password = password,
-            gender = "PENDING",
+            gender = Gender.PENDING,
             roles = mutableListOf(Role.ROLE_COUNCILLOR),
             ruleViolation = mutableListOf(),
             profileImage = null
@@ -58,7 +59,7 @@ class DevMemberConfig(
             stuNum = "3101",
             email = "s00003@gsm.hs.kr",
             password = password,
-            gender = "MALE",
+            gender = Gender.PENDING,
             roles = mutableListOf(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf(),
             profileImage = null
@@ -70,7 +71,7 @@ class DevMemberConfig(
             stuNum = "3201",
             email = "s00004@gsm.hs.kr",
             password = password,
-            gender = "FEMALE",
+            gender = Gender.PENDING,
             roles = mutableListOf(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf(),
             profileImage = null

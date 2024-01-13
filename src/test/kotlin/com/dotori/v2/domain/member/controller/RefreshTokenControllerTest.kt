@@ -4,10 +4,8 @@ import com.dotori.v2.domain.auth.presentation.AuthController
 import com.dotori.v2.domain.auth.util.AuthConverter
 import com.dotori.v2.domain.auth.util.impl.AuthConverterImpl
 import com.dotori.v2.domain.auth.presentation.data.res.RefreshResDto
-import com.dotori.v2.domain.auth.service.LogoutService
-import com.dotori.v2.domain.auth.service.RefreshTokenService
-import com.dotori.v2.domain.auth.service.SignInEmailAndPasswordService
-import com.dotori.v2.domain.auth.service.SignInGAuthService
+import com.dotori.v2.domain.auth.service.*
+import com.dotori.v2.domain.member.service.ChangePasswordService
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -27,12 +25,17 @@ class RefreshTokenControllerTest : BehaviorSpec({
     val signInGAuthService = mockk<SignInGAuthService>()
     val signInEmailAndPasswordService = mockk<SignInEmailAndPasswordService>()
     val logoutService = mockk<LogoutService>()
+    val signUpService = mockk<SignUpService>()
+    val changePasswordService = mockk<ChangePasswordService>()
+
     val authController = AuthController(
         authConverter = authConverter(),
         signInGAuthService = signInGAuthService,
         signInEmailAndPasswordService = signInEmailAndPasswordService,
         refreshTokenService = refreshTokenService,
-        logoutService = logoutService
+        logoutService = logoutService,
+        signUpService = signUpService,
+        changePasswordService = changePasswordService
     )
 
 

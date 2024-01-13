@@ -6,6 +6,7 @@ import com.dotori.v2.domain.board.presentation.data.dto.BoardDto
 import com.dotori.v2.domain.mainpage.presentation.dto.res.BoardAlarmResDto
 import com.dotori.v2.domain.mainpage.service.impl.BoardAlarmServiceImpl
 import com.dotori.v2.domain.member.domain.entity.Member
+import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -21,7 +22,8 @@ class BoardAlarmServiceTest : BehaviorSpec({
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
-            gender = "MALE",
+            password = "password1234",
+            gender = Gender.MAN,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
             ruleViolation = mutableListOf(),
             profileImage = null
