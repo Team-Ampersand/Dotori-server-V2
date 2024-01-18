@@ -13,7 +13,7 @@ class EmailCheckServiceImpl(
     private val emailCertificateRepository: EmailCertificateRepository,
 ) : EmailCheckService {
     @Transactional(rollbackFor = [Exception::class])
-    override fun execute(key: String): Boolean {
+    override fun execute(key: String) {
         val findByKey = emailCertificateRepository.findByKey(key)
             ?: throw AuthKeyNotFoundException()
 
@@ -23,6 +23,5 @@ class EmailCheckServiceImpl(
         val emailCertificate = findByKey.verify()
 
         emailCertificateRepository.save(emailCertificate)
-        return true
     }
 }

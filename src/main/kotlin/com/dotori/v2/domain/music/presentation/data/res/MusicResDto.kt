@@ -5,6 +5,8 @@ import java.time.LocalDateTime
 data class MusicResDto(
     val id: Long,
     val url: String,
+    val title: String,
+    val thumbnail: String,
     val username: String,
     val email: String,
     val createdTime: LocalDateTime,

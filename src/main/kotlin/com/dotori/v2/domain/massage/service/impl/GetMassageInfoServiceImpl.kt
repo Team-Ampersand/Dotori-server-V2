@@ -8,8 +8,6 @@ import com.dotori.v2.domain.massage.service.GetMassageInfoService
 import com.dotori.v2.domain.massage.util.ValidDayOfWeekAndHourMassageUtil
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.MassageStatus
-import com.dotori.v2.domain.member.enums.SelfStudyStatus
-import com.dotori.v2.domain.self_study.presentation.dto.res.SelfStudyInfoResDto
 import com.dotori.v2.global.error.exception.BasicException
 import com.dotori.v2.global.util.UserUtil
 import org.springframework.stereotype.Service

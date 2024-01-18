@@ -4,7 +4,6 @@ import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
-import com.dotori.v2.global.security.jwt.TokenProvider
 import org.springframework.context.annotation.Profile
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
@@ -14,18 +13,20 @@ import javax.annotation.PostConstruct
 @Profile("dev")
 class DevMemberConfig(
     private val memberRepository: MemberRepository,
-    private val passwordEncoder: PasswordEncoder,
+    private val passwordEncoder: PasswordEncoder
 ) {
     @PostConstruct
     fun generateMember(){
+        val password = passwordEncoder.encode("string1!")!!
         val admin = Member(
             memberName = "사감선생님",
             stuNum = "0000",
             email = "s00000@gsm.hs.kr",
+            password = password,
             gender = Gender.PENDING,
-            password = passwordEncoder.encode("string1!"),
             roles = mutableListOf(Role.ROLE_ADMIN),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         memberRepository.save(admin)
 
@@ -33,10 +34,11 @@ class DevMemberConfig(
             memberName = "도토리개발자",
             stuNum = "0001",
             email = "s00001@gsm.hs.kr",
+            password = password,
             gender = Gender.PENDING,
-            password = passwordEncoder.encode("string1!"),
             roles = mutableListOf(Role.ROLE_DEVELOPER),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         memberRepository.save(developer)
 
@@ -44,10 +46,11 @@ class DevMemberConfig(
             memberName = "기숙사자치위원",
             stuNum = "0002",
             email = "s00002@gsm.hs.kr",
+            password = password,
             gender = Gender.PENDING,
-            password = passwordEncoder.encode("string1!"),
             roles = mutableListOf(Role.ROLE_COUNCILLOR),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         memberRepository.save(councillor)
 
@@ -55,10 +58,11 @@ class DevMemberConfig(
             memberName = "남성유저",
             stuNum = "3101",
             email = "s00003@gsm.hs.kr",
-            gender = Gender.MAN,
-            password = passwordEncoder.encode("string1!"),
+            password = password,
+            gender = Gender.PENDING,
             roles = mutableListOf(Role.ROLE_MEMBER),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         memberRepository.save(man)
 
@@ -66,10 +70,11 @@ class DevMemberConfig(
             memberName = "여성유저",
             stuNum = "3201",
             email = "s00004@gsm.hs.kr",
-            gender = Gender.WOMAN,
-            password = passwordEncoder.encode("string1!"),
+            password = password,
+            gender = Gender.PENDING,
             roles = mutableListOf(Role.ROLE_MEMBER),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         memberRepository.save(woman)
     }

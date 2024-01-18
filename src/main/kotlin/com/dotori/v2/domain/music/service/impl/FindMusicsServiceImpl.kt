@@ -25,6 +25,8 @@ class FindMusicsServiceImpl(
         MusicResDto(
             id = music.id,
             url = music.url,
+            title = music.title,
+            thumbnail = music.thumbnail,
             username = music.member.memberName,
             email = music.member.email,
             createdTime = music.createdDate,

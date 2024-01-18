@@ -9,8 +9,10 @@ class MusicUtil {
         fun createMusic(
             id: Long = 0,
             url: String = "https://www.test.url",
+            title: String = "title",
+            thumbnail: String = "thumbnail",
             member: Member = MemberUtil.createMember()
-        ) = Music(id, url, member)
+        ) = Music(id, url, title, thumbnail, member)
     }
 
 }

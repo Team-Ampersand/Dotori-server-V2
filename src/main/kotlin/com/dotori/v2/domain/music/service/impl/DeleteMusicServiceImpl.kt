@@ -1,6 +1,5 @@
 package com.dotori.v2.domain.music.service.impl
 
-import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.MusicStatus
 import com.dotori.v2.domain.music.domain.entity.Music
 import com.dotori.v2.domain.music.domain.repository.MusicRepository

@@ -8,33 +8,17 @@ class AuthDetails(
     val member: Member,
 ) : UserDetails {
 
-    fun getEmail(): String = member.email
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority>? = member.roles
 
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority>? {
-        return member.roles
-    }
+    override fun getPassword(): String? = null
 
-    override fun getPassword(): String {
-        return member.password
-    }
+    override fun getUsername(): String = member.email
 
-    override fun getUsername(): String {
-        return member.email
-    }
+    override fun isAccountNonExpired(): Boolean = true
 
-    override fun isAccountNonExpired(): Boolean {
-        return false
-    }
+    override fun isAccountNonLocked(): Boolean = true
 
-    override fun isAccountNonLocked(): Boolean {
-        return false
-    }
+    override fun isCredentialsNonExpired(): Boolean = true
 
-    override fun isCredentialsNonExpired(): Boolean {
-        return false
-    }
-
-    override fun isEnabled(): Boolean {
-        return false
-    }
+    override fun isEnabled(): Boolean = true
 }

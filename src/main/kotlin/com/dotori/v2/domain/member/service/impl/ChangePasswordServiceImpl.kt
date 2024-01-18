@@ -1,11 +1,10 @@
 package com.dotori.v2.domain.member.service.impl
 
 import com.dotori.v2.domain.email.domain.repository.EmailCertificateRepository
-import com.dotori.v2.domain.email.exception.EmailNotBeenException
 import com.dotori.v2.domain.email.exception.EmailAuthNotFoundException
+import com.dotori.v2.domain.email.exception.EmailNotBeenException
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
-import com.dotori.v2.domain.member.exception.PasswordMismatchException
 import com.dotori.v2.domain.member.presentation.data.req.NoAuthNewPasswordReqDto
 import com.dotori.v2.domain.member.service.ChangePasswordService
 import org.springframework.security.crypto.password.PasswordEncoder

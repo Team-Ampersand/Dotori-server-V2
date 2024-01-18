@@ -31,6 +31,7 @@ enum class ErrorCode(
 
     // *** MEMBER ***
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "해당 유저를 찾을 수 없습니다."),
+    MEMBER_ROLE_NOT_EXIST(HttpStatus.NOT_FOUND.value(), "역할이 존재하지 않습니다"),
     MEMBER_ALREADY(HttpStatus.CONFLICT.value(), "이미 가입된 유저입니다."),
     MEMBER_PASSWORD_NOT_MATCHING(HttpStatus.BAD_REQUEST.value(), "비밀번호가 올바르지 않습니다."),
     MEMBER_AUTHENTICATION_KEY_NOT_MATCHING(HttpStatus.BAD_REQUEST.value(), "인증 키가 일치하지 않습니다."),
@@ -63,6 +64,7 @@ enum class ErrorCode(
     MUSIC_CANT_REQUEST_DATE(HttpStatus.ACCEPTED.value(), "음악신청을 하실 수 없는 요일입니다."),
     MUSIC_TODAY_NOT_REQUESTED(HttpStatus.ACCEPTED.value(), "오늘 신청된 음악이 없습니다."),
     MUSIC_NOT_REQUEST_ON_THAT_DATE(HttpStatus.ACCEPTED.value(), "해당 날짜에 신청된 노래가 없습니다."),
+    NOT_VALID_YOUTUBE_URL(HttpStatus.BAD_REQUEST.value(), "유효하지 않은 유튜브 url 입니다."),
 
 
     // *** TOKEN ***
@@ -76,5 +78,10 @@ enum class ErrorCode(
     RULE_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "해당 규정위반 내역을 찾지 못하였습니다."),
 
     //*** MAIL ***
-    MAIL_AUTH_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "메일을 발송하지 않았거나 만료되었습니다.")
+    MAIL_AUTH_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "메일을 발송하지 않았거나 만료되었습니다."),
+
+    //. *** GAUTH ***
+    SERVICE_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "gAuth 서비스를 찾을 수 없습니다."),
+    SECRET_MISMATCH(HttpStatus.BAD_REQUEST.value(), "gAuth Secret 코드가 잘못되었습니다"),
+    EXPIRED_CODE(HttpStatus.UNAUTHORIZED.value(), "만료된 토큰입니다")
 }

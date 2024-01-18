@@ -14,10 +14,10 @@ class SignupEmailSendServiceImpl(
     private val emailSendService: EmailSendService,
     private val memberRepository: MemberRepository
 ) : SignupEmailSendService {
-    override fun execute(emailReqDto: EmailReqDto): String {
+    override fun execute(emailReqDto: EmailReqDto) {
         if (memberRepository.existsByEmail(emailReqDto.email))
             throw MemberAlreadyException()
 
-        return emailSendService.execute(emailReqDto)
+        emailSendService.execute(emailReqDto)
     }
 }

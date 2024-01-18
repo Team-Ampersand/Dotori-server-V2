@@ -5,8 +5,8 @@ import com.dotori.v2.domain.member.domain.entity.QMember.member
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
-import com.dotori.v2.domain.self_study.presentation.dto.req.SelfStudySearchReqDto
-import com.dotori.v2.domain.stu_info.presentation.data.req.SearchRequestDto
+import com.dotori.v2.domain.selfstudy.presentation.dto.req.SelfStudySearchReqDto
+import com.dotori.v2.domain.student.presentation.data.req.SearchRequestDto
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
@@ -43,8 +43,18 @@ class CustomMemberRepositoryImpl(
             .fetch()
     }
 
+    override fun existMemberByEmail(email: String): Boolean {
+        val fetchOne = queryFactory
+            .selectOne()
+            .from(member)
+            .where(member.email.eq(email))
+            .fetchFirst()
+
+        return fetchOne != null
+    }
+
     private fun nameEq(name: String?): BooleanExpression? =
-        if(hasText(name)) member.memberName.eq(name) else null
+        if(hasText(name)) member.memberName.contains(name) else null
 
     private fun gradeEq(grade: String?): BooleanExpression? =
         if(hasText(grade)) member.stuNum.startsWith(grade) else null

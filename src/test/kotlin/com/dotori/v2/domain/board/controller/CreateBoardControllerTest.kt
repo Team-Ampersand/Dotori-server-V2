@@ -64,10 +64,11 @@ class CreateBoardControllerTest : BehaviorSpec({
             memberName = "test",
             stuNum = "2116",
             email = "test@gsm.hs.kr",
-            password = "test",
+            password = "password1234",
             gender = Gender.MAN,
             roles = Collections.singletonList(Role.ROLE_MEMBER),
-            ruleViolation = mutableListOf()
+            ruleViolation = mutableListOf(),
+            profileImage = null
         )
         val board = Board(
             title = "thisIsTitle",

@@ -1,95 +1,204 @@
 package com.dotori.v2.domain.member.service
 
+import com.dotori.v2.domain.auth.domain.entity.RefreshToken
+import com.dotori.v2.domain.auth.domain.repository.RefreshTokenRepository
+import com.dotori.v2.domain.auth.util.AuthConverter
+import com.dotori.v2.domain.auth.util.impl.AuthUtilImpl
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
-import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
-import com.dotori.v2.domain.member.exception.MemberNotFoundException
-import com.dotori.v2.domain.member.exception.PasswordMismatchException
-import com.dotori.v2.domain.member.presentation.data.req.SignInReqDto
-import com.dotori.v2.domain.member.presentation.data.res.SignInResDto
-import com.dotori.v2.domain.member.service.impl.SignInServiceImpl
+import com.dotori.v2.domain.auth.presentation.data.dto.SignInGAuthDto
+import com.dotori.v2.domain.auth.service.impl.SignInGAuthServiceImpl
+import com.dotori.v2.domain.member.enums.Gender
+import com.dotori.v2.global.config.gauth.properties.GAuthProperties
 import com.dotori.v2.global.security.jwt.TokenProvider
-import io.kotest.assertions.throwables.shouldThrow
+import gauth.GAuth
+import gauth.GAuthToken
+import gauth.GAuthUserInfo
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import io.mockk.Called
 import io.mockk.every
 import io.mockk.mockk
-import org.springframework.security.crypto.password.PasswordEncoder
-import java.time.ZonedDateTime
-import java.util.*
+import io.mockk.verify
 
 class SignInServiceTest : BehaviorSpec({
+    val clientId = "thisIsClientId"
+    val clientSecret = "thisIsClientSecret"
+    val redirectUri = "thisIsRedirectUri"
+
+    val tokenProvider = mockk<TokenProvider>(relaxed = true)
+    val gAuth = mockk<GAuth>()
     val memberRepository = mockk<MemberRepository>()
-    val passwordEncoder = mockk<PasswordEncoder>()
-    val tokenProvider = mockk<TokenProvider>()
-    val signInServiceImpl = SignInServiceImpl(memberRepository, passwordEncoder, tokenProvider)
-    given("signInReqDto가 주어지고"){
-        val reqDto = SignInReqDto(
-            email = "test@gsm.hs.kr",
-            password = "test"
-        )
-        val testMember = Member(
-            memberName = "test",
-            stuNum = "0000",
-            email = "test@gsm.hs.kr",
-            password = "test",
-            gender = Gender.PENDING,
-            roles = Collections.singletonList(Role.ROLE_MEMBER),
-            ruleViolation = mutableListOf()
+    val refreshTokenRepository = mockk<RefreshTokenRepository>()
+    val authConverter = mockk<AuthConverter>()
+    val gAuthProperties = GAuthProperties(clientId = clientId, clientSecret = clientSecret, redirectUri = redirectUri)
+    val authUtil = AuthUtilImpl(
+        refreshTokenRepository = refreshTokenRepository,
+        authConverter = authConverter,
+    )
+
+    val signInService = SignInGAuthServiceImpl(
+        gAuthProperties = gAuthProperties,
+        memberRepository = memberRepository,
+        tokenProvider = tokenProvider,
+        gAuth = gAuth,
+        authUtil = authUtil,
+        authConverter = authConverter
+    )
+
+    given("gAuth로 로그인 요청이 갔을때") {
+        val code = "thisIsCode"
+
+        val map: Map<String, String> = mapOf(
+            "accessToken" to "thisIsAccessToken",
+            "refreshToken" to "thisIsRefreshToken"
         )
 
-        init(memberRepository, reqDto, testMember, passwordEncoder, tokenProvider)
-        `when`("signIn이 실행되면"){
-            val target = SignInResDto(
-                accessToken = "testAccessToken",
-                refreshToken = "testRefreshToken",
-                expiresAt = tokenProvider.accessExpiredTime,
-                roles = testMember.roles
+
+        val gAuthToken = GAuthToken(map)
+        every {
+            gAuth.generateToken(
+                code,
+                gAuthProperties.clientId,
+                gAuthProperties.clientSecret,
+                gAuthProperties.redirectUri
             )
-            val result = signInServiceImpl.execute(reqDto)
-            then("updateRefreshToken이 실행되어야함"){
-                testMember.updateRefreshToken(tokenProvider.createRefreshToken(testMember.email))
+        } returns gAuthToken
+
+        val accessToken = "thisIsAccessToken"
+        val refreshToken = "thisIsRefreshToken"
+
+        val role = Role.ROLE_MEMBER
+        val member = Member(1, "최민욱", "string1!","2216", "s22034@gsm.hs.kr", Gender.MAN, mutableListOf(role), mutableListOf(), null)
+
+        val userMap: Map<String, Any> = mapOf(
+            "email" to member.email,
+            "name" to "최민욱",
+            "grade" to 2,
+            "classNum" to 2,
+            "num" to 16,
+            "gender" to "MALE",
+            "profileUrl" to "https://project-miso.s3.ap-northeast-2.amazonaws.com/file/Rectangle+2083.png",
+            "role" to "ROLE_STUDENT"
+        )
+
+        val gAuthUserInfo = GAuthUserInfo(userMap)
+
+        every {
+            gAuth.getUserInfo(
+                gAuthToken.accessToken
+            )
+        } returns gAuthUserInfo
+
+        val refreshTokenEntity = RefreshToken(
+            memberId = member.id,
+            token = refreshToken
+        )
+
+        every {
+            authUtil.saveNewRefreshToken(memberInfo = member, refreshToken = refreshToken)
+        } returns refreshTokenEntity
+
+        val signInDto = SignInGAuthDto(
+            code = "thisIsCode"
+        )
+
+        every {
+            tokenProvider.generateAccessToken(gAuthUserInfo.email, role)
+        } returns accessToken
+
+        every {
+            tokenProvider.generateRefreshToken(gAuthUserInfo.email, role)
+        } returns refreshToken
+
+        val accessExp = tokenProvider.accessExpiredTime
+        val refreshExp = tokenProvider.refreshExpiredTime
+
+        every {
+            tokenProvider.accessExpiredTime
+        } returns accessExp
+
+        every {
+            tokenProvider.refreshExpiredTime
+        } returns refreshExp
+
+        every {
+            authConverter.toEntity(gAuthUserInfo, role)
+        } returns member
+
+        every {
+            authConverter.toEntity(member, refreshToken)
+        } returns refreshTokenEntity
+
+        every {
+            memberRepository.save(member)
+        } returns member
+
+        memberRepository.save(member)
+
+        every {
+            refreshTokenRepository.save(refreshTokenEntity)
+        } returns refreshTokenEntity
+
+        refreshTokenRepository.save(refreshTokenEntity)
+
+        `when`("signInDto가 주어지고 유저가 첫 로그인 시도 일때") {
+
+            every {
+                memberRepository.findByEmail(gAuthUserInfo.email)
+            } returns null
+
+            every {
+                memberRepository.existsByEmail(gAuthUserInfo.email)
+            } returns false
+
+            then("user insert 쿼리가 실행되어야 함") {
+                verify(exactly = 1) { memberRepository.save(member) }
             }
-            then("결과값은 targetResult여야함"){
-                result shouldBe target
+
+            then("refreshToken insert 쿼리가 실행되어야 함") {
+                verify(exactly = 1) { refreshTokenRepository.save(refreshTokenEntity) }
+            }
+
+            val result = signInService.execute(signInDto)
+            then("토큰 값 비교") {
+                result.accessToken shouldBe accessToken
+                result.refreshToken shouldBe refreshToken
+                result.accessExp shouldBe accessExp
+                result.refreshExp shouldBe refreshExp
+            }
+
+        }
+
+
+        `when`("signInDto가 주어지고 유저가 로그인 했던 유저라면") {
+
+            every {
+                memberRepository.findByEmail(gAuthUserInfo.email)
+            } returns member
+
+            every {
+                memberRepository.existsByEmail(gAuthUserInfo.email)
+            } returns true
+
+            then("user insert 쿼리가 실행되지 않는다") {
+                verify { memberRepository.save(member) wasNot Called }
+            }
+
+            then("refreshToken update 쿼리가 실행되어야 함") {
+                verify(exactly = 2) { refreshTokenRepository.save(refreshTokenEntity) }
+            }
+
+            val result = signInService.execute(signInDto)
+            then("토큰 값 비교") {
+                result.accessToken shouldBe accessToken
+                result.refreshToken shouldBe refreshToken
+                result.accessExp shouldBe accessExp
+                result.refreshExp shouldBe refreshExp
             }
         }
 
-        every { memberRepository.findByEmail(reqDto.email) } returns null
-        `when`("해당 member가 존재하지 않을때"){
-            then("MemberNotFoundException이 발생해야함"){
-                val exception = shouldThrow<MemberNotFoundException> {
-                    signInServiceImpl.execute(reqDto)
-                }
-                exception shouldBe MemberNotFoundException()
-            }
-        }
-        init(memberRepository, reqDto, testMember, passwordEncoder, tokenProvider)
-
-        every { passwordEncoder.matches(reqDto.password, testMember.password) } returns false
-        `when`("패스워드가 일치하지 않을때"){
-            then("PasswordNotMathException이 발생해야함"){
-                    val exception = shouldThrow<PasswordMismatchException> {
-                        signInServiceImpl.execute(reqDto)
-                    }
-                exception shouldBe PasswordMismatchException()
-            }
-        }
-        init(memberRepository, reqDto, testMember, passwordEncoder, tokenProvider)
     }
-})
 
-private fun init(
-    memberRepository: MemberRepository,
-    reqDto: SignInReqDto,
-    testMember: Member,
-    passwordEncoder: PasswordEncoder,
-    tokenProvider: TokenProvider
-) {
-    every { memberRepository.findByEmail(reqDto.email) } returns testMember
-    every { passwordEncoder.matches(reqDto.password, testMember.password) } returns true
-    every { tokenProvider.createAccessToken(testMember.email, testMember.roles) } returns "testAccessToken"
-    every { tokenProvider.createRefreshToken(testMember.email) } returns "testRefreshToken"
-    every { tokenProvider.accessExpiredTime } returns ZonedDateTime.now()
-}
+})

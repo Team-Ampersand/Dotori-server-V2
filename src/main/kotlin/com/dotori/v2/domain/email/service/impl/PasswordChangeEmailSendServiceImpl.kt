@@ -12,10 +12,10 @@ class PasswordChangeEmailSendServiceImpl(
     private val memberRepository: MemberRepository,
     private val emailSendService: EmailSendService
 ) : PasswordChangeEmailSendService {
-    override fun execute(emailReqDto: EmailReqDto): String {
+    override fun execute(emailReqDto: EmailReqDto) {
         if (!memberRepository.existsByEmail(emailReqDto.email))
             throw MemberNotFoundException()
 
-        return emailSendService.execute(emailReqDto)
+        emailSendService.execute(emailReqDto)
     }
 }

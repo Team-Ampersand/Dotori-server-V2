@@ -18,7 +18,7 @@ class EmailSendServiceImpl(
     private val emailSender: EmailSender,
 ) : EmailSendService {
 
-    override fun execute(emailReqDto: EmailReqDto): String {
+    override fun execute(emailReqDto: EmailReqDto) {
         val key = keyUtil.keyIssuance()
         emailSender.send(emailReqDto.email, key)
 
@@ -33,6 +33,5 @@ class EmailSendServiceImpl(
         )
 
         emailCertificateRepository.save(emailCertificate)
-        return key
     }
 }

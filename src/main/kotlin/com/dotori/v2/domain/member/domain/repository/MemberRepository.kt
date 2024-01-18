@@ -6,6 +6,7 @@ import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface MemberRepository : JpaRepository<Member, Long>, CustomMemberRepository {
+    fun save(member: Member): Member
     fun findByEmail(email: String?): Member?
     fun existsByEmail(email: String): Boolean
     fun findByStuNum(stuNum: String): Member?

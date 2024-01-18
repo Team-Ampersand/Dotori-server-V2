@@ -1,11 +1,13 @@
 package com.dotori.v2.global.config.web
 
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpMethod
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
+@Profile("prod")
 class WebConfig : WebMvcConfigurer {
     //CORS 설정
     override fun addCorsMappings(registry: CorsRegistry) {

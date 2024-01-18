@@ -22,7 +22,6 @@ class CreateBoardServiceImpl(
     private val boardSaveUtil: BoardSaveUtil
 ) : CreateBoardService {
 
-
     @Value("\${cloud.aws.s3.url}")
     private val S3_ADDRESS: String? = null
 
@@ -35,7 +34,7 @@ class CreateBoardServiceImpl(
                 .let { boardSaveUtil.saveBoard(board = it) }
         }
 
-        val uploadFile: List<String> = s3Service.uploadFile(multipartFiles)
+        val uploadFile: List<String> = s3Service.uploadListFile(multipartFiles)
         val board: Board = toEntity(createBoardDto, member)
             .let { boardSaveUtil.saveBoard(board = it) }
 

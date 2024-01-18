@@ -4,5 +4,5 @@ import com.dotori.v2.domain.email.presentation.dto.request.EmailReqDto
 
 
 interface EmailSendService {
-    fun execute(emailReqDto: EmailReqDto): String
+    fun execute(emailReqDto: EmailReqDto)
 }
