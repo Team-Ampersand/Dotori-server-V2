@@ -21,13 +21,15 @@ object AuthDataUtil {
         refreshToken: String,
         accessExp: ZonedDateTime,
         refreshExp: ZonedDateTime,
-        roles: MutableList<Role>
+        roles: MutableList<Role>,
+        expiresAt: ZonedDateTime
     ) = SignInResDto(
         accessToken = accessToken,
         refreshToken = refreshToken,
         accessExp = accessExp,
         refreshExp = refreshExp,
-        roles = roles
+        roles = roles,
+        expiresAt = expiresAt
     )
 
     fun entity(memberId: Long) =

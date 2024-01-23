@@ -54,7 +54,8 @@ class RefreshTokenServiceImpl(
             refreshToken = newRefreshToken,
             accessExp = accessExp,
             refreshExp = refreshExp,
-            roles = member.roles
+            roles = member.roles,
+            expiresAt = accessExp
         )
     }
 }

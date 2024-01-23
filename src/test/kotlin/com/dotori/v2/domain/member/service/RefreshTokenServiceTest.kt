@@ -36,6 +36,7 @@ class RefreshTokenServiceTest : BehaviorSpec({
         val role = Role.ROLE_MEMBER
         val accessExp = ZonedDateTime.now()
         val refreshExp = ZonedDateTime.now()
+        val expiresAt = accessExp
         val email = "s22034@gsm.hs.kr"
         val member = MemberUtil.createMember(email = email)
 
@@ -74,6 +75,7 @@ class RefreshTokenServiceTest : BehaviorSpec({
                 value.accessExp shouldBe accessExp
                 value.refreshExp shouldBe refreshExp
                 value.roles shouldBe member.roles
+                value.expiresAt shouldBe expiresAt
             }
         }
     }

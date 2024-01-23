@@ -51,7 +51,8 @@ class RefreshTokenControllerTest : BehaviorSpec({
                 refreshToken = "thisIsRefresh",
                 accessExp = ZonedDateTime.now(),
                 refreshExp = ZonedDateTime.now(),
-                roles = Collections.singletonList(Role.ROLE_DEVELOPER)
+                roles = Collections.singletonList(Role.ROLE_DEVELOPER),
+                expiresAt = ZonedDateTime.now()
             )
 
             val response = authController.getNewRefreshToken(refreshToken)

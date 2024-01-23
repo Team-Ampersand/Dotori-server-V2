@@ -31,6 +31,7 @@ class SignInEmailAndPasswordServiceImpl(
             val accessToken =
                 tokenProvider.generateAccessToken(signInEmailAndPasswordDto.email, role = member.roles.first())
             val accessExp = tokenProvider.accessExpiredTime
+            val expiresAt = tokenProvider.accessExpiredTime
             val refreshToken =
                 tokenProvider.generateRefreshToken(signInEmailAndPasswordDto.email, role = member.roles.first())
             val refreshExp = tokenProvider.refreshExpiredTime
@@ -46,7 +47,8 @@ class SignInEmailAndPasswordServiceImpl(
                 refreshToken,
                 accessExp,
                 refreshExp,
-                member.roles
+                member.roles,
+                expiresAt
             )
         } else {
             throw PasswordMismatchException()
@@ -58,13 +60,15 @@ class SignInEmailAndPasswordServiceImpl(
         refreshToken: String,
         accessExp: ZonedDateTime,
         refreshExp: ZonedDateTime,
-        roles: MutableList<Role>
+        roles: MutableList<Role>,
+        expiresAt: ZonedDateTime
     ): SignInResDto =
         SignInResDto(
             accessToken = accessToken,
             refreshToken = refreshToken,
             accessExp = accessExp,
             refreshExp = refreshExp,
-            roles = roles
+            roles = roles,
+            expiresAt = expiresAt
         )
 }

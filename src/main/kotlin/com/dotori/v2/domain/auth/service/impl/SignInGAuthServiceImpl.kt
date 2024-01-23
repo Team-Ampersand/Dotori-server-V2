@@ -69,7 +69,8 @@ class SignInGAuthServiceImpl(
                 refreshToken = refreshToken,
                 accessExp = accessExp,
                 refreshExp = refreshExp,
-                roles = Collections.singletonList(role)
+                roles = Collections.singletonList(role),
+                expiresAt = accessExp
             )
         }.getOrElse { error ->
             when (error) {
