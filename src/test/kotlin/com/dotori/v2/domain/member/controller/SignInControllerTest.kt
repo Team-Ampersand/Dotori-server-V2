@@ -7,6 +7,7 @@ import com.dotori.v2.domain.auth.presentation.data.dto.SignInGAuthDto
 import com.dotori.v2.domain.auth.presentation.data.req.SignInGAuthReqDto
 import com.dotori.v2.domain.auth.presentation.data.res.SignInResDto
 import com.dotori.v2.domain.auth.service.*
+import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.service.ChangePasswordService
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -16,6 +17,7 @@ import io.mockk.verify
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpStatus
 import java.time.ZonedDateTime
+import java.util.*
 
 class SignInControllerTest : BehaviorSpec({
     @Bean
@@ -50,7 +52,8 @@ class SignInControllerTest : BehaviorSpec({
                 accessToken = "thisIsAccess",
                 refreshToken = "thisIsRefresh",
                 accessExp = ZonedDateTime.now(),
-                refreshExp = ZonedDateTime.now()
+                refreshExp = ZonedDateTime.now(),
+                roles = Collections.singletonList(Role.ROLE_DEVELOPER)
             )
             val response = authController.signInGAuth(request)
 
