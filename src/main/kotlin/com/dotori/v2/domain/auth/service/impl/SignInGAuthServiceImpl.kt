@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.ZonedDateTime
+import java.util.*
 
 @Service
 @Transactional(rollbackFor = [Exception::class])
@@ -67,7 +68,9 @@ class SignInGAuthServiceImpl(
                 accessToken = accessToken,
                 refreshToken = refreshToken,
                 accessExp = accessExp,
-                refreshExp = refreshExp
+                refreshExp = refreshExp,
+                roles = Collections.singletonList(role),
+                expiresAt = accessExp
             )
         }.getOrElse { error ->
             when (error) {

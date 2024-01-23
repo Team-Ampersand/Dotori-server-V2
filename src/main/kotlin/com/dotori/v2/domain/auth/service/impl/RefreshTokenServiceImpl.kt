@@ -5,6 +5,8 @@ import com.dotori.v2.domain.auth.util.AuthConverter
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.auth.presentation.data.res.RefreshResDto
 import com.dotori.v2.domain.auth.service.RefreshTokenService
+import com.dotori.v2.domain.member.domain.repository.MemberRepository
+import com.dotori.v2.domain.member.exception.MemberNotFoundException
 import com.dotori.v2.global.security.exception.TokenExpiredException
 import com.dotori.v2.global.security.exception.TokenInvalidException
 import com.dotori.v2.global.security.jwt.TokenProvider
@@ -16,6 +18,7 @@ import java.time.ZonedDateTime
 @Transactional(rollbackFor = [Exception::class])
 class RefreshTokenServiceImpl(
     private val refreshTokenRepository: RefreshTokenRepository,
+    private val memberRepository: MemberRepository,
     private val authConverter: AuthConverter,
     private val tokenProvider: TokenProvider,
 ) : RefreshTokenService {
@@ -25,6 +28,9 @@ class RefreshTokenServiceImpl(
             ?: throw TokenInvalidException()
 
         val email: String = tokenProvider.exactEmailFromRefreshToken(refresh)
+
+        val member = (memberRepository.findByEmail(email)
+            ?: throw MemberNotFoundException())
 
         val role: Role = tokenProvider.exactRoleFromRefreshToken(refresh)
 
@@ -47,7 +53,9 @@ class RefreshTokenServiceImpl(
             accessToken = newAccessToken,
             refreshToken = newRefreshToken,
             accessExp = accessExp,
-            refreshExp = refreshExp
+            refreshExp = refreshExp,
+            roles = member.roles,
+            expiresAt = accessExp
         )
     }
 }

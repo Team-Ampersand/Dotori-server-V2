@@ -5,6 +5,7 @@ import com.dotori.v2.domain.auth.util.AuthConverter
 import com.dotori.v2.domain.auth.util.impl.AuthConverterImpl
 import com.dotori.v2.domain.auth.presentation.data.res.RefreshResDto
 import com.dotori.v2.domain.auth.service.*
+import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.service.ChangePasswordService
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -14,6 +15,7 @@ import io.mockk.verify
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpStatus
 import java.time.ZonedDateTime
+import java.util.*
 
 class RefreshTokenControllerTest : BehaviorSpec({
 
@@ -48,7 +50,9 @@ class RefreshTokenControllerTest : BehaviorSpec({
                 accessToken = "thisIsAccess",
                 refreshToken = "thisIsRefresh",
                 accessExp = ZonedDateTime.now(),
-                refreshExp = ZonedDateTime.now()
+                refreshExp = ZonedDateTime.now(),
+                roles = Collections.singletonList(Role.ROLE_DEVELOPER),
+                expiresAt = ZonedDateTime.now()
             )
 
             val response = authController.getNewRefreshToken(refreshToken)
