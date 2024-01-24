@@ -22,7 +22,8 @@ class FindAllMemberServiceImpl(
                     memberName = it.memberName,
                     stuNum = it.stuNum,
                     role = it.roles[0],
-                    selfStudyStatus = it.selfStudyStatus
+                    selfStudyStatus = it.selfStudyStatus,
+                    profileImage = it.profileImage
                 )
             }
 

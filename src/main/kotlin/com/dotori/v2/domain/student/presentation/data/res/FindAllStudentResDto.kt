@@ -10,5 +10,6 @@ data class FindAllStudentResDto(
     val memberName: String,
     val stuNum: String,
     val role: Role,
-    val selfStudyStatus: SelfStudyStatus
+    val selfStudyStatus: SelfStudyStatus,
+    val profileImage: String?
 )
