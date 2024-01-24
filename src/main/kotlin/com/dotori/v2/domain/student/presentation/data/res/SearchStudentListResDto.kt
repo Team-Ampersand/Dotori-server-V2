@@ -11,5 +11,6 @@ data class SearchStudentListResDto(
     val stuNum: String,
     val gender: Gender,
     val role: Role,
-    val selfStudyStatus: SelfStudyStatus
+    val selfStudyStatus: SelfStudyStatus,
+    val profileImage: String?
 )

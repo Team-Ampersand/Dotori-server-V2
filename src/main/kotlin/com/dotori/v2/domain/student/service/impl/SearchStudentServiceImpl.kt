@@ -27,8 +27,8 @@ class SearchStudentServiceImpl(
                 stuNum = it.stuNum,
                 gender = it.gender,
                 role = it.roles[0],
-                selfStudyStatus = it.selfStudyStatus
-
+                selfStudyStatus = it.selfStudyStatus,
+                profileImage = it.profileImage
             )
         }
     }
