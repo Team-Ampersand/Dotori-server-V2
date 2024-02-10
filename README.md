@@ -17,7 +17,7 @@
 
 ---
 
-## Commit Message Rule
+### Commit Message Rule
 
 type | meaning |
 --|-- 
@@ -31,6 +31,7 @@ chore | 귀찮은 일 해냈을 때
 docs | 문서화 작업을 진행했을 때
 test | 테스트 관련 사항이 있을 때
 
+<br>
 
 ### Contiributing
 
