@@ -55,6 +55,7 @@ dependencies {
     implementation(Dependencies.GOOGLE_API_SERVICE)
     implementation(Dependencies.GAUTH)
     implementation(Dependencies.ACTUATOR)
+    implementation(Dependencies.PROMETHEUS)
 }
 
 tasks.withType<KotlinCompile> {
