@@ -4,7 +4,16 @@
 
 광주소프트웨어마이스터고등학교 기숙사 관리 서비스 [Dotori](https://www.dotori-gsm.com/) 입니다
 
+<details>
+<summary>프로모션 이미지 보기</summary>
+<div markdown="1">
+
 ![](./assets/img/dotori_production.png)
+
+</div>
+</details>
+
+
 
 ---
 
