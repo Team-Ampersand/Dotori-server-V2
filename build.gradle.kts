@@ -4,7 +4,6 @@ plugins {
     id("org.springframework.boot") version PluginVersions.SPRING_BOOT_VERSION
     id("io.spring.dependency-management") version PluginVersions.SPRING_MANAGE_VERSION
     id("com.ewerk.gradle.plugins.querydsl") version PluginVersions.QUERY_DSL_PLUGIN_VERSION
-
     kotlin("jvm") version PluginVersions.JVM_VERSION
     kotlin("plugin.spring") version PluginVersions.SPRING_PLUG_IN_VERSION
     kotlin("plugin.jpa") version PluginVersions.JPA_VERSION
@@ -55,6 +54,8 @@ dependencies {
     implementation(Dependencies.YOUTUBE_ANALYTICS)
     implementation(Dependencies.GOOGLE_API_SERVICE)
     implementation(Dependencies.GAUTH)
+    implementation(Dependencies.ACTUATOR)
+    implementation(Dependencies.PROMETHEUS)
 }
 
 tasks.withType<KotlinCompile> {

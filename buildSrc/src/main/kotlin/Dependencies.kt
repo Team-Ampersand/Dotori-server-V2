@@ -9,6 +9,8 @@ object Dependencies {
     const val WEB = "org.springframework.boot:spring-boot-starter-web"
     const val SPRING_CLOUD = "org.springframework.cloud:spring-cloud-starter-aws:${DependencyVersions.SPRING_CLOUD_VERSION}"
     const val SPRING_OPEN_FEIGN = "org.springframework.cloud:spring-cloud-starter-openfeign:${DependencyVersions.SPRING_CLOUD_OPEN_FEIGN}"
+    const val ACTUATOR = "org.springframework.boot:spring-boot-starter-actuator"
+    const val PROMETHEUS = "io.micrometer:micrometer-registry-prometheus"
 
     // kotlin
     const val KOTLIN_JACKSON = "com.fasterxml.jackson.module:jackson-module-kotlin"
