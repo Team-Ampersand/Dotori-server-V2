@@ -22,3 +22,7 @@ services:
     depends_on:
       - prometheus
     privileged: true
+
+networks:
+  promnet:
+    driver: bridge
