@@ -42,7 +42,7 @@ class SecurityConfig(
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeHttpRequests()
-            .antMatchers("/actuator/prometheus").permitAll()
+            .antMatchers("/actuator/**").permitAll()
             .antMatchers("/v2/auth/**").permitAll()
             .antMatchers("/v2/health-check").permitAll()
             .antMatchers("/v2/refresh").permitAll()
