@@ -6,7 +6,7 @@ on:
 
 env:
   S3_BUCKET_NAME: dotori-deploy-bucket
-  PROJECT_NAME: Dotori_Server_V2
+  PROJECT_NAME: Dotori-V2-Dev
 
 jobs:
   build:
