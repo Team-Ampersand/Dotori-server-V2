@@ -60,6 +60,8 @@ class SecurityConfig(
             .antMatchers(HttpMethod.GET, "/v2/home/board").authenticated()
             .antMatchers(HttpMethod.GET, "/v2/home").authenticated()
 
+            .mvcMatchers(HttpMethod.GET, "/").permitAll()
+
             .anyRequest().denyAll()
             .and()
             .exceptionHandling()
