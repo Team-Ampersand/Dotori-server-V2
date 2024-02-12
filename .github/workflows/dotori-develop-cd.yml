@@ -56,7 +56,7 @@ jobs:
       - name: Deploy
         run: |
           aws deploy create-deployment \
-          --application-name dotori-codedeploy \
+          --application-name dotori-v2 \
           --deployment-config-name CodeDeployDefault.OneAtATime \
           --deployment-group-name dotori-deploy-group \
           --file-exists-behavior OVERWRITE \
