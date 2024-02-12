@@ -1,9 +1,9 @@
-name: Java CICD with Gradle
+name: Java CICD with Gradle DEPRECATED
 
-on:
-  push:
-    branches:
-      - 'develop'
+#on:
+#  push:
+#    branches:
+#      - 'develop'
 
 jobs:
   build:
