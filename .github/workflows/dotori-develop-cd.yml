@@ -60,5 +60,5 @@ jobs:
           --deployment-config-name CodeDeployDefault.OneAtATime \
           --deployment-group-name dotori-deploy-group \
           --file-exists-behavior OVERWRITE \
-          --s3-location bucket=dotori-deploy-bucket,bundleType=zip,key=Bitgouel_Server/$GITHUB_SHA.zip \
+          --s3-location bucket=dotori-deploy-bucket,bundleType=zip,key=Dotori-Dev/$GITHUB_SHA.zip \
           --region ap-northeast-2 \
