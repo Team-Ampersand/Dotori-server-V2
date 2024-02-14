@@ -2,7 +2,7 @@ version: '3'
 
 services:
   mysql:
-    container_name: mysql
+    container_name: dotori-db
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -19,6 +19,6 @@ services:
 
   redis:
     image: redis
-    container_name: redis
+    container_name: dotori-redis
     ports:
       - "6379:6379"
