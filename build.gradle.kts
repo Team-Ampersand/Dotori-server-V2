@@ -56,6 +56,7 @@ dependencies {
     implementation(Dependencies.GAUTH)
     implementation(Dependencies.ACTUATOR)
     implementation(Dependencies.PROMETHEUS)
+    implementation(Dependencies.MYSQL)
 }
 
 tasks.withType<KotlinCompile> {
