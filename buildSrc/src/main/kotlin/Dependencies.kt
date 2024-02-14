@@ -17,9 +17,10 @@ object Dependencies {
     const val KOTLIN_REFLECT = "org.jetbrains.kotlin:kotlin-reflect"
     const val KOTLIN_STDLIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
-    // h2
+    // db
     const val H2_DATABASE = "com.h2database:h2"
     const val MARIA_DATABASE = "org.mariadb.jdbc:mariadb-java-client"
+    const val MYSQL = "mysql:mysql-connector-java"
 
     // test
     const val SPRING_TEST = "org.springframework.boot:spring-boot-starter-test"
