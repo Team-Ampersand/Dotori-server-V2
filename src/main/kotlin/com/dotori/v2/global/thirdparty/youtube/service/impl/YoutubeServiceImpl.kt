@@ -34,6 +34,6 @@ class YoutubeServiceImpl(
      */
     private fun extractVideoId(url: String): String {
         val pattern = Regex("""^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$""")
-        return pattern.find(url)?.groupValues?.get(1) ?: throw NotValidUrlException()
+        return pattern.find(url)?.groupValues?.get(6) ?: throw NotValidUrlException()
     }
 }
