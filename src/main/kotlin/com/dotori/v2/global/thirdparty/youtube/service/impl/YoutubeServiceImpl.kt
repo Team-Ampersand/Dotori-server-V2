@@ -33,7 +33,7 @@ class YoutubeServiceImpl(
      * YouTube videoId를 추출하는 로직입니다.
      */
     private fun extractVideoId(url: String): String {
-        val pattern = Regex("""https?://(?:youtu\.be/|(?:[a-z]{2,3}\.)?youtube\.com/watch(?:\?|#\!)v=)([\w-]{11}).*""")
-        return pattern.find(url)?.groupValues?.get(1) ?: throw NotValidUrlException()
+        val pattern = Regex("""^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu\.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$""")
+        return pattern.find(url)?.groupValues?.get(6) ?: throw NotValidUrlException()
     }
 }
