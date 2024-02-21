@@ -33,7 +33,7 @@ class GraduateStudentJobConfiguration(
 
     companion object {
         const val JOB_NAME = "graduateJob"
-        const val CHUNK_SIZE = 50
+        const val CHUNK_SIZE = 10
     }
 
     @Bean
