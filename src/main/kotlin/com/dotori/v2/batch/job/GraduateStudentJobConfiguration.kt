@@ -3,9 +3,12 @@ package com.dotori.v2.batch.job
 import com.dotori.v2.batch.vaildator.PeriodJobParametersValidator
 import com.dotori.v2.domain.member.domain.entity.Member
 import javax.persistence.EntityManagerFactory
-import javax.sql.DataSource
+import org.slf4j.LoggerFactory
+import org.springframework.batch.core.ExitStatus
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
+import org.springframework.batch.core.StepExecution
+import org.springframework.batch.core.StepExecutionListener
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.JobScope
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
@@ -22,9 +25,10 @@ import org.springframework.context.annotation.Configuration
 class GraduateStudentJobConfiguration(
     private val jobBuilderFactory: JobBuilderFactory,
     private val stepBuilderFactory: StepBuilderFactory,
-    private val dataSource: DataSource,
     private val entityManagerFactory: EntityManagerFactory
 ) {
+
+    private val log = LoggerFactory.getLogger(this.javaClass.name)
 
     companion object {
         const val JOB_NAME = "graduateJob"
@@ -45,6 +49,22 @@ class GraduateStudentJobConfiguration(
             .reader(graduatePagingReader())
             .processor(graduatePagingProcessor(""))
             .writer(writer())
+            .listener(object: StepExecutionListener {
+                override fun beforeStep(stepExecution: StepExecution) {
+                    log.info("Before Step of GraduateStep")
+                }
+
+                override fun afterStep(stepExecution: StepExecution): ExitStatus {
+                    log.info("After Step of GraduateStep")
+
+                    if(stepExecution.exitStatus.exitCode == ExitStatus.FAILED.exitCode) {
+                        log.error("GraduateStep FAILED!!")
+                        return ExitStatus.FAILED
+                    }
+
+                    return ExitStatus.COMPLETED
+                }
+            })
             .build()
     }
 
