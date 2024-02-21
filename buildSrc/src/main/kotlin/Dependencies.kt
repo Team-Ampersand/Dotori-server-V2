@@ -57,4 +57,8 @@ object Dependencies {
 
     // gauth
     const val GAUTH = "com.github.GSM-MSG:GAuth-SDK-Java:${DependencyVersions.GAUTH_VERSION}"
+
+    // batch
+    const val BATCH = "org.springframework.boot:spring-boot-starter-batch"
+    const val BATCH_TEST = "org.springframework.batch:spring-batch-test"
 }
