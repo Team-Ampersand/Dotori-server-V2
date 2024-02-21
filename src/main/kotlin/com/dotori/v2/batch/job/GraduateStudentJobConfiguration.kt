@@ -1,5 +1,6 @@
 package com.dotori.v2.batch.job
 
+import com.dotori.v2.batch.incrementer.UniqueRunIdIncrementer
 import com.dotori.v2.batch.vaildator.PeriodJobParametersValidator
 import com.dotori.v2.domain.member.domain.entity.Member
 import javax.persistence.EntityManagerFactory
@@ -13,7 +14,6 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.JobScope
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepScope
-import org.springframework.batch.core.launch.support.RunIdIncrementer
 import org.springframework.batch.item.ItemProcessor
 import org.springframework.batch.item.ItemWriter
 import org.springframework.batch.item.database.JpaItemWriter
@@ -40,7 +40,7 @@ class GraduateStudentJobConfiguration(
     fun graduateJob(): Job = jobBuilderFactory.get(JOB_NAME)
         .start(graduateStep())
         .validator(PeriodJobParametersValidator())
-        .incrementer(RunIdIncrementer())
+        .incrementer(UniqueRunIdIncrementer())
         .build()
 
     @Bean
@@ -73,7 +73,10 @@ class GraduateStudentJobConfiguration(
     @Bean
     @StepScope
     fun graduatePagingReader(): JpaPagingItemReader<Member> {
-        val sqlQuery = "SELECT * FROM MEMBER m WHERE CAST(SUBSTRING(m.member_stuNum, 1, 1) AS INT) >= 3"
+
+        val sqlQuery = "SELECT m FROM Member m " +
+                "WHERE LENGTH(m.stuNum) >= 4 AND " +
+                "m.stuNum >= 3101"
 
         val reader = object : JpaPagingItemReader<Member>() {
             override fun getPage(): Int {

@@ -6,6 +6,7 @@ import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Ignore
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -30,6 +31,11 @@ class GraduateStudentJobConfigurationTest(
     @Autowired
     private val memberRepository: MemberRepository
 ) {
+
+    @AfterEach
+    fun afterEach() {
+        memberRepository.deleteAllInBatch()
+    }
 
     @Test
     fun `학생_졸업_처리`(@Qualifier(value = GraduateStudentJobConfiguration.JOB_NAME) @Autowired job: Job) {
@@ -64,6 +70,6 @@ class GraduateStudentJobConfigurationTest(
         // then
         assertThat(jobExecution.status).isEqualTo(BatchStatus.COMPLETED)
         val resultCount = memberRepository.countByStuNum("5기")
-        assertTrue(resultCount == 10, "Expected 10 members to have student number 5기")
+        assertThat(resultCount).isEqualTo(10)
     }
 }

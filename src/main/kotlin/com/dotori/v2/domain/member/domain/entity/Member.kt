@@ -7,7 +7,6 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@Table(name = "member")
 class Member(
 
     @Id
@@ -18,7 +17,7 @@ class Member(
     @Column(name = "member_name", nullable = false)
     val memberName: String,
 
-    @Column(name = "member_stuNum", nullable = false)
+    @Column(name = "member_stu_num", nullable = false)
     var stuNum: String,
 
     @Column(name = "member_email", nullable = false, unique = true)
@@ -39,7 +38,7 @@ class Member(
     @OneToMany(mappedBy = "member")
     val ruleViolation: MutableList<RuleViolation>,
 
-    @Column(name = "profileImage")
+    @Column(name = "profile_image")
     var profileImage: String?
 
 ) : BaseTimeEntity() {
