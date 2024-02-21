@@ -15,4 +15,6 @@ interface MemberRepository : JpaRepository<Member, Long>, CustomMemberRepository
     fun findAllByMassageStatusOrMassageStatus(first: MassageStatus, second: MassageStatus): List<Member>
     fun findAllByMemberNameStartingWithOrderByStuNumAsc(memberName: String): List<Member>
     fun findAllByOrderByStuNumAsc(): List<Member>
+    fun findAllByStuNum(stuNum: String): List<Member>
+    fun countByStuNum(stuNum: String): Int
 }

@@ -9,15 +9,18 @@ object Dependencies {
     const val WEB = "org.springframework.boot:spring-boot-starter-web"
     const val SPRING_CLOUD = "org.springframework.cloud:spring-cloud-starter-aws:${DependencyVersions.SPRING_CLOUD_VERSION}"
     const val SPRING_OPEN_FEIGN = "org.springframework.cloud:spring-cloud-starter-openfeign:${DependencyVersions.SPRING_CLOUD_OPEN_FEIGN}"
+    const val ACTUATOR = "org.springframework.boot:spring-boot-starter-actuator"
+    const val PROMETHEUS = "io.micrometer:micrometer-registry-prometheus"
 
     // kotlin
     const val KOTLIN_JACKSON = "com.fasterxml.jackson.module:jackson-module-kotlin"
     const val KOTLIN_REFLECT = "org.jetbrains.kotlin:kotlin-reflect"
     const val KOTLIN_STDLIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
-    // h2
+    // db
     const val H2_DATABASE = "com.h2database:h2"
     const val MARIA_DATABASE = "org.mariadb.jdbc:mariadb-java-client"
+    const val MYSQL = "mysql:mysql-connector-java"
 
     // test
     const val SPRING_TEST = "org.springframework.boot:spring-boot-starter-test"
@@ -40,7 +43,7 @@ object Dependencies {
 
     // aws
     const val AWS_SES = "com.amazonaws:aws-java-sdk-ses:${DependencyVersions.AWS_SES_VERSION}"
-    const val KOTLIN_SES = "org.springframework.cloud:spring-cloud-starter-aws:${DependencyVersions.KOTLIN_SES_VERSION}"
+    const val KOTLIN_SES = "org.springframework.cloud:spring-cloud-starter-aws"
 
     // querydsl
     const val QUERY_DSL = "com.querydsl:querydsl-jpa:${DependencyVersions.QUERY_DSL_VERSION}"
@@ -54,4 +57,8 @@ object Dependencies {
 
     // gauth
     const val GAUTH = "com.github.GSM-MSG:GAuth-SDK-Java:${DependencyVersions.GAUTH_VERSION}"
+
+    // batch
+    const val BATCH = "org.springframework.boot:spring-boot-starter-batch"
+    const val BATCH_TEST = "org.springframework.batch:spring-batch-test"
 }

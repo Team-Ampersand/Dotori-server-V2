@@ -114,6 +114,7 @@ class SignInServiceTest : BehaviorSpec({
 
         val accessExp = tokenProvider.accessExpiredTime
         val refreshExp = tokenProvider.refreshExpiredTime
+        val expiresAt = tokenProvider.accessExpiredTime
 
         every {
             tokenProvider.accessExpiredTime
@@ -196,6 +197,8 @@ class SignInServiceTest : BehaviorSpec({
                 result.refreshToken shouldBe refreshToken
                 result.accessExp shouldBe accessExp
                 result.refreshExp shouldBe refreshExp
+                result.roles shouldBe member.roles
+                result.expiresAt shouldBe expiresAt
             }
         }
 

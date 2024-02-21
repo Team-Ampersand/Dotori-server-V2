@@ -42,6 +42,7 @@ class SecurityConfig(
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeHttpRequests()
+            .antMatchers("/actuator/**").permitAll()
             .antMatchers("/v2/auth/**").permitAll()
             .antMatchers("/v2/health-check").permitAll()
             .antMatchers("/v2/refresh").permitAll()
@@ -59,6 +60,8 @@ class SecurityConfig(
 
             .antMatchers(HttpMethod.GET, "/v2/home/board").authenticated()
             .antMatchers(HttpMethod.GET, "/v2/home").authenticated()
+
+            .mvcMatchers(HttpMethod.GET, "/").permitAll()
 
             .anyRequest().denyAll()
             .and()

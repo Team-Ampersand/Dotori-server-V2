@@ -1,4 +1,4 @@
-package com.dotori.v2.testUtil
+package com.dotori.v2.util
 
 object TestUtils {
 

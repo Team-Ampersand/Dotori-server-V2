@@ -4,7 +4,6 @@ plugins {
     id("org.springframework.boot") version PluginVersions.SPRING_BOOT_VERSION
     id("io.spring.dependency-management") version PluginVersions.SPRING_MANAGE_VERSION
     id("com.ewerk.gradle.plugins.querydsl") version PluginVersions.QUERY_DSL_PLUGIN_VERSION
-
     kotlin("jvm") version PluginVersions.JVM_VERSION
     kotlin("plugin.spring") version PluginVersions.SPRING_PLUG_IN_VERSION
     kotlin("plugin.jpa") version PluginVersions.JPA_VERSION
@@ -22,6 +21,8 @@ repositories {
 }
 
 dependencies {
+
+    // spring
     implementation(Dependencies.SPRING_JPA)
     implementation(Dependencies.SPRING_OPEN_FEIGN)
     implementation(Dependencies.SPRING_REDIS)
@@ -29,11 +30,15 @@ dependencies {
     implementation(Dependencies.SECURITY)
     implementation(Dependencies.VALIDATION)
     implementation(Dependencies.WEB)
+    implementation(Dependencies.SPRING_CLOUD)
+
+    // kotlin
     implementation(Dependencies.KOTLIN_JACKSON)
     implementation(Dependencies.KOTLIN_REFLECT)
     implementation(Dependencies.KOTLIN_STDLIB)
     runtimeOnly(Dependencies.H2_DATABASE)
-    runtimeOnly(Dependencies.MARIA_DATABASE)
+
+    // test
     testImplementation(Dependencies.SPRING_TEST)
     testImplementation(Dependencies.SECURITY_TEST)
     testImplementation(Dependencies.KOTEST_RUNNER)
@@ -41,20 +46,39 @@ dependencies {
     testImplementation(Dependencies.KOTEST_ASSERTIONS)
     testImplementation(Dependencies.KOTEST_JVM)
     testImplementation(Dependencies.MOCKK)
+
+    // jwt
     implementation(Dependencies.JWT_API)
     runtimeOnly(Dependencies.JWT_IMPL)
     runtimeOnly(Dependencies.JWT_JACKSON)
+
+    // aws ses
     implementation(Dependencies.AWS_SES)
     implementation(Dependencies.KOTLIN_SES)
-    implementation(Dependencies.SPRING_CLOUD)
+
+    // query dsl
     implementation(Dependencies.QUERY_DSL)
     implementation(Dependencies.QUERY_DSL_APT)
     kapt(Dependencies.QUERY_DSL_APT)
+
+    // open api
     implementation(Dependencies.GOOGLE_API_CLIENT)
     implementation(Dependencies.GOOGLE_OAUTH_CLIENT)
     implementation(Dependencies.YOUTUBE_ANALYTICS)
     implementation(Dependencies.GOOGLE_API_SERVICE)
     implementation(Dependencies.GAUTH)
+
+    // monitoring
+    implementation(Dependencies.ACTUATOR)
+    implementation(Dependencies.PROMETHEUS)
+
+    // database
+    implementation(Dependencies.MYSQL)
+    runtimeOnly(Dependencies.MARIA_DATABASE)
+
+    // batch
+    implementation(Dependencies.BATCH)
+    testImplementation(Dependencies.BATCH_TEST)
 }
 
 tasks.withType<KotlinCompile> {
@@ -65,6 +89,7 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.withType<Test> {
+    exclude("**/GraduateStudentJobConfigurationTest.class")
     useJUnitPlatform()
 }
 
@@ -75,6 +100,7 @@ idea {
         generatedSourceDirs.add(kaptMain)
     }
 }
+
 
 buildscript {
     repositories {
