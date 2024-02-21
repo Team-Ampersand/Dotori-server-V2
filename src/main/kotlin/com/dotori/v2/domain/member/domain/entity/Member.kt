@@ -111,7 +111,8 @@ class Member(
         )
     }
 
-    fun graduate(period: String) {
+    fun graduate(period: String): Member {
         this.stuNum = period
+        return this
     }
 }

@@ -1,8 +1,7 @@
 package com.dotori.v2.batch.job
 
-import com.dotori.v2.batch.incrementer.UniqueRunIdIncrementer
-import com.dotori.v2.batch.vaildator.PeriodJobParametersValidator
 import com.dotori.v2.domain.member.domain.entity.Member
+import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import javax.persistence.EntityManagerFactory
 import org.slf4j.LoggerFactory
 import org.springframework.batch.core.ExitStatus
@@ -15,8 +14,8 @@ import org.springframework.batch.core.configuration.annotation.JobScope
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepScope
 import org.springframework.batch.item.ItemProcessor
-import org.springframework.batch.item.ItemWriter
-import org.springframework.batch.item.database.JpaItemWriter
+import org.springframework.batch.item.data.RepositoryItemWriter
+import org.springframework.batch.item.data.builder.RepositoryItemWriterBuilder
 import org.springframework.batch.item.database.JpaPagingItemReader
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -26,7 +25,8 @@ import org.springframework.context.annotation.Configuration
 class GraduateStudentJobConfiguration(
     private val jobBuilderFactory: JobBuilderFactory,
     private val stepBuilderFactory: StepBuilderFactory,
-    private val entityManagerFactory: EntityManagerFactory
+    private val entityManagerFactory: EntityManagerFactory,
+    private val memberRepository: MemberRepository
 ) {
 
     private val log = LoggerFactory.getLogger(this.javaClass.name)
@@ -97,20 +97,12 @@ class GraduateStudentJobConfiguration(
     fun graduatePagingProcessor(
         @Value("#{jobParameters['period']}") period: String?,
         @Value("#{jobParameters['version']}") version: Long?
-    ): ItemProcessor<Member, Member> {
-
-        return ItemProcessor { item ->
-            item.graduate(period!!)
-            item
-        }
-    }
+    ): ItemProcessor<Member, Member> = ItemProcessor { it.graduate(period!!) }
 
     @Bean
     @StepScope
-    fun writer() : JpaItemWriter<Member> {
-        val writer = JpaItemWriter<Member>()
-        writer.setEntityManagerFactory(entityManagerFactory)
-        return writer
-    }
-
+    fun writer() : RepositoryItemWriter<Member> = RepositoryItemWriterBuilder<Member>()
+        .repository(memberRepository)
+        .methodName("save")
+        .build()
 }
