@@ -6,7 +6,7 @@ import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.global.util.UserUtil
-import com.dotori.v2.testUtil.TestUtils
+import com.dotori.v2.util.TestUtils
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.every
 import io.mockk.mockk

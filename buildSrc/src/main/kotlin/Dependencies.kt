@@ -43,7 +43,7 @@ object Dependencies {
 
     // aws
     const val AWS_SES = "com.amazonaws:aws-java-sdk-ses:${DependencyVersions.AWS_SES_VERSION}"
-    const val KOTLIN_SES = "org.springframework.cloud:spring-cloud-starter-aws:${DependencyVersions.KOTLIN_SES_VERSION}"
+    const val KOTLIN_SES = "org.springframework.cloud:spring-cloud-starter-aws"
 
     // querydsl
     const val QUERY_DSL = "com.querydsl:querydsl-jpa:${DependencyVersions.QUERY_DSL_VERSION}"
@@ -57,4 +57,8 @@ object Dependencies {
 
     // gauth
     const val GAUTH = "com.github.GSM-MSG:GAuth-SDK-Java:${DependencyVersions.GAUTH_VERSION}"
+
+    // batch
+    const val BATCH = "org.springframework.boot:spring-boot-starter-batch"
+    const val BATCH_TEST = "org.springframework.batch:spring-batch-test"
 }

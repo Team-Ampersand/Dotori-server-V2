@@ -1,4 +1,4 @@
-package com.dotori.v2.testUtil
+package com.dotori.v2.util
 
 import com.dotori.v2.domain.auth.domain.entity.RefreshToken
 import com.dotori.v2.domain.auth.presentation.data.dto.SignInGAuthDto
