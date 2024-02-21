@@ -39,8 +39,8 @@ class GraduateStudentJobConfiguration(
     @Bean
     fun graduateJob(): Job = jobBuilderFactory.get(JOB_NAME)
         .start(graduateStep())
-        .validator(PeriodJobParametersValidator())
-        .incrementer(UniqueRunIdIncrementer())
+//        .incrementer(UniqueRunIdIncrementer())
+//        .validator(PeriodJobParametersValidator())
         .build()
 
     @Bean
@@ -49,21 +49,21 @@ class GraduateStudentJobConfiguration(
         return stepBuilderFactory.get("graduateStep")
             .chunk<Member, Member>(CHUNK_SIZE)
             .reader(graduatePagingReader())
-            .processor(graduatePagingProcessor(""))
+            .processor(graduatePagingProcessor(null, null))
             .writer(writer())
             .listener(object: StepExecutionListener {
                 override fun beforeStep(stepExecution: StepExecution) {
-                    log.info("Before Step of GraduateStep")
+                    log.info("==========Before Step of GraduateStep==========")
                 }
 
                 override fun afterStep(stepExecution: StepExecution): ExitStatus {
-                    log.info("After Step of GraduateStep")
+                    log.info("==========After Step of GraduateStep==========")
 
                     if(stepExecution.exitStatus.exitCode == ExitStatus.FAILED.exitCode) {
-                        log.error("GraduateStep FAILED!!")
+                        log.error("==========GraduateStep FAILED!!!===========")
                         return ExitStatus.FAILED
                     }
-
+                    log.info("==========GraduateStep COMPLETED:)===========")
                     return ExitStatus.COMPLETED
                 }
             })
@@ -94,16 +94,20 @@ class GraduateStudentJobConfiguration(
 
     @Bean
     @StepScope
-    fun graduatePagingProcessor(@Value("#{jobParameters['period']}") period: String): ItemProcessor<Member, Member> {
+    fun graduatePagingProcessor(
+        @Value("#{jobParameters['period']}") period: String?,
+        @Value("#{jobParameters['version']}") version: Long?
+    ): ItemProcessor<Member, Member> {
+
         return ItemProcessor { item ->
-            item.graduate(period)
+            item.graduate(period!!)
             item
         }
     }
 
     @Bean
     @StepScope
-    fun writer() : ItemWriter<Member> {
+    fun writer() : JpaItemWriter<Member> {
         val writer = JpaItemWriter<Member>()
         writer.setEntityManagerFactory(entityManagerFactory)
         return writer

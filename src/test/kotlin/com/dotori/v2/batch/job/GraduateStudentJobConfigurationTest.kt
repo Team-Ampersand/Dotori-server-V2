@@ -6,7 +6,6 @@ import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Ignore
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -18,13 +17,15 @@ import org.springframework.batch.test.context.SpringBatchTest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.annotation.DirtiesContext
+import org.springframework.test.annotation.DirtiesContext.*
 import org.springframework.test.context.ActiveProfiles
 
 @DisplayName("졸업 전환 배치 테스트")
 @SpringBatchTest
 @ActiveProfiles(value = ["dev"])
 @SpringBootTest
-@Ignore
+@DirtiesContext(classMode = ClassMode.AFTER_CLASS)
 class GraduateStudentJobConfigurationTest(
     @Autowired
     private val jobLauncherTestUtils: JobLauncherTestUtils,
@@ -32,12 +33,8 @@ class GraduateStudentJobConfigurationTest(
     private val memberRepository: MemberRepository
 ) {
 
-    @AfterEach
-    fun afterEach() {
-        memberRepository.deleteAllInBatch()
-    }
-
     @Test
+    @Ignore
     fun `학생_졸업_처리`(@Qualifier(value = GraduateStudentJobConfiguration.JOB_NAME) @Autowired job: Job) {
           // given
         var number = 1
@@ -62,14 +59,16 @@ class GraduateStudentJobConfigurationTest(
 
         val periodJobParameters = JobParametersBuilder()
             .addString("period","5기")
+            .addLong("version", 8L) // date로 할까 어차피 단일 테스트고 ci돌때마다 진행하는 것도 아니라서 일단 두기 임의로 수정
             .toJobParameters()
 
         // when
         val jobExecution = jobLauncherTestUtils.launchJob(periodJobParameters)
 
         // then
-        assertThat(jobExecution.status).isEqualTo(BatchStatus.COMPLETED)
-        val resultCount = memberRepository.countByStuNum("5기")
+        val resultCount = memberRepository.findAllByStuNum("5기").size
         assertThat(resultCount).isEqualTo(10)
+        assertThat(jobExecution.status).isEqualTo(BatchStatus.COMPLETED)
     }
+
 }

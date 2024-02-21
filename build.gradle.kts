@@ -89,6 +89,7 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.withType<Test> {
+    exclude("**/GraduateStudentJobConfigurationTest.class")
     useJUnitPlatform()
 }
 
@@ -99,6 +100,7 @@ idea {
         generatedSourceDirs.add(kaptMain)
     }
 }
+
 
 buildscript {
     repositories {

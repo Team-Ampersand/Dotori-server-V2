@@ -4,6 +4,7 @@ import org.springframework.batch.core.JobParameters
 import org.springframework.batch.core.JobParametersBuilder
 import org.springframework.batch.core.launch.support.RunIdIncrementer
 
+@Deprecated("validator is deprecated")
 class UniqueRunIdIncrementer : RunIdIncrementer() {
 
     companion object {
