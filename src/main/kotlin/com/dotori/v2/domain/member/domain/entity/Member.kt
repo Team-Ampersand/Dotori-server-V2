@@ -19,7 +19,7 @@ class Member(
     val memberName: String,
 
     @Column(name = "member_stuNum", nullable = false)
-    val stuNum: String,
+    var stuNum: String,
 
     @Column(name = "member_email", nullable = false, unique = true)
     val email: String,
@@ -110,5 +110,9 @@ class Member(
             ruleViolation = this.ruleViolation,
             profileImage = profileImage
         )
+    }
+
+    fun graduate(period: String) {
+        this.stuNum = period
     }
 }

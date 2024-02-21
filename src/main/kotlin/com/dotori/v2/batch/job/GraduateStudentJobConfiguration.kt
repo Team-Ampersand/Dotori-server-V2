@@ -1,17 +1,71 @@
 package com.dotori.v2.batch.job
 
+import com.dotori.v2.domain.member.domain.entity.Member
+import javax.persistence.EntityManagerFactory
+import javax.sql.DataSource
+import org.springframework.batch.core.Job
+import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
+import org.springframework.batch.core.configuration.annotation.JobScope
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
+import org.springframework.batch.core.configuration.annotation.StepScope
+import org.springframework.batch.item.ItemProcessor
+import org.springframework.batch.item.database.JpaPagingItemReader
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
 class GraduateStudentJobConfiguration(
     private val jobBuilderFactory: JobBuilderFactory,
-    private val stepBuilderFactory: StepBuilderFactory
+    private val stepBuilderFactory: StepBuilderFactory,
+    private val dataSource: DataSource,
+    private val entityManagerFactory: EntityManagerFactory
 ) {
 
     companion object {
         const val JOB_NAME = "graduateJob"
         const val CHUNK_SIZE = 50
     }
+
+    @Bean
+    fun graduateJob(): Job = jobBuilderFactory.get(JOB_NAME)
+        .start(graduateStep())
+        .build()
+
+    @Bean
+    @JobScope
+    fun graduateStep(): Step {
+
+    }
+
+    @Bean
+    @StepScope
+    fun graduatePagingReader(): JpaPagingItemReader<Member> {
+        val sqlQuery = "SELECT * FROM MEMBER m WHERE CAST(SUBSTRING(m.member_stuNum, 1, 1) AS INT) >= 3"
+
+        val reader = object : JpaPagingItemReader<Member>() {
+            override fun getPage(): Int {
+                return 0
+            }
+        }
+
+        reader.setQueryString(sqlQuery)
+        reader.pageSize = CHUNK_SIZE
+        reader.setEntityManagerFactory(entityManagerFactory)
+        reader.setName("graduateReader")
+
+        return reader
+    }
+
+    @Bean
+    @StepScope
+    fun graduatePagingProcessor(@Value("#{jobParameters['period']}") period: String): ItemProcessor<Member, Member> {
+        return ItemProcessor { item ->
+            item.graduate(period)
+            item
+        }
+    }
+
+
 }
