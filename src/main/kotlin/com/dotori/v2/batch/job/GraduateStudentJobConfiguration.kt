@@ -1,5 +1,6 @@
 package com.dotori.v2.batch.job
 
+import com.dotori.v2.batch.vaildator.PeriodJobParametersValidator
 import com.dotori.v2.domain.member.domain.entity.Member
 import javax.persistence.EntityManagerFactory
 import javax.sql.DataSource
@@ -10,6 +11,8 @@ import org.springframework.batch.core.configuration.annotation.JobScope
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepScope
 import org.springframework.batch.item.ItemProcessor
+import org.springframework.batch.item.ItemWriter
+import org.springframework.batch.item.database.JpaItemWriter
 import org.springframework.batch.item.database.JpaPagingItemReader
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -31,12 +34,18 @@ class GraduateStudentJobConfiguration(
     @Bean
     fun graduateJob(): Job = jobBuilderFactory.get(JOB_NAME)
         .start(graduateStep())
+        .validator(PeriodJobParametersValidator())
         .build()
 
     @Bean
     @JobScope
     fun graduateStep(): Step {
-
+        return stepBuilderFactory.get("graduateStep")
+            .chunk<Member, Member>(CHUNK_SIZE)
+            .reader(graduatePagingReader())
+            .processor(graduatePagingProcessor(""))
+            .writer(writer())
+            .build()
     }
 
     @Bean
@@ -67,5 +76,12 @@ class GraduateStudentJobConfiguration(
         }
     }
 
+    @Bean
+    @StepScope
+    fun writer() : ItemWriter<Member> {
+        val writer = JpaItemWriter<Member>()
+        writer.setEntityManagerFactory(entityManagerFactory)
+        return writer
+    }
 
 }
