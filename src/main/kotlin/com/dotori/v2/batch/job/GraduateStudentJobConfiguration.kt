@@ -36,7 +36,7 @@ class GraduateStudentJobConfiguration(
         const val CHUNK_SIZE = 10
     }
 
-    @Bean
+//    @Bean
     fun graduateJob(): Job = jobBuilderFactory.get(JOB_NAME)
         .start(graduateStep())
 //        .incrementer(UniqueRunIdIncrementer())
