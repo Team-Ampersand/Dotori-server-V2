@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing
 
 @SpringBootApplication
-@EnableBatchProcessing
+// @EnableBatchProcessing
 class V2Application{
 	val log = LoggerFactory.getLogger(this::class.java.name)!!
 	@PostConstruct
