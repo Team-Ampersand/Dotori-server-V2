@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!-- log 기록 절대 위치 설정 -->
-    <property name="LOGS_ABSOLUTE_PATH" value="/home/ubuntu/logs" />
+    <property name="LOGS_ABSOLUTE_PATH" value="./logs" />
 
     <property name="CONSOLE_LOG_PATTERN"
-              value="[%d{yyyy-MM-dd HH:mm:ss}:%-3relative]  %clr(%-5level) %clr(${PID:-}){magenta} %clr(---){faint} %clr([%15.15thread]){faint} %clr(%-40.40logger{36}){cyan} %clr(:){faint} %msg%n"/>
+              value="[%d{yyyy-MM-dd HH:mm:ss}:%-3relative]  %highlight(%-5level) %highlight(${PID:-}){magenta} %highlight(---){faint} %highlight([%15.15thread]){faint} %highlight(%-40.40logger{36}){cyan} %highlight(:){faint} %msg%n"/>
     <property name="FILE_LOG_PATTERN"
               value="[%d{yyyy-MM-dd HH:mm:ss}:%-3relative] %-5level ${PID:-} --- [%15.15thread] %-40.40logger{36} : %msg%n"/>
 

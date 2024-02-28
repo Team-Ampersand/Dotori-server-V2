@@ -39,3 +39,5 @@ out/
 /src/main/resources/*.yml
 
 .env
+
+/logs
