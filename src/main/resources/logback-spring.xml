@@ -3,7 +3,6 @@
 
     <springProperty name="name" source="spring.application.name" />
 
-    <!-- Console Appender -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>
@@ -12,53 +11,36 @@
         </encoder>
     </appender>
 
-    <!-- Info File Appender -->
-    <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>/logs/backend/info/info.log</file>
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} %X{X-Request-ID} - %msg%n</pattern>
-        </encoder>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/logs/backend/info/info-%d{yyyy-MM-dd}.log</fileNamePattern>
-        </rollingPolicy>
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+        <!-- (1) -->
+        <http>
+            <url>http://localhost:3100/loki/api/v1/push</url>
+        </http>
+        <format>
+            <!-- (2) -->
+            <label>
+                <pattern>app=${name},host=${HOSTNAME},level=%level</pattern>
+                <!-- (3) -->
+                <readMarkers>true</readMarkers>
+            </label>
+            <message>
+                <!-- (4) -->
+                <pattern>
+                    {
+                    "level":"%level",
+                    "class":"%logger{36}",
+                    "thread":"%thread",
+                    "message": "%message",
+                    "requestId": "%X{X-Request-ID}"
+                    }
+                </pattern>
+            </message>
+        </format>
     </appender>
 
-    <!-- Warn File Appender -->
-    <appender name="WARN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>/logs/backend/warn/warn.log</file>
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} %X{X-Request-ID} - %msg%n</pattern>
-        </encoder>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/logs/backend/warn/warn-%d{yyyy-MM-dd}.log</fileNamePattern>
-        </rollingPolicy>
-    </appender>
-
-    <!-- Error File Appender -->
-    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>/logs/backend/error/error.log</file>
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} %X{X-Request-ID} - %msg%n</pattern>
-        </encoder>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/logs/backend/error/error-%d{yyyy-MM-dd}.log</fileNamePattern>
-        </rollingPolicy>
-    </appender>
-
-    <!-- Root Logger -->
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
-        <appender-ref ref="INFO_FILE" />
+        <appender-ref ref="LOKI" />
     </root>
-
-    <!-- Warn Logger -->
-    <logger name="org.example" level="WARN">
-        <appender-ref ref="WARN_FILE" />
-    </logger>
-
-    <!-- Error Logger -->
-    <logger name="org.example" level="ERROR">
-        <appender-ref ref="ERROR_FILE" />
-    </logger>
 
 </configuration>
