@@ -3,7 +3,7 @@ object DependencyVersions {
     // spring
     const val SPRING_CLOUD_VERSION = "2.2.6.RELEASE"
     const val SPRING_CLOUD_OPEN_FEIGN = "3.1.8"
-    const val LOKI = "1.5.0"
+    const val LOKI = "1.4.1"
 
     // kotest
     const val KOTEST_RUNNER_VERSION = "5.5.5"
