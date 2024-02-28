@@ -2,11 +2,11 @@ name: Dotori Develop Server CD
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ master ]
 
 env:
   S3_BUCKET_NAME: dotori-deploy-bucket
-  PROJECT_NAME: Dotori-V2-Dev
+  PROJECT_NAME: Dotori-V2
 
 jobs:
   build:
@@ -58,7 +58,7 @@ jobs:
           aws deploy create-deployment \
           --application-name dotori-v2 \
           --deployment-config-name CodeDeployDefault.OneAtATime \
-          --deployment-group-name dotori-deploy-group \
+          --deployment-group-name dotori-deploy-prod \
           --file-exists-behavior OVERWRITE \
-          --s3-location bucket=dotori-deploy-bucket,bundleType=zip,key=Dotori-V2-Dev/$GITHUB_SHA.zip \
+          --s3-location bucket=dotori-deploy-bucket,bundleType=zip,key=Dotori-V2/$GITHUB_SHA.zip \
           --region ap-northeast-2 \
