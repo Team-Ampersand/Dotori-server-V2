@@ -23,6 +23,19 @@ services:
       - prometheus
     privileged: true
 
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - ./logs/backend:/logs
+      - ./promtail-config.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+
 networks:
   promnet:
     driver: bridge
