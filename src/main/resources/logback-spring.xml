@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <!-- log 기록 절대 위치 설정 -->
+    <property name="LOGS_ABSOLUTE_PATH" value="/home/ubuntu/logs" />
 
-    <springProperty name="name" source="spring.application.name" />
+    <property name="CONSOLE_LOG_PATTERN"
+              value="[%d{yyyy-MM-dd HH:mm:ss}:%-3relative]  %clr(%-5level) %clr(${PID:-}){magenta} %clr(---){faint} %clr([%15.15thread]){faint} %clr(%-40.40logger{36}){cyan} %clr(:){faint} %msg%n"/>
+    <property name="FILE_LOG_PATTERN"
+              value="[%d{yyyy-MM-dd HH:mm:ss}:%-3relative] %-5level ${PID:-} --- [%15.15thread] %-40.40logger{36} : %msg%n"/>
 
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- 콘솔(STDOUT) -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+        </layout>
+    </appender>
+
+    <!-- 파일(FILE) -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--     log 기록할 파일 위치 설정 -->
+        <file>${LOGS_ABSOLUTE_PATH}/logback.log</file>
+        <!--     log 기록 타입 인코딩 -->
         <encoder>
-            <pattern>
-                %d{HH:mm:ss.SSS} %-5level %logger{36} %X{X-Request-ID} - %msg%n
-            </pattern>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
         </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- keep 30 days' worth of history capped at 3GB total size -->
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
     </appender>
 
-    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
-        <!-- (1) -->
-        <http>
-            <url>http://localhost:3100/loki/api/v1/push</url>
-        </http>
-        <format>
-            <!-- (2) -->
-            <label>
-                <pattern>app=${name},host=${HOSTNAME},level=%level</pattern>
-                <!-- (3) -->
-                <readMarkers>true</readMarkers>
-            </label>
-            <message>
-                <!-- (4) -->
-                <pattern>
-                    {
-                    "level":"%level",
-                    "class":"%logger{36}",
-                    "thread":"%thread",
-                    "message": "%message",
-                    "requestId": "%X{X-Request-ID}"
-                    }
-                </pattern>
-            </message>
-        </format>
-    </appender>
-
-    <root level="INFO">
-        <appender-ref ref="CONSOLE" />
-        <appender-ref ref="LOKI" />
+    <!-- log 레벨 설정 (logging.level.root=info)-->
+    <root level="info">
+        <!--     참조할 appender 설정 - STDOUT -->
+        <appender-ref ref="STDOUT" />
     </root>
+
+    <!-- log 레벨 설정 (org.springframework.web=debug)-->
+    <logger name="org.springframework.web" level="debug">
+        <appender-ref ref="FILE" />
+    </logger>
 
 </configuration>

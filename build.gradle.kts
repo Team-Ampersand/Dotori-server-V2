@@ -71,7 +71,6 @@ dependencies {
     // monitoring
     implementation(Dependencies.ACTUATOR)
     implementation(Dependencies.PROMETHEUS)
-    implementation(Dependencies.LOKI)
 
     // database
     implementation(Dependencies.MYSQL)
