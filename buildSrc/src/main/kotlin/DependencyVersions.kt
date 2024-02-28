@@ -4,7 +4,7 @@ object DependencyVersions {
     const val SPRING_CLOUD_VERSION = "2.2.6.RELEASE"
     const val SPRING_CLOUD_OPEN_FEIGN = "3.1.8"
     const val LOKI = "1.4.1"
-
+    const val ACTUATOR = "3.1.1"
     // kotest
     const val KOTEST_RUNNER_VERSION = "5.5.5"
     const val KOTEST_EXTENSION_VERSION = "1.1.2"
