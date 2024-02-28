@@ -11,6 +11,7 @@ object Dependencies {
     const val SPRING_OPEN_FEIGN = "org.springframework.cloud:spring-cloud-starter-openfeign:${DependencyVersions.SPRING_CLOUD_OPEN_FEIGN}"
     const val ACTUATOR = "org.springframework.boot:spring-boot-starter-actuator"
     const val PROMETHEUS = "io.micrometer:micrometer-registry-prometheus"
+    const val LOKI = "com.github.loki4j:loki-logback-appender:${DependencyVersions.LOKI}"
 
     // kotlin
     const val KOTLIN_JACKSON = "com.fasterxml.jackson.module:jackson-module-kotlin"
