@@ -97,18 +97,8 @@ class Member(
         this.selfStudyExpiredDate = localDateTime
     }
 
-    fun updateProfileImage(profileImage: String?): Member {
-        return Member(
-            id = this.id,
-            memberName = this.memberName,
-            password = this.password,
-            stuNum = this.stuNum,
-            email = this.email,
-            gender = this.gender,
-            roles = this.roles,
-            ruleViolation = this.ruleViolation,
-            profileImage = profileImage
-        )
+    fun updateProfileImage(profileImage: String?) {
+        this.profileImage = profileImage
     }
 
     fun graduate(period: String): Member {
