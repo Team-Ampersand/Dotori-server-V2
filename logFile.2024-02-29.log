@@ -1,0 +1,12 @@
+[2024-02-29 00:59:24:11770] DEBUG 28381 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 107 mappings in 'requestMappingHandlerMapping'
+[2024-02-29 00:59:24:11796] DEBUG 28381 --- [           main] o.s.w.s.h.SimpleUrlHandlerMapping        : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+[2024-02-29 00:59:24:11925] DEBUG 28381 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[2024-02-29 00:59:24:11949] DEBUG 28381 --- [           main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+[2024-02-29 00:59:24:12519] INFO  28381 --- [on(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+[2024-02-29 00:59:24:12519] DEBUG 28381 --- [on(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+[2024-02-29 00:59:24:12519] DEBUG 28381 --- [on(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+[2024-02-29 00:59:24:12519] DEBUG 28381 --- [on(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+[2024-02-29 00:59:24:12520] DEBUG 28381 --- [on(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@1278c48f
+[2024-02-29 00:59:24:12520] DEBUG 28381 --- [on(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@51386308
+[2024-02-29 00:59:24:12520] DEBUG 28381 --- [on(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+[2024-02-29 00:59:24:12520] INFO  28381 --- [on(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
