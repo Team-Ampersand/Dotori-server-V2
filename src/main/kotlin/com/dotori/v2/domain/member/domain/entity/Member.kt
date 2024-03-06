@@ -7,6 +7,8 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
+@Table(name = "member",
+    indexes = [Index(name = "idx__member__stu_num", columnList = "member_stu_num")])
 class Member(
 
     @Id
