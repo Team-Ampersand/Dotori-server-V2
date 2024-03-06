@@ -18,7 +18,7 @@ class CustomMemberRepositoryImpl(
 ) : CustomMemberRepository {
 
     override fun search(searchRequestDto: SearchRequestDto): List<Member> {
-        val stuNum = "${searchRequestDto.grade}${searchRequestDto.classNum}"
+        val stuNum = "${searchRequestDto.grade ?: ""}${searchRequestDto.classNum ?: ""}"
 
         return queryFactory.selectFrom(member)
             .where(
@@ -33,7 +33,7 @@ class CustomMemberRepositoryImpl(
     }
 
     override fun searchSelfStudyMember(selfStudySearchReqDto: SelfStudySearchReqDto): List<Member> {
-        val stuNum = "${selfStudySearchReqDto.grade}${selfStudySearchReqDto.classNum}"
+        val stuNum = "${selfStudySearchReqDto.grade ?: ""}${selfStudySearchReqDto.classNum ?: ""}"
 
         return queryFactory.selectFrom(member)
             .where(
