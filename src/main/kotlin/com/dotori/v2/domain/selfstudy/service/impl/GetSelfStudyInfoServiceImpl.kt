@@ -24,7 +24,7 @@ class GetSelfStudyInfoServiceImpl(
         val selfStudyCount = selfStudyCountRepository.findSelfStudyCountById(1)
         val member = userUtil.fetchCurrentUser()
 
-        if (isSelfStudyStatusCan(member) && validSelfStudyApplyCant(selfStudyCount))
+        if (member.selfStudyStatus == SelfStudyStatus.CAN && validSelfStudyApplyCant(selfStudyCount))
             return SelfStudyInfoResDto(
                 count = selfStudyCount.count,
                 limit = selfStudyCount.limit,
@@ -37,8 +37,6 @@ class GetSelfStudyInfoServiceImpl(
             selfStudyStatus = member.selfStudyStatus
         )
     }
-
-    private fun isSelfStudyStatusCan(member: Member) = member.selfStudyStatus == SelfStudyStatus.CAN
 
     private fun validSelfStudyApplyCant(selfStudyCount: SelfStudyCount): Boolean {
         try {
