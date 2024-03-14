@@ -24,4 +24,4 @@ echo "> 애플리케이션 배포"
 # shellcheck disable=SC2012
 JAR_NAME=$(ls -tr $JAR_PATH | tail -n 1)
 echo "> JAR NAME: $JAR_NAME"
-nohup java -jar "$JAR_NAME" --spring.profiles.active=dev  --logging.file.path=/home/ubuntu/ --logging.level.org.hibernate.SQL=DEBUG >> /home/ubuntu/deploy.log 2>/home/ubuntu/deploy_err.log &
+nohup java -jar "$JAR_NAME" --spring.profiles.active=dev  --logging.file.path=/home/ubuntu/ --logging.level.org.hibernate.SQL=INFO >> /home/ubuntu/deploy.log 2>/home/ubuntu/deploy_err.log &
