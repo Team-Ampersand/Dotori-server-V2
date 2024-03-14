@@ -28,7 +28,8 @@ class DevMemberConfig(
             ruleViolation = mutableListOf(),
             profileImage = null
         )
-        memberRepository.save(admin)
+        if(!memberRepository.existMemberByEmail(admin.email))
+            memberRepository.save(admin)
 
         val developer = Member(
             memberName = "도토리개발자",
@@ -40,7 +41,8 @@ class DevMemberConfig(
             ruleViolation = mutableListOf(),
             profileImage = null
         )
-        memberRepository.save(developer)
+        if(!memberRepository.existMemberByEmail(developer.email))
+            memberRepository.save(developer)
 
         val councillor = Member(
             memberName = "기숙사자치위원",
@@ -52,7 +54,8 @@ class DevMemberConfig(
             ruleViolation = mutableListOf(),
             profileImage = null
         )
-        memberRepository.save(councillor)
+        if(!memberRepository.existMemberByEmail(councillor.email))
+            memberRepository.save(councillor)
 
         val man = Member(
             memberName = "남성유저",
@@ -64,7 +67,8 @@ class DevMemberConfig(
             ruleViolation = mutableListOf(),
             profileImage = null
         )
-        memberRepository.save(man)
+        if(!memberRepository.existMemberByEmail(man.email))
+            memberRepository.save(man)
 
         val woman = Member(
             memberName = "여성유저",
@@ -76,6 +80,7 @@ class DevMemberConfig(
             ruleViolation = mutableListOf(),
             profileImage = null
         )
-        memberRepository.save(woman)
+        if(!memberRepository.existMemberByEmail(woman.email))
+            memberRepository.save(woman)
     }
 }
