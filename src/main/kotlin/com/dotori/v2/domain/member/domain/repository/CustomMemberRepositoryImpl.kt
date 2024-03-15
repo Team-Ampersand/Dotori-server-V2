@@ -2,6 +2,8 @@ package com.dotori.v2.domain.member.domain.repository
 
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.entity.QMember.member
+import com.dotori.v2.domain.member.domain.repository.projection.QSearchMemberProjection
+import com.dotori.v2.domain.member.domain.repository.projection.SearchMemberProjection
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
@@ -17,10 +19,22 @@ class CustomMemberRepositoryImpl(
     private val queryFactory: JPAQueryFactory
 ) : CustomMemberRepository {
 
-    override fun search(searchRequestDto: SearchRequestDto): List<Member> {
+     override fun search(searchRequestDto: SearchRequestDto): List<SearchMemberProjection> {
         val stuNum = "${searchRequestDto.grade ?: ""}${searchRequestDto.classNum ?: ""}"
 
-        return queryFactory.selectFrom(member)
+        return queryFactory.select(
+                QSearchMemberProjection(
+                    member.id,
+                    member.memberName,
+                    member.stuNum,
+                    member.gender,
+                    member.roles[0],
+                    member.selfStudyStatus,
+                    member.profileImage,
+                    member.email
+                )
+            )
+            .from(member)
             .where(
                 nameLike(searchRequestDto.name),
                 stuNumLike(stuNum),
@@ -56,18 +70,18 @@ class CustomMemberRepositoryImpl(
     }
 
     private fun nameLike(name: String?): BooleanExpression? =
-        if(hasText(name)) member.memberName.like("${name}%") else null
+        if (hasText(name)) member.memberName.like("${name}%") else null
 
     private fun genderEq(gender: String?): BooleanExpression? =
-        if(hasText(gender)) member.gender.eq(Gender.valueOf(gender!!)) else null
+        if (hasText(gender)) member.gender.eq(Gender.valueOf(gender!!)) else null
 
     private fun stuNumLike(stuNum: String): BooleanExpression? =
-        if(hasText(stuNum)) member.stuNum.like("${stuNum}%") else null
+        if (hasText(stuNum)) member.stuNum.like("${stuNum}%") else null
 
     private fun roleEq(role: String?): BooleanExpression? =
-        if(hasText(role)) member.roles.any().eq(Role.valueOf(role!!)) else null
+        if (hasText(role)) member.roles.any().eq(Role.valueOf(role!!)) else null
 
     private fun selfStudyStatusEq(selfStudyStatus: SelfStudyStatus?): BooleanExpression? =
-        if(selfStudyStatus != null) member.selfStudyStatus.eq(selfStudyStatus) else null
+        if (selfStudyStatus != null) member.selfStudyStatus.eq(selfStudyStatus) else null
 
 }
