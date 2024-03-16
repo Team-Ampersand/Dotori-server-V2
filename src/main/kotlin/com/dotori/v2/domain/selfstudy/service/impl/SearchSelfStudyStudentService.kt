@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = true, rollbackFor = [Exception::class])
-class GetSelfStudyByStuNumAndNameServiceImpl(
+class SearchSelfStudyStudentService(
     private val memberRepository: MemberRepository,
     private val selfStudyRepository: SelfStudyRepository
 ) : GetSelfStudyByStuNumAndNameService {
