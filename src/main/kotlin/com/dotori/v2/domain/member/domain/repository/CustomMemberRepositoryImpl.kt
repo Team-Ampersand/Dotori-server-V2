@@ -1,6 +1,5 @@
 package com.dotori.v2.domain.member.domain.repository
 
-import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.entity.QMember.member
 import com.dotori.v2.domain.member.domain.repository.projection.QSearchMemberProjection
 import com.dotori.v2.domain.member.domain.repository.projection.QSearchSelfStudyProjection
@@ -22,8 +21,6 @@ class CustomMemberRepositoryImpl(
 ) : CustomMemberRepository {
 
     override fun search(searchRequestDto: SearchRequestDto): List<SearchMemberProjection> {
-        val stuNum = "${searchRequestDto.grade ?: ""}${searchRequestDto.classNum ?: ""}"
-
         return queryFactory.select(
             QSearchMemberProjection(
                 member.id,
@@ -38,8 +35,9 @@ class CustomMemberRepositoryImpl(
         )
             .from(member)
             .where(
+                gradeEq(searchRequestDto.grade),
+                classNumEq(searchRequestDto.classNum),
                 nameLike(searchRequestDto.name),
-                stuNumLike(stuNum),
                 genderEq(searchRequestDto.gender),
                 roleEq(searchRequestDto.role),
                 selfStudyStatusEq(searchRequestDto.selfStudyStatus)
@@ -49,8 +47,6 @@ class CustomMemberRepositoryImpl(
     }
 
     override fun searchSelfStudyMember(selfStudySearchReqDto: SelfStudySearchReqDto): List<SearchSelfStudyProjection> {
-        val stuNum = "${selfStudySearchReqDto.grade ?: ""}${selfStudySearchReqDto.classNum ?: ""}"
-
         return queryFactory.select(
             QSearchSelfStudyProjection(
                 member.id,
@@ -63,8 +59,9 @@ class CustomMemberRepositoryImpl(
         )
             .from(member)
             .where(
+                gradeEq(selfStudySearchReqDto.grade),
+                classNumEq(selfStudySearchReqDto.classNum),
                 nameLike(selfStudySearchReqDto.name),
-                stuNumLike(stuNum),
                 genderEq(selfStudySearchReqDto.gender)
             )
             .orderBy(member.stuNum.asc())
@@ -87,8 +84,11 @@ class CustomMemberRepositoryImpl(
     private fun genderEq(gender: String?): BooleanExpression? =
         if (hasText(gender)) member.gender.eq(Gender.valueOf(gender!!)) else null
 
-    private fun stuNumLike(stuNum: String): BooleanExpression? =
-        if (hasText(stuNum)) member.stuNum.like("${stuNum}%") else null
+    private fun gradeEq(grade: String?): BooleanExpression? =
+        if(hasText(grade)) member.stuNum.startsWith(grade) else null
+
+    private fun classNumEq(classNum: String?): BooleanExpression? =
+        if(hasText(classNum)) member.stuNum.substring(1,2).eq(classNum) else null
 
     private fun roleEq(role: String?): BooleanExpression? =
         if (hasText(role)) member.roles.any().eq(Role.valueOf(role!!)) else null
