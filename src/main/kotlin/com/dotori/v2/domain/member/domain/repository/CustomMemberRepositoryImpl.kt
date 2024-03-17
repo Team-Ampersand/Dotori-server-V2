@@ -1,7 +1,10 @@
 package com.dotori.v2.domain.member.domain.repository
 
-import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.entity.QMember.member
+import com.dotori.v2.domain.member.domain.repository.projection.QSearchMemberProjection
+import com.dotori.v2.domain.member.domain.repository.projection.QSearchSelfStudyProjection
+import com.dotori.v2.domain.member.domain.repository.projection.SearchMemberProjection
+import com.dotori.v2.domain.member.domain.repository.projection.SearchSelfStudyProjection
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
@@ -17,8 +20,20 @@ class CustomMemberRepositoryImpl(
     private val queryFactory: JPAQueryFactory
 ) : CustomMemberRepository {
 
-    override fun search(searchRequestDto: SearchRequestDto): List<Member> {
-        return queryFactory.selectFrom(member)
+    override fun search(searchRequestDto: SearchRequestDto): List<SearchMemberProjection> {
+        return queryFactory.select(
+            QSearchMemberProjection(
+                member.id,
+                member.memberName,
+                member.stuNum,
+                member.gender,
+                member.roles[0],
+                member.selfStudyStatus,
+                member.profileImage,
+                member.email
+            )
+        )
+            .from(member)
             .where(
                 gradeEq(searchRequestDto.grade),
                 classNumEq(searchRequestDto.classNum),
@@ -31,8 +46,18 @@ class CustomMemberRepositoryImpl(
             .fetch()
     }
 
-    override fun searchSelfStudyMember(selfStudySearchReqDto: SelfStudySearchReqDto): List<Member> {
-        return queryFactory.selectFrom(member)
+    override fun searchSelfStudyMember(selfStudySearchReqDto: SelfStudySearchReqDto): List<SearchSelfStudyProjection> {
+        return queryFactory.select(
+            QSearchSelfStudyProjection(
+                member.id,
+                member.memberName,
+                member.stuNum,
+                member.gender,
+                member.selfStudyStatus,
+                member.profileImage
+            )
+        )
+            .from(member)
             .where(
                 gradeEq(selfStudySearchReqDto.grade),
                 classNumEq(selfStudySearchReqDto.classNum),
