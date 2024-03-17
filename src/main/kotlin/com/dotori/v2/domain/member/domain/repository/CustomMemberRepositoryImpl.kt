@@ -79,10 +79,10 @@ class CustomMemberRepositoryImpl(
     }
 
     private fun nameLike(name: String?): BooleanExpression? =
-        if (hasText(name)) member.memberName.like("${name}%") else null
+        if(hasText(name)) member.memberName.like("${name}%") else null
 
     private fun genderEq(gender: String?): BooleanExpression? =
-        if (hasText(gender)) member.gender.eq(Gender.valueOf(gender!!)) else null
+        if(hasText(gender)) member.gender.eq(Gender.valueOf(gender!!)) else null
 
     private fun gradeEq(grade: String?): BooleanExpression? =
         if(hasText(grade)) member.stuNum.startsWith(grade) else null
@@ -91,9 +91,9 @@ class CustomMemberRepositoryImpl(
         if(hasText(classNum)) member.stuNum.substring(1,2).eq(classNum) else null
 
     private fun roleEq(role: String?): BooleanExpression? =
-        if (hasText(role)) member.roles.any().eq(Role.valueOf(role!!)) else null
+        if(hasText(role)) member.roles.any().eq(Role.valueOf(role!!)) else null
 
     private fun selfStudyStatusEq(selfStudyStatus: SelfStudyStatus?): BooleanExpression? =
-        if (selfStudyStatus != null) member.selfStudyStatus.eq(selfStudyStatus) else null
+        if(selfStudyStatus != null) member.selfStudyStatus.eq(selfStudyStatus) else null
 
 }
