@@ -12,5 +12,13 @@ data class SelfStudyMemberResDto(
     val selfStudyCheck: Boolean,
     val profileImage: String?
 ) {
-    constructor(rank: Long, member: Member) : this(rank = rank, id = member.id, stuNum = member.stuNum, memberName = member.memberName, gender = member.gender, selfStudyCheck = member.selfStudyCheck, profileImage = member.profileImage)
+    constructor(rank: Long, member: Member): this(
+        rank = rank,
+        id = member.id,
+        stuNum = member.stuNum,
+        memberName = member.memberName,
+        gender = member.gender,
+        selfStudyCheck = member.selfStudyCheck,
+        profileImage = member.profileImage
+    )
 }
