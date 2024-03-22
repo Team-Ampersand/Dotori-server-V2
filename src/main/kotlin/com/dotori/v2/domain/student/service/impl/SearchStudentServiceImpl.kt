@@ -19,7 +19,18 @@ class SearchStudentServiceImpl(
 
         val members = memberRepository.search(searchRequestDto)
 
-        return members.map { it.toDto() }
+        return members.map {
+            SearchStudentListResDto(
+                id = it.id,
+                email = it.email,
+                memberName = it.memberName,
+                stuNum = it.stuNum,
+                gender = it.gender,
+                role = it.roles[0],
+                selfStudyStatus = it.selfStudyStatus,
+                profileImage = it.profileImage
+            )
+        }
     }
 
 }

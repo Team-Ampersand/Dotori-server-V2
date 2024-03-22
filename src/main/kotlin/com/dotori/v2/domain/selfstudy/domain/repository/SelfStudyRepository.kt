@@ -15,6 +15,6 @@ interface SelfStudyRepository : JpaRepository<SelfStudy, Long> {
     fun findAllByMemberName(@Param("memberName")memberName: String): List<Member>
     @Query("select selfStudy.member from SelfStudy selfStudy where selfStudy.member.stuNum like :stuNum%")
     fun findAllByStuNum(@Param("stuNum") stuNum: String): List<Member>
-    fun findByMemberIn(member: List<SearchSelfStudyProjection>): List<SelfStudy>
+    fun findByMemberIn(member: List<Member>): List<SelfStudy>
     fun existsByMember(member: Member): Boolean
 }
