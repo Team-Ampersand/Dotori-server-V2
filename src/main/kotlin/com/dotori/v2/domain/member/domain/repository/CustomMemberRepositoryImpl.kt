@@ -27,7 +27,7 @@ class CustomMemberRepositoryImpl(
                 member.memberName,
                 member.stuNum,
                 member.gender,
-                member.roles[0],
+                member.roles.any(),
                 member.selfStudyStatus,
                 member.profileImage,
                 member.email
