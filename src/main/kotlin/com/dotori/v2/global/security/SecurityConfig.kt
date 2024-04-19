@@ -1,5 +1,6 @@
 package com.dotori.v2.global.security
 
+import com.dotori.v2.global.error.ErrorFilter
 import com.dotori.v2.global.security.handler.CustomAccessDeniedHandler
 import com.dotori.v2.global.security.handler.CustomAuthenticationEntryPointHandler
 import com.dotori.v2.global.security.jwt.JwtExceptionFilter
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Component
 @EnableWebSecurity
 class SecurityConfig(
     private val jwtRequestFilter: JwtReqFilter,
-    private val jwtExceptionFilter: JwtExceptionFilter,
+    private val jwtExceptionFilter: JwtExceptionFilter
 ) {
     @Bean
     fun webSecurityCustomizer(): WebSecurityCustomizer {

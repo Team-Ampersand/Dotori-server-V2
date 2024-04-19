@@ -15,9 +15,9 @@ object DependencyVersions {
     const val MOCKK_VERSION = "1.13.4"
 
     // jwt
-    const val JWT_API_VERSION = "0.11.5"
-    const val JWT_IMPL_VERSION = "0.11.5"
-    const val JWT_JACKSON_VERSION= "0.11.5"
+    const val JWT_API_VERSION = "0.11.2"
+    const val JWT_IMPL_VERSION = "0.11.2"
+    const val JWT_JACKSON_VERSION= "0.11.2"
 
     // aws
     const val AWS_SES_VERSION = "1.12.347"
