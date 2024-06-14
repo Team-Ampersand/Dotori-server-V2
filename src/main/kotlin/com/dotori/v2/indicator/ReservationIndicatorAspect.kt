@@ -15,7 +15,7 @@ class ReservationIndicatorAspect(
     private val reservationIndicatorsRepository: ReservationIndicatorsRepository
 ) {
 
-    @Around("@annotation(com.dotori.v2.indicator.Indicate)")
+    @Around("@annotation(com.dotori.v2.indicator.IndicatorTarget)")
     fun indicateLatency(joinPoint: ProceedingJoinPoint): Any? {
         val currentTime = LocalDateTime.now()
         val startHour = 8
