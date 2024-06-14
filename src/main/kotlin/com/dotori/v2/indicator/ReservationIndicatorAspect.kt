@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
+import java.time.Duration
 import java.time.LocalDateTime
 
 @Aspect
@@ -22,8 +23,6 @@ class ReservationIndicatorAspect(
         val endHour = 9
 
         return if(currentTime.hour in startHour .. endHour) {
-            val startMillis = System.currentTimeMillis()
-
             val userId = SecurityContextHolder.getContext().authentication.name.toLong()
             var result: Any? = null
             var status: ResultStatus
@@ -37,7 +36,7 @@ class ReservationIndicatorAspect(
             }
 
             val endTime = LocalDateTime.now()
-            val duration = System.currentTimeMillis() - startMillis
+            val duration = Duration.between(currentTime, endTime).toMillis()
             val signatureName = joinPoint.signature.declaringType.simpleName
             reservationCategory = when (signatureName) {
                 "ApplySelfStudyService" -> {
