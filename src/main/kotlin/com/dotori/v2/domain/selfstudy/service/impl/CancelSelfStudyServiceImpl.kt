@@ -7,6 +7,7 @@ import com.dotori.v2.domain.selfstudy.util.FindSelfStudyCountUtil
 import com.dotori.v2.domain.selfstudy.util.SelfStudyCheckUtil
 import com.dotori.v2.domain.selfstudy.util.ValidDayOfWeekAndHourUtil
 import com.dotori.v2.global.util.UserUtil
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -19,6 +20,7 @@ class CancelSelfStudyServiceImpl(
     private val selfStudyRepository: SelfStudyRepository,
     private val selfStudyCheckUtil: SelfStudyCheckUtil
 ) : CancelSelfStudyService {
+    @CacheEvict(cacheNames = ["memberList"], key = "'memberList'", cacheManager = "contentCacheManager")
     override fun execute() {
         validDayOfWeekAndHourUtil.validateCancel()
 

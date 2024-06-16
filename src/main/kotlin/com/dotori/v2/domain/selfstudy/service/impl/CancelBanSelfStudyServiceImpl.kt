@@ -5,6 +5,7 @@ import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
 import com.dotori.v2.domain.selfstudy.service.CancelBanSelfStudyService
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -15,6 +16,7 @@ import java.time.LocalDateTime
 class CancelBanSelfStudyServiceImpl(
     private val memberRepository: MemberRepository
 ) : CancelBanSelfStudyService{
+    @CacheEvict(cacheNames = ["memberList"], key = "'memberList'", cacheManager = "contentCacheManager")
     override fun execute(id: Long) {
         val member = memberRepository.findByIdOrNull(id) ?: throw MemberNotFoundException()
         updateSelfStudyAndExpiredDate(member, SelfStudyStatus.CAN, null)

@@ -8,6 +8,7 @@ import com.dotori.v2.domain.selfstudy.util.SaveSelfStudyUtil
 import com.dotori.v2.domain.selfstudy.util.SelfStudyCheckUtil
 import com.dotori.v2.domain.selfstudy.util.ValidDayOfWeekAndHourUtil
 import com.dotori.v2.global.util.UserUtil
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
@@ -21,6 +22,7 @@ class ApplySelfStudyServiceImpl(
     private val saveSelfStudyUtil: SaveSelfStudyUtil,
     private val validDayOfWeekAndHourUtil: ValidDayOfWeekAndHourUtil
 ) : ApplySelfStudyService{
+    @CacheEvict(cacheNames = ["memberList"], key = "'memberList'", cacheManager = "contentCacheManager")
     override fun execute() {
         validDayOfWeekAndHourUtil.validateApply()
 
