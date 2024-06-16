@@ -5,6 +5,7 @@ import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
 import com.dotori.v2.domain.student.presentation.data.req.ModifyStudentInfoRequest
 import com.dotori.v2.domain.student.service.ModifyStudentInfoService
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -15,6 +16,7 @@ import java.util.*
 class ModifyStudentInfoServiceImpl(
     private val memberRepository: MemberRepository
 ) : ModifyStudentInfoService {
+    @CacheEvict(cacheNames = ["memberList"], key = "'memberList'", cacheManager = "contentCacheManager")
     override fun execute(modifyStudentInfoRequest: ModifyStudentInfoRequest) {
         val member = memberRepository.findByIdOrNull(modifyStudentInfoRequest.memberId) ?: throw MemberNotFoundException()
         updateMemberInfo(member, modifyStudentInfoRequest)
