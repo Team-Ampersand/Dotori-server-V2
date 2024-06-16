@@ -7,6 +7,7 @@ import com.dotori.v2.domain.email.exception.EmailAuthNotFoundException
 import com.dotori.v2.domain.email.exception.EmailNotBeenException
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.exception.MemberAlreadyException
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -18,6 +19,7 @@ class SignUpServiceImpl(
     private val memberRepository: MemberRepository,
     private val passwordEncoder: PasswordEncoder,
 ): SignUpService {
+    @CacheEvict(cacheNames = ["memberList"], key = "'memberList'", cacheManager = "contentCacheManager")
     override fun execute(signUpReqDto: SignUpReqDto) {
         val emailCertificate = emailCertificateRepository.findByEmail(signUpReqDto.email)
             ?: throw EmailAuthNotFoundException()
