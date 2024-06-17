@@ -19,45 +19,21 @@ class RedisCacheService(
     }
 
     fun updateCacheFromProfile(memberId: Long, uploadFile: String?) {
-        val cacheKey = "memberList"
-        val cachedData = getFromCache(cacheKey) as? List<FindAllStudentResDto>
-
-        if (cachedData != null) {
-            val updatedList = cachedData.map {
-                if (it.id == memberId) {
-                    FindAllStudentResDto(
-                        id = it.id,
-                        gender = it.gender,
-                        memberName = it.memberName,
-                        stuNum = it.stuNum,
-                        role = it.role,
-                        selfStudyStatus = it.selfStudyStatus,
-                        profileImage = uploadFile
-                    )
-                } else {
-                    it
-                }
-            }
-            putToCache(cacheKey,updatedList)
-        }
+        updateCache(memberId) { it.copy(profileImage = uploadFile) }
     }
 
-    fun updateCacheFromSelfStudy(memberId: Long,selfStudyStatus: SelfStudyStatus) {
+    fun updateCacheFromSelfStudy(memberId: Long, selfStudyStatus: SelfStudyStatus) {
+        updateCache(memberId) { it.copy(selfStudyStatus = selfStudyStatus) }
+    }
+
+    private fun updateCache(memberId: Long, update: (FindAllStudentResDto) -> FindAllStudentResDto) {
         val cacheKey = "memberList"
         val cachedData = getFromCache(cacheKey) as? List<FindAllStudentResDto>
 
         if (cachedData != null) {
             val updatedList = cachedData.map {
                 if (it.id == memberId) {
-                    FindAllStudentResDto(
-                        id = it.id,
-                        gender = it.gender,
-                        memberName = it.memberName,
-                        stuNum = it.stuNum,
-                        role = it.role,
-                        selfStudyStatus = selfStudyStatus,
-                        profileImage = it.profileImage
-                    )
+                    update(it)
                 } else {
                     it
                 }
