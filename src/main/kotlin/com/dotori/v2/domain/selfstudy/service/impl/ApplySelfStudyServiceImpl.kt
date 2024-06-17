@@ -8,6 +8,7 @@ import com.dotori.v2.domain.selfstudy.util.SaveSelfStudyUtil
 import com.dotori.v2.domain.selfstudy.util.SelfStudyCheckUtil
 import com.dotori.v2.domain.selfstudy.util.ValidDayOfWeekAndHourUtil
 import com.dotori.v2.global.util.UserUtil
+import com.dotori.v2.indicator.IndicatorTarget
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
@@ -21,6 +22,8 @@ class ApplySelfStudyServiceImpl(
     private val saveSelfStudyUtil: SaveSelfStudyUtil,
     private val validDayOfWeekAndHourUtil: ValidDayOfWeekAndHourUtil
 ) : ApplySelfStudyService{
+
+    @IndicatorTarget
     override fun execute() {
         validDayOfWeekAndHourUtil.validateApply()
 
