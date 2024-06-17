@@ -116,11 +116,17 @@ class ApplyMusicServiceTest : BehaviorSpec({
                 applyMusicService.execute(notValidApplyMusicReqDto, invalidDay)
             }
         }
-        `when`("이미 음악신청을 했으면") {
+        `when`("멤버의 음악 상태가 CAN인 경우") {
             val invalidDay = DayOfWeek.MONDAY
-            every { userUtil.fetchCurrentUser() } returns testMember
-            testMember.updateMusicStatus(MusicStatus.APPLIED)
-            shouldThrow<MusicAlreadyException> {
+            every { musicRepository.findMemberByMusicStatus(testMember.id) } returns MusicStatus.CAN
+            then("isCanApplyMusicStatus는 예외를 발생시키지 않아야 한다") {
+                applyMusicService.execute(applyMusicReqDto, invalidDay)
+            }
+        }
+        `when`("멤버의 음악 상태가 CANT인 경우") {
+            val invalidDay = DayOfWeek.MONDAY
+            every { musicRepository.findMemberByMusicStatus(testMember.id) } returns MusicStatus.CANT
+            then("isCanApplyMusicStatus는 예외를 발생시켜야 한다") {
                 applyMusicService.execute(applyMusicReqDto, invalidDay)
             }
         }
