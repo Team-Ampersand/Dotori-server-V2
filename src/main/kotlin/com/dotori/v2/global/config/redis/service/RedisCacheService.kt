@@ -19,14 +19,14 @@ class RedisCacheService(
     }
 
     fun updateCacheFromProfile(memberId: Long, uploadFile: String?) {
-        updateCache(memberId) { it.copy(profileImage = uploadFile) }
+        updateMemberCache(memberId) { it.copy(profileImage = uploadFile) }
     }
 
     fun updateCacheFromSelfStudy(memberId: Long, selfStudyStatus: SelfStudyStatus) {
-        updateCache(memberId) { it.copy(selfStudyStatus = selfStudyStatus) }
+        updateMemberCache(memberId) { it.copy(selfStudyStatus = selfStudyStatus) }
     }
 
-    private fun updateCache(memberId: Long, update: (FindAllStudentResDto) -> FindAllStudentResDto) {
+    private fun updateMemberCache(memberId: Long,update: (FindAllStudentResDto) -> FindAllStudentResDto) {
         val cacheKey = "memberList"
         val cachedData = getFromCache(cacheKey) as? List<FindAllStudentResDto>
 
