@@ -19,7 +19,4 @@ interface MusicRepository : JpaRepository<Music, Long> {
     @Query(value = "select * from music where created_date like :date%", nativeQuery = true)
     fun findAllByCreatedDate(@Param("date") date: LocalDate): List<Music>
 
-    @Lock(LockModeType.PESSIMISTIC_READ)
-    @Query(value = "select m.musicStatus from Member m where m.id = :member")
-    fun findMemberByMusicStatus(@Param("member") id: Long): MusicStatus
 }

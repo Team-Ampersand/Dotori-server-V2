@@ -1,6 +1,7 @@
 package com.dotori.v2.domain.music.service.impl
 
 import com.dotori.v2.domain.member.domain.entity.Member
+import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.enums.MusicStatus
 import com.dotori.v2.domain.music.domain.entity.Music
 import com.dotori.v2.domain.music.domain.repository.MusicRepository
@@ -21,7 +22,8 @@ import java.time.DayOfWeek
 class ApplyMusicServiceImpl(
     private val userUtil: UserUtil,
     private val musicRepository: MusicRepository,
-    private val youtubeService: YoutubeService
+    private val youtubeService: YoutubeService,
+    private val memberRepository: MemberRepository
 ) : ApplyMusicService {
     override fun execute(applyMusicReqDto: ApplyMusicReqDto, dayOfWeek: DayOfWeek): Music {
         validDayOfWeek(dayOfWeek)
@@ -49,7 +51,7 @@ class ApplyMusicServiceImpl(
     }
 
     private fun isCanApplyMusicStatus(member: Member) {
-        if (musicRepository.findMemberByMusicStatus(member.id) != MusicStatus.CAN) throw MusicAlreadyException()
+        if (memberRepository.findMemberByMusicStatus(member.id) != MusicStatus.CAN) throw MusicAlreadyException()
     }
 
     private fun toEntity(applyMusicDto: ApplyMusicDto, member: Member, youtubeResDto: YoutubeResDto): Music =
