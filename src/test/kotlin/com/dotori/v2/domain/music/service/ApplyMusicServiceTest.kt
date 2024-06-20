@@ -1,6 +1,7 @@
 package com.dotori.v2.domain.music.service
 
 import com.dotori.v2.domain.member.domain.entity.Member
+import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.MusicStatus
 import com.dotori.v2.domain.member.enums.Role
@@ -23,11 +24,13 @@ import io.mockk.verify
 import java.time.DayOfWeek
 import java.util.*
 
+
 class ApplyMusicServiceTest : BehaviorSpec({
     val userUtil = mockk<UserUtil>()
     val musicRepository = mockk<MusicRepository>()
     val youtubeService = mockk<YoutubeService>()
-    val applyMusicService = ApplyMusicServiceImpl(userUtil, musicRepository, youtubeService)
+    val memberRepository = mockk<MemberRepository>()
+    val applyMusicService = ApplyMusicServiceImpl(userUtil, musicRepository, youtubeService, memberRepository)
 
     given("유저가 주어지고") {
         val testMember = Member(
@@ -45,14 +48,14 @@ class ApplyMusicServiceTest : BehaviorSpec({
             url = "https://www.youtube.com/watch?v=ajeoinsweecmwcssfdkownmsoo",
             member = testMember,
             title = "test",
-            thumbnail = "test",
+            thumbnail = "test"
         )
         val testMusic2 = Music(
             id = 1L,
             url = "https://youtu.be/72vIkM5mUVM?si=DFmSX2mjpERPS0tY",
             member = testMember,
             title = "test",
-            thumbnail = "test",
+            thumbnail = "test"
         )
         val applyMusicReqDto = ApplyMusicReqDto(
             url = "https://www.youtube.com/watch?v=ajeoinsweecmwcssfdkownmsoo"
@@ -71,6 +74,7 @@ class ApplyMusicServiceTest : BehaviorSpec({
         every { userUtil.fetchCurrentUser() } returns testMember
         every { youtubeService.getYoutubeInfo(applyMusicReqDto.url) } returns youtubeResDto
         every { musicRepository.save(any()) } returns testMusic
+        every { memberRepository.findMusicStatusByMemberId(testMember.id) } returns MusicStatus.CAN
 
         `when`("applyMusicReqDto으로 요청하면") {
             val result = applyMusicService.execute(applyMusicReqDto, DayOfWeek.THURSDAY)
@@ -88,6 +92,8 @@ class ApplyMusicServiceTest : BehaviorSpec({
         every { userUtil.fetchCurrentUser() } returns testMember
         every { youtubeService.getYoutubeInfo(applyMusicReqDto2.url) } returns youtubeResDto
         every { musicRepository.save(any()) } returns testMusic2
+        every { memberRepository.findMusicStatusByMemberId(testMember.id) } returns MusicStatus.CAN
+
         testMember.updateMusicStatus(MusicStatus.CAN)
 
         `when`("applyMusicReqDto2로 요청하면") {
@@ -119,7 +125,7 @@ class ApplyMusicServiceTest : BehaviorSpec({
         `when`("이미 음악신청을 했으면") {
             val invalidDay = DayOfWeek.MONDAY
             every { userUtil.fetchCurrentUser() } returns testMember
-            testMember.updateMusicStatus(MusicStatus.APPLIED)
+            every { memberRepository.findMusicStatusByMemberId(testMember.id) } returns MusicStatus.APPLIED
             shouldThrow<MusicAlreadyException> {
                 applyMusicService.execute(applyMusicReqDto, invalidDay)
             }

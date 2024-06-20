@@ -1,8 +1,6 @@
 package com.dotori.v2.global.config
 
 import com.dotori.v2.domain.board.presentation.data.res.ListBoardResDto
-import com.fasterxml.jackson.annotation.JsonAutoDetect
-import com.fasterxml.jackson.annotation.PropertyAccessor
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -19,6 +17,8 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializationContext
 import org.springframework.data.redis.serializer.StringRedisSerializer
 import java.time.Duration
+import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
 
 @Configuration
 @EnableCaching
@@ -48,5 +48,13 @@ class RedisCacheConfig {
             .fromConnectionFactory(connectionFactory)
             .cacheDefaults(redisCacheConfiguration)
             .build()
+    }
+    @Bean
+    fun redisTemplate(redisConnectionFactory: RedisConnectionFactory): RedisTemplate<String, Any> {
+        return RedisTemplate<String, Any>().apply {
+            setConnectionFactory(redisConnectionFactory)
+            keySerializer = StringRedisSerializer()
+            valueSerializer = GenericJackson2JsonRedisSerializer()
+        }
     }
 }

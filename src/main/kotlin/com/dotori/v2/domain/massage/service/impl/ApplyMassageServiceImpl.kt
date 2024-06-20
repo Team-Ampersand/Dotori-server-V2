@@ -8,6 +8,7 @@ import com.dotori.v2.domain.massage.util.SaveMassageUtil
 import com.dotori.v2.domain.massage.util.ValidDayOfWeekAndHourMassageUtil
 import com.dotori.v2.domain.member.enums.MassageStatus
 import com.dotori.v2.global.util.UserUtil
+import com.dotori.v2.indicator.IndicatorTarget
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
@@ -21,6 +22,8 @@ class ApplyMassageServiceImpl(
     private val saveMassageUtil: SaveMassageUtil,
     private val massageCheckUtil: MassageCheckUtil,
 ) : ApplyMassageService {
+
+    @IndicatorTarget
     override fun execute() {
         validDayOfWeekAndHourMassageUtil.validateApply()
 
