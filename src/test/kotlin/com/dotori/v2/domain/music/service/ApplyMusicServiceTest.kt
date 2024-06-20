@@ -74,7 +74,7 @@ class ApplyMusicServiceTest : BehaviorSpec({
         every { userUtil.fetchCurrentUser() } returns testMember
         every { youtubeService.getYoutubeInfo(applyMusicReqDto.url) } returns youtubeResDto
         every { musicRepository.save(any()) } returns testMusic
-        every { memberRepository.findMemberByMusicStatus(testMember.id) } returns MusicStatus.CAN
+        every { memberRepository.findMusicStatusByMemberId(testMember.id) } returns MusicStatus.CAN
 
         `when`("applyMusicReqDto으로 요청하면") {
             val result = applyMusicService.execute(applyMusicReqDto, DayOfWeek.THURSDAY)
@@ -92,7 +92,7 @@ class ApplyMusicServiceTest : BehaviorSpec({
         every { userUtil.fetchCurrentUser() } returns testMember
         every { youtubeService.getYoutubeInfo(applyMusicReqDto2.url) } returns youtubeResDto
         every { musicRepository.save(any()) } returns testMusic2
-        every { memberRepository.findMemberByMusicStatus(testMember.id) } returns MusicStatus.CAN
+        every { memberRepository.findMusicStatusByMemberId(testMember.id) } returns MusicStatus.CAN
 
         testMember.updateMusicStatus(MusicStatus.CAN)
 
@@ -125,7 +125,7 @@ class ApplyMusicServiceTest : BehaviorSpec({
         `when`("이미 음악신청을 했으면") {
             val invalidDay = DayOfWeek.MONDAY
             every { userUtil.fetchCurrentUser() } returns testMember
-            every { memberRepository.findMemberByMusicStatus(testMember.id) } returns MusicStatus.APPLIED
+            every { memberRepository.findMusicStatusByMemberId(testMember.id) } returns MusicStatus.APPLIED
             shouldThrow<MusicAlreadyException> {
                 applyMusicService.execute(applyMusicReqDto, invalidDay)
             }

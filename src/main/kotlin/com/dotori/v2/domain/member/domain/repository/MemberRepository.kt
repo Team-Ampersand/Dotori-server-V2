@@ -25,5 +25,5 @@ interface MemberRepository : JpaRepository<Member, Long>, CustomMemberRepository
 
     @Lock(LockModeType.PESSIMISTIC_READ)
     @Query(value = "select m.musicStatus from Member m where m.id = :member_id")
-    fun findMemberByMusicStatus(@Param("member_id") id: Long): MusicStatus
+    fun findMusicStatusByMemberId(@Param("member_id") id: Long): MusicStatus
 }

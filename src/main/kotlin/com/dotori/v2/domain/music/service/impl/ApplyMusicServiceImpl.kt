@@ -51,7 +51,7 @@ class ApplyMusicServiceImpl(
     }
 
     private fun isCanApplyMusicStatus(member: Member) {
-        if (memberRepository.findMemberByMusicStatus(member.id) != MusicStatus.CAN) throw MusicAlreadyException()
+        if (memberRepository.findMusicStatusByMemberId(member.id) != MusicStatus.CAN) throw MusicAlreadyException()
     }
 
     private fun toEntity(applyMusicDto: ApplyMusicDto, member: Member, youtubeResDto: YoutubeResDto): Music =
