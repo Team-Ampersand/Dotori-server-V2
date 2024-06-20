@@ -10,6 +10,7 @@ import com.dotori.v2.domain.selfstudy.util.FindSelfStudyCountUtil
 import com.dotori.v2.domain.selfstudy.util.SaveSelfStudyUtil
 import com.dotori.v2.domain.selfstudy.util.SelfStudyCheckUtil
 import com.dotori.v2.domain.selfstudy.util.ValidDayOfWeekAndHourUtil
+import com.dotori.v2.global.config.redis.service.RedisCacheService
 import com.dotori.v2.global.util.UserUtil
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -26,13 +27,15 @@ class ApplySelfStudyServiceSynchronicityTest  : BehaviorSpec({
     val selfStudyCheckUtil = mockk<SelfStudyCheckUtil>()
     val saveSelfStudyUtil = mockk<SaveSelfStudyUtil>()
     val validDayOfWeekAndHourUtil = mockk<ValidDayOfWeekAndHourUtil>()
+    val redisCacheService = mockk<RedisCacheService>()
 
     val service = ApplySelfStudyServiceImpl(
         userUtil,
         findSelfStudyCountUtil,
         selfStudyCheckUtil,
         saveSelfStudyUtil,
-        validDayOfWeekAndHourUtil
+        validDayOfWeekAndHourUtil,
+        redisCacheService
     )
 
     given("유저가 주어지고") {
@@ -56,7 +59,8 @@ class ApplySelfStudyServiceSynchronicityTest  : BehaviorSpec({
             findSelfStudyCountUtil,
             selfStudyCount,
             selfStudyCheckUtil,
-            saveSelfStudyUtil
+            saveSelfStudyUtil,
+            redisCacheService
         )
 
         `when`("서비스를 실행하면") {
@@ -94,11 +98,13 @@ private fun init(
     findSelfStudyCountUtil: FindSelfStudyCountUtil,
     selfStudyCount: SelfStudyCount,
     selfStudyCheckUtil: SelfStudyCheckUtil,
-    saveSelfStudyUtil: SaveSelfStudyUtil
+    saveSelfStudyUtil: SaveSelfStudyUtil,
+    redisCacheService: RedisCacheService
 ) {
     every { validDayOfWeekAndHourUtil.validateApply() } returns Unit
     every { userUtil.fetchCurrentUser() } returns testMember
     every { findSelfStudyCountUtil.findSelfStudyCount() } returns selfStudyCount
     every { selfStudyCheckUtil.isSelfStudyStatusCan(testMember) } returns Unit
     every { saveSelfStudyUtil.save(testMember) } returns Unit
+    every { redisCacheService.updateCacheFromSelfStudy(any(), any()) } returns Unit
 }
