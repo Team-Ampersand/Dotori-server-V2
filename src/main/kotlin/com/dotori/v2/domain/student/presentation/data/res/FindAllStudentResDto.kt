@@ -12,4 +12,14 @@ data class FindAllStudentResDto(
     val role: Role,
     val selfStudyStatus: SelfStudyStatus,
     val profileImage: String?
-)
+) {
+    constructor() : this(
+        id = 0L,
+        gender = Gender.MAN,
+        memberName = "",
+        stuNum = "",
+        role = Role.ROLE_ADMIN,
+        selfStudyStatus = SelfStudyStatus.APPLIED,
+        profileImage = ""
+    )
+}

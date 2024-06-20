@@ -7,6 +7,7 @@ import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
 import com.dotori.v2.domain.selfstudy.service.impl.BanSelfStudyServiceImpl
+import com.dotori.v2.global.config.redis.service.RedisCacheService
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -17,7 +18,8 @@ import java.time.LocalDate
 
 class BanSelfStudyServiceTest : BehaviorSpec({
     val memberRepository = mockk<MemberRepository>()
-    val banSelfStudyServiceImpl = BanSelfStudyServiceImpl(memberRepository)
+    val redisCacheService = mockk<RedisCacheService>()
+    val banSelfStudyServiceImpl = BanSelfStudyServiceImpl(memberRepository, redisCacheService)
     given("유저가 주어지고") {
         val testMember = Member(
             memberName = "test",
@@ -30,6 +32,7 @@ class BanSelfStudyServiceTest : BehaviorSpec({
             profileImage = null
         )
 
+        init(testMember, memberRepository, redisCacheService)
         every { memberRepository.findByIdOrNull(testMember.id) } returns testMember
         `when`("서비스를 실행할때") {
             banSelfStudyServiceImpl.execute(testMember.id)
@@ -41,6 +44,7 @@ class BanSelfStudyServiceTest : BehaviorSpec({
             }
         }
 
+        init(testMember, memberRepository, redisCacheService)
         every { memberRepository.findByIdOrNull(testMember.id) } returns null
         `when`("해당 유저가 없다면") {
             then("MemberNotFoundException이 발생해야함") {
@@ -51,3 +55,12 @@ class BanSelfStudyServiceTest : BehaviorSpec({
         }
     }
 })
+
+private fun init(
+    testMember: Member,
+    memberRepository: MemberRepository,
+    redisCacheService: RedisCacheService
+) {
+    every { memberRepository.findByIdOrNull(testMember.id) } returns testMember
+    every { redisCacheService.updateCacheFromSelfStudy(any(), any()) } returns Unit
+}
