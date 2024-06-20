@@ -24,6 +24,6 @@ interface MemberRepository : JpaRepository<Member, Long>, CustomMemberRepository
     fun countByStuNum(stuNum: String): Int
 
     @Lock(LockModeType.PESSIMISTIC_READ)
-    @Query(value = "select m.musicStatus from Member m where m.id = :member")
-    fun findMemberByMusicStatus(@Param("member") id: Long): MusicStatus
+    @Query(value = "select m.musicStatus from Member m where m.id = :member_id")
+    fun findMemberByMusicStatus(@Param("member_id") id: Long): MusicStatus
 }
