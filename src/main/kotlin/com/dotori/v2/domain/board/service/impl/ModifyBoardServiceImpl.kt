@@ -15,14 +15,14 @@ import org.springframework.transaction.annotation.Transactional
 class ModifyBoardServiceImpl(
     private val boardRepository: BoardRepository
 ) : ModifyBoardService {
-    override fun execute(modifyBoardReqDto: ModifyBoardReqDto, boardId: Long): Board {
+
+    override fun execute(modifyBoardReqDto: ModifyBoardReqDto, boardId: Long) {
         val boardInfo: Board = boardRepository.findByIdOrNull(boardId)
             ?: throw BoardNotExistsException()
 
         toDto(modifyBoardReqDto)
             .let { boardInfo.updateBoard(title = it.title, content = it.content) }
 
-        return boardInfo
     }
 
     private fun toDto(modifyBoardReqDto: ModifyBoardReqDto): ModifyBoardDto =
@@ -30,4 +30,5 @@ class ModifyBoardServiceImpl(
             title = modifyBoardReqDto.title,
             content = modifyBoardReqDto.content
         )
+
 }
