@@ -11,6 +11,9 @@ object DependencyVersions {
     const val KOTEST_ASSERTIONS_VERSION = "5.5.5"
     const val KOTEST_JVM_VERSION = "5.5.5"
 
+    // jackson
+    const val JACKSON_DATA_BIND = "2.12.4"
+
     // mockk
     const val MOCKK_VERSION = "1.13.4"
 
