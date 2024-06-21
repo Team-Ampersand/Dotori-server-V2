@@ -35,7 +35,6 @@ class RedisCacheConfig {
             setConnectionFactory(redisConnectionFactory)
             keySerializer = StringRedisSerializer()
             valueSerializer = GenericJackson2JsonRedisSerializer(objectMapper())
-            valueSerializer = GenericJackson2JsonRedisSerializer()
         }
     }
 }
