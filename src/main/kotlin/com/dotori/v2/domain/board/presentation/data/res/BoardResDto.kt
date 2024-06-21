@@ -20,4 +20,11 @@ data class BoardResDto(
                 createdDate = board.createdDate
             )
     }
+    constructor() : this(
+        id = 0L,
+        title = "",
+        content = "",
+        role = Role.ROLE_MEMBER,
+        createdDate = LocalDateTime.now()
+    )
 }
