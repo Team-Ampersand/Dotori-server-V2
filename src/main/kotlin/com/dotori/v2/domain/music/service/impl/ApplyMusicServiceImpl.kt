@@ -9,6 +9,8 @@ import com.dotori.v2.domain.music.exception.MusicAlreadyException
 import com.dotori.v2.domain.music.exception.MusicCantRequestDateException
 import com.dotori.v2.domain.music.presentation.data.dto.ApplyMusicDto
 import com.dotori.v2.domain.music.presentation.data.req.ApplyMusicReqDto
+import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
+import com.dotori.v2.domain.music.presentation.data.res.MusicResDto
 import com.dotori.v2.domain.music.service.ApplyMusicService
 import com.dotori.v2.domain.student.presentation.data.req.ModifyStudentInfoRequest
 import com.dotori.v2.domain.student.presentation.data.res.FindAllStudentResDto
@@ -30,6 +32,8 @@ class ApplyMusicServiceImpl(
     private val redisCacheService: RedisCacheService
 ) : ApplyMusicService {
 
+    val CACHE_KEY = "musicList"
+
     override fun execute(applyMusicReqDto: ApplyMusicReqDto, dayOfWeek: DayOfWeek): Music {
         validDayOfWeek(dayOfWeek)
 
@@ -41,6 +45,7 @@ class ApplyMusicServiceImpl(
         val music: Music = toDto(applyMusicReqDto)
             .let { musicRepository.save(toEntity(it, memberInfo, youtubeInfo)) }
         memberInfo.updateMusicStatus(MusicStatus.APPLIED)
+        updateCache(music)
 
         return music
     }
@@ -48,6 +53,18 @@ class ApplyMusicServiceImpl(
     private fun toDto(applyMusicReqDto: ApplyMusicReqDto): ApplyMusicDto =
         ApplyMusicDto(
             url = applyMusicReqDto.url
+        )
+
+    private fun toDto(music: Music): MusicResDto =
+        MusicResDto(
+            id = music.id,
+            url = music.url,
+            title = music.title,
+            thumbnail = music.thumbnail,
+            username = music.member.memberName,
+            email = music.member.email,
+            createdTime = music.createdDate,
+            stuNum = music.member.stuNum
         )
 
     private fun validDayOfWeek(dayOfWeek: DayOfWeek) {
@@ -66,4 +83,15 @@ class ApplyMusicServiceImpl(
             title = youtubeResDto.title,
             thumbnail = youtubeResDto.thumbnail
         )
+
+    private fun updateCache(music: Music) {
+        val cachedData = redisCacheService.getFromCache(CACHE_KEY) as? MusicListResDto
+
+        if(cachedData != null) {
+            val content = cachedData.content.toMutableList()
+            content.add(toDto(music))
+            val updatedData = MusicListResDto(content)
+            redisCacheService.putToCache(CACHE_KEY, updatedData)
+        }
+    }
 }
