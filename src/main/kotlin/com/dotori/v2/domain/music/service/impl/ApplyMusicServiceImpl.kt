@@ -10,6 +10,9 @@ import com.dotori.v2.domain.music.exception.MusicCantRequestDateException
 import com.dotori.v2.domain.music.presentation.data.dto.ApplyMusicDto
 import com.dotori.v2.domain.music.presentation.data.req.ApplyMusicReqDto
 import com.dotori.v2.domain.music.service.ApplyMusicService
+import com.dotori.v2.domain.student.presentation.data.req.ModifyStudentInfoRequest
+import com.dotori.v2.domain.student.presentation.data.res.FindAllStudentResDto
+import com.dotori.v2.global.config.redis.service.RedisCacheService
 import com.dotori.v2.global.thirdparty.youtube.service.YoutubeService
 import com.dotori.v2.global.thirdparty.youtube.data.res.YoutubeResDto
 import com.dotori.v2.global.util.UserUtil
@@ -23,8 +26,10 @@ class ApplyMusicServiceImpl(
     private val userUtil: UserUtil,
     private val musicRepository: MusicRepository,
     private val youtubeService: YoutubeService,
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
+    private val redisCacheService: RedisCacheService
 ) : ApplyMusicService {
+
     override fun execute(applyMusicReqDto: ApplyMusicReqDto, dayOfWeek: DayOfWeek): Music {
         validDayOfWeek(dayOfWeek)
 
