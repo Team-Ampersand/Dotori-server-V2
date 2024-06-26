@@ -8,6 +8,7 @@ import com.dotori.v2.domain.board.presentation.data.req.ModifyBoardReqDto
 import com.dotori.v2.domain.board.presentation.data.res.BoardResDto
 import com.dotori.v2.domain.board.presentation.data.res.ListBoardResDto
 import com.dotori.v2.domain.board.service.ModifyBoardService
+import com.dotori.v2.global.config.redis.properties.CacheKeyProperties
 import com.dotori.v2.global.config.redis.service.RedisCacheService
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -17,7 +18,8 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(rollbackFor = [Exception::class])
 class ModifyBoardServiceImpl(
     private val boardRepository: BoardRepository,
-    private val redisCacheService: RedisCacheService
+    private val redisCacheService: RedisCacheService,
+    private val cacheKeyProperties: CacheKeyProperties
 ) : ModifyBoardService {
 
     override fun execute(modifyBoardReqDto: ModifyBoardReqDto, boardId: Long) {
@@ -31,8 +33,7 @@ class ModifyBoardServiceImpl(
 
     }
     private fun updateBoardCache(board: Board) {
-        val cacheKey = "boardList"
-        val cachedData = redisCacheService.getFromCache(cacheKey) as? ListBoardResDto
+        val cachedData = redisCacheService.getFromCache(cacheKeyProperties.boardKey) as? ListBoardResDto
 
         if (cachedData != null) {
             val updatedList = cachedData.boardList.map {
@@ -45,7 +46,7 @@ class ModifyBoardServiceImpl(
 
             updatedList.sortByDescending { it.id }
 
-            redisCacheService.putToCache(cacheKey, ListBoardResDto(updatedList))
+            redisCacheService.putToCache(cacheKeyProperties.boardKey, ListBoardResDto(updatedList))
         }
     }
 

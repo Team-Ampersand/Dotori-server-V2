@@ -4,6 +4,7 @@ import com.dotori.v2.domain.board.domain.repository.BoardRepository
 import com.dotori.v2.domain.board.presentation.data.res.BoardResDto
 import com.dotori.v2.domain.board.presentation.data.res.ListBoardResDto
 import com.dotori.v2.domain.board.service.GetBoardsService
+import com.dotori.v2.global.config.redis.properties.CacheKeyProperties
 import com.dotori.v2.global.config.redis.service.RedisCacheService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -12,13 +13,13 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true, rollbackFor = [Exception::class])
 class GetBoardsServiceImpl(
     private val boardRepository: BoardRepository,
-    private val redisCacheService: RedisCacheService
+    private val redisCacheService: RedisCacheService,
+    private val cacheKeyProperties: CacheKeyProperties
 ) : GetBoardsService {
 
     override fun execute(): ListBoardResDto {
-        val cacheKey = "boardList"
 
-        val cachedData = redisCacheService.getFromCache(cacheKey)
+        val cachedData = redisCacheService.getFromCache(cacheKeyProperties.boardKey)
         if (cachedData != null) {
             return cachedData as ListBoardResDto
         }
@@ -28,7 +29,7 @@ class GetBoardsServiceImpl(
 
         val listBoardResDto = ListBoardResDto(boardList)
 
-        redisCacheService.putToCache(cacheKey, listBoardResDto)
+        redisCacheService.putToCache(cacheKeyProperties.boardKey, listBoardResDto)
 
         return listBoardResDto
 
