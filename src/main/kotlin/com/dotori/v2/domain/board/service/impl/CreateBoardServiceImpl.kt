@@ -10,7 +10,6 @@ import com.dotori.v2.domain.board.service.CreateBoardService
 import com.dotori.v2.global.thirdparty.aws.s3.S3Service
 import com.dotori.v2.domain.board.util.BoardSaveUtil
 import com.dotori.v2.domain.member.domain.entity.Member
-import com.dotori.v2.global.config.redis.properties.CacheKeyProperties
 import com.dotori.v2.global.config.redis.service.RedisCacheService
 import com.dotori.v2.global.util.UserUtil
 import org.springframework.beans.factory.annotation.Value
@@ -24,12 +23,12 @@ class CreateBoardServiceImpl(
     private val userUtil: UserUtil,
     private val s3Service: S3Service,
     private val boardSaveUtil: BoardSaveUtil,
-    private val redisCacheService: RedisCacheService,
-    private val redisCacheKeyProperties: CacheKeyProperties
+    private val redisCacheService: RedisCacheService
 ) : CreateBoardService {
 
     @Value("\${cloud.aws.s3.url}")
     private val S3_ADDRESS: String? = null
+    val CACHE_KEY = "boardList"
 
     override fun execute(createBoardReqDto: CreateBoardReqDto, multipartFiles: List<MultipartFile>?): Board {
         val member: Member = userUtil.fetchCurrentUser()
@@ -55,7 +54,7 @@ class CreateBoardServiceImpl(
     }
 
     private fun updateBoardCache(board: Board) {
-        val cachedData = redisCacheService.getFromCache(redisCacheKeyProperties.boardKey) as? ListBoardResDto
+        val cachedData = redisCacheService.getFromCache(CACHE_KEY) as? ListBoardResDto
 
         if (cachedData != null) {
             val updatedList = cachedData.boardList.toMutableList().apply {
@@ -63,10 +62,10 @@ class CreateBoardServiceImpl(
             }
             updatedList.sortByDescending { it.id }
 
-            redisCacheService.putToCache(redisCacheKeyProperties.boardKey, ListBoardResDto(updatedList))
+            redisCacheService.putToCache(CACHE_KEY, ListBoardResDto(updatedList))
         } else {
             val newList = listOf(BoardResDto.of(board))
-            redisCacheService.putToCache(redisCacheKeyProperties.boardKey, ListBoardResDto(newList))
+            redisCacheService.putToCache(CACHE_KEY, ListBoardResDto(newList))
         }
     }
 

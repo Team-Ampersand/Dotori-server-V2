@@ -7,7 +7,6 @@ import com.dotori.v2.domain.board.domain.repository.BoardRepository
 import com.dotori.v2.domain.board.exception.BoardNotExistsException
 import com.dotori.v2.domain.board.presentation.data.res.ListBoardResDto
 import com.dotori.v2.domain.board.service.DeleteBoardService
-import com.dotori.v2.global.config.redis.properties.CacheKeyProperties
 import com.dotori.v2.global.config.redis.service.RedisCacheService
 import com.dotori.v2.global.thirdparty.aws.s3.S3Service
 import org.springframework.data.repository.findByIdOrNull
@@ -20,9 +19,10 @@ class DeleteBoardServiceImpl(
     private val boardRepository: BoardRepository,
     private val boardImageRepository: BoardImageRepository,
     private val s3Service: S3Service,
-    private val redisCacheService: RedisCacheService,
-    private val cacheKeyProperties: CacheKeyProperties
+    private val redisCacheService: RedisCacheService
 ) : DeleteBoardService {
+
+    val CACHE_KEY = "boardList"
 
     override fun execute(boardId: Long) {
         val boardInfo: Board = boardRepository.findByIdOrNull(boardId)
@@ -44,11 +44,11 @@ class DeleteBoardServiceImpl(
     }
 
     private fun evictBoardFromCache(boardId: Long) {
-        val cachedData = redisCacheService.getFromCache(cacheKeyProperties.boardKey) as? ListBoardResDto
+        val cachedData = redisCacheService.getFromCache(CACHE_KEY) as? ListBoardResDto
 
         if (cachedData != null) {
             val updatedList = cachedData.boardList.filterNot { it.id == boardId }
-            redisCacheService.putToCache(cacheKeyProperties.boardKey, ListBoardResDto(updatedList))
+            redisCacheService.putToCache(CACHE_KEY, ListBoardResDto(updatedList))
         }
     }
 
