@@ -15,10 +15,12 @@ class FindAllMemberServiceImpl(
     private val memberRepository: MemberRepository,
     private val redisCacheService: RedisCacheService
 ) : FindAllMemberService {
-    override fun execute(): List<FindAllStudentResDto> {
-        val cacheKey = "memberList"
 
-        val cachedData = redisCacheService.getFromCache(cacheKey)
+    val CACHE_KEY = "memberList"
+
+    override fun execute(): List<FindAllStudentResDto> {
+
+        val cachedData = redisCacheService.getFromCache(CACHE_KEY)
         if (cachedData != null) {
             return cachedData as List<FindAllStudentResDto>
         }
@@ -35,7 +37,7 @@ class FindAllMemberServiceImpl(
             )
         }
 
-        redisCacheService.putToCache(cacheKey, members)
+        redisCacheService.putToCache(CACHE_KEY, members)
 
         return members
     }

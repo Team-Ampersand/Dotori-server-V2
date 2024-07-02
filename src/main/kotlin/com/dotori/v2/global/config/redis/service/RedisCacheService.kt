@@ -7,15 +7,15 @@ import org.springframework.stereotype.Service
 
 @Service
 class RedisCacheService(
-    private val redisTemplate: RedisTemplate<String,Any>
+    private val redisTemplate: RedisTemplate<String, Any>
 ) {
 
     fun getFromCache(key: String): Any? {
         return redisTemplate.opsForValue().get(key)
     }
 
-    fun putToCache(key: String,value: Any) {
-        redisTemplate.opsForValue().set(key,value)
+    fun putToCache(key: String, value: Any) {
+        redisTemplate.opsForValue().set(key, value)
     }
 
     fun updateCacheFromProfile(memberId: Long, uploadFile: String?) {
