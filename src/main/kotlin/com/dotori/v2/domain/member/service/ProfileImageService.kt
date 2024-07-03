@@ -16,13 +16,13 @@ class ProfileImageService (
 
         validationExtension(multipartFiles)
 
-        val uploadFile: String? = s3Service.uploadSingleFile(multipartFiles)
+        val uploadFileUrl: String? = s3Service.uploadSingleFile(multipartFiles)
 
         if (isUpdate) s3Service.deleteFile(member.profileImage!!)
 
-        member.updateProfileImage(uploadFile)
+        member.updateProfileImage(uploadFileUrl)
 
-        redisCacheService.updateCacheFromProfile(member.id, uploadFile)
+        redisCacheService.updateCacheFromProfile(member.id, uploadFileUrl)
     }
 
     private fun validationExtension(multipartFiles: MultipartFile?) {
