@@ -25,7 +25,7 @@ class ProfileImageService (
         redisCacheService.updateCacheFromProfile(member.id, uploadFileUrl)
     }
 
-    private fun validationExtension(multipartFiles: MultipartFile?) {
+    private fun validateExtension(multipartFiles: MultipartFile?) {
         val acceptList = listOf("jpg", "jpeg", "png")
         val splitFile = multipartFiles?.originalFilename.toString().split(".")
         val extension = splitFile.last().lowercase()
