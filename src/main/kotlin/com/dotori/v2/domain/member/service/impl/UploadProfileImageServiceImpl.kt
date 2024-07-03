@@ -16,6 +16,6 @@ class UploadProfileImageServiceImpl(
 ): UploadProfileImageService {
     override fun execute(multipartFiles: MultipartFile?) {
         val member: Member = userUtil.fetchCurrentUser()
-        profileImageService.imageUpload(member, multipartFiles, false)
+        profileImageService.imageUpload(member, multipartFiles, isUpdate = false)
     }
 }

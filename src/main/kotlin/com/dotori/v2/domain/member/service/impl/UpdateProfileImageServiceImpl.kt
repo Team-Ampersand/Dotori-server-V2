@@ -16,6 +16,6 @@ class UpdateProfileImageServiceImpl(
 ): UpdateProfileImageService {
     override fun execute(multipartFiles: MultipartFile?) {
         val member: Member = userUtil.fetchCurrentUser()
-        profileImageService.imageUpload(member, multipartFiles, true)
+        profileImageService.imageUpload(member, multipartFiles, isUpdate = true)
     }
 }
