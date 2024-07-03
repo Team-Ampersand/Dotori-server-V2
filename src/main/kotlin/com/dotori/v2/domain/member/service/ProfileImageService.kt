@@ -14,7 +14,7 @@ class ProfileImageService (
 ) {
     fun imageUpload(member: Member, multipartFiles: MultipartFile?, isUpdate: Boolean) {
 
-        validationExtension(multipartFiles)
+        validateExtension(multipartFiles)
 
         val uploadFileUrl: String? = s3Service.uploadSingleFile(multipartFiles)
 
