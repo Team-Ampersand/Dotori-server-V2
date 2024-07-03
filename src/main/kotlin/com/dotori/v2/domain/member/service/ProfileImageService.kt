@@ -12,7 +12,7 @@ class ProfileImageService (
     private val s3Service: S3Service,
     private val redisCacheService: RedisCacheService
 ) {
-    fun imageUpload(member: Member, multipartFiles: MultipartFile?, isUpdate: Boolean) {
+    fun imageUpload(member: Member, multipartFiles: MultipartFile?, isUpdate: Boolean = false) {
 
         validateExtension(multipartFiles)
 
