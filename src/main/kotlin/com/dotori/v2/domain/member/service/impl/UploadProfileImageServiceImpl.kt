@@ -2,6 +2,7 @@ package com.dotori.v2.domain.member.service.impl
 
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.exception.NotAcceptImgExtensionException
+import com.dotori.v2.domain.member.service.ProfileImageService
 import com.dotori.v2.domain.member.service.UploadProfileImageService
 import com.dotori.v2.global.config.redis.service.RedisCacheService
 import com.dotori.v2.global.thirdparty.aws.s3.S3Service
@@ -16,20 +17,9 @@ class UploadProfileImageServiceImpl(
     private val userUtil: UserUtil,
     private val s3Service: S3Service,
     private val redisCacheService: RedisCacheService
-): UploadProfileImageService {
+): ProfileImageService(), UploadProfileImageService {
     override fun execute(multipartFiles: MultipartFile?) {
-
-        val acceptList = listOf("jpg", "jpeg", "png")
-        val splitFile = multipartFiles?.originalFilename.toString().split(".")
-        val extension = splitFile.last().lowercase()
-
-        if (acceptList.none { it == extension })
-            throw NotAcceptImgExtensionException()
-
         val member: Member = userUtil.fetchCurrentUser()
-        var uploadFile: String? = s3Service.uploadSingleFile(multipartFiles)
-        member.updateProfileImage(uploadFile)
-
-        redisCacheService.updateCacheFromProfile(member.id, uploadFile)
+        imageUpload(member, multipartFiles, s3Service, redisCacheService,false);
     }
 }
