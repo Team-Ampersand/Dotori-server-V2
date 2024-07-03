@@ -4,14 +4,15 @@ import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.exception.NotAcceptImgExtensionException
 import com.dotori.v2.global.config.redis.service.RedisCacheService
 import com.dotori.v2.global.thirdparty.aws.s3.S3Service
+import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 
-abstract class ProfileImageService {
-    fun imageUpload(member: Member,
-                    multipartFiles: MultipartFile?,
-                    s3Service: S3Service,
-                    redisCacheService: RedisCacheService,
-                    isUpdate: Boolean) {
+@Service
+class ProfileImageService (
+    private val s3Service: S3Service,
+    private val redisCacheService: RedisCacheService
+) {
+    fun imageUpload(member: Member, multipartFiles: MultipartFile?, isUpdate: Boolean) {
 
         validationExtension(multipartFiles)
 
