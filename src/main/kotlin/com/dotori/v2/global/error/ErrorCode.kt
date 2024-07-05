@@ -9,6 +9,7 @@ enum class ErrorCode(
     // *** SERVER ERROR ***
     UNKNOWN_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "알 수 없는 에러입니다."),
     EMAIL_SEND_FAIL(HttpStatus.INTERNAL_SERVER_ERROR.value(), "이메일 발송에 실패하였습니다"),
+    BAD_REQUEST(HttpStatus.BAD_REQUEST.value(), "Bad Request"),
 
     // *** MASSAGE ***
     MASSAGE_ALREADY(HttpStatus.CONFLICT.value(), "이미 안마의자 신청을 신청하신 회원입니다."),
