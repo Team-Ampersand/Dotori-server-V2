@@ -1,6 +1,7 @@
 package com.dotori.v2.domain.music.service.impl
 
 import com.dotori.v2.domain.member.domain.entity.Member
+import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.enums.MusicStatus
 import com.dotori.v2.domain.music.domain.entity.Music
 import com.dotori.v2.domain.music.domain.repository.MusicRepository
@@ -8,7 +9,12 @@ import com.dotori.v2.domain.music.exception.MusicAlreadyException
 import com.dotori.v2.domain.music.exception.MusicCantRequestDateException
 import com.dotori.v2.domain.music.presentation.data.dto.ApplyMusicDto
 import com.dotori.v2.domain.music.presentation.data.req.ApplyMusicReqDto
+import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
+import com.dotori.v2.domain.music.presentation.data.res.MusicResDto
 import com.dotori.v2.domain.music.service.ApplyMusicService
+import com.dotori.v2.domain.student.presentation.data.req.ModifyStudentInfoRequest
+import com.dotori.v2.domain.student.presentation.data.res.FindAllStudentResDto
+import com.dotori.v2.global.config.redis.service.RedisCacheService
 import com.dotori.v2.global.thirdparty.youtube.service.YoutubeService
 import com.dotori.v2.global.thirdparty.youtube.data.res.YoutubeResDto
 import com.dotori.v2.global.util.UserUtil
@@ -21,8 +27,13 @@ import java.time.DayOfWeek
 class ApplyMusicServiceImpl(
     private val userUtil: UserUtil,
     private val musicRepository: MusicRepository,
-    private val youtubeService: YoutubeService
+    private val youtubeService: YoutubeService,
+    private val memberRepository: MemberRepository,
+    private val redisCacheService: RedisCacheService
 ) : ApplyMusicService {
+
+    val CACHE_KEY = "musicList"
+
     override fun execute(applyMusicReqDto: ApplyMusicReqDto, dayOfWeek: DayOfWeek): Music {
         validDayOfWeek(dayOfWeek)
 
@@ -34,6 +45,7 @@ class ApplyMusicServiceImpl(
         val music: Music = toDto(applyMusicReqDto)
             .let { musicRepository.save(toEntity(it, memberInfo, youtubeInfo)) }
         memberInfo.updateMusicStatus(MusicStatus.APPLIED)
+        updateCache(music)
 
         return music
     }
@@ -43,13 +55,25 @@ class ApplyMusicServiceImpl(
             url = applyMusicReqDto.url
         )
 
+    private fun toDto(music: Music): MusicResDto =
+        MusicResDto(
+            id = music.id,
+            url = music.url,
+            title = music.title,
+            thumbnail = music.thumbnail,
+            username = music.member.memberName,
+            email = music.member.email,
+            createdTime = music.createdDate,
+            stuNum = music.member.stuNum
+        )
+
     private fun validDayOfWeek(dayOfWeek: DayOfWeek) {
         if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY)
             throw MusicCantRequestDateException()
     }
 
     private fun isCanApplyMusicStatus(member: Member) {
-        if (member.musicStatus != MusicStatus.CAN) throw MusicAlreadyException()
+        if (memberRepository.findMusicStatusByMemberId(member.id) != MusicStatus.CAN) throw MusicAlreadyException()
     }
 
     private fun toEntity(applyMusicDto: ApplyMusicDto, member: Member, youtubeResDto: YoutubeResDto): Music =
@@ -59,4 +83,15 @@ class ApplyMusicServiceImpl(
             title = youtubeResDto.title,
             thumbnail = youtubeResDto.thumbnail
         )
+
+    private fun updateCache(music: Music) {
+        val cachedData = redisCacheService.getFromCache(CACHE_KEY) as? MusicListResDto
+
+        if(cachedData != null) {
+            val content = cachedData.content.toMutableList()
+            content.add(toDto(music))
+            val updatedData = MusicListResDto(content)
+            redisCacheService.putToCache(CACHE_KEY, updatedData)
+        }
+    }
 }

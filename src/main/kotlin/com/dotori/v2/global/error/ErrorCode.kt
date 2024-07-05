@@ -42,6 +42,7 @@ enum class ErrorCode(
     MEMBER_EMAIL_HAS_NOT_AUTH_KEY(HttpStatus.NOT_FOUND.value(), "인증번호가 존재 하지 않습니다"),
     MEMBER_EMAIL_HAS_NOT_BEEN_CERTIFICATE(HttpStatus.ACCEPTED.value(), "이메일 인증이 되지않았습니다."),
     MEMBER_NOT_SAME(HttpStatus.UNAUTHORIZED.value(), "유저가 일치하지 않습니다."),
+    MEMBER_PROFILE_IMG_NOT_ACCEPT_EXTENSION(HttpStatus.BAD_REQUEST.value(), "지원하지 않는 프로필 사진 확장자 입니다."),
 
 
     // *** SELF STUDY ***

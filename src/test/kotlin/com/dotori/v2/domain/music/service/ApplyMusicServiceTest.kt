@@ -1,6 +1,7 @@
 package com.dotori.v2.domain.music.service
 
 import com.dotori.v2.domain.member.domain.entity.Member
+import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.enums.Gender
 import com.dotori.v2.domain.member.enums.MusicStatus
 import com.dotori.v2.domain.member.enums.Role
@@ -9,7 +10,10 @@ import com.dotori.v2.domain.music.domain.repository.MusicRepository
 import com.dotori.v2.domain.music.exception.MusicAlreadyException
 import com.dotori.v2.domain.music.exception.MusicCantRequestDateException
 import com.dotori.v2.domain.music.presentation.data.req.ApplyMusicReqDto
+import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
+import com.dotori.v2.domain.music.presentation.data.res.MusicResDto
 import com.dotori.v2.domain.music.service.impl.ApplyMusicServiceImpl
+import com.dotori.v2.global.config.redis.service.RedisCacheService
 import com.dotori.v2.global.thirdparty.youtube.data.res.YoutubeResDto
 import com.dotori.v2.global.thirdparty.youtube.exception.NotValidUrlException
 import com.dotori.v2.global.thirdparty.youtube.service.YoutubeService
@@ -23,11 +27,14 @@ import io.mockk.verify
 import java.time.DayOfWeek
 import java.util.*
 
+
 class ApplyMusicServiceTest : BehaviorSpec({
     val userUtil = mockk<UserUtil>()
     val musicRepository = mockk<MusicRepository>()
     val youtubeService = mockk<YoutubeService>()
-    val applyMusicService = ApplyMusicServiceImpl(userUtil, musicRepository, youtubeService)
+    val memberRepository = mockk<MemberRepository>()
+    val redisCacheService = mockk<RedisCacheService>()
+    val applyMusicService = ApplyMusicServiceImpl(userUtil, musicRepository, youtubeService, memberRepository, redisCacheService)
 
     given("유저가 주어지고") {
         val testMember = Member(
@@ -45,14 +52,14 @@ class ApplyMusicServiceTest : BehaviorSpec({
             url = "https://www.youtube.com/watch?v=ajeoinsweecmwcssfdkownmsoo",
             member = testMember,
             title = "test",
-            thumbnail = "test",
+            thumbnail = "test"
         )
         val testMusic2 = Music(
             id = 1L,
             url = "https://youtu.be/72vIkM5mUVM?si=DFmSX2mjpERPS0tY",
             member = testMember,
             title = "test",
-            thumbnail = "test",
+            thumbnail = "test"
         )
         val applyMusicReqDto = ApplyMusicReqDto(
             url = "https://www.youtube.com/watch?v=ajeoinsweecmwcssfdkownmsoo"
@@ -67,13 +74,18 @@ class ApplyMusicServiceTest : BehaviorSpec({
             title = "test",
             thumbnail = "test"
         )
+        val musicListResDto = MusicListResDto(mutableListOf())
 
         every { userUtil.fetchCurrentUser() } returns testMember
         every { youtubeService.getYoutubeInfo(applyMusicReqDto.url) } returns youtubeResDto
         every { musicRepository.save(any()) } returns testMusic
+        every { memberRepository.findMusicStatusByMemberId(testMember.id) } returns MusicStatus.CAN
+        every { redisCacheService.getFromCache(any()) } returns musicListResDto
+        every { redisCacheService.putToCache(any(), any()) } answers { nothing }
 
         `when`("applyMusicReqDto으로 요청하면") {
             val result = applyMusicService.execute(applyMusicReqDto, DayOfWeek.THURSDAY)
+
             then("save가 실행되어야함") {
                 verify(exactly = 1) { musicRepository.save(any()) }
             }
@@ -88,10 +100,15 @@ class ApplyMusicServiceTest : BehaviorSpec({
         every { userUtil.fetchCurrentUser() } returns testMember
         every { youtubeService.getYoutubeInfo(applyMusicReqDto2.url) } returns youtubeResDto
         every { musicRepository.save(any()) } returns testMusic2
+        every { memberRepository.findMusicStatusByMemberId(testMember.id) } returns MusicStatus.CAN
+        every { redisCacheService.getFromCache(any()) } returns musicListResDto
+        every { redisCacheService.putToCache(any(), any()) } answers { nothing }
+
         testMember.updateMusicStatus(MusicStatus.CAN)
 
         `when`("applyMusicReqDto2로 요청하면") {
             val result = applyMusicService.execute(applyMusicReqDto2, DayOfWeek.THURSDAY)
+
             then("save가 실행되어야함") {
                 verify(exactly = 2) { musicRepository.save(any()) }
             }
@@ -119,7 +136,7 @@ class ApplyMusicServiceTest : BehaviorSpec({
         `when`("이미 음악신청을 했으면") {
             val invalidDay = DayOfWeek.MONDAY
             every { userUtil.fetchCurrentUser() } returns testMember
-            testMember.updateMusicStatus(MusicStatus.APPLIED)
+            every { memberRepository.findMusicStatusByMemberId(testMember.id) } returns MusicStatus.APPLIED
             shouldThrow<MusicAlreadyException> {
                 applyMusicService.execute(applyMusicReqDto, invalidDay)
             }

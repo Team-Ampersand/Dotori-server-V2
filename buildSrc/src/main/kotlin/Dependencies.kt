@@ -15,6 +15,7 @@ object Dependencies {
 
     // kotlin
     const val KOTLIN_JACKSON = "com.fasterxml.jackson.module:jackson-module-kotlin"
+    const val KOTLIN_JACKSON_DATABIND = "com.fasterxml.jackson.core:jackson-databind:${DependencyVersions.JACKSON_DATA_BIND}"
     const val KOTLIN_REFLECT = "org.jetbrains.kotlin:kotlin-reflect"
     const val KOTLIN_STDLIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 

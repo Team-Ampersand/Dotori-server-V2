@@ -34,6 +34,7 @@ dependencies {
 
     // kotlin
     implementation(Dependencies.KOTLIN_JACKSON)
+    implementation(Dependencies.KOTLIN_JACKSON_DATABIND)
     implementation(Dependencies.KOTLIN_REFLECT)
     implementation(Dependencies.KOTLIN_STDLIB)
     runtimeOnly(Dependencies.H2_DATABASE)

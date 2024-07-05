@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 interface MusicRepository : JpaRepository<Music, Long> {
     @Modifying
@@ -14,4 +15,7 @@ interface MusicRepository : JpaRepository<Music, Long> {
 
     @Query(value = "select * from music where created_date like :date%", nativeQuery = true)
     fun findAllByCreatedDate(@Param("date") date: LocalDate): List<Music>
+
+    fun deleteAllByCreatedDateBefore(date: LocalDateTime)
+
 }
