@@ -16,8 +16,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer
 @EnableCaching
 class RedisCacheConfig {
 
-    @Bean
-    fun objectMapper(): ObjectMapper {
+    private fun objectMapper(): ObjectMapper {
         return jacksonObjectMapper().apply {
             registerModule(JavaTimeModule())
             activateDefaultTyping(
