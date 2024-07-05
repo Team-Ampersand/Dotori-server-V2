@@ -17,24 +17,11 @@ import org.springframework.data.redis.serializer.StringRedisSerializer
 class RedisCacheConfig {
 
     @Bean
-    fun objectMapper(): ObjectMapper {
-        return jacksonObjectMapper().apply {
-            registerModule(JavaTimeModule())
-            activateDefaultTyping(
-                BasicPolymorphicTypeValidator.builder()
-                    .allowIfBaseType(Any::class.java)
-                    .build(),
-                ObjectMapper.DefaultTyping.EVERYTHING
-            )
-        }
-    }
-
-    @Bean
     fun redisTemplate(redisConnectionFactory: RedisConnectionFactory): RedisTemplate<String, Any> {
         return RedisTemplate<String, Any>().apply {
             setConnectionFactory(redisConnectionFactory)
             keySerializer = StringRedisSerializer()
-            valueSerializer = GenericJackson2JsonRedisSerializer(objectMapper())
+            valueSerializer = GenericJackson2JsonRedisSerializer(ObjectMapper())
         }
     }
 }

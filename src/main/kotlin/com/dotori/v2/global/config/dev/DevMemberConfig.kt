@@ -18,7 +18,7 @@ class DevMemberConfig(
     @PostConstruct
     fun generateMember() {
         val password = passwordEncoder.encode("string1!")!!
-        if (!memberRepository.existsById(1)) {
+        if (!memberRepository.existsByEmail("s00000@gsm.hs.kr")) {
             val admin = Member(
                 memberName = "사감선생님",
                 stuNum = "0000",
@@ -32,7 +32,7 @@ class DevMemberConfig(
             memberRepository.save(admin)
         }
 
-        if (!memberRepository.existsById(2)) {
+        if (!memberRepository.existsByEmail("s00001@gsm.hs.kr")) {
             val developer = Member(
                 memberName = "도토리개발자",
                 stuNum = "0001",
@@ -46,7 +46,7 @@ class DevMemberConfig(
             memberRepository.save(developer)
         }
 
-        if (!memberRepository.existsById(3)) {
+        if (!memberRepository.existsByEmail("s00002@gsm.hs.kr")) {
             val councillor = Member(
                 memberName = "기숙사자치위원",
                 stuNum = "0002",
@@ -60,7 +60,7 @@ class DevMemberConfig(
             memberRepository.save(councillor)
         }
 
-        if (!memberRepository.existsById(4)) {
+        if (!memberRepository.existsByEmail("s00003@gsm.hs.kr")) {
             val man = Member(
                 memberName = "남성유저",
                 stuNum = "3101",
@@ -74,7 +74,7 @@ class DevMemberConfig(
             memberRepository.save(man)
         }
 
-        if (!memberRepository.existsById(5)) {
+        if (!memberRepository.existsByEmail("s00004@gsm.hs.kr")) {
             val woman = Member(
                 memberName = "여성유저",
                 stuNum = "3201",
