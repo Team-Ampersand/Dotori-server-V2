@@ -1,7 +1,7 @@
 package com.dotori.v2.domain.member.service.impl
 
 import com.dotori.v2.domain.member.domain.entity.Member
-import com.dotori.v2.domain.member.service.ProfileImageService
+import com.dotori.v2.global.util.ProfileImageService
 import com.dotori.v2.domain.member.service.UploadProfileImageService
 import com.dotori.v2.global.util.UserUtil
 import org.springframework.stereotype.Service

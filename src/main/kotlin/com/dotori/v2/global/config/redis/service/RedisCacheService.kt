@@ -4,6 +4,7 @@ import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.student.presentation.data.res.FindAllStudentResDto
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 @Service
 class RedisCacheService(
@@ -24,6 +25,13 @@ class RedisCacheService(
 
     fun updateCacheFromSelfStudy(memberId: Long, selfStudyStatus: SelfStudyStatus) {
         updateMemberCache(memberId) { it.copy(selfStudyStatus = selfStudyStatus) }
+    }
+
+    fun initCache(pattern: String) {
+        val keys = redisTemplate.keys(pattern)
+        if(keys.isNotEmpty()) {
+            redisTemplate.delete(pattern)
+        }
     }
 
     private fun updateMemberCache(memberId: Long,update: (FindAllStudentResDto) -> FindAllStudentResDto) {

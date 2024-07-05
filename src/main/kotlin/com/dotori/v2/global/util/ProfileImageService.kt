@@ -1,4 +1,4 @@
-package com.dotori.v2.domain.member.service
+package com.dotori.v2.global.util
 
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.exception.NotAcceptImgExtensionException
