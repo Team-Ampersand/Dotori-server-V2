@@ -22,8 +22,6 @@ class MusicSchedule(
     @Scheduled(cron = "0 0 0 ? * MON-FRI")
     fun weekdayMusicStatusReset() {
         musicRepository.updateMusicStatusMemberByMember()
-        redisCacheService.initCache("musicList:*")
-        log.info("init member music status")
     }
 
     @Scheduled(cron = "0 0 0 1 *")
