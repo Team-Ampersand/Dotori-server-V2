@@ -8,7 +8,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v3
@@ -40,12 +40,6 @@ jobs:
         with:
           username: ${{secrets.DOCKERHUB_USERNAME}}
           password: ${{secrets.DOCKERHUB_TOKEN}}
-
-      - name: Build the Docker image
-        run: docker build --platform linux/amd64 --build-arg DEPENDENCY=build/dependency -f DockerfileProd -t ${{secrets.DOCKERHUB_USERNAME}}/dotori .
-
-      - name: Docker Push
-        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/dotori
 
       - name: Pull Docker image
         run: sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/dotori

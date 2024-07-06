@@ -1,6 +1,9 @@
 name: Java CICD with Gradle
 
 on:
+  pull_request:
+    branches:
+      - 'develop'
   push:
     branches:
       - 'develop'
@@ -8,7 +11,7 @@ on:
 jobs:
   build:
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -20,7 +23,6 @@ jobs:
 
       - name: Create application.yml
         run: |
-          mkdir ./src/main/resources
           touch ./src/main/resources/application.yml
           echo "${{ secrets.APPLICATION_YML }}" >> ./src/main/resources/application.yml   
 
@@ -35,17 +37,14 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{secrets.DOCKERHUB_USERNAME}}
-          password: ${{secrets.DOCKERHUB_TOKEN}}
+      - name: Login Dockerhub
+        env:
+          DOCKER_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
+          DOCKER_PASSWORD: ${{secrets.DOCKERHUB_TOKEN}}
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
 
-      - name: Pull Docker image
-        run: sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev
+      - name: Build the Docker image
+        run: docker build --platform linux/amd64 --build-arg DEPENDENCY=build/dependency -f DockerfileDev -t ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev .
 
-      - name: Delete Old docker container
-        run: sudo docker rm -f dotori-dev || true
-
-      - name: Run Docker Container
-        run: sudo docker run -d -p 8080:8080 --name dotori-dev ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev
+      - name: Docker Push
+        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev
