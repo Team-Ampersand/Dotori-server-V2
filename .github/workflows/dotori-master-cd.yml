@@ -27,8 +27,11 @@ jobs:
       - name: Pull Docker image
         run: sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/dotori
 
-      - name: Delete Old docker container
-        run: sudo docker rm -f dotori || true
+      - name: Docker stop container
+        run: sudo docker stop $(sudo docker ps -q) 2>/dev/null || true
 
       - name: Run Docker Container
-        run: sudo docker run -d -p 8080:8080 --name dotori ${{secrets.DOCKERHUB_USERNAME}}/dotori
+        run: sudo docker run --name dotori --rm -d -p 8080:8080 ${{secrets.DOCKERHUB_USERNAME}}/dotori
+
+      - name: Delete old docker images
+        run: sudo docker system prune -f
