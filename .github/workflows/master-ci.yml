@@ -41,7 +41,7 @@ jobs:
         env:
           DOCKER_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
           DOCKER_PASSWORD: ${{secrets.DOCKERHUB_TOKEN}}
-        run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERUHB_TOKEN
+        run: docker login ${{secrets.DOCKERHUB_USERNAME}} -p ${{secrets.DOCKERHUB_TOKEN}}
 
       - name: Build the Docker image
         run: docker build --platform linux/amd64 --build-arg DEPENDENCY=build/dependency -f DockerfileProd -t ${{secrets.DOCKERHUB_USERNAME}}/dotori .
