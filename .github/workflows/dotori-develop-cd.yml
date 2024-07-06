@@ -28,7 +28,7 @@ jobs:
         run: sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev
 
       - name: Docker stop container
-        run: sudo docker stop $(sudo docker ps -q) 2>/dev/null || true
+        run: sudo docker stop dotori-dev 2>/dev/null || true
 
       - name: Run Docker Container
         run: sudo docker run --name dotori-dev --rm -d -p 8080:8080 ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev
