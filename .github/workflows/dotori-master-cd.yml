@@ -8,7 +8,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v3
@@ -20,6 +20,7 @@ jobs:
 
       - name: Create application.yml
         run: |
+          mkdir ./src/main/resources
           touch ./src/main/resources/application.yml
           echo "${{ secrets.APPLICATION_YML }}" >> ./src/main/resources/application.yml   
 
@@ -40,8 +41,11 @@ jobs:
           username: ${{secrets.DOCKERHUB_USERNAME}}
           password: ${{secrets.DOCKERHUB_TOKEN}}
 
-      - name: Build the Docker image
-        run: docker build --platform linux/amd64 --build-arg DEPENDENCY=build/dependency -f DockerfileProd -t ${{secrets.DOCKERHUB_USERNAME}}/dotori-prod .
+      - name: Pull Docker image
+        run: sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/dotori
 
-      - name: Docker Push
-        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/dotori-prod
+      - name: Delete Old docker container
+        run: sudo docker rm -f dotori || true
+
+      - name: Run Docker Container
+        run: sudo docker run -d -p 8080:8080 --name dotori ${{secrets.DOCKERHUB_USERNAME}}/dotori

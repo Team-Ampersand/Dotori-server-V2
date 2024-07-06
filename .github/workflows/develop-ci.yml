@@ -4,7 +4,9 @@ on:
   pull_request:
     branches:
       - 'develop'
-      - 'master'
+  push:
+    branches:
+      - 'develop'
 
 jobs:
   build:
@@ -34,3 +36,15 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
+
+      - name: Login Dockerhub
+        env:
+          DOCKER_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
+          DOCKER_PASSWORD: ${{secrets.DOCKERHUB_TOKEN}}
+        run: docker login -u ${{secrets.DOCKERHUB_USERNAME}} -p ${{secrets.DOCKERHUB_TOKEN}}
+
+      - name: Build the Docker image
+        run: docker build --platform linux/amd64 --build-arg DEPENDENCY=build/dependency -f DockerfileDev -t ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev .
+
+      - name: Docker Push
+        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev
