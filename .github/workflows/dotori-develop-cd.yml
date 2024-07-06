@@ -46,3 +46,12 @@ jobs:
 
       - name: Docker Push
         run: docker push ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev
+
+      - name: Pull Docker image
+        run: sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev
+
+      - name: Delete Old docker container
+        run: sudo docker rm -f dotori-dev || true
+
+      - name: Run Docker Container
+        run: sudo docker run -d -p 8080:8080 --name dotori-dev ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev

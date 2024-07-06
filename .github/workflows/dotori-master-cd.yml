@@ -42,7 +42,16 @@ jobs:
           password: ${{secrets.DOCKERHUB_TOKEN}}
 
       - name: Build the Docker image
-        run: docker build --platform linux/amd64 --build-arg DEPENDENCY=build/dependency -f DockerfileProd -t ${{secrets.DOCKERHUB_USERNAME}}/dotori-prod .
+        run: docker build --platform linux/amd64 --build-arg DEPENDENCY=build/dependency -f DockerfileProd -t ${{secrets.DOCKERHUB_USERNAME}}/dotori .
 
       - name: Docker Push
         run: docker push ${{secrets.DOCKERHUB_USERNAME}}/dotori
+
+      - name: Pull Docker image
+        run: sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/dotori
+
+      - name: Delete Old docker container
+        run: sudo docker rm -f dotori || true
+
+      - name: Run Docker Container
+        run: sudo docker run -d -p 8080:8080 --name dotori ${{secrets.DOCKERHUB_USERNAME}}/dotori
