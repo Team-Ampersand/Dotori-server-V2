@@ -18,8 +18,6 @@ class FindMusicsServiceImpl(
     private val redisCacheService: RedisCacheService
 ) : FindMusicsService {
 
-    val CACHE_KEY = "musicList"
-
     override fun execute(date: LocalDate): MusicListResDto {
 
         val cachedData = redisCacheService.getFromCacheMusic(date.toString())
