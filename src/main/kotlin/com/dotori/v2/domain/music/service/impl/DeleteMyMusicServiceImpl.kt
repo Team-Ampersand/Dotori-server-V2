@@ -21,7 +21,7 @@ class DeleteMyMusicServiceImpl(
     private val redisCacheService: RedisCacheService
 ) : DeleteMyMusicService {
 
-    private val CACHE_KEY = "musicList"
+    private val CACHE_KEY = "musicList:"
 
     override fun execute(musicId: Long) {
         val music: Music = musicRepository.findByIdOrNull(musicId) ?: throw MusicNotFoundException()
