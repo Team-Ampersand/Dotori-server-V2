@@ -18,6 +18,14 @@ class RedisCacheService(
         redisTemplate.opsForValue().set(key, value)
     }
 
+    fun putToCacheMusic(date: String, value: Any) {
+        redisTemplate.opsForValue().set("musicList:$date", value)
+    }
+
+    fun getFromCacheMusic(date: String): Any? {
+        return redisTemplate.opsForValue().get("musicList:$date")
+    }
+
     fun updateCacheFromProfile(memberId: Long, uploadFile: String?) {
         updateMemberCache(memberId) { it.copy(profileImage = uploadFile) }
     }
