@@ -21,7 +21,6 @@ class DeleteMyMusicServiceImpl(
     private val redisCacheService: RedisCacheService
 ) : DeleteMyMusicService {
 
-    private val CACHE_KEY = "musicList:"
 
     override fun execute(musicId: Long) {
         val music: Music = musicRepository.findByIdOrNull(musicId) ?: throw MusicNotFoundException()
@@ -30,7 +29,7 @@ class DeleteMyMusicServiceImpl(
         validMusic(music, member)
 
         musicRepository.delete(music)
-        updateCache(music.createdDate.toLocalDate().toString())
+        redisCacheService.deleteFromCache("musicList:${music.createdDate.toLocalDate()}")
         music.member.updateMusicStatus(MusicStatus.CAN)
     }
 
@@ -38,9 +37,5 @@ class DeleteMyMusicServiceImpl(
         if (music.member.id != member.id) {
             throw NotMyMusicException()
         }
-    }
-
-    private fun updateCache(date: String) {
-        redisCacheService.deleteFromCache(CACHE_KEY + date)
     }
 }
