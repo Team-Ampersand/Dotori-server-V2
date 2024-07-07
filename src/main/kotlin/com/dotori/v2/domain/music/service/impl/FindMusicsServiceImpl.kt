@@ -22,7 +22,8 @@ class FindMusicsServiceImpl(
 
     override fun execute(date: LocalDate): MusicListResDto {
 
-        val cachedData = redisCacheService.getFromCache(CACHE_KEY)
+        val cachedData = redisCacheService.getFromCacheMusic(date.toString())
+
         if(cachedData != null) {
             return cachedData as MusicListResDto
         }
@@ -33,7 +34,7 @@ class FindMusicsServiceImpl(
         )
 
         if(date.isEqual(LocalDate.now())) {
-            redisCacheService.putToCache(CACHE_KEY, response)
+            redisCacheService.putToCacheMusic(date.toString(), response)
         }
 
         return response

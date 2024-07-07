@@ -80,8 +80,8 @@ class ApplyMusicServiceTest : BehaviorSpec({
         every { youtubeService.getYoutubeInfo(applyMusicReqDto.url) } returns youtubeResDto
         every { musicRepository.save(any()) } returns testMusic
         every { memberRepository.findMusicStatusByMemberId(testMember.id) } returns MusicStatus.CAN
-        every { redisCacheService.getFromCache(any()) } returns musicListResDto
-        every { redisCacheService.putToCache(any(), any()) } answers { nothing }
+        every { redisCacheService.getFromCacheMusic(any()) } returns musicListResDto
+        every { redisCacheService.putToCacheMusic(any(), any()) } answers { nothing }
 
         `when`("applyMusicReqDto으로 요청하면") {
             val result = applyMusicService.execute(applyMusicReqDto, DayOfWeek.THURSDAY)
@@ -101,8 +101,8 @@ class ApplyMusicServiceTest : BehaviorSpec({
         every { youtubeService.getYoutubeInfo(applyMusicReqDto2.url) } returns youtubeResDto
         every { musicRepository.save(any()) } returns testMusic2
         every { memberRepository.findMusicStatusByMemberId(testMember.id) } returns MusicStatus.CAN
-        every { redisCacheService.getFromCache(any()) } returns musicListResDto
-        every { redisCacheService.putToCache(any(), any()) } answers { nothing }
+        every { redisCacheService.getFromCacheMusic(any()) } returns musicListResDto
+        every { redisCacheService.putToCacheMusic(any(), any()) } answers { nothing }
 
         testMember.updateMusicStatus(MusicStatus.CAN)
 
