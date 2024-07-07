@@ -28,8 +28,13 @@ class DeleteMyMusicServiceImpl(
 
         validMusic(music, member)
 
+        val key = "musicList:${music.createdDate.toLocalDate()}"
+
+        if(redisCacheService.getFromCache(key) != null) {
+            redisCacheService.deleteFromCache(key)
+        }
+
         musicRepository.delete(music)
-        redisCacheService.deleteFromCache("musicList:${music.createdDate.toLocalDate()}")
         music.member.updateMusicStatus(MusicStatus.CAN)
     }
 
