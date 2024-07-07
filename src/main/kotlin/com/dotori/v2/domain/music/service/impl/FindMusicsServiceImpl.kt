@@ -23,7 +23,10 @@ class FindMusicsServiceImpl(
         val cachedData = redisCacheService.getFromCacheMusic(date.toString())
 
         if(cachedData != null) {
-            return cachedData as MusicListResDto
+            val response = cachedData as MusicListResDto
+            if(response.content.isNotEmpty()) {
+                return response
+            }
         }
 
         val response = MusicListResDto(

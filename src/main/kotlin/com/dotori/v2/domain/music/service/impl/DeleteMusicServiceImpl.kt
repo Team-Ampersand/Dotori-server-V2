@@ -4,6 +4,7 @@ import com.dotori.v2.domain.member.enums.MusicStatus
 import com.dotori.v2.domain.music.domain.entity.Music
 import com.dotori.v2.domain.music.domain.repository.MusicRepository
 import com.dotori.v2.domain.music.exception.MusicNotFoundException
+import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
 import com.dotori.v2.domain.music.service.DeleteMusicService
 import com.dotori.v2.global.config.redis.service.RedisCacheService
 import org.springframework.data.repository.findByIdOrNull
@@ -16,15 +17,13 @@ class DeleteMusicServiceImpl(
     private val musicRepository: MusicRepository,
     private val redisCacheService: RedisCacheService
 ) : DeleteMusicService {
+
     override fun execute(musicId: Long) {
         val music: Music = musicRepository.findByIdOrNull(musicId) ?: throw MusicNotFoundException()
 
-        val key = "musicList:${music.createdDate.toLocalDate()}"
+        val date = music.createdDate.toLocalDate().toString()
 
-        if(redisCacheService.getFromCache(key) != null) {
-            redisCacheService.deleteFromCache(key)
-        }
-
+        redisCacheService.putToCacheMusic(date, MusicListResDto(mutableListOf()))
         musicRepository.delete(music)
         music.member.updateMusicStatus(MusicStatus.CAN)
     }
