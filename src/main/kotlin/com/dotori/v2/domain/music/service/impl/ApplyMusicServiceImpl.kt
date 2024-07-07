@@ -85,13 +85,14 @@ class ApplyMusicServiceImpl(
         )
 
     private fun updateCache(music: Music) {
-        val cachedData = redisCacheService.getFromCache(CACHE_KEY) as? MusicListResDto
+        val date = music.createdDate.toLocalDate().toString()
+        val cachedData = redisCacheService.getFromCacheMusic(date) as? MusicListResDto
 
         if(cachedData != null) {
             val content = cachedData.content.toMutableList()
             content.add(toDto(music))
             val updatedData = MusicListResDto(content)
-            redisCacheService.putToCache(CACHE_KEY, updatedData)
+            redisCacheService.putToCacheMusic(date, updatedData)
         }
     }
 }
