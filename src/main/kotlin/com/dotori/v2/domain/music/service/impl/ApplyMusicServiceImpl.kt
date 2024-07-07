@@ -39,7 +39,7 @@ class ApplyMusicServiceImpl(
 
         val memberInfo: Member = userUtil.fetchCurrentUser()
 
-        // isCanApplyMusicStatus(memberInfo)
+        isCanApplyMusicStatus(memberInfo)
 
         val youtubeInfo = youtubeService.getYoutubeInfo(applyMusicReqDto.url)
         val music: Music = toDto(applyMusicReqDto)
