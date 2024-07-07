@@ -26,7 +26,7 @@ class MusicSchedule(
 
     @Scheduled(cron = "0 0 0 1 * ?")
     fun initMusic() {
-        val localDateTime = LocalDateTime.now().minus(2,ChronoUnit.MONTHS)
+        val localDateTime = LocalDateTime.now().minus(2, ChronoUnit.MONTHS)
         musicRepository.deleteAllByCreatedDateBefore(localDateTime)
         redisCacheService.initCache("musicList:*")
         log.info("delete music data schedule")
