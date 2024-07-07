@@ -19,7 +19,7 @@ class RedisCacheService(
     }
 
     fun deleteFromCache(key: String) {
-        redisTemplate.delete(key)
+        redisTemplate.opsForValue().getAndDelete(key)
     }
 
     fun putToCacheMusic(date: String, value: Any) {
