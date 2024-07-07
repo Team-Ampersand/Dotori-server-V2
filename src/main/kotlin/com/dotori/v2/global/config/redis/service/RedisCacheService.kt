@@ -18,6 +18,10 @@ class RedisCacheService(
         redisTemplate.opsForValue().set(key, value)
     }
 
+    fun deleteFromCache(key: String) {
+        redisTemplate.delete(key)
+    }
+
     fun putToCacheMusic(date: String, value: Any) {
         redisTemplate.opsForValue().set("musicList:$date", value)
     }
