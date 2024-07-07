@@ -3,7 +3,9 @@ name: Java CICD with Gradle
 on:
   pull_request:
     branches:
-      - 'develop'
+      - 'master'
+  push:
+    branches:
       - 'master'
 
 jobs:
@@ -24,13 +26,25 @@ jobs:
           touch ./src/main/resources/application.yml
           echo "${{ secrets.APPLICATION_YML }}" >> ./src/main/resources/application.yml   
 
-      - name: Create application-dev.yml
+      - name: Create application-prod.yml
         run: |
           touch ./src/main/resources/application-dev.yml
-          echo "${{ secrets.APPLICATION_DEV_YML }}" >> ./src/main/resources/application-dev.yml
+          echo "${{ secrets.APPLICATION_PROD_YML }}" >> ./src/main/resources/application-prod.yml
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
       - name: Build with Gradle
         run: ./gradlew build
+
+      - name: Login Dockerhub
+        env:
+          DOCKER_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
+          DOCKER_PASSWORD: ${{secrets.DOCKERHUB_TOKEN}}
+        run: docker login -u ${{secrets.DOCKERHUB_USERNAME}} -p ${{secrets.DOCKERHUB_TOKEN}}
+
+      - name: Build the Docker image
+        run: docker build --platform linux/amd64 --build-arg DEPENDENCY=build/dependency -f DockerfileProd -t ${{secrets.DOCKERHUB_USERNAME}}/dotori .
+
+      - name: Docker Push
+        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/dotori

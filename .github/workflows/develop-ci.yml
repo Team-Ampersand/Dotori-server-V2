@@ -1,0 +1,50 @@
+name: Java CICD with Gradle
+
+on:
+  pull_request:
+    branches:
+      - 'develop'
+  push:
+    branches:
+      - 'develop'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Create application.yml
+        run: |
+          touch ./src/main/resources/application.yml
+          echo "${{ secrets.APPLICATION_YML }}" >> ./src/main/resources/application.yml   
+
+      - name: Create application-dev.yml
+        run: |
+          touch ./src/main/resources/application-dev.yml
+          echo "${{ secrets.APPLICATION_DEV_YML }}" >> ./src/main/resources/application-dev.yml
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Login Dockerhub
+        env:
+          DOCKER_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
+          DOCKER_PASSWORD: ${{secrets.DOCKERHUB_TOKEN}}
+        run: docker login -u ${{secrets.DOCKERHUB_USERNAME}} -p ${{secrets.DOCKERHUB_TOKEN}}
+
+      - name: Build the Docker image
+        run: docker build --platform linux/amd64 --build-arg DEPENDENCY=build/dependency -f DockerfileDev -t ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev .
+
+      - name: Docker Push
+        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev

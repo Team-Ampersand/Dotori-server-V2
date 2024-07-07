@@ -37,4 +37,4 @@ test | 테스트 관련 사항이 있을 때
 
 - 버그 제보: [이슈 트래커](https://github.com/Team-Ampersand/Dotori-server-V2/issues)에 제보할 버그를 작성합니다.
 - 기능 제안: [이슈 트래커](https://github.com/Team-Ampersand/Dotori-server-V2/issues)에 제안하고 싶은 기능을 작성합니다.
-- 코드 기여: GitHub에서 코드를 Fork하고, Pull Request를 보냅니다.
+- 코드 기여: GitHub에서 코드를 Fork하고, Pull Request를 보냅니다. (issue를 create하고 assigness 배정을 받게되면 진행해주세요)
