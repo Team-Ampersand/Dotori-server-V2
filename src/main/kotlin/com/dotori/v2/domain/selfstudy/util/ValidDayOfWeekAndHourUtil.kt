@@ -21,7 +21,6 @@ class ValidDayOfWeekAndHourUtil(
      fun validateApply() {
          val currentTime = currentTime ?: LocalDateTime.now()
          val dayOfWeek = currentTime.dayOfWeek
-         val hour = currentTime.hour
 
          if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
             throw NotSelfStudyApplyDayException()
@@ -37,7 +36,6 @@ class ValidDayOfWeekAndHourUtil(
     fun validateCancel() {
         val currentTime = currentTime ?: LocalDateTime.now()
         val dayOfWeek = currentTime.dayOfWeek
-        val hour = currentTime.hour
 
         if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
             throw NotSelfStudyCancelDayException()
