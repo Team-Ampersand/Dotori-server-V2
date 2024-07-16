@@ -39,10 +39,10 @@ class ModifyStudentInfoServiceImpl(
             profileImage = member.profileImage
         )
 
-        val cachedData = redisCacheService.getFromCache("memberList") as? List<FindAllStudentResDto>
+        val cachedData = redisCacheService.getFromCache(CACHE_KEY) as? List<FindAllStudentResDto>
 
         if (cachedData != null) {
-            redisCacheService.putToCache("memberList", cachedData)
+            redisCacheService.putToCache(CACHE_KEY, cachedData)
         }
 
         memberRepository.save(newMember)
