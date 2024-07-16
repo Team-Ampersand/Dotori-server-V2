@@ -45,7 +45,7 @@ class RedisCacheService(
         }
     }
 
-    private fun updateMemberCache(memberId: Long,update: (FindAllStudentResDto) -> FindAllStudentResDto) {
+    private fun updateMemberCache(memberId: Long, update: (FindAllStudentResDto) -> FindAllStudentResDto) {
         val cacheKey = "memberList"
         val cachedData = getFromCache(cacheKey) as? List<FindAllStudentResDto>
 
