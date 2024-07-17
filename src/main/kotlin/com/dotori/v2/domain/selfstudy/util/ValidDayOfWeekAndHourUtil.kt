@@ -14,12 +14,11 @@ import java.time.LocalTime
 
 @Component
 class ValidDayOfWeekAndHourUtil(
-    private val selfStudyProperties: SelfStudyProperties,
-    private val currentTime: LocalDateTime? = null
+    private val selfStudyProperties: SelfStudyProperties
 ) {
 
     fun validateApply() {
-        val currentTime = currentTime ?: LocalDateTime.now()
+        val currentTime = LocalDateTime.now()
         val dayOfWeek = currentTime.dayOfWeek
 
         if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
@@ -35,7 +34,7 @@ class ValidDayOfWeekAndHourUtil(
     }
 
     fun validateCancel() {
-        val currentTime = currentTime ?: LocalDateTime.now()
+        val currentTime = LocalDateTime.now()
         val dayOfWeek = currentTime.dayOfWeek
 
         if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
