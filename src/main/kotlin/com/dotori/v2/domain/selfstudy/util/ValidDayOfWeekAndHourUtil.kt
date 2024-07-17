@@ -18,19 +18,20 @@ class ValidDayOfWeekAndHourUtil(
     private val currentTime: LocalDateTime? = null
 ) {
 
-     fun validateApply() {
-         val currentTime = currentTime ?: LocalDateTime.now()
-         val dayOfWeek = currentTime.dayOfWeek
+    fun validateApply() {
+        val currentTime = currentTime ?: LocalDateTime.now()
+        val dayOfWeek = currentTime.dayOfWeek
 
-         if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
+        if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
             throw NotSelfStudyApplyDayException()
 
-         val allowedTime = selfStudyProperties.allowedTime ?: throw BasicException(ErrorCode.BAD_REQUEST);
-         val allowedStartTime = LocalTime.parse(allowedTime.split("-")[0])
-         val allowedEndTime = LocalTime.parse(allowedTime.split("-")[1])
+        val allowedStartTime = selfStudyProperties.allowedStartTime?.let { LocalTime.parse(it) }
+            ?: throw BasicException(ErrorCode.UNKNOWN_ERROR)
+        val allowedEndTime = selfStudyProperties.allowedEndTime?.let { LocalTime.parse(it) }
+            ?: throw BasicException(ErrorCode.UNKNOWN_ERROR)
 
-         if (currentTime.toLocalTime().isBefore(allowedStartTime) || currentTime.toLocalTime().isAfter(allowedEndTime))
-             throw NotSelfStudyApplyHourException()
+        if (currentTime.toLocalTime().isBefore(allowedStartTime) || currentTime.toLocalTime().isAfter(allowedEndTime))
+            throw NotSelfStudyApplyHourException()
     }
 
     fun validateCancel() {
@@ -40,9 +41,10 @@ class ValidDayOfWeekAndHourUtil(
         if (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
             throw NotSelfStudyCancelDayException()
 
-        val allowedTime = selfStudyProperties.allowedTime ?: throw BasicException(ErrorCode.BAD_REQUEST);
-        val allowedStartTime = LocalTime.parse(allowedTime.split("-")[0])
-        val allowedEndTime = LocalTime.parse(allowedTime.split("-")[1])
+        val allowedStartTime = selfStudyProperties.allowedStartTime?.let { LocalTime.parse(it) }
+            ?: throw BasicException(ErrorCode.UNKNOWN_ERROR)
+        val allowedEndTime = selfStudyProperties.allowedEndTime?.let { LocalTime.parse(it) }
+            ?: throw BasicException(ErrorCode.UNKNOWN_ERROR)
 
         if (currentTime.toLocalTime().isBefore(allowedStartTime) || currentTime.toLocalTime().isAfter(allowedEndTime))
             throw NotSelfStudyCancelHourException()
