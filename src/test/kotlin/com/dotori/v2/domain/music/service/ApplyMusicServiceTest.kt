@@ -11,7 +11,6 @@ import com.dotori.v2.domain.music.exception.MusicAlreadyException
 import com.dotori.v2.domain.music.exception.MusicCantRequestDateException
 import com.dotori.v2.domain.music.presentation.data.req.ApplyMusicReqDto
 import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
-import com.dotori.v2.domain.music.presentation.data.res.MusicResDto
 import com.dotori.v2.domain.music.service.impl.ApplyMusicServiceImpl
 import com.dotori.v2.global.config.redis.service.RedisCacheService
 import com.dotori.v2.global.thirdparty.youtube.data.res.YoutubeResDto
@@ -143,3 +142,4 @@ class ApplyMusicServiceTest : BehaviorSpec({
         }
     }
 })
+
