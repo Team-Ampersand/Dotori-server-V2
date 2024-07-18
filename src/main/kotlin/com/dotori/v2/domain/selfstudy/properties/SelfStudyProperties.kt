@@ -6,6 +6,6 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 @ConfigurationProperties(prefix = "self-study")
 class SelfStudyProperties {
-    var allowedStartTime: String? = null
-    var allowedEndTime: String? = null
+    var allowedStartTime: String = "20:00"
+    var allowedEndTime: String = "20:59"
 }
