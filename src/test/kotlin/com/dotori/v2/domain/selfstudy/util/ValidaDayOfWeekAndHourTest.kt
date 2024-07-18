@@ -97,18 +97,14 @@ class ValidDayOfWeekAndHourTest : BehaviorSpec({
     }
     given("시간이 오후 8시가 아닌 날짜가 주어지면 dev 프로파일") {
         val validDayOfWeekAndHourUtil = validDayOfWeekAndHourUtil(2023, 4, 27, 19, 0, 0, "dev")
-        `when`("신청가능한지 검증할 때") {
-            then("NotSelfStudyApplyHourException이 발생해야 함") {
-                shouldThrow<NotSelfStudyApplyHourException> {
-                    validDayOfWeekAndHourUtil.validateApply()
-                }
+        `when`("신청가능한지 검증할 때"){
+            then("아무 예외도 발생하지 않아야 함") {
+                validDayOfWeekAndHourUtil.validateApply() shouldBe Unit
             }
         }
         `when`("신청취소가 가능한지 검증할 때") {
-            then("NotSelfStudyCancelHourException이 발생해야 함") {
-                shouldThrow<NotSelfStudyCancelHourException> {
-                    validDayOfWeekAndHourUtil.validateCancel()
-                }
+            then("아무 예외도 발생하지 않아야 함") {
+                validDayOfWeekAndHourUtil.validateCancel()
             }
         }
     }
