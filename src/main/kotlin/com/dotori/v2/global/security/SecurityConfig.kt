@@ -3,7 +3,6 @@ package com.dotori.v2.global.security
 import com.dotori.v2.global.error.ErrorFilter
 import com.dotori.v2.global.security.handler.CustomAccessDeniedHandler
 import com.dotori.v2.global.security.handler.CustomAuthenticationEntryPointHandler
-import com.dotori.v2.global.security.jwt.JwtExceptionFilter
 import com.dotori.v2.global.security.jwt.JwtReqFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpMethod
@@ -22,7 +21,7 @@ import org.springframework.stereotype.Component
 @EnableWebSecurity
 class SecurityConfig(
     private val jwtRequestFilter: JwtReqFilter,
-    private val jwtExceptionFilter: JwtExceptionFilter
+    private val errorFilter: ErrorFilter
 ) {
     @Bean
     fun webSecurityCustomizer(): WebSecurityCustomizer {
@@ -71,7 +70,7 @@ class SecurityConfig(
             .authenticationEntryPoint(CustomAuthenticationEntryPointHandler())
             .and()
             .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
-            .addFilterBefore(jwtExceptionFilter, JwtReqFilter::class.java)
+            .addFilterBefore(errorFilter, JwtReqFilter::class.java)
         return http.build()
     }
 
