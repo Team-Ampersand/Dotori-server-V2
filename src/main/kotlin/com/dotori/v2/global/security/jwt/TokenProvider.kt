@@ -94,21 +94,12 @@ class TokenProvider(
             .compact()
     }
 
-    private fun getTokenBody(token: String, secret: Key): Claims {
-        return try {
-            Jwts.parserBuilder()
-                .setSigningKey(secret)
-                .build()
-                .parseClaimsJws(token)
-                .body
-        } catch (e: ExpiredJwtException) {
-
-            throw TokenExpiredException()
-        } catch (e: Exception) {
-
-            throw TokenInvalidException()
-        }
-    }
+    private fun getTokenBody(token: String, secret: Key): Claims =
+        Jwts.parserBuilder()
+            .setSigningKey(secret)
+            .build()
+            .parseClaimsJws(token)
+            .body
 
     private fun getTokenSubject(token: String, secret: Key): String =
         getTokenBody(token, secret).subject
