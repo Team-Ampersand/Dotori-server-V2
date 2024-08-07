@@ -58,4 +58,12 @@ class ValidDayOfWeekAndHourUtil(
     private fun isDevProfile(): Boolean {
         return environment.activeProfiles.contains("dev")
     }
+    fun isApplyValid(): Boolean {
+        return try {
+            validateApply()
+            true
+        } catch (ex: BasicException) {
+            false
+        }
+    }
 }
