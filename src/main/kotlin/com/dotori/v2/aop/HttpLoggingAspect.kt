@@ -23,8 +23,7 @@ class HttpLoggingAspect {
     private val log = LoggerFactory.getLogger(this.javaClass.name)
 
     @Pointcut("within(@org.springframework.web.bind.annotation.RestController *)")
-    fun onRequest() {
-    }
+    fun onRequest() {}
 
     @Around("onRequest()")
     @Throws(Throwable::class)
@@ -47,24 +46,31 @@ class HttpLoggingAspect {
             val headerName = headerNames.nextElement()
             headerSet.add(headerName)
         }
+
         val code = UUID.randomUUID()
         log.info(
             "At {}#{} [Request:{}] IP: {}, Session-ID: {}, URI: {}, Params: {}, Content-Type: {}, User-Agent: {}, Headers: {}, Parameters: {}, Code: {}",
-            className,methodName,method,ip,sessionId,uri,params,contentType,userAgent,headerSet,params(proceedingJoinPoint),code
+            className, methodName, method, ip, sessionId, uri, params, contentType, userAgent, headerSet, params(proceedingJoinPoint), code
         )
         val result = proceedingJoinPoint.proceed()
         when (result) {
             is ResponseEntity<*> -> {
+                var body = result.body.toString()
+
+                if(body.length > 55) {
+                    body = body.substring(0, 55)
+                }
+
                 log.info(
                     "At {}#{} [Response:{}] IP: {}, Session-ID: {}, Headers: {}, Response: {}, Status-Code: {}, Code: {}",
-                    className,methodName,method,ip,sessionId,result.headers,result.body,result.statusCode,code
+                    className, methodName, method, ip, sessionId, result.headers, body, result.statusCode, code
                 )
             }
 
             null -> {
                 log.info(
                     "At {}#{} [Response: null] IP: {}, Session-ID: {}, Code: {}",
-                    className,methodName,ip,sessionId,code
+                    className, methodName, ip, sessionId, code
                 )
             }
 

@@ -17,6 +17,7 @@ class GetSelfStudyInfoServiceImpl(
     private val validDayOfWeekAndHourUtil: ValidDayOfWeekAndHourUtil,
     private val userUtil: UserUtil
 ) : GetSelfStudyInfoService {
+
     override fun execute(): SelfStudyInfoResDto {
         val selfStudyCount = selfStudyCountRepository.findSelfStudyCountById(1)
         val member = userUtil.fetchCurrentUser()

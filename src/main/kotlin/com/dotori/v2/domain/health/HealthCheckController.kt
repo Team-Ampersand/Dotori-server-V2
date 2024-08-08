@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController
 class HealthCheckController {
 
     @GetMapping
-    fun healthCheck() = ResponseEntity.ok("Dotori-V2 Server running")
+    fun healthCheck() = ResponseEntity.ok("Dotori Server running")
 
 }
