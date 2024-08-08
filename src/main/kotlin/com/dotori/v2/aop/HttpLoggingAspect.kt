@@ -55,7 +55,12 @@ class HttpLoggingAspect {
         val result = proceedingJoinPoint.proceed()
         when (result) {
             is ResponseEntity<*> -> {
-                val body = result.body.toString().substring(0, 55)
+                var body = result.body.toString()
+
+                if(body.length > 55) {
+                    body = body.substring(0, 55)
+                }
+
                 log.info(
                     "At {}#{} [Response:{}] IP: {}, Session-ID: {}, Headers: {}, Response: {}, Status-Code: {}, Code: {}",
                     className, methodName, method, ip, sessionId, result.headers, body, result.statusCode, code
