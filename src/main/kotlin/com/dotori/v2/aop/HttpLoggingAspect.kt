@@ -23,8 +23,7 @@ class HttpLoggingAspect {
     private val log = LoggerFactory.getLogger(this.javaClass.name)
 
     @Pointcut("within(@org.springframework.web.bind.annotation.RestController *)")
-    fun onRequest() {
-    }
+    fun onRequest() {}
 
     @Around("onRequest()")
     @Throws(Throwable::class)
