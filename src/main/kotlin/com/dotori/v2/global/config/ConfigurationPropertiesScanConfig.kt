@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration
         GAuthProperties::class,
         JwtProperties::class,
         JwtTimeProperties::class,
-        SelfStudyProperties::class
     ]
 )
 class ConfigurationPropertiesScanConfig
