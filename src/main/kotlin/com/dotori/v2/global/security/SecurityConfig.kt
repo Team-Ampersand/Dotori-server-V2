@@ -69,8 +69,8 @@ class SecurityConfig(
             .accessDeniedHandler(CustomAccessDeniedHandler())
             .authenticationEntryPoint(CustomAuthenticationEntryPointHandler())
             .and()
-            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
-            .addFilterBefore(errorFilter, JwtReqFilter::class.java)
+            .addFilterBefore(jwtRequestFilter, JwtReqFilter::class.java)
+            .addFilterBefore(errorFilter, ErrorFilter::class.java)
         return http.build()
     }
 
