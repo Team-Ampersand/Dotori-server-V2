@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletResponse
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import java.nio.charset.StandardCharsets
 
+@Component
 class ErrorFilter : OncePerRequestFilter() {
 
     private val log = LoggerFactory.getLogger(this::class.simpleName)
