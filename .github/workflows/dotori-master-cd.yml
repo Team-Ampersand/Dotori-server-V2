@@ -27,7 +27,7 @@ jobs:
       - name: Stop Docker container
         run: sudo docker rm -f dotori 2>/dev/null || true
 
-      - name: Remove Docker Image
+      - name: Docker remove Image
         run: sudo docker rmi ${{secrets.DOCKERHUB_USERNAME}}/dotori
 
       - name: Pull Docker image
@@ -35,6 +35,3 @@ jobs:
 
       - name: Run Docker Container
         run: sudo docker run --net="host" --name dotori --rm -d -p 8080:8080 ${{secrets.DOCKERHUB_USERNAME}}/dotori
-
-      - name: Delete old docker images
-        run: sudo docker system prune -f
