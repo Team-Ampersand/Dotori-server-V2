@@ -36,7 +36,7 @@ class GetMassageInfoServiceTest : BehaviorSpec({
             }
         }
 
-        every { validDayOfWeekAndHourMassageUtil.validateApply() } throws NotMassageApplyDayException()
+        every { validDayOfWeekAndHourMassageUtil.isApplyValid() } returns false
         `when`("신청할 수 없는 요일일때") {
             val result = getMassageInfoServiceImpl.execute()
             then("massageStatus가 CANT여야함") {
@@ -45,7 +45,7 @@ class GetMassageInfoServiceTest : BehaviorSpec({
         }
         init(massageCountRepository, massageCount, userUtil, member, validDayOfWeekAndHourMassageUtil)
 
-        every { validDayOfWeekAndHourMassageUtil.validateApply() } throws NotMassageApplyHourException()
+        every { validDayOfWeekAndHourMassageUtil.isApplyValid() } returns false
         `when`("신청할 수 없는 시간일때") {
             val result = getMassageInfoServiceImpl.execute()
             then("massageStatus가 CANT여야함") {
@@ -82,5 +82,5 @@ private fun init(
 ) {
     every { massageCountRepository.findMassageCountById(1L) } returns massageCount
     every { userUtil.fetchCurrentUser() } returns member
-    every { validDayOfWeekAndHourMassageUtil.validateApply() } returns Unit
+    every { validDayOfWeekAndHourMassageUtil.isApplyValid() } returns true
 }
