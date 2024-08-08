@@ -4,7 +4,6 @@ import com.dotori.v2.domain.selfstudy.exception.NotSelfStudyApplyDayException
 import com.dotori.v2.domain.selfstudy.exception.NotSelfStudyApplyHourException
 import com.dotori.v2.domain.selfstudy.exception.NotSelfStudyCancelDayException
 import com.dotori.v2.domain.selfstudy.exception.NotSelfStudyCancelHourException
-import com.dotori.v2.domain.selfstudy.properties.SelfStudyProperties
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
