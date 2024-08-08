@@ -9,5 +9,5 @@ class FindSelfStudyCountUtil(
     private val selfStudyCountRepository: SelfStudyCountRepository
 ) {
     fun findSelfStudyCount(): SelfStudyCount =
-        selfStudyCountRepository.findSelfStudyCountById(1L)
+        selfStudyCountRepository.findSelfStudyCountByIdForUpdate(1L)
 }

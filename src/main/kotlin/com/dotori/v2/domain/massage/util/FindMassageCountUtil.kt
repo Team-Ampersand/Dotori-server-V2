@@ -9,5 +9,5 @@ class FindMassageCountUtil(
     private val massageCountRepository: MassageCountRepository
 ) {
     fun findMassageCount(): MassageCount =
-        massageCountRepository.findMassageCountById(1L)
+        massageCountRepository.findMassageCountByIdForUpdate(1L)
 }
