@@ -25,16 +25,13 @@ jobs:
           password: ${{secrets.DOCKERHUB_TOKEN}}
 
       - name: Stop Docker container
-        run: sudo docker rm -f dotori 2>/dev/null || true
-
-      - name: Remove Docker Image
-        run: sudo docker rmi ${{secrets.DOCKERHUB_USERNAME}}/dotori
+        run: sudo docker rm -f dotori-prod 2>/dev/null || true
 
       - name: Pull Docker image
-        run: sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/dotori
+        run: sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/dotori-prod
 
       - name: Run Docker Container
-        run: sudo docker run --net="host" --name dotori --rm -d -p 8080:8080 ${{secrets.DOCKERHUB_USERNAME}}/dotori
+        run: sudo docker run --net="host" --name dotori --rm -d -p 8080:8080 ${{secrets.DOCKERHUB_USERNAME}}/dotori-prod
 
       - name: Delete old docker images
         run: sudo docker system prune -f

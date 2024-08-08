@@ -35,6 +35,3 @@ jobs:
 
       - name: Run Docker Container
         run: sudo docker run --net="host" --name dotori-dev --rm -d -p 8080:8080 ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev
-
-      - name: Delete old docker images
-        run: sudo docker system prune -f
