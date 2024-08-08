@@ -58,7 +58,7 @@ class HttpLoggingAspect {
                 val body = result.body.toString().substring(0, 55)
                 log.info(
                     "At {}#{} [Response:{}] IP: {}, Session-ID: {}, Headers: {}, Response: {}, Status-Code: {}, Code: {}",
-                    className,methodName,method,ip,sessionId,result.headers,body,result.statusCode,code
+                    className, methodName, method, ip, sessionId, result.headers, body, result.statusCode, code
                 )
             }
 
