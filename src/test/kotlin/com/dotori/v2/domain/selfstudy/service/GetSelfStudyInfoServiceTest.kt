@@ -21,7 +21,7 @@ class GetSelfStudyInfoServiceTest : BehaviorSpec({
     val userUtil = mockk<UserUtil>()
 
     val service = GetSelfStudyInfoServiceImpl(selfStudyCountRepository, validDayOfWeekAndHourUtil, userUtil)
-    given("유저가 주어지고"){
+    given("유저가 주어지고") {
         val testMember = Member(
             memberName = "test",
             stuNum = "2116",
@@ -35,13 +35,13 @@ class GetSelfStudyInfoServiceTest : BehaviorSpec({
         every { userUtil.fetchCurrentUser() } returns testMember
         val selfStudyCount = SelfStudyCount(id = 1)
         every { selfStudyCountRepository.findSelfStudyCountById(1) } returns selfStudyCount
-        every { validDayOfWeekAndHourUtil.validateApply() } returns Unit
+        every { validDayOfWeekAndHourUtil.isApplyValid() } returns true
         selfStudyCount.addCount()
         selfStudyCount.addCount()
-        `when`("서비스를 실행하면"){
+        `when`("서비스를 실행하면") {
             val result = service.execute()
-            then("결괴값이 유저의 정보와 2가 반환되어야함"){
-                result shouldBe SelfStudyInfoResDto(selfStudyStatus = testMember.selfStudyStatus, limit = 50, count = selfStudyCount.count)
+            then("결과값이 유저의 정보와 2가 반환되어야 함") {
+                result shouldBe SelfStudyInfoResDto(selfStudyStatus = testMember.selfStudyStatus,limit = 50, count = selfStudyCount.count)
             }
         }
     }
