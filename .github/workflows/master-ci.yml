@@ -47,4 +47,4 @@ jobs:
         run: docker build --platform linux/amd64 --build-arg DEPENDENCY=build/dependency -f DockerfileProd -t ${{secrets.DOCKERHUB_USERNAME}}/dotori-prod .
 
       - name: Docker Push
-        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/dotori
+        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/dotori-prod
