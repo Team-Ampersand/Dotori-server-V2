@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component
 import java.time.Duration
 import java.time.LocalDateTime
 
-@Aspect
-@Component
+//@Aspect
+//@Component
 class ReservationIndicatorAspect(
     private val reservationIndicatorsRepository: ReservationIndicatorsRepository
 ) {

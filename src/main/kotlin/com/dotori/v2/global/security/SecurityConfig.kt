@@ -42,10 +42,16 @@ class SecurityConfig(
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeHttpRequests()
+
+            .antMatchers(HttpMethod.GET, "/").permitAll()
+
             .antMatchers("/actuator/**").permitAll()
             .antMatchers("/v2/auth/**").permitAll()
             .antMatchers("/v2/health-check").permitAll()
             .antMatchers("/v2/refresh").permitAll()
+
+            .antMatchers(HttpMethod.GET, "/v2/home/board").authenticated()
+            .antMatchers(HttpMethod.GET, "/v2/home").authenticated()
 
             .antMatchers("/v2/admin/**").hasRole("ADMIN")
             .antMatchers("/v2/member/**").hasRole("MEMBER")
@@ -57,20 +63,14 @@ class SecurityConfig(
             .antMatchers("/v2/email/**").permitAll()
 
             .antMatchers("/v2/members/**").authenticated()
-
-            .antMatchers(HttpMethod.GET, "/v2/home/board").authenticated()
-            .antMatchers(HttpMethod.GET, "/v2/home").authenticated()
-
-            .mvcMatchers(HttpMethod.GET, "/").permitAll()
-
             .anyRequest().denyAll()
             .and()
             .exceptionHandling()
             .accessDeniedHandler(CustomAccessDeniedHandler())
             .authenticationEntryPoint(CustomAuthenticationEntryPointHandler())
             .and()
-            .addFilterBefore(jwtRequestFilter, JwtReqFilter::class.java)
-            .addFilterBefore(errorFilter, ErrorFilter::class.java)
+            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(errorFilter, JwtReqFilter::class.java)
         return http.build()
     }
 
