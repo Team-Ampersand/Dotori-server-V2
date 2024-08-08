@@ -138,8 +138,6 @@ private fun validDayOfWeekAndHourUtil(year: Int, month: Int, day: Int, hour: Int
     val testDate = LocalDateTime.of(year, month, day, hour, minute, second)
     val selfStudyProperties = mockk<SelfStudyProperties>()
 
-    every { environment.activeProfiles } returns arrayOf(profile)
-
     if (profile == "dev") {
         every { selfStudyProperties.allowedStartTime } returns "00:00"
         every { selfStudyProperties.allowedEndTime } returns "23:59"
