@@ -13,7 +13,7 @@ class FindSelfStudyCountUtilTest : BehaviorSpec({
         `when`("유틸을 실행할때") {
             selfStudyCountUtil.findSelfStudyCount()
             then("selfStudyCountRepository는 조회 메서드를 실행해야됨") {
-                verify(exactly = 1) { selfStudyCountRepository.findSelfStudyCountById(1L) }
+                verify(exactly = 1) { selfStudyCountRepository.findSelfStudyCountByIdForUpdate(1L) }
             }
         }
     }
