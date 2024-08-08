@@ -1,6 +1,5 @@
 package com.dotori.v2.domain.selfstudy.util
 
-import com.dotori.v2.domain.selfstudy.properties.SelfStudyProperties
 import com.dotori.v2.domain.selfstudy.exception.NotSelfStudyApplyDayException
 import com.dotori.v2.domain.selfstudy.exception.NotSelfStudyApplyHourException
 import com.dotori.v2.domain.selfstudy.exception.NotSelfStudyCancelDayException
@@ -13,7 +12,6 @@ import java.time.LocalDateTime
 
 @Component
 class ValidDayOfWeekAndHourUtil(
-    private val selfStudyProperties: SelfStudyProperties,
     private val environment: Environment
 ) {
 
@@ -23,16 +21,14 @@ class ValidDayOfWeekAndHourUtil(
         val hour = currentTime.hour
         val minute = currentTime.minute
 
-        if (!isDevProfile() && (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)) {
+        if (!isDevProfile() && (dayOfWeek == DayOfWeek.FRIDAY ||
+                    dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)) {
             throw NotSelfStudyApplyDayException()
         }
 
-        val allowedStartTime = selfStudyProperties.allowedStartTime.split(":").map { it.toInt() }.toIntArray()
-        val allowedEndTime = selfStudyProperties.allowedEndTime.split(":").map { it.toInt() }.toIntArray()
+        if(isDevProfile()) return
 
-        // 시간은 start hour: start minute ~ end 사이이면서
-        if (hour >= allowedStartTime[0] && minute >= allowedStartTime[1] && hour <= allowedEndTime[0] && minute <= allowedEndTime[1])
-            return
+        if(hour == 20 && minute >= 0) return
 
         throw NotSelfStudyApplyHourException()
     }
@@ -43,15 +39,14 @@ class ValidDayOfWeekAndHourUtil(
         val hour = currentTime.hour
         val minute = currentTime.minute
 
-        if (!isDevProfile() && (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)) {
+        if (!isDevProfile() && (dayOfWeek == DayOfWeek.FRIDAY ||
+                    dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)) {
             throw NotSelfStudyCancelDayException()
         }
 
-        val allowedStartTime = selfStudyProperties.allowedStartTime.split(":").map { it.toInt() }.toIntArray()
-        val allowedEndTime = selfStudyProperties.allowedEndTime.split(":").map { it.toInt() }.toIntArray()
+        if(isDevProfile()) return
 
-        if (hour >= allowedStartTime[0] && minute >= allowedStartTime[1] && hour <= allowedEndTime[0] && minute <= allowedEndTime[1])
-            return
+        if(hour == 20 && minute >= 0) return
 
         throw NotSelfStudyCancelHourException()
     }

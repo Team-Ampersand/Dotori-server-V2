@@ -136,20 +136,11 @@ class ValidDayOfWeekAndHourTest : BehaviorSpec({
 
 private fun validDayOfWeekAndHourUtil(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int, profile: String): ValidDayOfWeekAndHourUtil {
     val testDate = LocalDateTime.of(year, month, day, hour, minute, second)
-    val selfStudyProperties = mockk<SelfStudyProperties>()
     val environment = mockk<Environment>()
 
     every { environment.activeProfiles } returns arrayOf(profile)
 
-    if (profile == "dev") {
-        every { selfStudyProperties.allowedStartTime } returns "00:00"
-        every { selfStudyProperties.allowedEndTime } returns "23:59"
-    } else if (profile == "prod") {
-        every { selfStudyProperties.allowedStartTime } returns "20:00"
-        every { selfStudyProperties.allowedEndTime } returns "20:59"
-    }
-
     every { LocalDateTime.now() } returns testDate
 
-    return ValidDayOfWeekAndHourUtil(selfStudyProperties, environment)
+    return ValidDayOfWeekAndHourUtil(environment)
 }
