@@ -1,11 +1,14 @@
 package com.dotori.v2.domain.selfstudy.properties
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.context.annotation.Configuration
+import org.springframework.boot.context.properties.ConstructorBinding
 
-@Configuration
+@ConstructorBinding
 @ConfigurationProperties(prefix = "self-study")
-class SelfStudyProperties {
-    var allowedStartTime: String = "20:00"
-    var allowedEndTime: String = "20:59"
+class SelfStudyProperties(
+    allowedStartTime: String,
+    allowedEndTime: String
+) {
+    val allowedStartTime = allowedStartTime
+    val allowedEndTime =  allowedEndTime
 }
