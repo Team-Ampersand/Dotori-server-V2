@@ -10,6 +10,6 @@ interface MassageCountRepository : JpaRepository<MassageCount, Long> {
     fun findMassageCountById(id: Long): MassageCount
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("select m from MassageCount m where m = :id")
+    @Query("select m from MassageCount m where m.id = :id")
     fun findMassageCountByIdForUpdate(id: Long): MassageCount
 }
