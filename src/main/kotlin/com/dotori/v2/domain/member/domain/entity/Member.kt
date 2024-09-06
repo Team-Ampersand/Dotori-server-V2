@@ -2,9 +2,11 @@ package com.dotori.v2.domain.member.domain.entity
 
 import com.dotori.v2.domain.member.enums.*
 import com.dotori.v2.domain.rule.domain.entity.RuleViolation
+import com.dotori.v2.domain.student.presentation.data.req.ModifyStudentInfoRequest
 import com.dotori.v2.global.entity.BaseTimeEntity
 import java.time.LocalDateTime
 import javax.persistence.*
+import java.util.*
 
 @Entity
 @Table(name = "member",
@@ -18,7 +20,7 @@ class Member(
     val id: Long = 0,
 
     @Column(name = "member_name", nullable = false)
-    val memberName: String,
+    var memberName: String,
 
     @Column(name = "member_stu_num", nullable = false)
     var stuNum: String,
@@ -30,13 +32,13 @@ class Member(
 
     @Enumerated(EnumType.STRING)
     @Column(name = "member_gender")
-    val gender: Gender,
+    var gender: Gender,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "Role")
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "Role", joinColumns = [JoinColumn(name = "member_id")])
-    val roles: MutableList<Role>,
+    var roles: MutableList<Role>,
 
     @OneToMany(mappedBy = "member")
     val ruleViolation: MutableList<RuleViolation>,
@@ -106,6 +108,14 @@ class Member(
 
     fun graduate(period: String): Member {
         this.stuNum = period
+        return this
+    }
+
+    fun updateMemberInfo(request: ModifyStudentInfoRequest) : Member {
+        this.memberName = request.memberName
+        this.stuNum = request.stuNum
+        this.gender = request.gender
+        this.roles = Collections.singletonList(request.role)
         return this
     }
 }

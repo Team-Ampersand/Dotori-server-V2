@@ -3,6 +3,7 @@ package com.dotori.v2.domain.student.service.impl
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
+import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
 import com.dotori.v2.domain.student.presentation.data.req.ModifyStudentInfoRequest
 import com.dotori.v2.domain.student.presentation.data.res.FindAllStudentResDto
 import com.dotori.v2.domain.student.service.ModifyStudentInfoService
@@ -22,29 +23,20 @@ class ModifyStudentInfoServiceImpl(
     private val CACHE_KEY = "memberList"
 
     override fun execute(modifyStudentInfoRequest: ModifyStudentInfoRequest) {
-        val member = memberRepository.findByIdOrNull(modifyStudentInfoRequest.memberId) ?: throw MemberNotFoundException()
-        updateMemberInfo(member, modifyStudentInfoRequest)
+        val member = memberRepository.findByIdOrNull(modifyStudentInfoRequest.memberId)
+            ?: throw MemberNotFoundException()
+
+        val updated = memberRepository.save(member.updateMemberInfo(modifyStudentInfoRequest))
+        updateCache(updated)
     }
 
-    private fun updateMemberInfo(member: Member, modifyStudentInfoRequest: ModifyStudentInfoRequest) {
-        val newMember = Member(
-            id = member.id,
-            memberName = modifyStudentInfoRequest.memberName,
-            stuNum = modifyStudentInfoRequest.stuNum,
-            email = member.email,
-            password = member.password,
-            gender = modifyStudentInfoRequest.gender,
-            roles = Collections.singletonList(modifyStudentInfoRequest.role),
-            ruleViolation = member.ruleViolation,
-            profileImage = member.profileImage
-        )
-
+    private fun updateCache(member: Member) {
         val cachedData = redisCacheService.getFromCache(CACHE_KEY) as? List<FindAllStudentResDto>
 
         if (cachedData != null) {
-            redisCacheService.putToCache(CACHE_KEY, cachedData)
+            val content = cachedData.toMutableList()
+            content.add(FindAllStudentResDto.of(member))
+            redisCacheService.putToCache(CACHE_KEY, content)
         }
-
-        memberRepository.save(newMember)
     }
 }
