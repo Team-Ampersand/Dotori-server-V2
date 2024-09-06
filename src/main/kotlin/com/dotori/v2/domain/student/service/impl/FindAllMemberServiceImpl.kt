@@ -1,6 +1,7 @@
 package com.dotori.v2.domain.student.service.impl
 
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
+import com.dotori.v2.domain.student.presentation.data.res.FindAllStudentListResDto
 import com.dotori.v2.domain.student.presentation.data.res.FindAllStudentResDto
 import com.dotori.v2.domain.student.service.FindAllMemberService
 import com.dotori.v2.global.config.redis.service.RedisCacheService
@@ -18,27 +19,20 @@ class FindAllMemberServiceImpl(
 
     val CACHE_KEY = "memberList"
 
-    override fun execute(): List<FindAllStudentResDto> {
+    override fun execute(): FindAllStudentListResDto {
 
         val cachedData = redisCacheService.getFromCache(CACHE_KEY)
+
         if (cachedData != null) {
-            return cachedData as List<FindAllStudentResDto>
+            return cachedData as FindAllStudentListResDto
         }
 
         val members = memberRepository.findAll(Sort.by(Sort.Direction.ASC, "stuNum")).map {
-            FindAllStudentResDto(
-                id = it.id,
-                gender = it.gender,
-                memberName = it.memberName,
-                stuNum = it.stuNum,
-                role = it.roles[0],
-                selfStudyStatus = it.selfStudyStatus,
-                profileImage = it.profileImage
-            )
+            FindAllStudentResDto.of(it)
         }
 
         redisCacheService.putToCache(CACHE_KEY, members)
 
-        return members
+        return FindAllStudentListResDto(members)
     }
 }
