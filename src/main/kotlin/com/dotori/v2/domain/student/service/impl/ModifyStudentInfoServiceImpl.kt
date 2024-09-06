@@ -26,19 +26,16 @@ class ModifyStudentInfoServiceImpl(
     override fun execute(modifyStudentInfoRequest: ModifyStudentInfoRequest) {
         val member = memberRepository.findByIdOrNull(modifyStudentInfoRequest.memberId)
             ?: throw MemberNotFoundException()
-
-        val updated = memberRepository.save(member.updateMemberInfo(modifyStudentInfoRequest))
-        updateCache(updated)
+        member.updateMemberInfo(modifyStudentInfoRequest)
+        initCache()
     }
 
-    private fun updateCache(member: Member) {
+    private fun initCache() {
         val cachedData =
             redisCacheService.getFromCache(CACHE_KEY) as? FindAllStudentListResDto
 
         if (cachedData != null) {
-            val content = cachedData.students.toMutableList()
-            content.add(FindAllStudentResDto.of(member))
-            redisCacheService.putToCache(CACHE_KEY, FindAllStudentListResDto(content))
+            redisCacheService.deleteFromCache(CACHE_KEY)
         }
     }
 }

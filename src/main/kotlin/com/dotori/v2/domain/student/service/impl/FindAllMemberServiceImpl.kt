@@ -31,8 +31,10 @@ class FindAllMemberServiceImpl(
             FindAllStudentResDto.of(it)
         }
 
-        redisCacheService.putToCache(CACHE_KEY, members)
+        val response = FindAllStudentListResDto(members)
 
-        return FindAllStudentListResDto(members)
+        redisCacheService.putToCache(CACHE_KEY, response)
+
+        return response
     }
 }
