@@ -23,7 +23,7 @@ class RedisCacheConfig {
                 BasicPolymorphicTypeValidator.builder()
                     .allowIfBaseType(Any::class.java)
                     .build(),
-                ObjectMapper.DefaultTyping.EVERYTHING
+                ObjectMapper.DefaultTyping.EVERYTHING,
             )
         }
     }

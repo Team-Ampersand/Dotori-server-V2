@@ -111,11 +111,10 @@ class Member(
         return this
     }
 
-    fun updateMemberInfo(request: ModifyStudentInfoRequest) : Member {
+    fun updateMemberInfo(request: ModifyStudentInfoRequest) {
         this.memberName = request.memberName
         this.stuNum = request.stuNum
         this.gender = request.gender
         this.roles = Collections.singletonList(request.role)
-        return this
     }
 }

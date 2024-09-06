@@ -5,6 +5,7 @@ import com.dotori.v2.domain.member.domain.repository.MemberRepository
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
 import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
 import com.dotori.v2.domain.student.presentation.data.req.ModifyStudentInfoRequest
+import com.dotori.v2.domain.student.presentation.data.res.FindAllStudentListResDto
 import com.dotori.v2.domain.student.presentation.data.res.FindAllStudentResDto
 import com.dotori.v2.domain.student.service.ModifyStudentInfoService
 import com.dotori.v2.global.config.redis.service.RedisCacheService
@@ -25,18 +26,16 @@ class ModifyStudentInfoServiceImpl(
     override fun execute(modifyStudentInfoRequest: ModifyStudentInfoRequest) {
         val member = memberRepository.findByIdOrNull(modifyStudentInfoRequest.memberId)
             ?: throw MemberNotFoundException()
-
-        val updated = memberRepository.save(member.updateMemberInfo(modifyStudentInfoRequest))
-        updateCache(updated)
+        member.updateMemberInfo(modifyStudentInfoRequest)
+        initCache()
     }
 
-    private fun updateCache(member: Member) {
-        val cachedData = redisCacheService.getFromCache(CACHE_KEY) as? List<FindAllStudentResDto>
+    private fun initCache() {
+        val cachedData =
+            redisCacheService.getFromCache(CACHE_KEY) as? FindAllStudentListResDto
 
         if (cachedData != null) {
-            val content = cachedData.toMutableList()
-            content.add(FindAllStudentResDto.of(member))
-            redisCacheService.putToCache(CACHE_KEY, content)
+            redisCacheService.deleteFromCache(CACHE_KEY)
         }
     }
 }

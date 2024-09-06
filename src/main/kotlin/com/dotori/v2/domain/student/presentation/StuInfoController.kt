@@ -17,10 +17,11 @@ class StuInfoController(
     private val searchStudentService: SearchStudentService,
     private val modifyStudentInfoService: ModifyStudentInfoService
 ) {
+
     @GetMapping
     fun findAllStudentInfo(): ResponseEntity<List<FindAllStudentResDto>> =
         findAllMemberService.execute()
-            .let { ResponseEntity.ok().body(it) }
+            .let { ResponseEntity.ok().body(it.students) }
 
     @GetMapping("/search")
     fun searchStudent(searchRequestDto: SearchRequestDto): ResponseEntity<List<SearchStudentListResDto>> =

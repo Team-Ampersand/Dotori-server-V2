@@ -14,6 +14,7 @@ data class FindAllStudentResDto(
     val selfStudyStatus: SelfStudyStatus,
     val profileImage: String?
 ) {
+
     companion object {
         fun of(member: Member): FindAllStudentResDto = FindAllStudentResDto(
             id = member.id,
@@ -25,4 +26,9 @@ data class FindAllStudentResDto(
             profileImage = member.profileImage
         )
     }
+
 }
+
+data class FindAllStudentListResDto(
+    val students: List<FindAllStudentResDto>
+)
