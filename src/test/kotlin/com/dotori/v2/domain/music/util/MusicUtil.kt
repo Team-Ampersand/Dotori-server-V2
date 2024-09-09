@@ -12,7 +12,7 @@ class MusicUtil {
             title: String = "title",
             thumbnail: String = "thumbnail",
             member: Member = MemberUtil.createMember()
-        ) = Music(id, url, title, thumbnail, member)
+        ) = Music(id, url, title, thumbnail, 0 ,member)
     }
 
 }

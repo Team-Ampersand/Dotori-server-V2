@@ -11,12 +11,19 @@ class Music(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "music_id")
     val id: Long = 0,
+
     @Column(name = "music_url", nullable = false)
     val url: String,
+
     @Column(name = "music_title", nullable = false)
     val title: String,
+
     @Column(name = "music_thumbnail", nullable = false)
     val thumbnail: String,
+
+    @Column(name = "like_count", nullable = false, columnDefinition = "INT default 0")
+    val likeCount: Int = 0,
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     val member: Member

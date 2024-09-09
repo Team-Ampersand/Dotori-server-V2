@@ -12,8 +12,6 @@ import com.dotori.v2.domain.music.presentation.data.req.ApplyMusicReqDto
 import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
 import com.dotori.v2.domain.music.presentation.data.res.MusicResDto
 import com.dotori.v2.domain.music.service.ApplyMusicService
-import com.dotori.v2.domain.student.presentation.data.req.ModifyStudentInfoRequest
-import com.dotori.v2.domain.student.presentation.data.res.FindAllStudentResDto
 import com.dotori.v2.global.config.redis.service.RedisCacheService
 import com.dotori.v2.global.thirdparty.youtube.service.YoutubeService
 import com.dotori.v2.global.thirdparty.youtube.data.res.YoutubeResDto
@@ -31,8 +29,6 @@ class ApplyMusicServiceImpl(
     private val memberRepository: MemberRepository,
     private val redisCacheService: RedisCacheService
 ) : ApplyMusicService {
-
-    val CACHE_KEY = "musicList"
 
     override fun execute(applyMusicReqDto: ApplyMusicReqDto, dayOfWeek: DayOfWeek): Music {
         validDayOfWeek(dayOfWeek)
