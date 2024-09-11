@@ -36,8 +36,7 @@ class PostMusicLikeServiceImpl (
             music = music,
             member = member
         )
-        music.likeCount += 1
-        musicRepository.save(music)
+        music.plusLikeCount()
 
         likeRepository.save(like)
     }

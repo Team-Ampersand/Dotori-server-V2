@@ -24,7 +24,6 @@ class DeleteMusicLikeServiceImpl (
         val like = likeRepository.findByMemberAndMusic(member, music)
         likeRepository.deleteById(like.id)
 
-        music.likeCount -= 1
-        musicRepository.save(music)
+        music.minusLikeCount()
     }
 }

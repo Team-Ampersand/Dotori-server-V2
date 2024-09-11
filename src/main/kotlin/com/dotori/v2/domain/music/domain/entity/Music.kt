@@ -27,4 +27,12 @@ class Music(
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     val member: Member
-) : BaseTimeEntity()
+) : BaseTimeEntity() {
+    fun plusLikeCount() {
+        this.likeCount++
+    }
+
+    fun minusLikeCount() {
+        this.likeCount--
+    }
+}
