@@ -24,11 +24,16 @@ class PostMusicLikeServiceImpl (
     override fun execute(musicId: Long) {
         val member = userUtil.fetchCurrentUser()
         val music: Music = musicRepository.findByIdOrNull(musicId) ?: throw MusicNotFoundException()
-        val date = LocalDateTime.now()
 
-        require(music.createdDate.dayOfWeek == date.dayOfWeek) {throw NotValidMusicLikeException()}
+        validDayOfWeek(music.createdDate)
 
         saveLike(member, music)
+    }
+
+    private fun validDayOfWeek (date: LocalDateTime) {
+        if (date.dayOfWeek != LocalDateTime.now().dayOfWeek) {
+            throw NotValidMusicLikeException()
+        }
     }
 
     private fun saveLike(member: Member, music: Music) {
