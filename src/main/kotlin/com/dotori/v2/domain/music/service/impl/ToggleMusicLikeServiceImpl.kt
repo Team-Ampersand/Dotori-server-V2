@@ -33,7 +33,7 @@ class ToggleMusicLikeServiceImpl(
     }
 
     private fun saveLike(music: Music, member: Member) {
-        val like = Like (
+        val like = Like(
             music = music,
             member = member
         )
