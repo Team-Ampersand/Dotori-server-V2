@@ -3,10 +3,9 @@ package com.dotori.v2.domain.music.presentation.developer
 import com.dotori.v2.domain.music.presentation.data.req.ApplyMusicReqDto
 import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
 import com.dotori.v2.domain.music.service.ApplyMusicService
-import com.dotori.v2.domain.music.service.DeleteMusicLikeService
 import com.dotori.v2.domain.music.service.DeleteMusicService
 import com.dotori.v2.domain.music.service.FindMusicsService
-import com.dotori.v2.domain.music.service.PostMusicLikeService
+import com.dotori.v2.domain.music.service.ToggleMusicLikeService
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -20,8 +19,7 @@ class DeveloperMusicController(
     private val applyMusicService: ApplyMusicService,
     private val findMusicsService: FindMusicsService,
     private val deleteMusicService: DeleteMusicService,
-    private val postMusicLikeService: PostMusicLikeService,
-    private val deleteMusicLikeService: DeleteMusicLikeService,
+    private val toggleMusicLikeService: ToggleMusicLikeService
 ) {
     @PostMapping
     fun applyMusic(@RequestBody applyMusicReqDto: ApplyMusicReqDto): ResponseEntity<Void> =
@@ -42,13 +40,8 @@ class DeveloperMusicController(
         deleteMusicService.execute(musicId)
             .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
 
-    @PostMapping("/{music_id}/like")
-    fun postMusicLike(@PathVariable("music_id") musicId: Long): ResponseEntity<Void> =
-        postMusicLikeService.execute(musicId)
+    @PatchMapping("/{music_id}/like")
+    fun toggleMusicLike(@PathVariable("music_id") musicId: Long): ResponseEntity<Void> =
+        toggleMusicLikeService.execute(musicId)
             .run { ResponseEntity.status(HttpStatus.OK).build() }
-
-    @DeleteMapping("/{music_id}/like")
-    fun deleteMusicLike(@PathVariable("music_id") musicId: Long): ResponseEntity<Void> =
-        deleteMusicLikeService.execute(musicId)
-            .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
 }
