@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.Query
 
 interface LikeRepository : JpaRepository<Like, Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("select l from Like l where l.music = :music and l.member = :member")
-    fun findByMemberAndMusic(@Param("member") member: Member, @Param("music") music: Music): Like?
+    @Query("select l from Like l where l.memberId = :memberId and l.musicId = :musicId")
+    fun findByMemberIdAndMusicId(@Param("memberId") memberId: Long, @Param("musicId") musicId: Long): Like?
 }
