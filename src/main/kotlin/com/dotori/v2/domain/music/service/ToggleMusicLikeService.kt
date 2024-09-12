@@ -1,5 +1,5 @@
 package com.dotori.v2.domain.music.service
 
-interface PostMusicLikeService {
+interface ToggleMusicLikeService {
     fun execute(musicId: Long)
 }
