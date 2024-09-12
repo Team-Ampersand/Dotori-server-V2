@@ -23,12 +23,16 @@ class ToggleMusicLikeServiceImpl(
         val member = userUtil.fetchCurrentUser()
         val music: Music = musicRepository.findByIdOrNull(musicId) ?: throw MusicNotFoundException()
 
+        updateLike(music, member)
+    }
+
+    private fun updateLike(music: Music, member: Member) {
         val like = likeRepository.findByMemberIdAndMusicId(member.id, music.id)
 
-        like?.let {
-            deleteLike(like.id, music)
-        }?: run {
+        if (like == null) {
             saveLike(music, member)
+        } else {
+            deleteLike(like.id, music)
         }
     }
 
