@@ -3,6 +3,7 @@ package com.dotori.v2.domain.music.presentation.admin
 import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
 import com.dotori.v2.domain.music.service.DeleteMusicService
 import com.dotori.v2.domain.music.service.FindMusicsService
+import com.dotori.v2.domain.music.service.ToggleMusicLikeService
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -13,7 +14,8 @@ import java.time.LocalDate
 @RequestMapping("/v2/admin/music")
 class AdminMusicController(
     private val findMusicsService: FindMusicsService,
-    private val deleteMusicService: DeleteMusicService
+    private val deleteMusicService: DeleteMusicService,
+    private val toggleMusicLikeService: ToggleMusicLikeService
 ) {
     @GetMapping
     fun findMusics(
@@ -29,4 +31,8 @@ class AdminMusicController(
         deleteMusicService.execute(musicId)
             .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
 
+    @PatchMapping("/{music_id}/like")
+    fun toggleMusicLike(@PathVariable("music_id") musicId: Long): ResponseEntity<Void> =
+        toggleMusicLikeService.execute(musicId)
+            .run { ResponseEntity.status(HttpStatus.OK).build() }
 }

@@ -67,6 +67,7 @@ enum class ErrorCode(
     MUSIC_TODAY_NOT_REQUESTED(HttpStatus.ACCEPTED.value(), "오늘 신청된 음악이 없습니다."),
     MUSIC_NOT_REQUEST_ON_THAT_DATE(HttpStatus.ACCEPTED.value(), "해당 날짜에 신청된 노래가 없습니다."),
     NOT_VALID_YOUTUBE_URL(HttpStatus.BAD_REQUEST.value(), "유효하지 않은 유튜브 url 입니다."),
+    NOT_VALID_MUSIC_LIKE(HttpStatus.BAD_REQUEST.value(), "이미 지난 요일의 기상음악에는 좋아요를 누를 수 없습니다."),
 
 
     // *** TOKEN ***
