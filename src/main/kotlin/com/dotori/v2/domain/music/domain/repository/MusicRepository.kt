@@ -9,6 +9,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 interface MusicRepository : JpaRepository<Music, Long> {
+
     @Modifying
     @Query("update member set member_music = 'CAN'", nativeQuery = true)
     fun updateMusicStatusMemberByMember()
@@ -17,5 +18,8 @@ interface MusicRepository : JpaRepository<Music, Long> {
     fun findAllByCreatedDate(@Param("date") date: LocalDate): List<Music>
 
     fun deleteAllByCreatedDateBefore(date: LocalDateTime)
+
+    @Query(value = "select * from music m where created_date like :date% order by m.likeCount", nativeQuery = true)
+    fun findAllByCreatedDateOrderByLikeCount(@Param("date") date: LocalDate): List<Music>
 
 }
