@@ -1,6 +1,7 @@
 package com.dotori.v2.domain.music.presentation.admin
 
 import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
+import com.dotori.v2.domain.music.presentation.data.res.ToggleMusicResDto
 import com.dotori.v2.domain.music.service.DeleteMusicService
 import com.dotori.v2.domain.music.service.FindMusicsService
 import com.dotori.v2.domain.music.service.ToggleMusicLikeService
@@ -32,7 +33,6 @@ class AdminMusicController(
             .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
 
     @PatchMapping("/{music_id}/like")
-    fun toggleMusicLike(@PathVariable("music_id") musicId: Long): ResponseEntity<Void> =
-        toggleMusicLikeService.execute(musicId)
-            .run { ResponseEntity.status(HttpStatus.OK).build() }
+    fun toggleMusicLike(@PathVariable("music_id") musicId: Long): ResponseEntity<ToggleMusicResDto> =
+        ResponseEntity.status(HttpStatus.OK).body(toggleMusicLikeService.execute(musicId))
 }
