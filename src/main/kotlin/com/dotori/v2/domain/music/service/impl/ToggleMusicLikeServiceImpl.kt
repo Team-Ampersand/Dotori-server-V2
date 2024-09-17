@@ -1,12 +1,12 @@
 package com.dotori.v2.domain.music.service.impl
 
-import com.dotori.v2.domain.like.entity.Like
-import com.dotori.v2.domain.like.repository.LikeRepository
+import com.dotori.v2.domain.music.domain.entity.MusicLike
+import com.dotori.v2.domain.music.domain.repository.MusicLikeRepository
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.music.domain.entity.Music
 import com.dotori.v2.domain.music.domain.repository.MusicRepository
 import com.dotori.v2.domain.music.exception.MusicNotFoundException
-import com.dotori.v2.domain.music.presentation.data.res.ToggleMusicResDto
+import com.dotori.v2.domain.music.presentation.data.res.MusicLikeCountResDto
 import com.dotori.v2.domain.music.service.ToggleMusicLikeService
 import com.dotori.v2.global.util.UserUtil
 import org.springframework.data.repository.findByIdOrNull
@@ -16,23 +16,23 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = false, rollbackFor = [Exception::class])
 class ToggleMusicLikeServiceImpl(
-    private val likeRepository: LikeRepository,
+    private val musicLikeRepository: MusicLikeRepository,
     private val musicRepository: MusicRepository,
     private val userUtil: UserUtil
 ): ToggleMusicLikeService {
-    override fun execute(musicId: Long) : ToggleMusicResDto{
+    override fun execute(musicId: Long) : MusicLikeCountResDto {
         val member = userUtil.fetchCurrentUser()
         val music: Music = musicRepository.findByIdOrNull(musicId) ?: throw MusicNotFoundException()
 
         updateLike(music, member)
 
-        return ToggleMusicResDto (
+        return MusicLikeCountResDto (
             likeCount = music.likeCount
         )
     }
 
     private fun updateLike(music: Music, member: Member) {
-        val like = likeRepository.findByMemberIdAndMusicId(member.id, music.id)
+        val like = musicLikeRepository.findByMemberIdAndMusicId(member.id, music.id)
 
         if (like == null) {
             saveLike(music, member)
@@ -42,16 +42,16 @@ class ToggleMusicLikeServiceImpl(
     }
 
     private fun saveLike(music: Music, member: Member) {
-        val like = Like (
+        val musicLike = MusicLike (
             musicId = music.id,
             memberId = member.id
         )
-        likeRepository.save(like)
+        musicLikeRepository.save(musicLike)
         music.plusLikeCount()
     }
 
     private fun deleteLike (likeId: Long, music: Music) {
-        likeRepository.deleteById(likeId)
+        musicLikeRepository.deleteById(likeId)
         music.minusLikeCount()
     }
 
