@@ -6,6 +6,7 @@ import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.music.domain.entity.Music
 import com.dotori.v2.domain.music.domain.repository.MusicRepository
 import com.dotori.v2.domain.music.exception.MusicNotFoundException
+import com.dotori.v2.domain.music.presentation.data.res.ToggleMusicResDto
 import com.dotori.v2.domain.music.service.ToggleMusicLikeService
 import com.dotori.v2.global.util.UserUtil
 import org.springframework.data.repository.findByIdOrNull
@@ -19,11 +20,15 @@ class ToggleMusicLikeServiceImpl(
     private val musicRepository: MusicRepository,
     private val userUtil: UserUtil
 ): ToggleMusicLikeService {
-    override fun execute(musicId: Long) {
+    override fun execute(musicId: Long) : ToggleMusicResDto{
         val member = userUtil.fetchCurrentUser()
         val music: Music = musicRepository.findByIdOrNull(musicId) ?: throw MusicNotFoundException()
 
         updateLike(music, member)
+
+        return ToggleMusicResDto (
+            likeCount = music.likeCount
+        )
     }
 
     private fun updateLike(music: Music, member: Member) {
