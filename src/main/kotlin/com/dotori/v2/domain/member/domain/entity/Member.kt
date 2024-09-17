@@ -1,7 +1,9 @@
 package com.dotori.v2.domain.member.domain.entity
 
+import com.dotori.v2.domain.member.domain.entity.QMember.member
 import com.dotori.v2.domain.member.enums.*
 import com.dotori.v2.domain.rule.domain.entity.RuleViolation
+import com.dotori.v2.global.thirdparty.aws.s3.S3Service
 import com.dotori.v2.domain.student.presentation.data.req.ModifyStudentInfoRequest
 import com.dotori.v2.global.entity.BaseTimeEntity
 import java.time.LocalDateTime
@@ -102,10 +104,6 @@ class Member(
         this.selfStudyExpiredDate = localDateTime
     }
 
-    fun updateProfileImage(profileImage: String?) {
-        this.profileImage = profileImage
-    }
-
     fun graduate(period: String): Member {
         this.stuNum = period
         return this
@@ -117,4 +115,15 @@ class Member(
         this.gender = request.gender
         this.roles = Collections.singletonList(request.role)
     }
+
+    fun updateProfileImage(profileImage: String?): Member {
+        this.profileImage = profileImage
+        return this
+    }
+
+    fun isProfileImageExists(): Boolean {
+        return !this.profileImage.isNullOrEmpty()
+    }
+
+
 }
