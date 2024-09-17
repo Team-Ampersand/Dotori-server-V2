@@ -2,6 +2,7 @@ package com.dotori.v2.domain.music.presentation.member
 
 import com.dotori.v2.domain.music.presentation.data.req.ApplyMusicReqDto
 import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
+import com.dotori.v2.domain.music.presentation.data.res.MusicLikeCountResDto
 import com.dotori.v2.domain.music.service.ApplyMusicService
 import com.dotori.v2.domain.music.service.DeleteMyMusicService
 import com.dotori.v2.domain.music.service.FindMusicsService
@@ -41,7 +42,6 @@ class MemberMusicController(
             .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
 
     @PatchMapping("/{music_id}/like")
-    fun toggleMusicLike(@PathVariable("music_id") musicId: Long): ResponseEntity<Void> =
-        toggleMusicLikeService.execute(musicId)
-            .run { ResponseEntity.status(HttpStatus.OK).build() }
+    fun toggleMusicLike(@PathVariable("music_id") musicId: Long): ResponseEntity<MusicLikeCountResDto> =
+        ResponseEntity.status(HttpStatus.OK).body(toggleMusicLikeService.execute(musicId))
 }

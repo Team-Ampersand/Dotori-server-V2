@@ -1,4 +1,4 @@
-package com.dotori.v2.domain.like.entity
+package com.dotori.v2.domain.music.domain.entity
 
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -9,7 +9,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "likes")
-class Like (
+class MusicLike (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "like_id")
