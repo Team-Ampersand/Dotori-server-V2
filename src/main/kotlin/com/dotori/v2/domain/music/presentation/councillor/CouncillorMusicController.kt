@@ -3,6 +3,7 @@ package com.dotori.v2.domain.music.presentation.councillor
 import com.dotori.v2.domain.music.presentation.data.req.ApplyMusicReqDto
 import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
 import com.dotori.v2.domain.music.presentation.data.res.MusicRankListResDto
+import com.dotori.v2.domain.music.presentation.data.res.MusicLikeCountResDto
 import com.dotori.v2.domain.music.service.ApplyMusicService
 import com.dotori.v2.domain.music.service.DeleteMusicService
 import com.dotori.v2.domain.music.service.FindMusicRankService

@@ -2,6 +2,7 @@ package com.dotori.v2.domain.music.presentation.admin
 
 import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
 import com.dotori.v2.domain.music.presentation.data.res.MusicRankListResDto
+import com.dotori.v2.domain.music.presentation.data.res.MusicLikeCountResDto
 import com.dotori.v2.domain.music.service.DeleteMusicService
 import com.dotori.v2.domain.music.service.FindMusicRankService
 import com.dotori.v2.domain.music.service.FindMusicsService
@@ -20,6 +21,7 @@ class AdminMusicController(
     private val toggleMusicLikeService: ToggleMusicLikeService,
     private val findMusicRankService: FindMusicRankService
 ) {
+  
     @GetMapping
     fun findMusics(
         @RequestParam(
@@ -47,5 +49,4 @@ class AdminMusicController(
         ) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate
     ): ResponseEntity<MusicRankListResDto> =
         ResponseEntity.status(HttpStatus.OK).body(findMusicRankService.execute(date))
-
 }
