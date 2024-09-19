@@ -45,9 +45,8 @@ class MemberMusicController(
             .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
 
     @PatchMapping("/{music_id}/like")
-    fun toggleMusicLike(@PathVariable("music_id") musicId: Long): ResponseEntity<Void> =
-        toggleMusicLikeService.execute(musicId)
-            .run { ResponseEntity.status(HttpStatus.OK).build() }
+    fun toggleMusicLike(@PathVariable("music_id") musicId: Long): ResponseEntity<MusicLikeCountResDto> =
+        ResponseEntity.status(HttpStatus.OK).body(toggleMusicLikeService.execute(musicId))
 
     @GetMapping("/like")
     fun findMusicRank(

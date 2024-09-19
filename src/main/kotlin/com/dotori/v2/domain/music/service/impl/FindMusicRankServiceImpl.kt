@@ -1,17 +1,22 @@
 package com.dotori.v2.domain.music.service.impl
 
+import com.dotori.v2.domain.music.domain.entity.Music
+import com.dotori.v2.domain.music.domain.repository.MusicLikeRepository
 import com.dotori.v2.domain.music.domain.repository.MusicRepository
 import com.dotori.v2.domain.music.presentation.data.res.MusicRankListResDto
 import com.dotori.v2.domain.music.presentation.data.res.MusicRankResDto
 import com.dotori.v2.domain.music.service.FindMusicRankService
+import com.dotori.v2.global.util.UserUtil
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 class FindMusicRankServiceImpl(
-    private val musicRepository: MusicRepository
+    private val musicRepository: MusicRepository,
+    private val musicLikeRepository: MusicLikeRepository,
+    private val userUtil: UserUtil
 ) : FindMusicRankService {
 
     override fun execute(date: LocalDate): MusicRankListResDto {
@@ -27,13 +32,20 @@ class FindMusicRankServiceImpl(
                     email = music.member.email,
                     createdTime = music.createdDate,
                     stuNum = music.member.stuNum,
-                    likeCount = music.likeCount
+                    likeCount = music.likeCount,
+                    memberLikeCheck = checkLike(music)
                 )
             }
 
         return MusicRankListResDto(
             responses
         )
+    }
+
+    private fun checkLike(music: Music): Boolean {
+        val member = userUtil.fetchCurrentUser()
+
+        return musicLikeRepository.findByMemberIdAndMusicId(member.id, music.id) != null
     }
 
 }
