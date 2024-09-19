@@ -12,5 +12,6 @@ data class MusicRankResDto(
     val email: String,
     val createdTime: LocalDateTime,
     val stuNum: String,
-    val likeCount: Int
+    val likeCount: Int,
+    val memberLikeCheck: Boolean
 )
