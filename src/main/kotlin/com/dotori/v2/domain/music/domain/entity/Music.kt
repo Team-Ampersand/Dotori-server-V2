@@ -28,6 +28,7 @@ class Music(
     @JoinColumn(name = "member_id", nullable = false)
     val member: Member
 ) : BaseTimeEntity() {
+
     fun plusLikeCount() {
         this.likeCount++
     }
