@@ -20,7 +20,7 @@ class FindMusicRankServiceImpl(
 ) : FindMusicRankService {
 
     override fun execute(date: LocalDate): MusicRankListResDto {
-        val responses = musicRepository.findAllByCreatedDateOrderByLikeCount(date)
+        val responses = musicRepository.findAllByCreatedDateOrderByLikeCountDESC(date)
             .mapIndexed { index, music ->
                 MusicRankResDto(
                     id = music.id,
