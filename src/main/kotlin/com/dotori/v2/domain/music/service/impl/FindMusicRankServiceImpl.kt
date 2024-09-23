@@ -45,7 +45,7 @@ class FindMusicRankServiceImpl(
     private fun checkLike(music: Music): Boolean {
         val member = userUtil.fetchCurrentUser()
 
-        return musicLikeRepository.findByMemberIdAndMusicId(member.id, music.id) != null
+        return musicLikeRepository.existsByMusicIdAndMemberId(music.id, member.id)
     }
 
 }
