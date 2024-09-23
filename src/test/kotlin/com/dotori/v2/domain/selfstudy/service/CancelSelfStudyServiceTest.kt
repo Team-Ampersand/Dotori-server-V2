@@ -51,7 +51,7 @@ class CancelSelfStudyServiceTest : BehaviorSpec({
             profileImage = null
         )
         val selfStudyCount = SelfStudyCount(id = 1, count = 1)
-        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository)
+        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository, redisCacheService)
         `when`("서비스를 실행하면") {
             serviceImpl.execute()
             then("delete 쿼리가 날라가야함") {
@@ -73,7 +73,7 @@ class CancelSelfStudyServiceTest : BehaviorSpec({
                 }
             }
         }
-        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository)
+        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository, redisCacheService)
 
         every { validDayOfWeekAndHourUtil.validateCancel() } throws NotSelfStudyCancelHourException()
         `when`("취소를 할 수 없는 시간일때") {
@@ -83,7 +83,7 @@ class CancelSelfStudyServiceTest : BehaviorSpec({
                 }
             }
         }
-        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository)
+        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository, redisCacheService)
 
         every { selfStudyCheckUtil.isSelfStudyStatusApplied(testMember) } throws NotAppliedException()
         `when`("자습에 신청하지 않았을때") {
@@ -93,7 +93,7 @@ class CancelSelfStudyServiceTest : BehaviorSpec({
                 }
             }
         }
-        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository)
+        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository, redisCacheService)
 
 
     }
@@ -106,11 +106,14 @@ private fun init(
     findSelfStudyCountUtil: FindSelfStudyCountUtil,
     selfStudyCount: SelfStudyCount,
     selfStudyCheckUtil: SelfStudyCheckUtil,
-    selfStudyRepository: SelfStudyRepository
+    selfStudyRepository: SelfStudyRepository,
+    redisCacheService: RedisCacheService
 ) {
     every { validDayOfWeekAndHourUtil.validateCancel() } returns Unit
     every { userUtil.fetchCurrentUser() } returns testMember
     every { findSelfStudyCountUtil.findSelfStudyCount() } returns selfStudyCount
     every { selfStudyCheckUtil.isSelfStudyStatusApplied(testMember) } returns Unit
     every { selfStudyRepository.deleteByMember(testMember) } returns Unit
+    every { redisCacheService.getFromCache(any()) } returns Unit
+    every { redisCacheService.putToCache(any(), any()) } answers { nothing }
 }

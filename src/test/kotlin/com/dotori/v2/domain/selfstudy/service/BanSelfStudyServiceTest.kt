@@ -37,6 +37,7 @@ class BanSelfStudyServiceTest : BehaviorSpec({
             profileImage = null
         )
 
+        init(testMember, memberRepository, redisCacheService)
         every { memberRepository.findByIdOrNull(testMember.id) } returns testMember
         `when`("서비스를 실행할때") {
             banSelfStudyServiceImpl.execute(testMember.id)
@@ -48,6 +49,7 @@ class BanSelfStudyServiceTest : BehaviorSpec({
             }
         }
 
+        init(testMember, memberRepository, redisCacheService)
         every { memberRepository.findByIdOrNull(testMember.id) } returns null
         `when`("해당 유저가 없다면") {
             then("MemberNotFoundException이 발생해야함") {
@@ -58,3 +60,13 @@ class BanSelfStudyServiceTest : BehaviorSpec({
         }
     }
 })
+
+private fun init(
+    testMember: Member,
+    memberRepository: MemberRepository,
+    redisCacheService: RedisCacheService
+) {
+    every { memberRepository.findByIdOrNull(testMember.id) } returns testMember
+    every { redisCacheService.getFromCache(any()) } returns Unit
+    every { redisCacheService.putToCache(any(), any()) } answers { nothing }
+}
