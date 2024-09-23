@@ -13,6 +13,7 @@ import com.dotori.v2.domain.selfstudy.service.impl.CancelSelfStudyServiceImpl
 import com.dotori.v2.domain.selfstudy.util.FindSelfStudyCountUtil
 import com.dotori.v2.domain.selfstudy.util.SelfStudyCheckUtil
 import com.dotori.v2.domain.selfstudy.util.ValidDayOfWeekAndHourUtil
+import com.dotori.v2.global.config.redis.service.RedisCacheService
 import com.dotori.v2.global.util.UserUtil
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
@@ -28,12 +29,15 @@ class CancelSelfStudyServiceTest : BehaviorSpec({
     val validDayOfWeekAndHourUtil = mockk<ValidDayOfWeekAndHourUtil>()
     val selfStudyRepository = mockk<SelfStudyRepository>()
     val selfStudyCheckUtil = mockk<SelfStudyCheckUtil>()
+    val redisCacheService = mockk<RedisCacheService>()
+
     val serviceImpl = CancelSelfStudyServiceImpl(
         userUtil,
         validDayOfWeekAndHourUtil,
         findSelfStudyCountUtil,
         selfStudyRepository,
-        selfStudyCheckUtil
+        selfStudyCheckUtil,
+        redisCacheService
     )
     given("유저가 주어지고") {
         val testMember = Member(

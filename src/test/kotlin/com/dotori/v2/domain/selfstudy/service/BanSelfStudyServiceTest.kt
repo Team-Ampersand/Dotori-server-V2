@@ -7,6 +7,7 @@ import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.enums.SelfStudyStatus
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
 import com.dotori.v2.domain.selfstudy.service.impl.BanSelfStudyServiceImpl
+import com.dotori.v2.global.config.redis.service.RedisCacheService
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -17,7 +18,13 @@ import java.time.LocalDate
 
 class BanSelfStudyServiceTest : BehaviorSpec({
     val memberRepository = mockk<MemberRepository>()
-    val banSelfStudyServiceImpl = BanSelfStudyServiceImpl(memberRepository)
+    val redisCacheService = mockk<RedisCacheService>()
+
+    val banSelfStudyServiceImpl = BanSelfStudyServiceImpl(
+        memberRepository,
+        redisCacheService
+    )
+
     given("유저가 주어지고") {
         val testMember = Member(
             memberName = "test",
