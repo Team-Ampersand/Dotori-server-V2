@@ -7,9 +7,7 @@ on:
 
 jobs:
   build:
-
     runs-on: self-hosted
-
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 11
@@ -24,14 +22,18 @@ jobs:
           username: ${{secrets.DOCKERHUB_USERNAME}}
           password: ${{secrets.DOCKERHUB_TOKEN}}
 
-      - name: Docker stop container
-        run: sudo docker rm -f dotori-dev 2>/dev/null || true
-
-      - name: Docker remove Image
-        run: sudo docker rmi ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev
-
-      - name: Pull Docker image
-        run: sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev
-
-      - name: Run Docker Container
-        run: sudo docker run --net="host" --name dotori-dev --rm -d -p 8080:8080 ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev
+      - name: Deploy to dev
+        uses: appleboy/ssh-action@master
+        id: dotori-dev
+        with:
+          host: ${{ secrets.HOST_DEV }}
+          username: ubuntu
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          key: ${{ secrets.KEYPAIR }}
+          script: |
+            sudo docker ps
+            sudo docker rm -f dotori-dev 2>/dev/null || true
+            sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev
+            sudo docker run --net="host" --name dotori-dev --rm -d -p 8080:8080 ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev
+            sudo docker image prune -f

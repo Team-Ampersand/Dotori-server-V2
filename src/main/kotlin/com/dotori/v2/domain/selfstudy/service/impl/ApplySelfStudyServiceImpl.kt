@@ -7,6 +7,8 @@ import com.dotori.v2.domain.selfstudy.util.FindSelfStudyCountUtil
 import com.dotori.v2.domain.selfstudy.util.SaveSelfStudyUtil
 import com.dotori.v2.domain.selfstudy.util.SelfStudyCheckUtil
 import com.dotori.v2.domain.selfstudy.util.ValidDayOfWeekAndHourUtil
+import com.dotori.v2.domain.student.presentation.data.res.FindAllStudentListResDto
+import com.dotori.v2.global.config.redis.service.RedisCacheService
 import com.dotori.v2.global.util.UserUtil
 import com.dotori.v2.indicator.IndicatorTarget
 import org.springframework.stereotype.Service
@@ -20,8 +22,11 @@ class ApplySelfStudyServiceImpl(
     private val findSelfStudyCountUtil: FindSelfStudyCountUtil,
     private val selfStudyCheckUtil: SelfStudyCheckUtil,
     private val saveSelfStudyUtil: SaveSelfStudyUtil,
-    private val validDayOfWeekAndHourUtil: ValidDayOfWeekAndHourUtil
+    private val validDayOfWeekAndHourUtil: ValidDayOfWeekAndHourUtil,
+    private val redisCacheService: RedisCacheService
 ) : ApplySelfStudyService{
+
+    private val CACHE_KEY = "memberList"
 
     @IndicatorTarget
     override fun execute() {
@@ -38,5 +43,15 @@ class ApplySelfStudyServiceImpl(
         member.updateSelfStudyStatus(SelfStudyStatus.APPLIED)
         selfStudyCount.addCount()
         saveSelfStudyUtil.save(member)
+        initCache()
+    }
+
+    private fun initCache() {
+        val cachedData =
+            redisCacheService.getFromCache(CACHE_KEY) as? FindAllStudentListResDto
+
+        if (cachedData != null) {
+            redisCacheService.deleteFromCache(CACHE_KEY)
+        }
     }
 }
