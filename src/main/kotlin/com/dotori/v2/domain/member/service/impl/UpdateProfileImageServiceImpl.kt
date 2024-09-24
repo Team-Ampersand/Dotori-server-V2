@@ -33,5 +33,6 @@ class UpdateProfileImageServiceImpl(
         if (cachedData != null) {
             redisCacheService.deleteFromCache(CACHE_KEY)
         }
+        profileImageService.imageUpload(member = member, multipartFiles = multipartFiles, isUpdate = true)
     }
 }

@@ -10,6 +10,5 @@ data class MusicResDto(
     val username: String,
     val email: String,
     val createdTime: LocalDateTime,
-    val stuNum: String,
-    val likeCount: Int
+    val stuNum: String
 )

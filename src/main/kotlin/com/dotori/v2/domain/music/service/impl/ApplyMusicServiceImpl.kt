@@ -60,8 +60,7 @@ class ApplyMusicServiceImpl(
             username = music.member.memberName,
             email = music.member.email,
             createdTime = music.createdDate,
-            stuNum = music.member.stuNum,
-            likeCount = music.likeCount
+            stuNum = music.member.stuNum
         )
 
     private fun validDayOfWeek(dayOfWeek: DayOfWeek) {

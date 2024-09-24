@@ -10,15 +10,13 @@ import org.springframework.web.multipart.MultipartFile
 class ProfileImageService (
     private val s3Service: S3Service
 ) {
+    fun imageUpload(member: Member, multipartFiles: MultipartFile?, isUpdate: Boolean = false) {
 
-    fun imageUpload(member: Member, multipartFiles: MultipartFile?) {
         validateExtension(multipartFiles)
 
-        val uploadFileUrl = s3Service.uploadSingleFile(multipartFiles)
+        val uploadFileUrl: String? = s3Service.uploadSingleFile(multipartFiles)
 
-        if (member.isProfileImageExists()) {
-            s3Service.deleteFile(member.profileImage!!)
-        }
+        if (isUpdate) s3Service.deleteFile(member.profileImage!!)
 
         member.updateProfileImage(uploadFileUrl)
     }
