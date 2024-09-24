@@ -21,12 +21,12 @@ class UpdateProfileImageServiceImpl(
     private val CACHE_KEY = "memberList"
 
     override fun execute(multipartFiles: MultipartFile?) {
-        val member: Member = userUtil.fetchCurrentUser()
+        val member = userUtil.fetchCurrentUser()
         profileImageService.imageUpload(member = member, multipartFiles = multipartFiles)
-        initCache()
+        initCache(member, multipartFiles)
     }
 
-    private fun initCache() {
+    private fun initCache(member: Member, multipartFiles: MultipartFile?) {
         val cachedData =
             redisCacheService.getFromCache(CACHE_KEY) as? FindAllStudentListResDto
 
