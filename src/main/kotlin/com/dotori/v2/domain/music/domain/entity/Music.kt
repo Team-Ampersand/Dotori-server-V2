@@ -22,18 +22,9 @@ class Music(
     val thumbnail: String,
 
     @Column(name = "like_count", nullable = false, columnDefinition = "INT default 0")
-    var likeCount: Int = 0,
+    val likeCount: Int = 0,
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     val member: Member
-) : BaseTimeEntity() {
-
-    fun plusLikeCount() {
-        this.likeCount++
-    }
-
-    fun minusLikeCount() {
-        this.likeCount--
-    }
-}
+) : BaseTimeEntity()

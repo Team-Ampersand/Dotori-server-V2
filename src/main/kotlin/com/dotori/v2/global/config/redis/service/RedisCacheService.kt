@@ -30,10 +30,6 @@ class RedisCacheService(
         return redisTemplate.opsForValue().get("musicList:$date")
     }
 
-    fun deleteFromCacheMusic(date: String) {
-        redisTemplate.delete("musicList:$date")
-    }
-
     fun updateCacheFromProfile(memberId: Long, uploadFile: String?) {
         updateMemberCache(memberId) { it.copy(profileImage = uploadFile) }
     }
