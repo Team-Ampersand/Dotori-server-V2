@@ -32,7 +32,7 @@ jobs:
           username: ubuntu
           password: ${{ secrets.PASSWORD }}
           port: 22
-          key: ${{ secrets.AWS_SECRET_KEY }}
+          key: ${{ secrets.KEYPAIR }}
           script: |
             sudo docker ps
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/dotori-dev
