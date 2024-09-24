@@ -28,7 +28,7 @@ jobs:
         uses: appleboy/ssh-action@master
         id: dotori-dev
         with:
-          host: ${{ secrets.HOST_DEV }} # EC2 퍼블릭 IPv4 DNS
+          host: ${{ secrets.HOST_DEV }}
           username: ubuntu
           password: ${{ secrets.PASSWORD }}
           port: 22
