@@ -35,8 +35,7 @@ jobs:
           key: ${{ secrets.KEYPAIR }}
           script: |
             sudo docker ps
-            sudo docker stop $(docker ps -q -f "publish=8080")
-            sudo docker rm $(docker ps -q -f "publish=8080")
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/dotori-dev
+            sudo docker rm -f dotori-dev 2>/dev/null || true
+            sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev
             sudo docker run --net="host" --name dotori-dev --rm -d -p 8080:8080 ${{secrets.DOCKERHUB_USERNAME}}/dotori-dev
             sudo docker image prune -f
