@@ -32,6 +32,10 @@ class RedisCacheService(
         return redisTemplate.opsForValue().get("musicList:$date")
     }
 
+    fun deleteFromCacheMusic(date: String) {
+        redisTemplate.delete("musicList:$date")
+    }
+
     fun initCache(pattern: String) {
         val keys = redisTemplate.keys(pattern)
         if(keys.isNotEmpty()) {
