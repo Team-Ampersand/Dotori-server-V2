@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service
 import java.time.ZonedDateTime
 
 @Service
-@Deprecated("GAuth 로그인으로 변환")
 class SignInEmailAndPasswordServiceImpl(
     private val memberRepository: MemberRepository,
     private val tokenProvider: TokenProvider,
