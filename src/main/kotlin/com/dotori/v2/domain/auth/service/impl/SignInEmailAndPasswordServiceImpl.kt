@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service
 import java.time.ZonedDateTime
 
 @Service
-@Deprecated("GAuth 로그인으로 변환")
 class SignInEmailAndPasswordServiceImpl(
     private val memberRepository: MemberRepository,
     private val tokenProvider: TokenProvider,
@@ -27,32 +26,32 @@ class SignInEmailAndPasswordServiceImpl(
         val member = memberRepository.findByEmail(signInEmailAndPasswordDto.email)
             ?: throw MemberNotFoundException()
 
-        if (passwordEncoder.matches(signInEmailAndPasswordDto.password, member.password)) {
-            val accessToken =
-                tokenProvider.generateAccessToken(signInEmailAndPasswordDto.email, role = member.roles.first())
-            val accessExp = tokenProvider.accessExpiredTime
-            val expiresAt = tokenProvider.accessExpiredTime
-            val refreshToken =
-                tokenProvider.generateRefreshToken(signInEmailAndPasswordDto.email, role = member.roles.first())
-            val refreshExp = tokenProvider.refreshExpiredTime
-
-            refreshTokenRepository.save(
-                RefreshToken(
-                    memberId = member.id,
-                    token = refreshToken
-                )
-            )
-            return toResponse(
-                accessToken,
-                refreshToken,
-                accessExp,
-                refreshExp,
-                member.roles,
-                expiresAt
-            )
-        } else {
+        if (!passwordEncoder.matches(signInEmailAndPasswordDto.password, member.password)) {
             throw PasswordMismatchException()
         }
+
+        val accessToken =
+            tokenProvider.generateAccessToken(signInEmailAndPasswordDto.email, role = member.roles.first())
+        val accessExp = tokenProvider.accessExpiredTime
+        val expiresAt = tokenProvider.accessExpiredTime
+        val refreshToken =
+            tokenProvider.generateRefreshToken(signInEmailAndPasswordDto.email, role = member.roles.first())
+        val refreshExp = tokenProvider.refreshExpiredTime
+
+        refreshTokenRepository.save(
+            RefreshToken(
+                memberId = member.id,
+                token = refreshToken
+            )
+        )
+        return toResponse(
+            accessToken,
+            refreshToken,
+            accessExp,
+            refreshExp,
+            member.roles,
+            expiresAt
+        )
     }
 
     private fun toResponse(

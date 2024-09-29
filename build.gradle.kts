@@ -67,7 +67,6 @@ dependencies {
     implementation(Dependencies.GOOGLE_OAUTH_CLIENT)
     implementation(Dependencies.YOUTUBE_ANALYTICS)
     implementation(Dependencies.GOOGLE_API_SERVICE)
-    implementation(Dependencies.GAUTH)
 
     // monitoring
     implementation(Dependencies.ACTUATOR)
