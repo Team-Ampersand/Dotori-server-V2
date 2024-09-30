@@ -18,6 +18,8 @@ interface MusicRepository : JpaRepository<Music, Long> {
 
     fun deleteAllByCreatedDateBefore(date: LocalDateTime)
 
+    fun findAllByCreatedDateBefore(date: LocalDateTime): List<Music>
+
     @Query(value = "select * from music where created_date like :date% order by music.like_count desc", nativeQuery = true)
     fun findAllByCreatedDateOrderByLikeCountDESC(@Param("date") date: LocalDate): List<Music>
 }
