@@ -43,6 +43,6 @@ test | 테스트 관련 사항이 있을 때
 
 ### Dotori Hall of fame
 
-See [the complete list of our contributors](https://github.com/line/Dotori-V2-server/contributors).
+See [the complete list of our contributors](https://github.com/Team-Ampersand/Dotori-server-V2/graphs/contributors).
 
 ![Contributors](https://contrib.rocks/image?repo=Team-Ampersand/Dotori-server-V2)
