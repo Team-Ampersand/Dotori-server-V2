@@ -3,6 +3,7 @@ package com.dotori.v2.domain.music.service.impl
 import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.MusicStatus
 import com.dotori.v2.domain.music.domain.entity.Music
+import com.dotori.v2.domain.music.domain.repository.MusicLikeRepository
 import com.dotori.v2.domain.music.domain.repository.MusicRepository
 import com.dotori.v2.domain.music.exception.MusicNotFoundException
 import com.dotori.v2.domain.music.exception.NotMyMusicException
@@ -19,12 +20,15 @@ import org.springframework.transaction.annotation.Transactional
 class DeleteMyMusicServiceImpl(
     private val musicRepository: MusicRepository,
     private val userUtil: UserUtil,
-    private val redisCacheService: RedisCacheService
+    private val redisCacheService: RedisCacheService,
+    private val musicLikeRepository: MusicLikeRepository
 ) : DeleteMyMusicService {
 
 
     override fun execute(musicId: Long) {
-        val music: Music = musicRepository.findByIdOrNull(musicId) ?: throw MusicNotFoundException()
+        val music: Music = musicRepository.findByIdOrNull(musicId)
+            ?: throw MusicNotFoundException()
+
         val member: Member = userUtil.fetchCurrentUser()
 
         validMusic(music, member)
@@ -32,6 +36,7 @@ class DeleteMyMusicServiceImpl(
         val date = music.createdDate.toLocalDate().toString()
 
         redisCacheService.putToCacheMusic(date, MusicListResDto(mutableListOf()))
+        musicLikeRepository.deleteAllByMusicId(musicId)
         musicRepository.delete(music)
         music.member.updateMusicStatus(MusicStatus.CAN)
     }
