@@ -16,7 +16,7 @@ import java.time.temporal.ChronoUnit
 @Transactional
 class MusicSchedule(
     private val musicRepository: MusicRepository,
-    private val musicLikeRepository: MusicLikeRepository
+    private val musicLikeRepository: MusicLikeRepository,
     private val redisCacheService: RedisCacheService
 ) {
     private val log = LoggerFactory.getLogger(this.javaClass.simpleName)
