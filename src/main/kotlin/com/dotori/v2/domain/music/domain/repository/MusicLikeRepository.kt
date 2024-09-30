@@ -14,5 +14,7 @@ interface MusicLikeRepository : JpaRepository<MusicLike,Long> {
 
     fun deleteAllByMusicId(music: Long)
 
+    fun deleteAllByMusicIdIn(musicIds: List<Long>)
+
     fun existsByMusicIdAndMemberId(musicId: Long, memberId: Long): Boolean
 }
