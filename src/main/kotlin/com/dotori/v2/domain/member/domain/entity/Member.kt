@@ -9,9 +9,7 @@ import javax.persistence.*
 import java.util.*
 
 @Entity
-@Table(name = "member",
-    indexes = [Index(name = "idx__member__stu_num",
-        columnList = "member_stu_num, member_name, member_gender, member_selfstudy")] )
+@Table(name = "member")
 class Member(
 
     @Id
