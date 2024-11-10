@@ -10,6 +10,10 @@ import org.springframework.stereotype.Component
 import java.time.Duration
 import java.time.LocalDateTime
 
+
+/**
+ * Squirrel로 대처해 Deprecated Squirrel이 배포되면 삭제 예정
+ */
 //@Aspect
 //@Component
 class ReservationIndicatorAspect(
