@@ -56,8 +56,9 @@ dependencies {
     // aws
     implementation(Dependencies.AWS_SES)
     implementation(Dependencies.KOTLIN_SES)
-    implementation(Dependencies.AWS_SQS)
-    implementation(platform(Dependencies.IO_AWS))
+    implementation("org.springframework.cloud:spring-cloud-aws-messaging:2.2.6.RELEASE")
+    implementation("org.springframework.cloud:spring-cloud-aws-autoconfigure:2.2.6.RELEASE")
+
 
 
     // query dsl

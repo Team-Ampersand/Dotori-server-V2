@@ -25,7 +25,7 @@ object DependencyVersions {
     // aws
     const val AWS_SES_VERSION = "1.12.347"
     const val KOTLIN_SES_VERSION = "0.16.0"
-    const val IO_AWS = "3.0.1"
+    const val IO_AWS = "2.4.0"
 
     // querydsl
     const val QUERY_DSL_VERSION = "5.0.0"
