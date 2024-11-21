@@ -46,9 +46,9 @@ object Dependencies {
     // aws
     const val AWS_SES = "com.amazonaws:aws-java-sdk-ses:${DependencyVersions.AWS_SES_VERSION}"
     const val KOTLIN_SES = "org.springframework.cloud:spring-cloud-starter-aws"
-    const val AWS_SQS = "io.awspring.cloud:spring-cloud-aws-starter-sqs"
-    const val AWS_MESSAGING = "org.springframework.cloud:spring-cloud-aws-messaging:${DependencyVersions.IO_AWS}"
-    const val AWS_AUTOCONF = "org.springframework.cloud:spring-cloud-aws-autoconfigure::${DependencyVersions.IO_AWS}"
+    const val AWS_MESSAGING = "org.springframework.cloud:spring-cloud-aws-messaging:${DependencyVersions.AWS_MESSAGE_VERSION}"
+    const val AWS_AUTO_CONFIG = "org.springframework.cloud:spring-cloud-aws-autoconfigure:${DependencyVersions.AWS_MESSAGE_VERSION}"
+
 
     // querydsl
     const val QUERY_DSL = "com.querydsl:querydsl-jpa:${DependencyVersions.QUERY_DSL_VERSION}"
