@@ -53,9 +53,12 @@ dependencies {
     runtimeOnly(Dependencies.JWT_IMPL)
     runtimeOnly(Dependencies.JWT_JACKSON)
 
-    // aws ses
+    // aws
     implementation(Dependencies.AWS_SES)
     implementation(Dependencies.KOTLIN_SES)
+    implementation(Dependencies.AWS_SQS)
+    implementation(platform(Dependencies.IO_AWS))
+
 
     // query dsl
     implementation(Dependencies.QUERY_DSL)
@@ -79,6 +82,12 @@ dependencies {
     // batch
     implementation(Dependencies.BATCH)
     testImplementation(Dependencies.BATCH_TEST)
+}
+
+allOpen {
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.MappedSuperclass")
+    annotation("jakarta.persistence.Embeddable")
 }
 
 tasks.withType<KotlinCompile> {
