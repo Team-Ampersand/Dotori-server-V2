@@ -13,6 +13,10 @@ import com.dotori.v2.domain.music.presentation.data.req.ApplyMusicReqDto
 import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
 import com.dotori.v2.domain.music.service.impl.ApplyMusicServiceImpl
 import com.dotori.v2.global.config.redis.service.RedisCacheService
+import com.dotori.v2.global.squirrel.ActiveType
+import com.dotori.v2.global.squirrel.EventEnv
+import com.dotori.v2.global.squirrel.EventType
+import com.dotori.v2.global.squirrel.MusicDotoriEvent
 import com.dotori.v2.global.thirdparty.youtube.data.res.YoutubeResDto
 import com.dotori.v2.global.thirdparty.youtube.exception.NotValidUrlException
 import com.dotori.v2.global.thirdparty.youtube.service.YoutubeService
@@ -23,7 +27,10 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.springframework.context.ApplicationEventPublisher
+import org.springframework.core.env.Environment
 import java.time.DayOfWeek
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -33,7 +40,17 @@ class ApplyMusicServiceTest : BehaviorSpec({
     val youtubeService = mockk<YoutubeService>()
     val memberRepository = mockk<MemberRepository>()
     val redisCacheService = mockk<RedisCacheService>()
-    val applyMusicService = ApplyMusicServiceImpl(userUtil, musicRepository, youtubeService, memberRepository, redisCacheService)
+    val applicationEventPublisher = mockk<ApplicationEventPublisher>(relaxed = true)
+    val env = mockk<Environment>()
+    val applyMusicService = ApplyMusicServiceImpl(
+        userUtil,
+        musicRepository,
+        youtubeService,
+        memberRepository,
+        redisCacheService,
+        applicationEventPublisher,
+        env
+    )
 
     given("유저가 주어지고") {
         val testMember = Member(
@@ -74,6 +91,15 @@ class ApplyMusicServiceTest : BehaviorSpec({
             thumbnail = "test"
         )
         val musicListResDto = MusicListResDto(mutableListOf())
+        val event = MusicDotoriEvent(
+            id = UUID.randomUUID().toString(),
+            username = "test12323",
+            createdAt = LocalDateTime.now(),
+            env = EventEnv.DEV,
+            activeType = ActiveType.CREATE,
+            eventType = EventType.MUSIC,
+            musicTitle = "asdf"
+        )
 
         every { userUtil.fetchCurrentUser() } returns testMember
         every { youtubeService.getYoutubeInfo(applyMusicReqDto.url) } returns youtubeResDto
@@ -81,6 +107,8 @@ class ApplyMusicServiceTest : BehaviorSpec({
         every { memberRepository.findMusicStatusByMemberId(testMember.id) } returns MusicStatus.CAN
         every { redisCacheService.getFromCacheMusic(any()) } returns musicListResDto
         every { redisCacheService.putToCacheMusic(any(), any()) } answers { nothing }
+        every { env.activeProfiles } returns arrayOf("dev")
+        every { applicationEventPublisher.publishEvent(event) } answers { nothing }
 
         `when`("applyMusicReqDto으로 요청하면") {
             val result = applyMusicService.execute(applyMusicReqDto, DayOfWeek.THURSDAY)
@@ -102,6 +130,8 @@ class ApplyMusicServiceTest : BehaviorSpec({
         every { memberRepository.findMusicStatusByMemberId(testMember.id) } returns MusicStatus.CAN
         every { redisCacheService.getFromCacheMusic(any()) } returns musicListResDto
         every { redisCacheService.putToCacheMusic(any(), any()) } answers { nothing }
+        every { env.activeProfiles } returns arrayOf("dev")
+        every { applicationEventPublisher.publishEvent(event) } returns Unit
 
         testMember.updateMusicStatus(MusicStatus.CAN)
 
