@@ -31,11 +31,11 @@ class ToggleMusicLikeServiceImpl(
 
     override fun execute(musicId: Long) : MusicLikeCountResDto {
         val member = userUtil.fetchCurrentUser()
-        val music: Music = musicRepository.findByIdOrNull(musicId) ?: throw MusicNotFoundException()
+        val music: Music = musicRepository.findByIdForUpdate(musicId) ?: throw MusicNotFoundException()
 
         updateLike(music, member)
 
-        return MusicLikeCountResDto (
+        return MusicLikeCountResDto(
             likeCount = music.likeCount
         )
     }

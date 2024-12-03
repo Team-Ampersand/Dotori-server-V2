@@ -1,7 +1,9 @@
 package com.dotori.v2.domain.music.domain.repository
 
 import com.dotori.v2.domain.music.domain.entity.Music
+import javax.persistence.LockModeType
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Lock
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
@@ -15,6 +17,10 @@ interface MusicRepository : JpaRepository<Music, Long> {
 
     @Query(value = "select * from music where created_date like :date%", nativeQuery = true)
     fun findAllByCreatedDate(@Param("date") date: LocalDate): List<Music>
+
+    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT m FROM Music m WHERE m.id = :id")
+    fun findByIdForUpdate(id: Long): Music?
 
     fun deleteAllByCreatedDateBefore(date: LocalDateTime)
 
