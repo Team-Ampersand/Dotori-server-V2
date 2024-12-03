@@ -12,9 +12,9 @@ class AsyncConfig {
     @Bean
     fun squirrelTaskExecutor(): ThreadPoolTaskExecutor {
         val executor = ThreadPoolTaskExecutor()
-        executor.corePoolSize = 5
-        executor.maxPoolSize = 10
-        executor.setQueueCapacity(25)
+        executor.corePoolSize = 8
+        executor.maxPoolSize = 16
+        executor.setQueueCapacity(30)
         executor.setThreadNamePrefix("Async-")
         executor.initialize()
         return executor
