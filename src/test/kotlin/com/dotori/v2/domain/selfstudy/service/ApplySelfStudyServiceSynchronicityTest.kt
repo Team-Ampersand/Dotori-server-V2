@@ -11,6 +11,10 @@ import com.dotori.v2.domain.selfstudy.util.SaveSelfStudyUtil
 import com.dotori.v2.domain.selfstudy.util.SelfStudyCheckUtil
 import com.dotori.v2.domain.selfstudy.util.ValidDayOfWeekAndHourUtil
 import com.dotori.v2.global.config.redis.service.RedisCacheService
+import com.dotori.v2.global.squirrel.ActiveType
+import com.dotori.v2.global.squirrel.EventEnv
+import com.dotori.v2.global.squirrel.EventType
+import com.dotori.v2.global.squirrel.ReserveDotoriEvent
 import com.dotori.v2.global.util.UserUtil
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -19,6 +23,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+import org.springframework.context.ApplicationEventPublisher
+import org.springframework.core.env.Environment
+import java.time.LocalDateTime
 import java.util.*
 
 class ApplySelfStudyServiceSynchronicityTest  : BehaviorSpec({
@@ -28,6 +35,8 @@ class ApplySelfStudyServiceSynchronicityTest  : BehaviorSpec({
     val saveSelfStudyUtil = mockk<SaveSelfStudyUtil>()
     val validDayOfWeekAndHourUtil = mockk<ValidDayOfWeekAndHourUtil>()
     val redisCacheService = mockk<RedisCacheService>()
+    val applicationEventPublisher = mockk<ApplicationEventPublisher>(relaxed = true)
+    val env = mockk<Environment>()
 
     val service = ApplySelfStudyServiceImpl(
         userUtil,
@@ -35,7 +44,9 @@ class ApplySelfStudyServiceSynchronicityTest  : BehaviorSpec({
         selfStudyCheckUtil,
         saveSelfStudyUtil,
         validDayOfWeekAndHourUtil,
-        redisCacheService
+        redisCacheService,
+        applicationEventPublisher,
+        env
     )
 
     given("유저가 주어지고") {
@@ -50,6 +61,15 @@ class ApplySelfStudyServiceSynchronicityTest  : BehaviorSpec({
             profileImage = null
         )
 
+        val event = ReserveDotoriEvent(
+            id = UUID.randomUUID().toString(),
+            username = "test12323",
+            createdAt = LocalDateTime.now(),
+            env = EventEnv.DEV,
+            activeType = ActiveType.CREATE,
+            eventType = EventType.SELFSTUDY,
+        )
+
         val selfStudyCount = SelfStudyCount(id = 1, count = 49, 50)
 
         init(
@@ -60,6 +80,9 @@ class ApplySelfStudyServiceSynchronicityTest  : BehaviorSpec({
             selfStudyCount,
             selfStudyCheckUtil,
             saveSelfStudyUtil,
+            applicationEventPublisher,
+            env,
+            event
         )
 
         `when`("서비스를 실행하면") {
@@ -98,10 +121,15 @@ private fun init(
     selfStudyCount: SelfStudyCount,
     selfStudyCheckUtil: SelfStudyCheckUtil,
     saveSelfStudyUtil: SaveSelfStudyUtil,
+    applicationEventPublisher: ApplicationEventPublisher,
+    env: Environment,
+    event: ReserveDotoriEvent
 ) {
     every { validDayOfWeekAndHourUtil.validateApply() } returns Unit
     every { userUtil.fetchCurrentUser() } returns testMember
     every { findSelfStudyCountUtil.findSelfStudyCount() } returns selfStudyCount
     every { selfStudyCheckUtil.isSelfStudyStatusCan(testMember) } returns Unit
     every { saveSelfStudyUtil.save(testMember) } returns Unit
+    every { env.activeProfiles } returns arrayOf("dev")
+    every { applicationEventPublisher.publishEvent(event) } answers { nothing }
 }

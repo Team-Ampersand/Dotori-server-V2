@@ -11,6 +11,11 @@ import com.dotori.v2.domain.member.domain.entity.Member
 import com.dotori.v2.domain.member.enums.MassageStatus
 import com.dotori.v2.domain.member.util.MemberUtil
 import com.dotori.v2.domain.selfstudy.exception.AlreadyApplySelfStudyException
+import com.dotori.v2.global.squirrel.ActiveType
+import com.dotori.v2.global.squirrel.EventEnv
+import com.dotori.v2.global.squirrel.EventType
+import com.dotori.v2.global.squirrel.MusicDotoriEvent
+import com.dotori.v2.global.squirrel.ReserveDotoriEvent
 import com.dotori.v2.global.util.UserUtil
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
@@ -18,6 +23,10 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.springframework.context.ApplicationEventPublisher
+import org.springframework.core.env.Environment
+import java.time.LocalDateTime
+import java.util.*
 
 class MassageApplyServiceTest : BehaviorSpec({
     val userUtil = mockk<UserUtil>()
@@ -25,21 +34,33 @@ class MassageApplyServiceTest : BehaviorSpec({
     val findMassageCountUtil = mockk<FindMassageCountUtil>()
     val saveMassageUtil = mockk<SaveMassageUtil>()
     val massageCheckUtil = mockk<MassageCheckUtil>()
+    val applicationEventPublisher = mockk<ApplicationEventPublisher>(relaxed = true)
+    val env = mockk<Environment>()
 
     val applyMassageServiceImpl = ApplyMassageServiceImpl(
         userUtil,
         validDayOfWeekAndHourMassageUtil,
         findMassageCountUtil,
         saveMassageUtil,
-        massageCheckUtil
+        massageCheckUtil,
+        applicationEventPublisher,
+        env
     )
 
     given("유저와 안마의자가 주어지고") {
         val member = MemberUtil.createMember()
         val massageCount = MassageUtil.createMassageCount()
         val massage = MassageUtil.createMassage()
+        val event = ReserveDotoriEvent(
+            id = UUID.randomUUID().toString(),
+            username = "test12323",
+            createdAt = LocalDateTime.now(),
+            env = EventEnv.DEV,
+            activeType = ActiveType.CREATE,
+            eventType = EventType.MASSAGE,
+        )
 
-        init(userUtil, member, validDayOfWeekAndHourMassageUtil, findMassageCountUtil, massageCount, massageCheckUtil, saveMassageUtil, massage)
+        init(userUtil, member, validDayOfWeekAndHourMassageUtil, findMassageCountUtil, massageCount, massageCheckUtil, saveMassageUtil, massage, applicationEventPublisher, env, event)
         `when`("서비스를 실행할때") {
             applyMassageServiceImpl.execute()
             then("사용자의 massageStatus는 APPLIED로 변경되어야함") {
@@ -61,7 +82,7 @@ class MassageApplyServiceTest : BehaviorSpec({
                 }
             }
         }
-        init(userUtil, member, validDayOfWeekAndHourMassageUtil, findMassageCountUtil, massageCount, massageCheckUtil, saveMassageUtil, massage)
+        init(userUtil, member, validDayOfWeekAndHourMassageUtil, findMassageCountUtil, massageCount, massageCheckUtil, saveMassageUtil, massage, applicationEventPublisher, env, event)
 
         every { validDayOfWeekAndHourMassageUtil.validateApply() } throws NotMassageApplyHourException()
         `when`("신청할 수 있는 시간이 아닐때") {
@@ -71,7 +92,7 @@ class MassageApplyServiceTest : BehaviorSpec({
                 }
             }
         }
-        init(userUtil, member, validDayOfWeekAndHourMassageUtil, findMassageCountUtil, massageCount, massageCheckUtil, saveMassageUtil, massage)
+        init(userUtil, member, validDayOfWeekAndHourMassageUtil, findMassageCountUtil, massageCount, massageCheckUtil, saveMassageUtil, massage, applicationEventPublisher, env, event)
 
         every { findMassageCountUtil.findMassageCount() } returns MassageUtil.createMassageCount(count = 5)
         `when`("신청인원이 가득 차 있을때") {
@@ -81,7 +102,7 @@ class MassageApplyServiceTest : BehaviorSpec({
                 }
             }
         }
-        init(userUtil, member, validDayOfWeekAndHourMassageUtil, findMassageCountUtil, massageCount, massageCheckUtil, saveMassageUtil, massage)
+        init(userUtil, member, validDayOfWeekAndHourMassageUtil, findMassageCountUtil, massageCount, massageCheckUtil, saveMassageUtil, massage, applicationEventPublisher, env, event)
 
         every { massageCheckUtil.isMassageStatusCan(member) } throws AlreadyApplySelfStudyException()
         `when`("유저가 안마의자 신청할 수 없을때") {
@@ -103,10 +124,15 @@ private fun init(
     massageCheckUtil: MassageCheckUtil,
     saveMassageUtil: SaveMassageUtil,
     massage: Massage,
+    applicationEventPublisher: ApplicationEventPublisher,
+    env: Environment,
+    event: ReserveDotoriEvent
 ) {
     every { userUtil.fetchCurrentUser() } returns member
     every { validDayOfWeekAndHourMassageUtil.validateApply() } returns Unit
     every { findMassageCountUtil.findMassageCount() } returns massageCount
     every { massageCheckUtil.isMassageStatusCan(member) } returns Unit
     every { saveMassageUtil.save(member) } returns massage
+    every { env.activeProfiles } returns arrayOf("dev")
+    every { applicationEventPublisher.publishEvent(event) } answers { nothing }
 }
