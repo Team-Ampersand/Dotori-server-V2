@@ -1,4 +1,4 @@
-package com.dotori.v2.global.config
+package com.dotori.v2.global.config.config
 
 import com.dotori.v2.global.security.jwt.properties.JwtProperties
 import com.dotori.v2.global.security.jwt.properties.JwtTimeProperties
