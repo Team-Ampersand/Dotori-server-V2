@@ -24,5 +24,4 @@ class SQSEventPublisher(
         log.info("publish event {} event-type {}", event, eventType)
         queueMessagingTemplate.send("squirrel-sqs", message)
     }
-
 }
