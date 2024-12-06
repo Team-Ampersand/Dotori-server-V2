@@ -31,6 +31,7 @@ dependencies {
     implementation(Dependencies.VALIDATION)
     implementation(Dependencies.WEB)
     implementation(Dependencies.SPRING_CLOUD)
+    implementation(Dependencies.RETRY)
 
     // kotlin
     implementation(Dependencies.KOTLIN_JACKSON)

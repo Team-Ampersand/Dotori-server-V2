@@ -12,6 +12,7 @@ object Dependencies {
     const val ACTUATOR = "org.springframework.boot:spring-boot-starter-actuator"
     const val PROMETHEUS = "io.micrometer:micrometer-registry-prometheus"
     const val LOKI = "com.github.loki4j:loki-logback-appender:${DependencyVersions.LOKI}"
+    const val RETRY = "org.springframework.retry:spring-retry"
 
     // kotlin
     const val KOTLIN_JACKSON = "com.fasterxml.jackson.module:jackson-module-kotlin"
