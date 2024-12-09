@@ -14,6 +14,10 @@ import com.dotori.v2.domain.selfstudy.util.FindSelfStudyCountUtil
 import com.dotori.v2.domain.selfstudy.util.SelfStudyCheckUtil
 import com.dotori.v2.domain.selfstudy.util.ValidDayOfWeekAndHourUtil
 import com.dotori.v2.global.config.redis.service.RedisCacheService
+import com.dotori.v2.global.squirrel.ActiveType
+import com.dotori.v2.global.squirrel.EventEnv
+import com.dotori.v2.global.squirrel.EventType
+import com.dotori.v2.global.squirrel.ReserveDotoriEvent
 import com.dotori.v2.global.util.UserUtil
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
@@ -21,6 +25,9 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.springframework.context.ApplicationEventPublisher
+import org.springframework.core.env.Environment
+import java.time.LocalDateTime
 import java.util.*
 
 class CancelSelfStudyServiceTest : BehaviorSpec({
@@ -30,6 +37,8 @@ class CancelSelfStudyServiceTest : BehaviorSpec({
     val selfStudyRepository = mockk<SelfStudyRepository>()
     val selfStudyCheckUtil = mockk<SelfStudyCheckUtil>()
     val redisCacheService = mockk<RedisCacheService>()
+    val applicationEventPublisher = mockk<ApplicationEventPublisher>(relaxed = true)
+    val env = mockk<Environment>()
 
     val serviceImpl = CancelSelfStudyServiceImpl(
         userUtil,
@@ -37,8 +46,11 @@ class CancelSelfStudyServiceTest : BehaviorSpec({
         findSelfStudyCountUtil,
         selfStudyRepository,
         selfStudyCheckUtil,
-        redisCacheService
+        redisCacheService,
+        applicationEventPublisher,
+        env
     )
+
     given("유저가 주어지고") {
         val testMember = Member(
             memberName = "test",
@@ -50,8 +62,18 @@ class CancelSelfStudyServiceTest : BehaviorSpec({
             ruleViolation = mutableListOf(),
             profileImage = null
         )
+
+        val event = ReserveDotoriEvent(
+            id = UUID.randomUUID().toString(),
+            username = "test12323",
+            createdAt = LocalDateTime.now(),
+            env = EventEnv.DEV,
+            activeType = ActiveType.DELETE,
+            eventType = EventType.SELFSTUDY,
+        )
+
         val selfStudyCount = SelfStudyCount(id = 1, count = 1)
-        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository, redisCacheService)
+        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository, redisCacheService, applicationEventPublisher, env, event)
         `when`("서비스를 실행하면") {
             serviceImpl.execute()
             then("delete 쿼리가 날라가야함") {
@@ -73,7 +95,7 @@ class CancelSelfStudyServiceTest : BehaviorSpec({
                 }
             }
         }
-        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository, redisCacheService)
+        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository, redisCacheService, applicationEventPublisher, env, event)
 
         every { validDayOfWeekAndHourUtil.validateCancel() } throws NotSelfStudyCancelHourException()
         `when`("취소를 할 수 없는 시간일때") {
@@ -83,7 +105,7 @@ class CancelSelfStudyServiceTest : BehaviorSpec({
                 }
             }
         }
-        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository, redisCacheService)
+        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository, redisCacheService, applicationEventPublisher, env, event)
 
         every { selfStudyCheckUtil.isSelfStudyStatusApplied(testMember) } throws NotAppliedException()
         `when`("자습에 신청하지 않았을때") {
@@ -93,7 +115,7 @@ class CancelSelfStudyServiceTest : BehaviorSpec({
                 }
             }
         }
-        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository, redisCacheService)
+        init(validDayOfWeekAndHourUtil, userUtil, testMember, findSelfStudyCountUtil, selfStudyCount, selfStudyCheckUtil, selfStudyRepository, redisCacheService, applicationEventPublisher, env, event)
 
 
     }
@@ -107,7 +129,10 @@ private fun init(
     selfStudyCount: SelfStudyCount,
     selfStudyCheckUtil: SelfStudyCheckUtil,
     selfStudyRepository: SelfStudyRepository,
-    redisCacheService: RedisCacheService
+    redisCacheService: RedisCacheService,
+    applicationEventPublisher: ApplicationEventPublisher,
+    env: Environment,
+    event: ReserveDotoriEvent
 ) {
     every { validDayOfWeekAndHourUtil.validateCancel() } returns Unit
     every { userUtil.fetchCurrentUser() } returns testMember
@@ -116,4 +141,6 @@ private fun init(
     every { selfStudyRepository.deleteByMember(testMember) } returns Unit
     every { redisCacheService.getFromCache(any()) } returns Unit
     every { redisCacheService.putToCache(any(), any()) } answers { nothing }
+    every { env.activeProfiles } returns arrayOf("dev")
+    every { applicationEventPublisher.publishEvent(event) } answers { nothing }
 }

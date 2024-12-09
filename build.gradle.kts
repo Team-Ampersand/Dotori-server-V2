@@ -21,7 +21,6 @@ repositories {
 }
 
 dependencies {
-
     // spring
     implementation(Dependencies.SPRING_JPA)
     implementation(Dependencies.SPRING_OPEN_FEIGN)
@@ -31,6 +30,10 @@ dependencies {
     implementation(Dependencies.VALIDATION)
     implementation(Dependencies.WEB)
     implementation(Dependencies.SPRING_CLOUD)
+    implementation(Dependencies.RETRY)
+    implementation(Dependencies.RESILIENCE4J)
+    implementation(Dependencies.RATE_LIMITER)
+    implementation(Dependencies.CIRCUIT_BREAKER)
 
     // kotlin
     implementation(Dependencies.KOTLIN_JACKSON)
@@ -53,9 +56,11 @@ dependencies {
     runtimeOnly(Dependencies.JWT_IMPL)
     runtimeOnly(Dependencies.JWT_JACKSON)
 
-    // aws ses
+    // aws
     implementation(Dependencies.AWS_SES)
     implementation(Dependencies.KOTLIN_SES)
+    implementation(Dependencies.AWS_MESSAGING)
+    implementation(Dependencies.AWS_AUTO_CONFIG)
 
     // query dsl
     implementation(Dependencies.QUERY_DSL)
@@ -79,6 +84,12 @@ dependencies {
     // batch
     implementation(Dependencies.BATCH)
     testImplementation(Dependencies.BATCH_TEST)
+}
+
+allOpen {
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.MappedSuperclass")
+    annotation("jakarta.persistence.Embeddable")
 }
 
 tasks.withType<KotlinCompile> {

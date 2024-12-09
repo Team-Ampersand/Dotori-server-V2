@@ -1,4 +1,4 @@
-package com.dotori.v2.global.config
+package com.dotori.v2.global.config.redis
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator

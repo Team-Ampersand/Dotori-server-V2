@@ -15,8 +15,11 @@ class RedisCacheService(
 
     fun putToCache(key: String, value: Any) {
         redisTemplate.opsForValue().set(key, value)
+
         if (key == "memberList") {
             redisTemplate.expire(key, 1, TimeUnit.HOURS)
+        } else if(key.startsWith("musicList")) {
+            redisTemplate.expire(key, 10, TimeUnit.MINUTES)
         }
     }
 

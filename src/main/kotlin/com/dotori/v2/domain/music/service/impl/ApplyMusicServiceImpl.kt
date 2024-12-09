@@ -13,12 +13,16 @@ import com.dotori.v2.domain.music.presentation.data.res.MusicListResDto
 import com.dotori.v2.domain.music.presentation.data.res.MusicResDto
 import com.dotori.v2.domain.music.service.ApplyMusicService
 import com.dotori.v2.global.config.redis.service.RedisCacheService
+import com.dotori.v2.global.squirrel.MusicDotoriEvent
 import com.dotori.v2.global.thirdparty.youtube.service.YoutubeService
 import com.dotori.v2.global.thirdparty.youtube.data.res.YoutubeResDto
 import com.dotori.v2.global.util.UserUtil
+import org.springframework.context.ApplicationEventPublisher
+import org.springframework.core.env.Environment
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.DayOfWeek
+import java.time.LocalDateTime
 
 @Service
 @Transactional(rollbackFor = [Exception::class])
@@ -27,7 +31,9 @@ class ApplyMusicServiceImpl(
     private val musicRepository: MusicRepository,
     private val youtubeService: YoutubeService,
     private val memberRepository: MemberRepository,
-    private val redisCacheService: RedisCacheService
+    private val redisCacheService: RedisCacheService,
+    private val applicationEventPublisher: ApplicationEventPublisher,
+    private val env: Environment
 ) : ApplyMusicService {
 
     override fun execute(applyMusicReqDto: ApplyMusicReqDto, dayOfWeek: DayOfWeek): Music {
@@ -42,6 +48,14 @@ class ApplyMusicServiceImpl(
             .let { musicRepository.save(toEntity(it, memberInfo, youtubeInfo)) }
         memberInfo.updateMusicStatus(MusicStatus.APPLIED)
         updateCache(music)
+        applicationEventPublisher.publishEvent(
+            MusicDotoriEvent.ofCreateMusicEvent(
+                memberInfo.memberName,
+                createdAt = LocalDateTime.now(),
+                env = env.activeProfiles[0],
+                title = music.title
+            )
+        )
 
         return music
     }

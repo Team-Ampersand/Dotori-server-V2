@@ -12,6 +12,10 @@ object Dependencies {
     const val ACTUATOR = "org.springframework.boot:spring-boot-starter-actuator"
     const val PROMETHEUS = "io.micrometer:micrometer-registry-prometheus"
     const val LOKI = "com.github.loki4j:loki-logback-appender:${DependencyVersions.LOKI}"
+    const val RETRY = "org.springframework.retry:spring-retry"
+    const val RESILIENCE4J = "io.github.resilience4j:resilience4j-spring-boot2:1.7.1"
+    const val RATE_LIMITER = "io.github.resilience4j:resilience4j-ratelimiter:1.7.1"
+    const val CIRCUIT_BREAKER = "io.github.resilience4j:resilience4j-circuitbreaker:1.7.1"
 
     // kotlin
     const val KOTLIN_JACKSON = "com.fasterxml.jackson.module:jackson-module-kotlin"
@@ -46,6 +50,9 @@ object Dependencies {
     // aws
     const val AWS_SES = "com.amazonaws:aws-java-sdk-ses:${DependencyVersions.AWS_SES_VERSION}"
     const val KOTLIN_SES = "org.springframework.cloud:spring-cloud-starter-aws"
+    const val AWS_MESSAGING = "org.springframework.cloud:spring-cloud-aws-messaging:${DependencyVersions.AWS_MESSAGE_VERSION}"
+    const val AWS_AUTO_CONFIG = "org.springframework.cloud:spring-cloud-aws-autoconfigure:${DependencyVersions.AWS_MESSAGE_VERSION}"
+
 
     // querydsl
     const val QUERY_DSL = "com.querydsl:querydsl-jpa:${DependencyVersions.QUERY_DSL_VERSION}"
