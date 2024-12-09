@@ -21,7 +21,6 @@ repositories {
 }
 
 dependencies {
-
     // spring
     implementation(Dependencies.SPRING_JPA)
     implementation(Dependencies.SPRING_OPEN_FEIGN)
@@ -32,6 +31,9 @@ dependencies {
     implementation(Dependencies.WEB)
     implementation(Dependencies.SPRING_CLOUD)
     implementation(Dependencies.RETRY)
+    implementation(Dependencies.RESILIENCE4J)
+    implementation(Dependencies.RATE_LIMITER)
+    implementation(Dependencies.CIRCUIT_BREAKER)
 
     // kotlin
     implementation(Dependencies.KOTLIN_JACKSON)
