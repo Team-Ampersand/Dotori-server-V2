@@ -11,15 +11,18 @@ import com.dotori.v2.domain.music.service.ToggleMusicLikeService
 import com.dotori.v2.global.config.redis.service.RedisCacheService
 import com.dotori.v2.global.squirrel.MusicDotoriEvent
 import com.dotori.v2.global.util.UserUtil
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.core.env.Environment
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
 @Transactional(readOnly = false, rollbackFor = [Exception::class])
+@RateLimiter(name = "toggleMusicLikeService")
+@CircuitBreaker(name = "toggleMusicLikeService", fallbackMethod = "fallback")
 class ToggleMusicLikeServiceImpl(
     private val musicLikeRepository: MusicLikeRepository,
     private val musicRepository: MusicRepository,
@@ -87,4 +90,10 @@ class ToggleMusicLikeServiceImpl(
         redisCacheService.deleteFromCacheMusic(cacheKey)
     }
 
+    private fun fallback(musicId: Long, ex: Throwable): MusicLikeCountResDto {
+        // Fallback logic here
+        return MusicLikeCountResDto(
+            likeCount = -1 // Indicate failure
+        )
+    }
 }

@@ -13,6 +13,9 @@ object Dependencies {
     const val PROMETHEUS = "io.micrometer:micrometer-registry-prometheus"
     const val LOKI = "com.github.loki4j:loki-logback-appender:${DependencyVersions.LOKI}"
     const val RETRY = "org.springframework.retry:spring-retry"
+    const val RESILIENCE4J = "io.github.resilience4j:resilience4j-spring-boot2:1.7.1"
+    const val RATE_LIMITER = "io.github.resilience4j:resilience4j-ratelimiter:1.7.1"
+    const val CIRCUIT_BREAKER = "io.github.resilience4j:resilience4j-circuitbreaker:1.7.1"
 
     // kotlin
     const val KOTLIN_JACKSON = "com.fasterxml.jackson.module:jackson-module-kotlin"
