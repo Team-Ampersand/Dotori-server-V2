@@ -16,11 +16,8 @@ class RedisCacheService(
     fun putToCache(key: String, value: Any) {
         redisTemplate.opsForValue().set(key, value)
 
-        if (key == "memberList") {
+        if (key == "memberList")
             redisTemplate.expire(key, 1, TimeUnit.HOURS)
-        } else if(key.startsWith("musicList")) {
-            redisTemplate.expire(key, 10, TimeUnit.MINUTES)
-        }
     }
 
     fun deleteFromCache(key: String) {
@@ -28,7 +25,9 @@ class RedisCacheService(
     }
 
     fun putToCacheMusic(date: String, value: Any) {
-        redisTemplate.opsForValue().set("musicList:$date", value)
+        val key = "musicList:$date"
+        redisTemplate.opsForValue().set(key, value)
+        redisTemplate.expire(key, 10, TimeUnit.MINUTES)
     }
 
     fun getFromCacheMusic(date: String): Any? {
