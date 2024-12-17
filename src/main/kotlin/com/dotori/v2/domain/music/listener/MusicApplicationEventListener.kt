@@ -28,9 +28,9 @@ class MusicApplicationEventListener(
     )
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION)
     fun onEvent(event: MusicDotoriEvent) {
-        log.info("published music event: {} eventType: {}", event.id, event.eventType)
+        log.info("published music event: {} eventType: MUSIC", event.id)
         CompletableFuture.runAsync {
-            eventPublisher.publishEvent(event,event.eventType.toString())
+            eventPublisher.publishEvent(event, "MUSIC")
         }
     }
 
