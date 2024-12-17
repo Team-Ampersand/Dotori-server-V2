@@ -30,7 +30,7 @@ class ReserveEventListener(
     fun onEvent(event: ReserveDotoriEvent) {
         log.info("published reserve event: {} eventType: {}", event.id, "RESERVE")
         CompletableFuture.runAsync {
-            eventPublisher.publishEvent(event,event.eventType.toString())
+            eventPublisher.publishEvent(event, "RESERVE")
         }
     }
 

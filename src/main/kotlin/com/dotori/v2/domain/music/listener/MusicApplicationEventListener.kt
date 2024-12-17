@@ -30,7 +30,7 @@ class MusicApplicationEventListener(
     fun onEvent(event: MusicDotoriEvent) {
         log.info("published music event: {} eventType: {}", event.id, "MUSIC")
         CompletableFuture.runAsync {
-            eventPublisher.publishEvent(event,event.eventType.toString())
+            eventPublisher.publishEvent(event, "MUSIC")
         }
     }
 
