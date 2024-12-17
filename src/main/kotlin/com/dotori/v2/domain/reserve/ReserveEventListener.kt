@@ -28,7 +28,7 @@ class ReserveEventListener(
     )
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION)
     fun onEvent(event: ReserveDotoriEvent) {
-        log.info("published reserve event: {} eventType: {}", event.id, event.eventType)
+        log.info("published reserve event: {} eventType: {}", event.id, "RESERVE")
         CompletableFuture.runAsync {
             eventPublisher.publishEvent(event,event.eventType.toString())
         }
