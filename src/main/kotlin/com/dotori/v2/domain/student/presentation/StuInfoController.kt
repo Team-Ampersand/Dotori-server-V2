@@ -38,7 +38,7 @@ class StuInfoController(
 
 
     @PostMapping("/sync")
-    fun syncStudentNumber(@RequestPart("csv") csv: MultipartFile): ResponseEntity<Void> =
+    fun syncStudentNumber(@RequestParam("csv") csv: MultipartFile): ResponseEntity<Void> =
         syncStudentNumberTask.syncStudentNumber(csv)
             .let { ResponseEntity.ok().build() }
 
