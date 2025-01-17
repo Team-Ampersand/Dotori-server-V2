@@ -6,8 +6,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 @Component
 class SyncStudentNumberTask(
@@ -48,17 +46,23 @@ class SyncStudentNumberTask(
     }
 
     private fun parseCsv(file: MultipartFile): List<Pair<String, String>> {
-        val reader = BufferedReader(InputStreamReader(file.inputStream))
-        return reader.lines()
-            .skip(1)
-            .map { line ->
-                val tokens = line.split("|")
+        val result = mutableListOf<Pair<String, String>>()
+
+        file.inputStream.bufferedReader().use { reader ->
+            // 첫 번째 줄(헤더) 건너뛰기
+            reader.readLine()
+
+            var line: String?
+            while (reader.readLine().also { line = it } != null) {
+                val tokens = line!!.split("|")
                 if (tokens.size != 2) {
                     throw IllegalArgumentException("Invalid CSV format")
                 }
-                Pair(tokens[0], tokens[1])
+                result.add(Pair(tokens[0].trim(),tokens[1].trim()))
             }
-            .toList()
+        }
+
+        return result
     }
 
 }
