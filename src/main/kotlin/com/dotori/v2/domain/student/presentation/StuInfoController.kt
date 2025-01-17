@@ -32,11 +32,14 @@ class StuInfoController(
             .let { ResponseEntity.ok().body(it) }
 
     @PutMapping("/modify")
-    fun modifyStudentInfo(@RequestBody modifyStudentInfoRequest: ModifyStudentInfoRequest) =
+    fun modifyStudentInfo(@RequestBody modifyStudentInfoRequest: ModifyStudentInfoRequest): ResponseEntity<Void> =
         modifyStudentInfoService.execute(modifyStudentInfoRequest)
+            .let { ResponseEntity.ok().build() }
+
 
     @PostMapping("/sync")
-    fun syncStudentNumber(@RequestPart("csv") csv: MultipartFile) {
+    fun syncStudentNumber(@RequestPart("csv") csv: MultipartFile): ResponseEntity<Void> =
         syncStudentNumberTask.syncStudentNumber(csv)
-    }
+            .let { ResponseEntity.ok().build() }
+
 }

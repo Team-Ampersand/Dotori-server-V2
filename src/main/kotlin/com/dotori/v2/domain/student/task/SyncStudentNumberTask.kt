@@ -1,7 +1,6 @@
 package com.dotori.v2.domain.student.task
 
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
-import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -61,4 +60,5 @@ class SyncStudentNumberTask(
             }
             .toList()
     }
+
 }
