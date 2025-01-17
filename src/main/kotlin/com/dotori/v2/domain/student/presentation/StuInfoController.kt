@@ -7,15 +7,18 @@ import com.dotori.v2.domain.student.presentation.data.res.SearchStudentListResDt
 import com.dotori.v2.domain.student.service.FindAllMemberService
 import com.dotori.v2.domain.student.service.ModifyStudentInfoService
 import com.dotori.v2.domain.student.service.SearchStudentService
+import com.dotori.v2.domain.student.task.SyncStudentNumberTask
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping("/v2/student-info")
 class StuInfoController(
     private val findAllMemberService: FindAllMemberService,
     private val searchStudentService: SearchStudentService,
-    private val modifyStudentInfoService: ModifyStudentInfoService
+    private val modifyStudentInfoService: ModifyStudentInfoService,
+    private val syncStudentNumberTask: SyncStudentNumberTask
 ) {
 
     @GetMapping
@@ -32,4 +35,8 @@ class StuInfoController(
     fun modifyStudentInfo(@RequestBody modifyStudentInfoRequest: ModifyStudentInfoRequest) =
         modifyStudentInfoService.execute(modifyStudentInfoRequest)
 
+    @PostMapping("/sync")
+    fun syncStudentNumber(@RequestPart("csv") csv: MultipartFile) {
+        syncStudentNumberTask.syncStudentNumber(csv)
+    }
 }
