@@ -1,6 +1,7 @@
 package com.dotori.v2.domain.student.task
 
 import com.dotori.v2.domain.member.domain.repository.MemberRepository
+import com.dotori.v2.domain.member.enums.Role
 import com.dotori.v2.domain.member.exception.MemberNotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -29,6 +30,16 @@ class SyncStudentNumberTask(
             if(member.stuNum == studentNumber) {
                 log.info("이미 동일한 학번이 등록되어 있습니다. email: $email, studentNumber: $studentNumber")
                 throw IllegalArgumentException("이미 동일한 학번이 등록되어 있습니다.")
+            }
+
+            if(member.stuNum.endsWith("기")) {
+                log.info("졸업생은 학번을 싱크할 수 없습니다. email: $email, studentNumber: $studentNumber")
+                throw IllegalArgumentException("졸업생은 학번을 싱크할 수 없습니다.")
+            }
+
+            if (member.stuNum == "전학") {
+                log.info("전학생은 학번을 싱크할 수 없습니다. email: $email, studentNumber: $studentNumber")
+                throw IllegalArgumentException("전학생은 학번을 싱크할 수 없습니다.")
             }
 
             member.updateStudentNumber(studentNumber)
