@@ -115,4 +115,8 @@ class Member(
         this.gender = request.gender
         this.roles = Collections.singletonList(request.role)
     }
+
+    fun updateStudentNumber(studentNumber: String) {
+        this.stuNum = studentNumber
+    }
 }
