@@ -70,4 +70,7 @@ object Dependencies {
     // batch
     const val BATCH = "org.springframework.boot:spring-boot-starter-batch"
     const val BATCH_TEST = "org.springframework.batch:spring-batch-test"
+
+    // http
+    const val FUEL = "com.github.kittinunf.fuel:fuel:3.0.0-alpha04"
 }
